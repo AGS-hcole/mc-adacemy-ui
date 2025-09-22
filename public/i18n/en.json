@@ -1,0 +1,143 @@
+{
+    "HOME": {
+        "NAVIGATION": {
+            "TITLE": "Home",
+            "SUBTITLE": "Application Management",
+            "DASHBOARD": {
+                "TITLE": "Dashboard"
+            },
+            "GROUPS": {
+                "TITLE": "Groups"
+            },
+            "USERS": {
+                "TITLE": "Users"
+            },
+            "COMMUNICATIONPLANS": {
+                "TITLE": "Communication Plans"
+            },
+            "RELEASENOTES": {
+                "TITLE": "Release Notes"
+            },
+            "BRANDINGS": {
+                "TITLE": "White Labels"
+            },
+            "BILLINGS": {
+                "TITLE": "Billings"
+            },
+            "TRACKINGS": {
+                "TITLE": "Production Tracking"
+            },
+            "PORTOFOLIOS": {
+                "TITLE": "Equipment Rate"
+            }
+        },
+        "DASHBOARD": {
+            "TITLE": "Dashboard"
+        }
+    },
+    "INTERNAL": {
+        "NAVIGATION": {
+            "TITLE": "Internal",
+            "SUBTITLE": "Billings and Tracking Tools"
+        }
+    },
+    "IAAS": {
+        "NAVIGATION": {
+            "TITLE": "IaaS",
+            "SUBTITLE": "Infrastructure as a Service",
+            "DASHBOARD": {
+                "TITLE": "Dashboard"
+            },
+            "VMS": {
+                "TITLE": "Virtual Machines"
+            },
+            "AUDITS": {
+                "TITLE": "Audits"
+            }
+        }
+    },
+    "SVAULT": {
+        "NAVIGATION": {
+            "TITLE": "SVault",
+            "SUBTITLE": "Backup as a Service",
+            "DASHBOARD": {
+                "TITLE": "Dashboard"
+            },
+            "LICENSES": {
+                "TITLE": "Licenses"
+            },
+            "TEMPLATES": {
+                "TITLE": "Templates"
+            },
+            "REPORTS": {
+                "TITLE": "Reports"
+            },
+            "DOWNLOADS": {
+                "TITLE": "Downloads"
+            },
+            "AUDITS": {
+                "TITLE": "Audits"
+            }
+        }
+    },
+    "VEEAMM365": {
+        "NAVIGATION": {
+            "TITLE": "Veeam M365",
+            "SUBTITLE": "Veeam Backup for Microsoft 365 as a Service",
+            "DASHBOARD": {
+                "TITLE": "Dashboard"
+            },
+            "ORGANIZATIONS": {
+                "TITLE": "Organizations"
+            },
+            "AUDITS": {
+                "TITLE": "Audits"
+            }
+        }
+    },
+    "VEEAMCLOUDCONNECT": {
+        "NAVIGATION": {
+            "TITLE": "Veeam Cloud Connect",
+            "SUBTITLE": "Backup and Replication as a Service",
+            "DASHBOARD": {
+                "TITLE": "Dashboard"
+            },
+            "COMPANIES": {
+                "TITLE": "Companies"
+            },
+            "DEVICES": {
+                "TITLE": "Devices"
+            },
+            "BACKUPAGENTS": {
+                "TITLE": "Backup Agents"
+            },
+            "BACKUPSERVERS": {
+                "TITLE": "Backup Servers"
+            },
+            "BACKUPJOBS": {
+                "TITLE": "Backup Jobs"
+            },
+            "PROTECTEDDATAS": {
+                "TITLE": "Protected Data"
+            },
+            "AUDITS": {
+                "TITLE": "Audits"
+            }
+        }
+    },
+    "VADESECUREM365": {
+        "NAVIGATION": {
+            "TITLE": "Vade Secure M365",
+            "SUBTITLE": "Vade Secure M365 as a Service",
+            "DASHBOARD": {
+                "TITLE": "Dashboard"
+            },
+            "CUSTOMERS": {
+                "TITLE": "Customers"
+            },
+            "AUDITS": {
+                "TITLE": "Audits"
+            }
+        }
+    }
+}

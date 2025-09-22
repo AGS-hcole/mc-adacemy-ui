@@ -1,0 +1,128 @@
+{
+    "SHARED": {
+        "UNDER_CONSTRUCTION": "En construction",
+        "UNDER_CONSTRUCTION_DESCRIPTION": "Cette fonctionnalité est en cours de développement et sera bientôt disponible.",
+        "CLIPBOARD": {
+            "COPYTO": "Copier dans le presse-papiers",
+            "SUCCESS": "Copié dans le presse-papiers",
+            "ERROR": "Erreur lors de la copie dans le presse-papiers"
+        },
+        "USER": {
+            "SIGNED_IN_AS": "Connecté en tant que",
+            "PROFILE": "Profil",
+            "SIGN_OUT": "Se déconnecter"
+        }
+    },
+    "AUTH": {
+        "SUBTITLE": "My Center Academy, l’école où les passionnés de padel deviennent les champions de demain. Entraînements, suivi personnalisé et esprit d’équipe pour révéler tout votre potentiel.",
+        "DESCRIPTION": "Découvrez les talents de demain, formés à My Center Academy.",
+        "SIGNIN": {
+            "TITLE": "Se connecter",
+            "EMAIL": "Adresse e-mail",
+            "EMAIL_REQUIRED": "L'adresse e-mail est requise",
+            "EMAIL_INVALID": "Veuillez entrer une adresse e-mail valide",
+            "PASSWORD": "Mot de passe",
+            "PASSWORD_REQUIRED": "Le mot de passe est requis",
+            "REMEMBER_ME": "Se souvenir de moi",
+            "FORGOT_PASSWORD": "Mot de passe oublié ?",
+            "SIGNIN": "Se connecter"
+        },
+        "SIGN_OUT": {
+            "TITLE": "Déconnexion",
+            "REDIRECTING": "Redirection dans ",
+            "REDIRECTED": "Vous êtes maintenant redirigé !",
+            "GOTO": "Aller à",
+            "SIGN_IN": "se connecter"
+        },
+        "RESET_PASSWORD": {
+            "TITLE": "Réinitialiser le mot de passe",
+            "SUBTITLE": "Entrez votre adresse e-mail pour recevoir un lien de réinitialisation de mot de passe.",
+            "PASSWORD": "Nouveau mot de passe",
+            "PASSWORD_REQUIRED": "Le mot de passe est requis",
+            "PASSWORD_CONFIRM": "Confirmer le mot de passe",
+            "PASSWORD_CONFIRM_REQUIRED": "La confirmation du mot de passe est requise",
+            "PASSWORD_MUST_MATCH": "Les mots de passe doivent correspondre",
+            "SUBMIT": "Réinitialiser le mot de passe",
+            "RETURNTO": "Retour à",
+            "SIGN_IN": "se connecter"
+        },
+        "FORGOT_PASSWORD": {
+            "TITLE": "Mot de passe oublié",
+            "SUBTITLE": "Entrez votre adresse e-mail pour recevoir un lien de réinitialisation de mot de passe.",
+            "EMAIL": "Adresse e-mail",
+            "EMAIL_REQUIRED": "L'adresse e-mail est requise",
+            "EMAIL_INVALID": "Veuillez entrer une adresse e-mail valide",
+            "SEND_LINK": "Envoyer le lien de réinitialisation",
+            "RETURNTO": "Retour à",
+            "SIGN_IN": "se connecter"
+        },
+        "CONFIRMATION_REQUIRED": {
+            "TITLE": "Confirmation requise",
+            "DESCRIPTION": "Un e-mail de confirmation avec des instructions a été envoyé à votre adresse e-mail. Suivez ces instructions pour confirmer votre adresse e-mail et activer votre compte.",
+            "RETURNTO": "Retour à",
+            "SIGN_IN": "se connecter"
+        }
+    },
+    "NAVIGATION": {
+        "TITLE": "Accueil",
+        "SUBTITLE": "Informations générales",
+        "DASHBOARD": {
+            "TITLE": "Tableau de bord"
+        },
+        "ADMIN": {
+            "TITLE": "Administration",
+            "SUBTITLE": "Gestion de l'application",
+            "USERS": {
+                "TITLE": "Utilisateurs"
+            }
+        },
+        "USER": {
+            "TITLE": "Utilisateur",
+            "SUBTITLE": "Espace utilisateur",
+            "DASHBOARD": {
+                "TITLE": "Tableau de bord"
+            },
+            "TRAININGS": {
+                "TITLE": "Entraînements"
+            }
+        }
+    },
+    "HOME": {
+        "DASHBOARD": {
+            "TITLE": "MyCenter Academy",
+            "SUBTITLE": "Bienvenue sur MCA",
+            "TITLEDETAILS": "My Center Academy, l’école où les passionnés de padel deviennent les champions de demain. Entraînements, suivi personnalisé et esprit d’équipe pour révéler tout votre potentiel."
+        },
+        "USERS": {
+            "TITLE": "Utilisateurs",
+            "SEARCH": "Rechercher un utilisateur",
+            "ADD": "Ajouter",
+            "NO_USERS": "Aucun utilisateur trouvé",
+            "USER": "Utilisateur",
+            "USERS": "Utilisateurs",
+            "DETAILS": {
+                "ROLES": "Rôles",
+                "PH_EMAIL": "Adresse e-mail",
+                "EMAIL": "Adresse e-mail",
+                "PH_FIRSTNAME": "Prénom",
+                "FIRSTNAME": "Prénom",
+                "PH_LASTNAME": "Nom",
+                "LASTNAME": "Nom",
+                "COMMUNICATION_PLAN": "Plan de communication",
+                "PH_COMMUNICATION_PLAN": "Sélectionner un plan de communication",
+                "ALLOW_LOGIN": "Autoriser la connexion"
+            },
+            "ROLES": {
+                "ADD": "Ajouter",
+                "EDIT": "Modifier"
+            },
+            "ACTIONS": {
+                "DELETE": "Supprimer",
+                "CANCEL": "Annuler",
+                "SAVE": "Enregistrer",
+                "ADD": "Ajouter",
+                "EDIT": "Modifier"
+            }
+        }
+    }
+}

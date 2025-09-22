@@ -1,0 +1,14 @@
+/* ----------------------------------------------------------------------------------------------------- */
+/*  @ Import/write your custom styles here.
+/*  @ Styles from this file will override 'vendors.scss' and Fuse's base styles.
+/* ----------------------------------------------------------------------------------------------------- */
+:root,
+html,
+body,
+app-root,
+.mat-mdc-tab-group,
+.mat-mdc-tab-body-wrapper,
+.mat-mdc-tab-body,
+.mat-mdc-tab-body-content {
+    height: 100%;
+}
