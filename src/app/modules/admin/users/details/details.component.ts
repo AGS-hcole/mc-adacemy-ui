@@ -14,7 +14,6 @@ import {
     ViewEncapsulation,
 } from '@angular/core';
 import {
-    FormArray,
     FormsModule,
     ReactiveFormsModule,
     UntypedFormBuilder,
@@ -80,11 +79,6 @@ export class UsersDetailsComponent implements OnInit, OnDestroy {
     // @ Getters
     // -----------------------------------------------------------------------------------------------------
 
-    // Get the disks FormArray
-    get userRoles(): FormArray {
-        return this.userForm.get('userRoles') as FormArray;
-    }
-
     /**
      * Constructor
      */
@@ -117,8 +111,8 @@ export class UsersDetailsComponent implements OnInit, OnDestroy {
             id: [''],
             background: [null],
             avatar: [null],
-            firstName: ['', Validators.required],
-            lastName: ['', Validators.required],
+            firstname: ['', Validators.required],
+            lastname: ['', Validators.required],
             email: ['', [Validators.required, Validators.email]],
             languageId: [1],
             allowLogin: [true],
@@ -145,9 +139,6 @@ export class UsersDetailsComponent implements OnInit, OnDestroy {
                 if (user) {
                     // Get the user
                     this.user = user;
-
-                    // Initialize the userRoles FormArray with the user roles
-                    this.userRoles.clear();
 
                     // Patch values to the form
                     this.userForm.patchValue(user);
@@ -213,8 +204,8 @@ export class UsersDetailsComponent implements OnInit, OnDestroy {
 
         const userRequest = {
             id: user.id,
-            firstName: user.firstName,
-            lastName: user.lastName,
+            firstname: user.firstname,
+            lastname: user.lastname,
             email: user.email,
             languageId: user.languageId,
             isEditByUser: false,
@@ -236,8 +227,8 @@ export class UsersDetailsComponent implements OnInit, OnDestroy {
         const user = this.userForm.getRawValue();
 
         const userRequest = {
-            firstName: user.firstName,
-            lastName: user.lastName,
+            firstname: user.firstname,
+            lastname: user.lastname,
             email: user.email,
             password: null,
             twoFactorEnabled: false,
