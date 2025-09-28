@@ -27,15 +27,17 @@ export interface User {
     // Contract / formula
     formula?: FormulaType | null;
 
+    // Security (password not included in frontend model for security)
+    
     // Consents (RGPD)
     privacyConsentAt?: Date | null;
     photoConsentAt?: Date | null;
     marketingConsentAt?: Date | null;
 
-    // Images (base64 + mime)
-    avatarData?: string | null;
+    // Images stored in DB (Bytes in Prisma, but handled as base64 strings in frontend)
+    avatarData?: string | null; // base64 encoded
     avatarMime?: string | null;
-    backgroundData?: string | null;
+    backgroundData?: string | null; // base64 encoded
     backgroundMime?: string | null;
 
     // Notifications preferences
