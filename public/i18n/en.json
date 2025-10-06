@@ -139,5 +139,111 @@
                 "TITLE": "Audits"
             }
         }
+    },
+    "NAVIGATION": {
+        "TITLE": "Home",
+        "SUBTITLE": "General Information",
+        "DASHBOARD": {
+            "TITLE": "Dashboard"
+        },
+        "ADMIN": {
+            "TITLE": "Administration",
+            "SUBTITLE": "Application Management",
+            "USERS": {
+                "TITLE": "Users"
+            },
+            "SESSIONS": {
+                "TITLE": "Training Sessions"
+            }
+        },
+        "USER": {
+            "TITLE": "User",
+            "SUBTITLE": "User Space",
+            "DASHBOARD": {
+                "TITLE": "Dashboard"
+            },
+            "SESSIONS": {
+                "TITLE": "My Sessions"
+            }
+        }
+    },
+    "SESSIONS": {
+        "SLOT": {
+            "AM": "Morning",
+            "PM": "Afternoon"
+        },
+        "STATUS": {
+            "PUBLISHED": "Published",
+            "DRAFT": "Draft",
+            "CANCELLED": "Cancelled"
+        },
+        "ADMIN": {
+            "TITLE": "Training Sessions",
+            "CREATE_SESSION": "Create Session",
+            "EDIT_SESSION": "Edit Session",
+            "NO_SESSIONS": "No sessions found",
+            "FILTERS": {
+                "SITE": "Site",
+                "ALL_SITES": "All sites",
+                "SLOT": "Slot",
+                "ALL_SLOTS": "All slots",
+                "STATUS": "Status",
+                "ALL_STATUS": "All statuses"
+            },
+            "TABLE": {
+                "SESSION": "Session",
+                "SLOT": "Slot",
+                "TIME": "Time",
+                "SITE": "Site",
+                "STATUS": "Status",
+                "ACTIONS": "Actions"
+            },
+            "ACTIONS": {
+                "EDIT": "Edit",
+                "DELETE": "Delete",
+                "CANCEL": "Cancel",
+                "PUBLISH": "Publish",
+                "UNPUBLISH": "Unpublish"
+            },
+            "FORM": {
+                "SITE": "Site",
+                "SITE_REQUIRED": "Site is required",
+                "DATE": "Date",
+                "DATE_REQUIRED": "Date is required",
+                "SLOT": "Slot",
+                "SLOT_REQUIRED": "Slot is required",
+                "START_TIME": "Start Time",
+                "START_TIME_HINT": "Leave empty to use default times",
+                "END_TIME": "End Time",
+                "END_TIME_HINT": "Leave empty to use default times",
+                "INVALID_TIME_RANGE": "End time must be after start time",
+                "NOTES": "Notes",
+                "NOTES_HINT": "Notes or instructions for this session",
+                "IS_PUBLISHED": "Publish this session",
+                "IS_PUBLISHED_HINT": "Published sessions are visible to users",
+                "CANCEL": "Cancel",
+                "SAVE": "Save",
+                "CREATE": "Create"
+            }
+        },
+        "USER": {
+            "TITLE": "My Training Sessions",
+            "NO_SESSIONS": "No upcoming sessions",
+            "NO_SESSIONS_DESCRIPTION": "Check back later for available sessions",
+            "STATUS": {
+                "AVAILABLE": "Available",
+                "REGISTERED": "Registered",
+                "CANCELLED": "Cancelled",
+                "CUTOFF_PASSED": "Registration deadline passed",
+                "FULL": "Full",
+                "NOT_PUBLISHED": "Not published",
+                "UNAVAILABLE": "Unavailable",
+                "OUT_OF_CONTRACT": "Out of contract"
+            },
+            "ACTIONS": {
+                "REGISTER": "Register",
+                "REGISTERED": "Registered"
+            }
+        }
     }
 }

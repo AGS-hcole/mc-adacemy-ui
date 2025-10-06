@@ -38,6 +38,13 @@ export const adminNavigation: FuseNavigationItem[] = [
                 icon: 'heroicons_outline:user',
                 link: '/admin/users',
             },
+            {
+                id: 'sessions',
+                title: 'NAVIGATION.ADMIN.SESSIONS.TITLE',
+                type: 'basic',
+                icon: 'heroicons_outline:calendar',
+                link: '/admin/sessions',
+            },
         ],
     },
 ];
@@ -53,11 +60,11 @@ export const userNavigation: FuseNavigationItem[] = [
         subtitle: 'NAVIGATION.USER.SUBTITLE',
         children: [
             {
-                id: 'trainings',
-                title: 'NAVIGATION.USER.TRAININGS.TITLE',
+                id: 'sessions',
+                title: 'NAVIGATION.USER.SESSIONS.TITLE',
                 type: 'basic',
-                icon: 'heroicons_outline:check-badge',
-                link: '/user/trainings',
+                icon: 'heroicons_outline:calendar',
+                link: '/user/sessions',
             },
         ],
     },

@@ -6,4 +6,8 @@ export default [
         redirectTo: 'dashboard',
         pathMatch: 'full',
     },
+    {
+        path: 'sessions',
+        loadChildren: () => import('app/modules/user/sessions/sessions.routes'),
+    },
 ] as Routes;

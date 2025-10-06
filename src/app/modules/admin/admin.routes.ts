@@ -18,4 +18,8 @@ export default [
         path: 'users',
         loadChildren: () => import('app/modules/admin/users/users.routes'),
     },
+    {
+        path: 'sessions',
+        loadChildren: () => import('app/modules/admin/sessions/sessions.routes'),
+    },
 ] as Routes;
