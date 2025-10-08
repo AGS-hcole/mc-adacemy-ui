@@ -102,19 +102,43 @@
             "USERS": "Utilisateurs",
             "DETAILS": {
                 "ROLES": "Rôles",
+                "ROLE": "Rôle",
                 "PH_EMAIL": "Adresse e-mail",
                 "EMAIL": "Adresse e-mail",
                 "PH_FIRSTNAME": "Prénom",
                 "FIRSTNAME": "Prénom",
                 "PH_LASTNAME": "Nom",
                 "LASTNAME": "Nom",
+                "PH_PHONE": "Numéro de téléphone",
+                "PHONE": "Téléphone",
+                "PH_BIRTH_DATE": "Date de naissance",
+                "BIRTH_DATE": "Date de naissance",
+                "PH_FFT_LICENSE": "Numéro de licence FFT",
+                "FFT_LICENSE": "Licence FFT",
+                "FORMULA": "Formule",
+                "NO_FORMULA": "Aucune formule",
+                "CONSENTS": "Consentements (RGPD)",
+                "PRIVACY_CONSENT": "Consentement aux conditions d'utilisation et politique de confidentialité",
+                "PHOTO_CONSENT": "Consentement à l'utilisation de photos",
+                "MARKETING_CONSENT": "Consentement marketing et communications",
+                "NOTIFICATIONS": "Préférences de Notifications",
+                "NOTIFY_EMAIL": "Notifications par e-mail",
+                "NOTIFY_SMS": "Notifications par SMS",
+                "NOTIFY_WHATSAPP": "Notifications WhatsApp",
                 "COMMUNICATION_PLAN": "Plan de communication",
                 "PH_COMMUNICATION_PLAN": "Sélectionner un plan de communication",
                 "ALLOW_LOGIN": "Autoriser la connexion"
             },
             "ROLES": {
                 "ADD": "Ajouter",
-                "EDIT": "Modifier"
+                "EDIT": "Modifier",
+                "USER": "Utilisateur",
+                "ADMIN": "Administrateur"
+            },
+            "FORMULAS": {
+                "MORNING": "Matin",
+                "AFTERNOON": "Après-midi",
+                "FULL": "Journée complète"
             },
             "ACTIONS": {
                 "DELETE": "Supprimer",

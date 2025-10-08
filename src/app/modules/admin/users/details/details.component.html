@@ -33,16 +33,16 @@
                     <div
                         class="ring-bg-card flex h-32 w-32 items-center justify-center overflow-hidden rounded-full ring-4"
                     >
-                        @if (user.profilePictureToBase64) {
+                        @if (user.avatarData) {
                             <img
                                 class="h-full w-full object-cover"
                                 [src]="
-                                    'data:image/jpeg;base64,' +
-                                    user.profilePictureToBase64
+                                    'data:' + user.avatarMime + ';base64,' +
+                                    user.avatarData
                                 "
                             />
                         }
-                        @if (!user.profilePictureToBase64) {
+                        @if (!user.avatarData) {
                             <div
                                 class="flex h-full w-full items-center justify-center overflow-hidden rounded bg-gray-200 text-8xl font-bold uppercase leading-none text-gray-600 dark:bg-gray-700 dark:text-gray-200"
                             >
@@ -90,6 +90,157 @@
                             </div>
                         </div>
                     }
+                    
+                    <!-- Phone -->
+                    @if (user.phone) {
+                        <div class="flex sm:items-center">
+                            <mat-icon
+                                [svgIcon]="'heroicons_outline:phone'"
+                            ></mat-icon>
+                            <div class="ml-6 leading-6">
+                                {{ user.phone }}
+                            </div>
+                        </div>
+                    }
+                    
+                    <!-- Birth Date -->
+                    @if (user.birthDate) {
+                        <div class="flex sm:items-center">
+                            <mat-icon
+                                [svgIcon]="'heroicons_outline:calendar-days'"
+                            ></mat-icon>
+                            <div class="ml-6 leading-6">
+                                <div class="font-medium">{{ 'HOME.USERS.DETAILS.BIRTH_DATE' | transloco }}</div>
+                                <div class="text-secondary">{{ user.birthDate | date:'dd/MM/yyyy' }}</div>
+                            </div>
+                        </div>
+                    }
+                    
+                    <!-- FFT License -->
+                    @if (user.fftLicenseNumber) {
+                        <div class="flex sm:items-center">
+                            <mat-icon
+                                [svgIcon]="'heroicons_outline:identification'"
+                            ></mat-icon>
+                            <div class="ml-6 leading-6">
+                                <div class="font-medium">{{ 'HOME.USERS.DETAILS.FFT_LICENSE' | transloco }}</div>
+                                <div class="text-secondary">{{ user.fftLicenseNumber }}</div>
+                            </div>
+                        </div>
+                    }
+                    
+                    <!-- Role -->
+                    @if (user.role) {
+                        <div class="flex sm:items-center">
+                            <mat-icon
+                                [svgIcon]="'heroicons_outline:user-group'"
+                            ></mat-icon>
+                            <div class="ml-6 leading-6">
+                                <div class="font-medium">{{ 'HOME.USERS.DETAILS.ROLE' | transloco }}</div>
+                                <div class="text-secondary">{{ 'HOME.USERS.ROLES.' + user.role.toUpperCase() | transloco }}</div>
+                            </div>
+                        </div>
+                    }
+                    
+                    <!-- Formula -->
+                    @if (user.formula) {
+                        <div class="flex sm:items-center">
+                            <mat-icon
+                                [svgIcon]="'heroicons_outline:clock'"
+                            ></mat-icon>
+                            <div class="ml-6 leading-6">
+                                <div class="font-medium">{{ 'HOME.USERS.DETAILS.FORMULA' | transloco }}</div>
+                                <div class="text-secondary">{{ 'HOME.USERS.FORMULAS.' + user.formula | transloco }}</div>
+                            </div>
+                        </div>
+                    }
+                </div>
+                
+                <!-- Consents Section -->
+                <div class="mt-8 border-t pt-6">
+                    <div class="text-lg font-semibold mb-4">
+                        {{ 'HOME.USERS.DETAILS.CONSENTS' | transloco }}
+                    </div>
+                    <div class="flex flex-col space-y-3">
+                        <div class="flex items-center">
+                            <mat-icon 
+                                class="icon-size-5 mr-3"
+                                [svgIcon]="user.privacyConsentAt ? 'heroicons_solid:check-circle' : 'heroicons_outline:x-circle'"
+                                [class.text-green-600]="user.privacyConsentAt"
+                                [class.text-gray-400]="!user.privacyConsentAt"
+                            ></mat-icon>
+                            <div class="flex-1">
+                                <div class="text-sm">{{ 'HOME.USERS.DETAILS.PRIVACY_CONSENT' | transloco }}</div>
+                                @if (user.privacyConsentAt) {
+                                    <div class="text-xs text-secondary">{{ user.privacyConsentAt | date:'dd/MM/yyyy HH:mm' }}</div>
+                                }
+                            </div>
+                        </div>
+                        <div class="flex items-center">
+                            <mat-icon 
+                                class="icon-size-5 mr-3"
+                                [svgIcon]="user.photoConsentAt ? 'heroicons_solid:check-circle' : 'heroicons_outline:x-circle'"
+                                [class.text-green-600]="user.photoConsentAt"
+                                [class.text-gray-400]="!user.photoConsentAt"
+                            ></mat-icon>
+                            <div class="flex-1">
+                                <div class="text-sm">{{ 'HOME.USERS.DETAILS.PHOTO_CONSENT' | transloco }}</div>
+                                @if (user.photoConsentAt) {
+                                    <div class="text-xs text-secondary">{{ user.photoConsentAt | date:'dd/MM/yyyy HH:mm' }}</div>
+                                }
+                            </div>
+                        </div>
+                        <div class="flex items-center">
+                            <mat-icon 
+                                class="icon-size-5 mr-3"
+                                [svgIcon]="user.marketingConsentAt ? 'heroicons_solid:check-circle' : 'heroicons_outline:x-circle'"
+                                [class.text-green-600]="user.marketingConsentAt"
+                                [class.text-gray-400]="!user.marketingConsentAt"
+                            ></mat-icon>
+                            <div class="flex-1">
+                                <div class="text-sm">{{ 'HOME.USERS.DETAILS.MARKETING_CONSENT' | transloco }}</div>
+                                @if (user.marketingConsentAt) {
+                                    <div class="text-xs text-secondary">{{ user.marketingConsentAt | date:'dd/MM/yyyy HH:mm' }}</div>
+                                }
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Notifications Section -->
+                <div class="mt-8 border-t pt-6">
+                    <div class="text-lg font-semibold mb-4">
+                        {{ 'HOME.USERS.DETAILS.NOTIFICATIONS' | transloco }}
+                    </div>
+                    <div class="flex flex-col space-y-3">
+                        <div class="flex items-center">
+                            <mat-icon 
+                                class="icon-size-5 mr-3"
+                                [svgIcon]="user.notifyEmail ? 'heroicons_solid:check-circle' : 'heroicons_outline:x-circle'"
+                                [class.text-green-600]="user.notifyEmail"
+                                [class.text-gray-400]="!user.notifyEmail"
+                            ></mat-icon>
+                            <div class="text-sm">{{ 'HOME.USERS.DETAILS.NOTIFY_EMAIL' | transloco }}</div>
+                        </div>
+                        <div class="flex items-center">
+                            <mat-icon 
+                                class="icon-size-5 mr-3"
+                                [svgIcon]="user.notifySMS ? 'heroicons_solid:check-circle' : 'heroicons_outline:x-circle'"
+                                [class.text-green-600]="user.notifySMS"
+                                [class.text-gray-400]="!user.notifySMS"
+                            ></mat-icon>
+                            <div class="text-sm">{{ 'HOME.USERS.DETAILS.NOTIFY_SMS' | transloco }}</div>
+                        </div>
+                        <div class="flex items-center">
+                            <mat-icon 
+                                class="icon-size-5 mr-3"
+                                [svgIcon]="user.notifyWhatsApp ? 'heroicons_solid:check-circle' : 'heroicons_outline:x-circle'"
+                                [class.text-green-600]="user.notifyWhatsApp"
+                                [class.text-gray-400]="!user.notifyWhatsApp"
+                            ></mat-icon>
+                            <div class="text-sm">{{ 'HOME.USERS.DETAILS.NOTIFY_WHATSAPP' | transloco }}</div>
+                        </div>
+                    </div>
                 </div>
             </div>
         </div>
@@ -271,28 +422,193 @@
                         </mat-form-field>
                     </div>
 
-                    <!-- Birth date -->
-                    <!-- TBD-->
-
-                    <!-- Roles -->
+                    <!-- Phone -->
                     <div class="mt-8">
-                        <span class="font-medium">{{
-                            'HOME.USERS.DETAILS.ROLES' | transloco
-                        }}</span>
+                        <mat-form-field
+                            class="w-full"
+                            [subscriptSizing]="'dynamic'"
+                        >
+                            <mat-label>{{
+                                'HOME.USERS.DETAILS.PHONE' | transloco
+                            }}</mat-label>
+                            <mat-icon
+                                matPrefix
+                                class="hidden icon-size-5 sm:flex"
+                                [svgIcon]="'heroicons_solid:phone'"
+                            ></mat-icon>
+                            <input
+                                matInput
+                                [formControlName]="'phone'"
+                                [placeholder]="
+                                    'HOME.USERS.DETAILS.PH_PHONE' | transloco
+                                "
+                                [spellcheck]="false"
+                            />
+                        </mat-form-field>
                     </div>
-                    <div class="-m-1.5 mt-1 flex flex-wrap items-center">
-                        <!-- Roles -->
-                        <!-- TBD -->
+
+                    <!-- Birth date -->
+                    <div class="mt-8">
+                        <mat-form-field
+                            class="w-full"
+                            [subscriptSizing]="'dynamic'"
+                        >
+                            <mat-label>{{
+                                'HOME.USERS.DETAILS.BIRTH_DATE' | transloco
+                            }}</mat-label>
+                            <mat-icon
+                                matPrefix
+                                class="hidden icon-size-5 sm:flex"
+                                [svgIcon]="'heroicons_solid:calendar-days'"
+                            ></mat-icon>
+                            <input
+                                matInput
+                                [matDatepicker]="birthDatePicker"
+                                [formControlName]="'birthDate'"
+                                [placeholder]="
+                                    'HOME.USERS.DETAILS.PH_BIRTH_DATE' | transloco
+                                "
+                                [spellcheck]="false"
+                            />
+                            <mat-datepicker-toggle
+                                matSuffix
+                                [for]="birthDatePicker"
+                            ></mat-datepicker-toggle>
+                            <mat-datepicker #birthDatePicker></mat-datepicker>
+                        </mat-form-field>
+                    </div>
+
+                    <!-- FFT License Number -->
+                    <div class="mt-8">
+                        <mat-form-field
+                            class="w-full"
+                            [subscriptSizing]="'dynamic'"
+                        >
+                            <mat-label>{{
+                                'HOME.USERS.DETAILS.FFT_LICENSE' | transloco
+                            }}</mat-label>
+                            <mat-icon
+                                matPrefix
+                                class="hidden icon-size-5 sm:flex"
+                                [svgIcon]="'heroicons_solid:identification'"
+                            ></mat-icon>
+                            <input
+                                matInput
+                                [formControlName]="'fftLicenseNumber'"
+                                [placeholder]="
+                                    'HOME.USERS.DETAILS.PH_FFT_LICENSE' | transloco
+                                "
+                                [spellcheck]="false"
+                            />
+                        </mat-form-field>
+                    </div>
+
+                    <!-- Role -->
+                    <div class="mt-8">
+                        <mat-form-field
+                            class="w-full"
+                            [subscriptSizing]="'dynamic'"
+                        >
+                            <mat-label>{{
+                                'HOME.USERS.DETAILS.ROLE' | transloco
+                            }}</mat-label>
+                            <mat-icon
+                                matPrefix
+                                class="hidden icon-size-5 sm:flex"
+                                [svgIcon]="'heroicons_solid:user-group'"
+                            ></mat-icon>
+                            <mat-select [formControlName]="'role'">
+                                @for (role of roles; track role) {
+                                    <mat-option [value]="role">
+                                        {{ 'HOME.USERS.ROLES.' + role.toUpperCase() | transloco }}
+                                    </mat-option>
+                                }
+                            </mat-select>
+                        </mat-form-field>
                     </div>
 
                     <!-- Formula -->
-                    <!-- TBD-->
+                    <div class="mt-8">
+                        <mat-form-field
+                            class="w-full"
+                            [subscriptSizing]="'dynamic'"
+                        >
+                            <mat-label>{{
+                                'HOME.USERS.DETAILS.FORMULA' | transloco
+                            }}</mat-label>
+                            <mat-icon
+                                matPrefix
+                                class="hidden icon-size-5 sm:flex"
+                                [svgIcon]="'heroicons_solid:clock'"
+                            ></mat-icon>
+                            <mat-select [formControlName]="'formula'">
+                                <mat-option [value]="null">
+                                    {{ 'HOME.USERS.DETAILS.NO_FORMULA' | transloco }}
+                                </mat-option>
+                                @for (formula of formulaTypes; track formula) {
+                                    <mat-option [value]="formula">
+                                        {{ 'HOME.USERS.FORMULAS.' + formula | transloco }}
+                                    </mat-option>
+                                }
+                            </mat-select>
+                        </mat-form-field>
+                    </div>
 
-                    <!-- FFT License Number -->
-                    <!-- TBD-->
+                    <!-- Consent Section -->
+                    <div class="mt-8">
+                        <div class="font-medium text-lg mb-4">{{
+                            'HOME.USERS.DETAILS.CONSENTS' | transloco
+                        }}</div>
+                        
+                        <!-- Privacy Consent -->
+                        <div class="mb-4">
+                            <mat-checkbox [formControlName]="'privacyConsent'">
+                                {{ 'HOME.USERS.DETAILS.PRIVACY_CONSENT' | transloco }}
+                            </mat-checkbox>
+                        </div>
+                        
+                        <!-- Photo Consent -->
+                        <div class="mb-4">
+                            <mat-checkbox [formControlName]="'photoConsent'">
+                                {{ 'HOME.USERS.DETAILS.PHOTO_CONSENT' | transloco }}
+                            </mat-checkbox>
+                        </div>
+                        
+                        <!-- Marketing Consent -->
+                        <div class="mb-4">
+                            <mat-checkbox [formControlName]="'marketingConsent'">
+                                {{ 'HOME.USERS.DETAILS.MARKETING_CONSENT' | transloco }}
+                            </mat-checkbox>
+                        </div>
+                    </div>
 
                     <!-- Notifications -->
-                    <!-- TBD-->
+                    <div class="mt-8">
+                        <div class="font-medium text-lg mb-4">{{
+                            'HOME.USERS.DETAILS.NOTIFICATIONS' | transloco
+                        }}</div>
+                        
+                        <!-- Email Notifications -->
+                        <div class="mb-4 flex items-center justify-between">
+                            <span>{{ 'HOME.USERS.DETAILS.NOTIFY_EMAIL' | transloco }}</span>
+                            <mat-slide-toggle [formControlName]="'notifyEmail'">
+                            </mat-slide-toggle>
+                        </div>
+                        
+                        <!-- SMS Notifications -->  
+                        <div class="mb-4 flex items-center justify-between">
+                            <span>{{ 'HOME.USERS.DETAILS.NOTIFY_SMS' | transloco }}</span>
+                            <mat-slide-toggle [formControlName]="'notifySMS'">
+                            </mat-slide-toggle>
+                        </div>
+                        
+                        <!-- WhatsApp Notifications -->
+                        <div class="mb-4 flex items-center justify-between">
+                            <span>{{ 'HOME.USERS.DETAILS.NOTIFY_WHATSAPP' | transloco }}</span>
+                            <mat-slide-toggle [formControlName]="'notifyWhatsApp'">
+                            </mat-slide-toggle>
+                        </div>
+                    </div>
 
                     <!-- Actions -->
                     <div

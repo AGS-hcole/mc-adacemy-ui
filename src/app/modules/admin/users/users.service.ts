@@ -128,7 +128,7 @@ export class UsersService {
             take(1),
             switchMap((users) =>
                 this._httpClient
-                    .put<User>(
+                    .patch<User>(
                         `${this.apiUrl}/users/${id}`,
                         JSON.stringify(user)
                     )

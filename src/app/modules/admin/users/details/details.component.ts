@@ -1,5 +1,6 @@
 import { Overlay, OverlayRef } from '@angular/cdk/overlay';
 import { TextFieldModule } from '@angular/cdk/text-field';
+import { DatePipe } from '@angular/common';
 import {
     ChangeDetectionStrategy,
     ChangeDetectorRef,
@@ -34,7 +35,7 @@ import { MatTooltipModule } from '@angular/material/tooltip';
 import { ActivatedRoute, Router, RouterLink } from '@angular/router';
 import { FuseConfirmationService } from '@fuse/services/confirmation';
 import { TranslocoModule } from '@jsverse/transloco';
-import { User } from 'app/core/user/user.types';
+import { FormulaType, Role, User } from 'app/core/user/user.types';
 import { Subject, takeUntil } from 'rxjs';
 import { UsersListComponent } from '../list/list.component';
 import { UsersService } from '../users.service';
@@ -61,6 +62,7 @@ import { UsersService } from '../users.service';
         TextFieldModule,
         TranslocoModule,
         MatSlideToggleModule,
+        DatePipe,
     ],
 })
 export class UsersDetailsComponent implements OnInit, OnDestroy {
@@ -72,6 +74,8 @@ export class UsersDetailsComponent implements OnInit, OnDestroy {
     user: User;
     userForm: UntypedFormGroup;
     users: User[];
+    roles: Role[] = Object.values(Role);
+    formulaTypes: FormulaType[] = Object.values(FormulaType);
     private _rolesPanelOverlayRef: OverlayRef;
     private _unsubscribeAll: Subject<any> = new Subject<any>();
 
@@ -108,15 +112,23 @@ export class UsersDetailsComponent implements OnInit, OnDestroy {
 
         // Create the user form
         this.userForm = this._formBuilder.group({
-            id: [''],
+            id: [{ value: '', disabled: true }],
             background: [null],
             avatar: [null],
             firstname: ['', Validators.required],
             lastname: ['', Validators.required],
             email: ['', [Validators.required, Validators.email]],
-            languageId: [1],
-            allowLogin: [true],
-            role: [null],
+            phone: [''],
+            birthDate: [null],
+            fftLicenseNumber: [''],
+            role: [Role.user, Validators.required],
+            formula: [null],
+            privacyConsent: [false],
+            photoConsent: [false],
+            marketingConsent: [false],
+            notifyEmail: [true],
+            notifySMS: [false],
+            notifyWhatsApp: [false],
         });
 
         // Get the users
@@ -140,8 +152,14 @@ export class UsersDetailsComponent implements OnInit, OnDestroy {
                     // Get the user
                     this.user = user;
 
-                    // Patch values to the form
-                    this.userForm.patchValue(user);
+                    // Patch values to the form with proper mapping for consent fields
+                    const formData = {
+                        ...user,
+                        privacyConsent: !!user.privacyConsentAt,
+                        photoConsent: !!user.photoConsentAt,
+                        marketingConsent: !!user.marketingConsentAt,
+                    };
+                    this.userForm.patchValue(formData);
 
                     // Toggle the edit mode off
                     this.toggleEditMode(false);
@@ -203,13 +221,24 @@ export class UsersDetailsComponent implements OnInit, OnDestroy {
         const user = this.userForm.getRawValue();
 
         const userRequest = {
-            id: user.id,
             firstname: user.firstname,
             lastname: user.lastname,
             email: user.email,
-            languageId: user.languageId,
-            isEditByUser: false,
-            isLoginAllowed: user.allowLogin,
+            phone: user.phone || null,
+            birthDate: user.birthDate || null,
+            fftLicenseNumber: user.fftLicenseNumber || null,
+            role: user.role,
+            formula: user.formula || null,
+            privacyConsentAt: user.privacyConsent
+                ? new Date().toISOString()
+                : null,
+            photoConsentAt: user.photoConsent ? new Date().toISOString() : null,
+            marketingConsentAt: user.marketingConsent
+                ? new Date().toISOString()
+                : null,
+            notifyEmail: user.notifyEmail,
+            notifySMS: user.notifySMS,
+            notifyWhatsApp: user.notifyWhatsApp,
         };
 
         // Update the user on the server
@@ -230,10 +259,22 @@ export class UsersDetailsComponent implements OnInit, OnDestroy {
             firstname: user.firstname,
             lastname: user.lastname,
             email: user.email,
-            password: null,
-            twoFactorEnabled: false,
-            entity: null,
-            isLoginAllowed: user.allowLogin,
+            phone: user.phone || null,
+            birthDate: user.birthDate || null,
+            fftLicenseNumber: user.fftLicenseNumber || null,
+            role: user.role,
+            formula: user.formula || null,
+            password: null, // Password will be handled separately by the backend
+            privacyConsentAt: user.privacyConsent
+                ? new Date().toISOString()
+                : null,
+            photoConsentAt: user.photoConsent ? new Date().toISOString() : null,
+            marketingConsentAt: user.marketingConsent
+                ? new Date().toISOString()
+                : null,
+            notifyEmail: user.notifyEmail,
+            notifySMS: user.notifySMS,
+            notifyWhatsApp: user.notifyWhatsApp,
         };
 
         // Create the user on the server
