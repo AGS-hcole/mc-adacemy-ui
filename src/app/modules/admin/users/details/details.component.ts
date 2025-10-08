@@ -112,7 +112,7 @@ export class UsersDetailsComponent implements OnInit, OnDestroy {
 
         // Create the user form
         this.userForm = this._formBuilder.group({
-            id: [''],
+            id: [{ value: '', disabled: true }],
             background: [null],
             avatar: [null],
             firstname: ['', Validators.required],
@@ -221,7 +221,6 @@ export class UsersDetailsComponent implements OnInit, OnDestroy {
         const user = this.userForm.getRawValue();
 
         const userRequest = {
-            id: user.id,
             firstname: user.firstname,
             lastname: user.lastname,
             email: user.email,
