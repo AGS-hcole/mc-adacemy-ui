@@ -45,6 +45,13 @@ export const adminNavigation: FuseNavigationItem[] = [
                 icon: 'heroicons_outline:calendar',
                 link: '/admin/sessions',
             },
+            {
+                id: 'sites',
+                title: 'NAVIGATION.ADMIN.SITES.TITLE',
+                type: 'basic',
+                icon: 'heroicons_outline:map-pin',
+                link: '/admin/sites',
+            },
         ],
     },
 ];

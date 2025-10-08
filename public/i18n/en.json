@@ -154,6 +154,9 @@
             },
             "SESSIONS": {
                 "TITLE": "Training Sessions"
+            },
+            "SITES": {
+                "TITLE": "Sites"
             }
         },
         "USER": {
@@ -243,6 +246,38 @@
             "ACTIONS": {
                 "REGISTER": "Register",
                 "REGISTERED": "Registered"
+            }
+        }
+    },
+    "SITES": {
+        "ADMIN": {
+            "TITLE": "Training Sites",
+            "CREATE_SITE": "Create Site",
+            "EDIT_SITE": "Edit Site",
+            "NO_SITES": "No sites found",
+            "NO_SITES_DESCRIPTION": "Create a new site to get started",
+            "SEARCH": "Search for a site",
+            "TABLE": {
+                "NAME": "Name",
+                "CITY": "City",
+                "ADDRESS": "Address",
+                "ACTIONS": "Actions"
+            },
+            "ACTIONS": {
+                "EDIT": "Edit",
+                "DELETE": "Delete"
+            },
+            "FORM": {
+                "NAME": "Site Name",
+                "NAME_REQUIRED": "Name is required",
+                "NAME_HINT": "Training site name",
+                "CITY": "City",
+                "CITY_HINT": "City where the site is located",
+                "ADDRESS": "Address",
+                "ADDRESS_HINT": "Full address of the site",
+                "CANCEL": "Cancel",
+                "SAVE": "Save",
+                "CREATE": "Create"
             }
         }
     }

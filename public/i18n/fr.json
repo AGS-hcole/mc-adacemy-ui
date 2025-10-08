@@ -77,6 +77,9 @@
             },
             "SESSIONS": {
                 "TITLE": "Sessions d'entraînement"
+            },
+            "SITES": {
+                "TITLE": "Sites"
             }
         },
         "USER": {
@@ -204,6 +207,38 @@
             "ACTIONS": {
                 "REGISTER": "S'inscrire",
                 "REGISTERED": "Inscrit"
+            }
+        }
+    },
+    "SITES": {
+        "ADMIN": {
+            "TITLE": "Sites d'entraînement",
+            "CREATE_SITE": "Créer un site",
+            "EDIT_SITE": "Modifier le site",
+            "NO_SITES": "Aucun site trouvé",
+            "NO_SITES_DESCRIPTION": "Créez un nouveau site pour commencer",
+            "SEARCH": "Rechercher un site",
+            "TABLE": {
+                "NAME": "Nom",
+                "CITY": "Ville",
+                "ADDRESS": "Adresse",
+                "ACTIONS": "Actions"
+            },
+            "ACTIONS": {
+                "EDIT": "Modifier",
+                "DELETE": "Supprimer"
+            },
+            "FORM": {
+                "NAME": "Nom du site",
+                "NAME_REQUIRED": "Le nom est requis",
+                "NAME_HINT": "Nom du site d'entraînement",
+                "CITY": "Ville",
+                "CITY_HINT": "Ville où se trouve le site",
+                "ADDRESS": "Adresse",
+                "ADDRESS_HINT": "Adresse complète du site",
+                "CANCEL": "Annuler",
+                "SAVE": "Enregistrer",
+                "CREATE": "Créer"
             }
         }
     }

@@ -22,4 +22,8 @@ export default [
         path: 'sessions',
         loadChildren: () => import('app/modules/admin/sessions/sessions.routes'),
     },
+    {
+        path: 'sites',
+        loadChildren: () => import('app/modules/admin/sites/sites.routes'),
+    },
 ] as Routes;

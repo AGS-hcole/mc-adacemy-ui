@@ -1,0 +1,75 @@
+<div class="absolute inset-0 flex flex-col min-w-0 overflow-hidden">
+    <!-- Header -->
+    <div
+        class="relative flex flex-col sm:flex-row flex-0 sm:items-center sm:justify-between py-8 px-6 md:px-8 border-b bg-card dark:bg-transparent">
+        <!-- Title -->
+        <div>
+            <div class="flex items-center">
+                <button
+                    mat-icon-button
+                    [routerLink]="['../']">
+                    <mat-icon [svgIcon]="'heroicons_outline:arrow-left'"></mat-icon>
+                </button>
+                <div class="text-4xl font-extrabold tracking-tight ml-2">
+                    {{ (editMode ? 'SITES.ADMIN.EDIT_SITE' : 'SITES.ADMIN.CREATE_SITE') | transloco }}
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Main content -->
+    <div class="flex flex-auto overflow-y-auto">
+        <div class="flex flex-col w-full max-w-3xl mx-auto p-6 md:p-8">
+            <form [formGroup]="siteForm" class="flex flex-col">
+                <!-- Name -->
+                <mat-form-field class="w-full">
+                    <mat-label>{{ 'SITES.ADMIN.FORM.NAME' | transloco }}</mat-label>
+                    <input
+                        matInput
+                        formControlName="name">
+                    <mat-error *ngIf="siteForm.get('name').hasError('required')">
+                        {{ 'SITES.ADMIN.FORM.NAME_REQUIRED' | transloco }}
+                    </mat-error>
+                    <mat-hint>{{ 'SITES.ADMIN.FORM.NAME_HINT' | transloco }}</mat-hint>
+                </mat-form-field>
+
+                <!-- City -->
+                <mat-form-field class="w-full mt-4">
+                    <mat-label>{{ 'SITES.ADMIN.FORM.CITY' | transloco }}</mat-label>
+                    <input
+                        matInput
+                        formControlName="city">
+                    <mat-hint>{{ 'SITES.ADMIN.FORM.CITY_HINT' | transloco }}</mat-hint>
+                </mat-form-field>
+
+                <!-- Address -->
+                <mat-form-field class="w-full mt-4">
+                    <mat-label>{{ 'SITES.ADMIN.FORM.ADDRESS' | transloco }}</mat-label>
+                    <textarea
+                        matInput
+                        formControlName="address"
+                        rows="3">
+                    </textarea>
+                    <mat-hint>{{ 'SITES.ADMIN.FORM.ADDRESS_HINT' | transloco }}</mat-hint>
+                </mat-form-field>
+
+                <!-- Actions -->
+                <div class="flex items-center justify-end gap-4 mt-8 pt-6 border-t">
+                    <button
+                        mat-button
+                        type="button"
+                        (click)="cancel()">
+                        {{ 'SITES.ADMIN.FORM.CANCEL' | transloco }}
+                    </button>
+                    <button
+                        mat-flat-button
+                        [color]="'primary'"
+                        [disabled]="siteForm.invalid"
+                        (click)="saveSite()">
+                        {{ (editMode ? 'SITES.ADMIN.FORM.SAVE' : 'SITES.ADMIN.FORM.CREATE') | transloco }}
+                    </button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
