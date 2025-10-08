@@ -20,7 +20,7 @@ This feature provides a complete training sessions management system for MC Acad
   - Publish/Unpublish sessions
   - Cancel sessions
   - Delete sessions
-  - View and manage attendees (future enhancement)
+  - View and manage attendees
 
 ### User Interface (`/user/sessions`)
 
@@ -65,6 +65,7 @@ This feature provides a complete training sessions management system for MC Acad
   - `updateSession(id, request)`: Update existing session
   - `deleteSession(id)`: Delete session
   - `adminRegisterUser(request)`: Admin override registration
+  - `adminRemoveAttendee(sessionId, attendanceId)`: Admin remove participant
   - `getSites()`: List available sites
 
 - **rsvp.service.ts**: User registration operations
@@ -78,6 +79,7 @@ This feature provides a complete training sessions management system for MC Acad
 
 - **list/**: Session list with filters and actions
 - **details/**: Create/edit session form with validations
+- **attendees/**: Dialog for managing session participants
 - **sessions.routes.ts**: Routing configuration
 
 #### User Module (`src/app/modules/user/sessions/`)
@@ -141,6 +143,7 @@ The feature expects the following REST endpoints:
 - `POST /api/sessions/:id/rsvp` - User registration
 - `DELETE /api/sessions/:id/rsvp` - Cancel user registration
 - `POST /api/sessions/:id/admin-register` - Admin override registration
+- `DELETE /api/sessions/:id/attendances/:attendanceId` - Admin remove participant
 
 ### Sites
 - `GET /api/sites` - List available sites
@@ -167,11 +170,10 @@ Key namespaces:
 
 ## Future Enhancements
 
-1. **Attendees Management**:
-   - Drawer to view session attendees
-   - Admin form to manually add users
-   - Remove attendees
-   - Export attendee lists
+1. **Enhanced Attendees Management**:
+   - Export attendee lists (CSV/Excel)
+   - Bulk import of attendees
+   - Send notifications to attendees
 
 2. **Bulk Operations**:
    - Publish/unpublish multiple sessions
