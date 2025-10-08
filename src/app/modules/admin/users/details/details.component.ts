@@ -1,5 +1,6 @@
 import { Overlay, OverlayRef } from '@angular/cdk/overlay';
 import { TextFieldModule } from '@angular/cdk/text-field';
+import { DatePipe } from '@angular/common';
 import {
     ChangeDetectionStrategy,
     ChangeDetectorRef,
@@ -61,6 +62,7 @@ import { UsersService } from '../users.service';
         TextFieldModule,
         TranslocoModule,
         MatSlideToggleModule,
+        DatePipe,
     ],
 })
 export class UsersDetailsComponent implements OnInit, OnDestroy {

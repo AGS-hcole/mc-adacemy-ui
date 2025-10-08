@@ -33,6 +33,61 @@
         },
         "DASHBOARD": {
             "TITLE": "Dashboard"
+        },
+        "USERS": {
+            "TITLE": "Users",
+            "SEARCH": "Search a user",
+            "ADD": "Add",
+            "NO_USERS": "No users found",
+            "USER": "User",
+            "USERS": "Users",
+            "DETAILS": {
+                "ROLES": "Roles",
+                "ROLE": "Role",
+                "PH_EMAIL": "Email address",
+                "EMAIL": "Email address",
+                "PH_FIRSTNAME": "First name",
+                "FIRSTNAME": "First name",
+                "PH_LASTNAME": "Last name",
+                "LASTNAME": "Last name",
+                "PH_PHONE": "Phone number",
+                "PHONE": "Phone",
+                "PH_BIRTH_DATE": "Birth date",
+                "BIRTH_DATE": "Birth date",
+                "PH_FFT_LICENSE": "FFT license number",
+                "FFT_LICENSE": "FFT License",
+                "FORMULA": "Formula",
+                "NO_FORMULA": "No formula",
+                "CONSENTS": "Consents (GDPR)",
+                "PRIVACY_CONSENT": "Privacy policy and terms of use consent",
+                "PHOTO_CONSENT": "Photo usage consent",
+                "MARKETING_CONSENT": "Marketing and communications consent",
+                "NOTIFICATIONS": "Notification Preferences",
+                "NOTIFY_EMAIL": "Email notifications",
+                "NOTIFY_SMS": "SMS notifications",
+                "NOTIFY_WHATSAPP": "WhatsApp notifications",
+                "COMMUNICATION_PLAN": "Communication plan",
+                "PH_COMMUNICATION_PLAN": "Select a communication plan",
+                "ALLOW_LOGIN": "Allow login"
+            },
+            "ROLES": {
+                "ADD": "Add",
+                "EDIT": "Edit",
+                "USER": "User",
+                "ADMIN": "Administrator"
+            },
+            "FORMULAS": {
+                "MORNING": "Morning",
+                "AFTERNOON": "Afternoon",
+                "FULL": "Full day"
+            },
+            "ACTIONS": {
+                "DELETE": "Delete",
+                "CANCEL": "Cancel",
+                "SAVE": "Save",
+                "ADD": "Add",
+                "EDIT": "Edit"
+            }
         }
     },
     "INTERNAL": {

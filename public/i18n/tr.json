@@ -1,5 +1,62 @@
 {
     "welcome-back": "Hoşgeldin",
     "Project": "Proje",
-    "Analytics": "Analitik"
+    "Analytics": "Analitik",
+    "HOME": {
+        "USERS": {
+            "TITLE": "Kullanıcılar",
+            "SEARCH": "Kullanıcı ara",
+            "ADD": "Ekle",
+            "NO_USERS": "Kullanıcı bulunamadı",
+            "USER": "Kullanıcı",
+            "USERS": "Kullanıcılar",
+            "DETAILS": {
+                "ROLES": "Roller",
+                "ROLE": "Rol",
+                "PH_EMAIL": "E-posta adresi",
+                "EMAIL": "E-posta adresi",
+                "PH_FIRSTNAME": "Ad",
+                "FIRSTNAME": "Ad",
+                "PH_LASTNAME": "Soyad",
+                "LASTNAME": "Soyad",
+                "PH_PHONE": "Telefon numarası",
+                "PHONE": "Telefon",
+                "PH_BIRTH_DATE": "Doğum tarihi",
+                "BIRTH_DATE": "Doğum tarihi",
+                "PH_FFT_LICENSE": "FFT lisans numarası",
+                "FFT_LICENSE": "FFT Lisansı",
+                "FORMULA": "Formül",
+                "NO_FORMULA": "Formül yok",
+                "CONSENTS": "Onaylar (GDPR)",
+                "PRIVACY_CONSENT": "Gizlilik politikası ve kullanım şartları onayı",
+                "PHOTO_CONSENT": "Fotoğraf kullanım onayı",
+                "MARKETING_CONSENT": "Pazarlama ve iletişim onayı",
+                "NOTIFICATIONS": "Bildirim Tercihleri",
+                "NOTIFY_EMAIL": "E-posta bildirimleri",
+                "NOTIFY_SMS": "SMS bildirimleri",
+                "NOTIFY_WHATSAPP": "WhatsApp bildirimleri",
+                "COMMUNICATION_PLAN": "İletişim planı",
+                "PH_COMMUNICATION_PLAN": "Bir iletişim planı seçin",
+                "ALLOW_LOGIN": "Girişe izin ver"
+            },
+            "ROLES": {
+                "ADD": "Ekle",
+                "EDIT": "Düzenle",
+                "USER": "Kullanıcı",
+                "ADMIN": "Yönetici"
+            },
+            "FORMULAS": {
+                "MORNING": "Sabah",
+                "AFTERNOON": "Öğleden sonra",
+                "FULL": "Tam gün"
+            },
+            "ACTIONS": {
+                "DELETE": "Sil",
+                "CANCEL": "İptal",
+                "SAVE": "Kaydet",
+                "ADD": "Ekle",
+                "EDIT": "Düzenle"
+            }
+        }
+    }
 }
