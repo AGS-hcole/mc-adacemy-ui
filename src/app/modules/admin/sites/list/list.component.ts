@@ -1,4 +1,4 @@
-import { AsyncPipe } from '@angular/common';
+import { AsyncPipe, NgForOf, NgIf } from '@angular/common';
 import {
     ChangeDetectionStrategy,
     ChangeDetectorRef,
@@ -37,16 +37,18 @@ import { Observable, Subject, debounceTime, takeUntil } from 'rxjs';
         MatFormFieldModule,
         MatIconModule,
         MatInputModule,
+        NgIf,
+        NgForOf,
         MatTooltipModule,
         TranslocoModule,
     ],
 })
 export class AdminSitesListComponent implements OnInit, OnDestroy {
     sites$: Observable<Site[]>;
-    
+
     searchInputControl: UntypedFormControl = new UntypedFormControl();
     filteredSites: Site[] = [];
-    
+
     private _unsubscribeAll: Subject<any> = new Subject<any>();
 
     /**
@@ -70,16 +72,13 @@ export class AdminSitesListComponent implements OnInit, OnDestroy {
     ngOnInit(): void {
         // Get sites
         this.sites$ = this._sitesService.sites$;
-        
+
         // Load initial data
         this._sitesService.getSites().subscribe();
 
         // Subscribe to search input
         this.searchInputControl.valueChanges
-            .pipe(
-                takeUntil(this._unsubscribeAll),
-                debounceTime(300)
-            )
+            .pipe(takeUntil(this._unsubscribeAll), debounceTime(300))
             .subscribe(() => {
                 this._changeDetectorRef.markForCheck();
             });
@@ -102,15 +101,16 @@ export class AdminSitesListComponent implements OnInit, OnDestroy {
      */
     filterSites(sites: Site[]): Site[] {
         const searchTerm = this.searchInputControl.value?.toLowerCase() || '';
-        
+
         if (!searchTerm) {
             return sites;
         }
 
-        return sites.filter(site => 
-            site.name.toLowerCase().includes(searchTerm) ||
-            site.address?.toLowerCase().includes(searchTerm) ||
-            site.city?.toLowerCase().includes(searchTerm)
+        return sites.filter(
+            (site) =>
+                site.name.toLowerCase().includes(searchTerm) ||
+                site.address?.toLowerCase().includes(searchTerm) ||
+                site.city?.toLowerCase().includes(searchTerm)
         );
     }
 

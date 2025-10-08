@@ -1,4 +1,4 @@
-import { AsyncPipe, DatePipe, NgClass } from '@angular/common';
+import { AsyncPipe, DatePipe, NgClass, NgForOf, NgIf } from '@angular/common';
 import {
     ChangeDetectionStrategy,
     ChangeDetectorRef,
@@ -30,7 +30,7 @@ import {
     Site,
 } from 'app/core/session/session.types';
 import { SessionsService } from 'app/core/session/sessions.service';
-import { Observable, Subject, debounceTime, map, switchMap, takeUntil } from 'rxjs';
+import { Observable, Subject, debounceTime, takeUntil } from 'rxjs';
 
 @Component({
     selector: 'admin-sessions-list',
@@ -44,6 +44,8 @@ import { Observable, Subject, debounceTime, map, switchMap, takeUntil } from 'rx
         FormsModule,
         ReactiveFormsModule,
         MatButtonModule,
+        NgIf,
+        NgForOf,
         MatFormFieldModule,
         MatIconModule,
         MatInputModule,
@@ -56,14 +58,14 @@ import { Observable, Subject, debounceTime, map, switchMap, takeUntil } from 'rx
 export class AdminSessionsListComponent implements OnInit, OnDestroy {
     sessions$: Observable<Session[]>;
     sites$: Observable<Site[]>;
-    
+
     searchInputControl: UntypedFormControl = new UntypedFormControl();
     selectedSite: string | null = null;
     selectedSlot: SessionSlot | null = null;
     selectedPublished: boolean | null = null;
-    
+
     SessionSlot = SessionSlot;
-    
+
     private _unsubscribeAll: Subject<any> = new Subject<any>();
 
     /**
@@ -88,20 +90,17 @@ export class AdminSessionsListComponent implements OnInit, OnDestroy {
     ngOnInit(): void {
         // Get sessions
         this.sessions$ = this._sessionsService.sessions$;
-        
+
         // Get sites
         this.sites$ = this._sessionsService.sites$;
-        
+
         // Load initial data
         this._sessionsService.getSites().subscribe();
         this.loadSessions();
 
         // Subscribe to search input
         this.searchInputControl.valueChanges
-            .pipe(
-                takeUntil(this._unsubscribeAll),
-                debounceTime(300)
-            )
+            .pipe(takeUntil(this._unsubscribeAll), debounceTime(300))
             .subscribe(() => {
                 this.loadSessions();
             });
@@ -128,7 +127,7 @@ export class AdminSessionsListComponent implements OnInit, OnDestroy {
             slot: this.selectedSlot,
             isPublished: this.selectedPublished,
         };
-        
+
         this._sessionsService.getSessions(filters).subscribe();
     }
 
@@ -171,9 +170,11 @@ export class AdminSessionsListComponent implements OnInit, OnDestroy {
 
         confirmation.afterClosed().subscribe((result) => {
             if (result === 'confirmed') {
-                this._sessionsService.deleteSession(session.id).subscribe(() => {
-                    this._changeDetectorRef.markForCheck();
-                });
+                this._sessionsService
+                    .deleteSession(session.id)
+                    .subscribe(() => {
+                        this._changeDetectorRef.markForCheck();
+                    });
             }
         });
     }
@@ -222,8 +223,12 @@ export class AdminSessionsListComponent implements OnInit, OnDestroy {
      * Get display time for session
      */
     getDisplayTime(session: Session): string {
-        const start = session.startTime || (session.slot === SessionSlot.AM ? '09:00' : '14:00');
-        const end = session.endTime || (session.slot === SessionSlot.AM ? '12:00' : '17:00');
+        const start =
+            session.startTime ||
+            (session.slot === SessionSlot.AM ? '09:00' : '14:00');
+        const end =
+            session.endTime ||
+            (session.slot === SessionSlot.AM ? '12:00' : '17:00');
         return `${start} - ${end}`;
     }
 
