@@ -32,6 +32,7 @@ import {
     UpdateSessionRequest,
 } from 'app/core/session/session.types';
 import { SessionsService } from 'app/core/session/sessions.service';
+import { SitesService } from 'app/core/sites/sites.service';
 import { Observable, Subject, takeUntil } from 'rxjs';
 
 @Component({
@@ -72,7 +73,8 @@ export class AdminSessionDetailsComponent implements OnInit, OnDestroy {
         private _changeDetectorRef: ChangeDetectorRef,
         private _formBuilder: UntypedFormBuilder,
         private _router: Router,
-        private _sessionsService: SessionsService
+        private _sessionsService: SessionsService,
+        private _sitesService: SitesService
     ) {}
 
     // -----------------------------------------------------------------------------------------------------
@@ -83,9 +85,9 @@ export class AdminSessionDetailsComponent implements OnInit, OnDestroy {
      * On init
      */
     ngOnInit(): void {
-        // Get sites
-        this.sites$ = this._sessionsService.sites$;
-        this._sessionsService.getSites().subscribe();
+        // Get sites from SitesService (automatically loads available sites)
+        this.sites$ = this._sitesService.sites$;
+        this._sitesService.getSites().subscribe();
 
         // Create the form
         this.sessionForm = this._formBuilder.group({
