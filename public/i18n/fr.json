@@ -170,6 +170,12 @@
             "CREATE_SESSION": "Créer une session",
             "EDIT_SESSION": "Modifier la session",
             "NO_SESSIONS": "Aucune session trouvée",
+            "VIEW": {
+                "TABS": {
+                    "INFO": "Informations",
+                    "PARTICIPANTS": "Participants"
+                }
+            },
             "FILTERS": {
                 "SITE": "Site",
                 "ALL_SITES": "Tous les sites",

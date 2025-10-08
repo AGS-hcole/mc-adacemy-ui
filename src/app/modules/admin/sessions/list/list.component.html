@@ -73,8 +73,9 @@
                         <!-- Rows -->
                         <ng-container *ngFor="let session of sessions; trackBy: trackByFn">
                             <div
-                                class="grid items-center gap-4 py-3 px-6 md:px-8 border-b"
-                                style="grid-template-columns: 48px auto 100px 120px 120px 120px 100px 200px;">
+                                class="grid items-center gap-4 py-3 px-6 md:px-8 border-b cursor-pointer hover:bg-gray-50 dark:hover:bg-gray-900"
+                                style="grid-template-columns: 48px auto 100px 120px 120px 120px 100px 200px;"
+                                (click)="editSession(session.id)">
                                 <!-- Icon -->
                                 <div>
                                     <mat-icon
@@ -112,19 +113,14 @@
                                 </div>
 
                                 <!-- Participants -->
-                                <div>
-                                    <button
-                                        mat-button
-                                        class="min-w-0 px-2"
-                                        (click)="manageAttendees(session)">
-                                        <mat-icon
-                                            class="icon-size-4 mr-1"
-                                            [svgIcon]="'heroicons_outline:user-group'">
-                                        </mat-icon>
-                                        <span class="text-sm">
-                                            {{ session.currentAttendees || 0 }}<ng-container *ngIf="session.maxAttendees"> / {{ session.maxAttendees }}</ng-container>
-                                        </span>
-                                    </button>
+                                <div class="flex items-center gap-1 text-sm">
+                                    <mat-icon
+                                        class="icon-size-4"
+                                        [svgIcon]="'heroicons_outline:user-group'">
+                                    </mat-icon>
+                                    <span>
+                                        {{ session.currentAttendees || 0 }}<ng-container *ngIf="session.maxAttendees"> / {{ session.maxAttendees }}</ng-container>
+                                    </span>
                                 </div>
 
                                 <!-- Status -->
@@ -146,7 +142,7 @@
                                 </div>
 
                                 <!-- Actions -->
-                                <div class="flex items-center justify-end gap-2">
+                                <div class="flex items-center justify-end gap-2" (click)="$event.stopPropagation()">
                                     <button
                                         mat-icon-button
                                         [matTooltip]="'SESSIONS.ADMIN.ACTIONS.EDIT' | transloco"

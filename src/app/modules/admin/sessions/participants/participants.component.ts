@@ -1,9 +1,8 @@
-import { AsyncPipe, DatePipe, NgForOf, NgIf } from '@angular/common';
+import { AsyncPipe, NgForOf, NgIf } from '@angular/common';
 import {
     ChangeDetectionStrategy,
     ChangeDetectorRef,
     Component,
-    Inject,
     OnDestroy,
     OnInit,
     ViewEncapsulation,
@@ -11,11 +10,6 @@ import {
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { MatButtonModule } from '@angular/material/button';
 import { MatOptionModule } from '@angular/material/core';
-import {
-    MAT_DIALOG_DATA,
-    MatDialogModule,
-    MatDialogRef,
-} from '@angular/material/dialog';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatIconModule } from '@angular/material/icon';
 import { MatSelectModule } from '@angular/material/select';
@@ -29,19 +23,17 @@ import { UsersService } from 'app/modules/admin/users/users.service';
 import { Observable, Subject, takeUntil } from 'rxjs';
 
 @Component({
-    selector: 'session-attendees',
-    templateUrl: './attendees.component.html',
+    selector: 'session-participants',
+    templateUrl: './participants.component.html',
     encapsulation: ViewEncapsulation.None,
     changeDetection: ChangeDetectionStrategy.OnPush,
     imports: [
         AsyncPipe,
-        DatePipe,
         NgIf,
         NgForOf,
         FormsModule,
         ReactiveFormsModule,
         MatButtonModule,
-        MatDialogModule,
         MatFormFieldModule,
         MatIconModule,
         MatSelectModule,
@@ -50,7 +42,7 @@ import { Observable, Subject, takeUntil } from 'rxjs';
         TranslocoModule,
     ],
 })
-export class SessionAttendeesComponent implements OnInit, OnDestroy {
+export class SessionParticipantsComponent implements OnInit, OnDestroy {
     session: Session;
     users$: Observable<User[]>;
     selectedUserId: string | null = null;
@@ -61,15 +53,11 @@ export class SessionAttendeesComponent implements OnInit, OnDestroy {
      * Constructor
      */
     constructor(
-        @Inject(MAT_DIALOG_DATA) public data: { session: Session },
-        private _dialogRef: MatDialogRef<SessionAttendeesComponent>,
         private _sessionsService: SessionsService,
         private _usersService: UsersService,
         private _changeDetectorRef: ChangeDetectorRef,
         private _fuseConfirmationService: FuseConfirmationService
-    ) {
-        this.session = data.session;
-    }
+    ) {}
 
     // -----------------------------------------------------------------------------------------------------
     // @ Lifecycle hooks
@@ -79,6 +67,14 @@ export class SessionAttendeesComponent implements OnInit, OnDestroy {
      * On init
      */
     ngOnInit(): void {
+        // Get the session
+        this._sessionsService.session$
+            .pipe(takeUntil(this._unsubscribeAll))
+            .subscribe((session: Session) => {
+                this.session = session;
+                this._changeDetectorRef.markForCheck();
+            });
+
         // Get users
         this.users$ = this._usersService.users$;
 
@@ -97,13 +93,6 @@ export class SessionAttendeesComponent implements OnInit, OnDestroy {
     // -----------------------------------------------------------------------------------------------------
     // @ Public methods
     // -----------------------------------------------------------------------------------------------------
-
-    /**
-     * Close dialog
-     */
-    close(): void {
-        this._dialogRef.close();
-    }
 
     /**
      * Add participant

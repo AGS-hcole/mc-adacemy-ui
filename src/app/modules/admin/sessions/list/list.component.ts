@@ -31,7 +31,6 @@ import {
 } from 'app/core/session/session.types';
 import { SessionsService } from 'app/core/session/sessions.service';
 import { Observable, Subject, debounceTime, takeUntil } from 'rxjs';
-import { SessionAttendeesComponent } from '../attendees/attendees.component';
 
 @Component({
     selector: 'admin-sessions-list',
@@ -231,22 +230,6 @@ export class AdminSessionsListComponent implements OnInit, OnDestroy {
             session.endTime ||
             (session.slot === SessionSlot.AM ? '12:00' : '17:00');
         return `${start} - ${end}`;
-    }
-
-    /**
-     * Manage attendees
-     */
-    manageAttendees(session: Session): void {
-        const dialogRef = this._matDialog.open(SessionAttendeesComponent, {
-            width: '600px',
-            maxHeight: '90vh',
-            data: { session },
-        });
-
-        dialogRef.afterClosed().subscribe(() => {
-            // Reload sessions to get updated attendee count
-            this.loadSessions();
-        });
     }
 
     /**

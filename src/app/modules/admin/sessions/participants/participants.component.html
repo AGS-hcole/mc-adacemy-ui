@@ -1,0 +1,83 @@
+<div class="flex flex-col w-full p-6 md:p-8">
+    <!-- Add participant section -->
+    <div class="mb-6">
+        <h3 class="text-lg font-medium mb-3">
+            {{ 'SESSIONS.ADMIN.ATTENDEES.ADD_PARTICIPANT' | transloco }}
+        </h3>
+        <div class="flex gap-2">
+            <mat-form-field class="flex-auto">
+                <mat-label>{{ 'SESSIONS.ADMIN.ATTENDEES.SELECT_USER' | transloco }}</mat-label>
+                <mat-select [(ngModel)]="selectedUserId">
+                    <mat-option
+                        *ngFor="let user of getAvailableUsers(users$ | async)"
+                        [value]="user.id">
+                        {{ user.firstname }} {{ user.lastname }} ({{ user.email }})
+                    </mat-option>
+                </mat-select>
+            </mat-form-field>
+            <button
+                mat-flat-button
+                [color]="'primary'"
+                [disabled]="!selectedUserId"
+                (click)="addParticipant()">
+                <mat-icon [svgIcon]="'heroicons_outline:plus'"></mat-icon>
+                <span class="ml-2">{{ 'SESSIONS.ADMIN.ATTENDEES.ADD' | transloco }}</span>
+            </button>
+        </div>
+    </div>
+
+    <!-- Participants list -->
+    <div>
+        <h3 class="text-lg font-medium mb-3">
+            {{ 'SESSIONS.ADMIN.ATTENDEES.PARTICIPANTS_LIST' | transloco }}
+            <span class="ml-2 text-secondary text-sm" *ngIf="session">
+                ({{ session.currentAttendees || 0 }}<ng-container *ngIf="session.maxAttendees"> / {{ session.maxAttendees }}</ng-container>)
+            </span>
+        </h3>
+
+        <ng-container *ngIf="session && session.attendances && session.attendances.length > 0; else noAttendees">
+            <div class="space-y-2">
+                <div
+                    *ngFor="let attendance of session.attendances"
+                    class="flex items-center justify-between p-3 bg-gray-50 dark:bg-gray-900 rounded-lg">
+                    <div class="flex items-center gap-3">
+                        <mat-icon
+                            class="icon-size-5 text-secondary"
+                            [svgIcon]="'heroicons_outline:user'">
+                        </mat-icon>
+                        <div>
+                            <div class="font-medium">
+                                {{ attendance.user?.firstname || '' }} {{ attendance.user?.lastname || '' }}
+                            </div>
+                            <div class="text-sm text-secondary">
+                                {{ attendance.user?.email || '' }}
+                            </div>
+                        </div>
+                    </div>
+                    <div class="flex items-center gap-2">
+                        <span
+                            *ngIf="attendance.createdByAdmin"
+                            class="text-xs px-2 py-1 rounded bg-blue-100 text-blue-800 dark:bg-blue-900 dark:text-blue-200">
+                            {{ 'SESSIONS.ADMIN.ATTENDEES.ADMIN_REGISTERED' | transloco }}
+                        </span>
+                        <button
+                            mat-icon-button
+                            [matTooltip]="'SESSIONS.ADMIN.ATTENDEES.REMOVE' | transloco"
+                            (click)="removeParticipant(attendance.id)">
+                            <mat-icon
+                                class="icon-size-5"
+                                [svgIcon]="'heroicons_outline:trash'">
+                            </mat-icon>
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </ng-container>
+
+        <ng-template #noAttendees>
+            <div class="text-center py-8 text-secondary">
+                {{ 'SESSIONS.ADMIN.ATTENDEES.NO_PARTICIPANTS' | transloco }}
+            </div>
+        </ng-template>
+    </div>
+</div>
