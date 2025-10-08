@@ -49,12 +49,12 @@ export interface Session {
     // Metadata
     notes?: string | null;
     isPublished: boolean;
-    isCancelled: boolean;
+    isCanceled: boolean;
 
     // Attendees tracking
     maxAttendees?: number | null;
     currentAttendees?: number;
-    attendees?: SessionAttendee[];
+    attendances?: SessionAttendee[];
 
     // Timestamps
     createdAt: Date | string;
@@ -80,7 +80,7 @@ export interface SessionAttendee {
     // RSVP metadata
     createdByAdmin: boolean; // True if registered via admin override
     outOfContract: boolean; // True if user's formula doesn't match the session slot
-    rsvpAt: Date | string;
+    respondedAt: Date | string;
 
     // Optional cancellation
     cancelledAt?: Date | string | null;
@@ -96,7 +96,7 @@ export interface SessionFilters {
     endDate?: string | null; // ISO date string
     slot?: SessionSlot | null;
     isPublished?: boolean | null;
-    isCancelled?: boolean | null;
+    isCanceled?: boolean | null;
 }
 
 /**
@@ -123,7 +123,7 @@ export interface UpdateSessionRequest {
     endTime?: string | null; // HH:mm format
     notes?: string | null;
     isPublished?: boolean;
-    isCancelled?: boolean;
+    isCanceled?: boolean;
 }
 
 /**
@@ -154,7 +154,10 @@ export interface SessionListResponse {
 /**
  * Default session times based on slot
  */
-export const DEFAULT_SESSION_TIMES: Record<SessionSlot, { start: string; end: string }> = {
+export const DEFAULT_SESSION_TIMES: Record<
+    SessionSlot,
+    { start: string; end: string }
+> = {
     [SessionSlot.AM]: { start: '09:00', end: '12:00' },
     [SessionSlot.PM]: { start: '14:00', end: '17:00' },
 };

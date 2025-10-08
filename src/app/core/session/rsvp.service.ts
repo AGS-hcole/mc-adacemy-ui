@@ -1,8 +1,8 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { environment } from 'environments/environment';
-import { Observable, tap } from 'rxjs';
-import { RsvpRequest, Session } from './session.types';
+import { Observable } from 'rxjs';
+import { Session } from './session.types';
 
 @Injectable({ providedIn: 'root' })
 export class RsvpService {
@@ -20,19 +20,10 @@ export class RsvpService {
     /**
      * Register user for a session (RSVP)
      */
-    rsvp(sessionId: string): Observable<Session> {
+    rsvp(sessionId: string, payload: any): Observable<Session> {
         return this._httpClient.post<Session>(
             `${this.apiUrl}/sessions/${sessionId}/rsvp`,
-            {}
-        );
-    }
-
-    /**
-     * Cancel user's RSVP for a session
-     */
-    cancelRsvp(sessionId: string): Observable<Session> {
-        return this._httpClient.delete<Session>(
-            `${this.apiUrl}/sessions/${sessionId}/rsvp`
+            payload
         );
     }
 
@@ -40,15 +31,18 @@ export class RsvpService {
      * Check if user can register for a session
      * This is a helper method that should be called before attempting RSVP
      */
-    canRegister(session: Session, userFormula?: string | null): {
+    canRegister(
+        session: Session,
+        userFormula?: string | null
+    ): {
         canRegister: boolean;
         reason?: string;
     } {
-        // Check if session is cancelled
-        if (session.isCancelled) {
+        // Check if session is canceled
+        if (session.isCanceled) {
             return {
                 canRegister: false,
-                reason: 'SESSION_CANCELLED',
+                reason: 'SESSION_CANCELED',
             };
         }
 

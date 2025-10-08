@@ -1,16 +1,7 @@
 import { HttpClient, HttpParams } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { environment } from 'environments/environment';
-import {
-    BehaviorSubject,
-    Observable,
-    map,
-    of,
-    switchMap,
-    take,
-    tap,
-    throwError,
-} from 'rxjs';
+import { BehaviorSubject, Observable, map, switchMap, take, tap } from 'rxjs';
 import {
     AdminRegisterRequest,
     CreateSessionRequest,
@@ -23,8 +14,12 @@ import {
 @Injectable({ providedIn: 'root' })
 export class SessionsService {
     private apiUrl = environment.apiUrl;
-    private _session: BehaviorSubject<Session | null> = new BehaviorSubject(null);
-    private _sessions: BehaviorSubject<Session[] | null> = new BehaviorSubject(null);
+    private _session: BehaviorSubject<Session | null> = new BehaviorSubject(
+        null
+    );
+    private _sessions: BehaviorSubject<Session[] | null> = new BehaviorSubject(
+        null
+    );
     private _sites: BehaviorSubject<Site[] | null> = new BehaviorSubject(null);
 
     /**
@@ -80,11 +75,17 @@ export class SessionsService {
             if (filters.slot) {
                 params = params.set('slot', filters.slot);
             }
-            if (filters.isPublished !== null && filters.isPublished !== undefined) {
+            if (
+                filters.isPublished !== null &&
+                filters.isPublished !== undefined
+            ) {
                 params = params.set('isPublished', String(filters.isPublished));
             }
-            if (filters.isCancelled !== null && filters.isCancelled !== undefined) {
-                params = params.set('isCancelled', String(filters.isCancelled));
+            if (
+                filters.isCanceled !== null &&
+                filters.isCanceled !== undefined
+            ) {
+                params = params.set('isCanceled', String(filters.isCanceled));
             }
         }
 
@@ -136,7 +137,10 @@ export class SessionsService {
                         map((newSession) => {
                             // Update the sessions with the new session
                             const updatedSessions = sessions || [];
-                            this._sessions.next([newSession, ...updatedSessions]);
+                            this._sessions.next([
+                                newSession,
+                                ...updatedSessions,
+                            ]);
                             return newSession;
                         })
                     )
@@ -147,7 +151,10 @@ export class SessionsService {
     /**
      * Update session
      */
-    updateSession(id: string, request: UpdateSessionRequest): Observable<Session> {
+    updateSession(
+        id: string,
+        request: UpdateSessionRequest
+    ): Observable<Session> {
         return this._sessions.pipe(
             take(1),
             switchMap((sessions) =>
@@ -236,7 +243,10 @@ export class SessionsService {
 
                     // Update the current session if it matches
                     const currentSession = this._session.getValue();
-                    if (currentSession && currentSession.id === request.sessionId) {
+                    if (
+                        currentSession &&
+                        currentSession.id === request.sessionId
+                    ) {
                         this._session.next(updatedSession);
                     }
                 })

@@ -210,7 +210,7 @@ export class AdminSessionsListComponent implements OnInit, OnDestroy {
             if (result === 'confirmed') {
                 this._sessionsService
                     .updateSession(session.id, {
-                        isCancelled: true,
+                        isCanceled: true,
                     })
                     .subscribe(() => {
                         this._changeDetectorRef.markForCheck();

@@ -1,4 +1,4 @@
-import { AsyncPipe, DatePipe, NgClass } from '@angular/common';
+import { AsyncPipe, CommonModule, DatePipe, NgClass } from '@angular/common';
 import {
     ChangeDetectionStrategy,
     ChangeDetectorRef,
@@ -12,13 +12,17 @@ import { MatIconModule } from '@angular/material/icon';
 import { MatTooltipModule } from '@angular/material/tooltip';
 import { Router } from '@angular/router';
 import { TranslocoModule } from '@jsverse/transloco';
-import { getSessionDisplayTime, isCutoffPassed, isFormulaCompatibleWithSlot } from 'app/core/session/session.helpers';
+import { RsvpService } from 'app/core/session/rsvp.service';
+import {
+    getSessionDisplayTime,
+    isCutoffPassed,
+    isFormulaCompatibleWithSlot,
+} from 'app/core/session/session.helpers';
 import { Session, SessionSlot } from 'app/core/session/session.types';
 import { SessionsService } from 'app/core/session/sessions.service';
-import { RsvpService } from 'app/core/session/rsvp.service';
 import { UserService } from 'app/core/user/user.service';
-import { FormulaType, User } from 'app/core/user/user.types';
-import { Observable, Subject, combineLatest, map, takeUntil } from 'rxjs';
+import { User } from 'app/core/user/user.types';
+import { Observable, Subject, map, takeUntil } from 'rxjs';
 
 @Component({
     selector: 'user-sessions-list',
@@ -31,6 +35,7 @@ import { Observable, Subject, combineLatest, map, takeUntil } from 'rxjs';
         NgClass,
         MatButtonModule,
         MatIconModule,
+        CommonModule,
         MatTooltipModule,
         TranslocoModule,
     ],
@@ -38,9 +43,9 @@ import { Observable, Subject, combineLatest, map, takeUntil } from 'rxjs';
 export class UserSessionsListComponent implements OnInit, OnDestroy {
     sessions$: Observable<Session[]>;
     user$: Observable<User>;
-    
+
     SessionSlot = SessionSlot;
-    
+
     private _unsubscribeAll: Subject<any> = new Subject<any>();
 
     /**
@@ -64,13 +69,19 @@ export class UserSessionsListComponent implements OnInit, OnDestroy {
     ngOnInit(): void {
         // Get current user
         this.user$ = this._userService.user$;
-        
+
         // Get upcoming sessions
-        this.sessions$ = this._sessionsService.getUpcomingSessions().pipe(
-            map(sessions => sessions.sort((a, b) => 
-                new Date(a.date).getTime() - new Date(b.date).getTime()
-            ))
-        );
+        this.sessions$ = this._sessionsService
+            .getUpcomingSessions()
+            .pipe(
+                map((sessions) =>
+                    sessions.sort(
+                        (a, b) =>
+                            new Date(a.date).getTime() -
+                            new Date(b.date).getTime()
+                    )
+                )
+            );
     }
 
     /**
@@ -101,7 +112,8 @@ export class UserSessionsListComponent implements OnInit, OnDestroy {
             // Could still allow with confirmation
         }
 
-        this._rsvpService.rsvp(session.id)
+        this._rsvpService
+            .rsvp(session.id, { status: 'YES', comment: '' })
             .pipe(takeUntil(this._unsubscribeAll))
             .subscribe(() => {
                 // Refresh sessions
@@ -115,7 +127,10 @@ export class UserSessionsListComponent implements OnInit, OnDestroy {
      */
     canRegister(session: Session, user: User): boolean {
         // Check basic eligibility
-        const { canRegister } = this._rsvpService.canRegister(session, user.formula);
+        const { canRegister } = this._rsvpService.canRegister(
+            session,
+            user.formula
+        );
         if (!canRegister) {
             return false;
         }
@@ -137,10 +152,12 @@ export class UserSessionsListComponent implements OnInit, OnDestroy {
      * Check if user is registered for a session
      */
     isRegistered(session: Session, user: User): boolean {
-        if (!session.attendees) {
+        if (!session.attendances) {
             return false;
         }
-        return session.attendees.some(attendee => attendee.userId === user.id);
+        return session.attendances.some(
+            (attendee) => attendee.userId === user.id
+        );
     }
 
     /**
@@ -151,7 +168,7 @@ export class UserSessionsListComponent implements OnInit, OnDestroy {
             return 'SESSIONS.USER.STATUS.REGISTERED';
         }
 
-        if (session.isCancelled) {
+        if (session.isCanceled) {
             return 'SESSIONS.USER.STATUS.CANCELLED';
         }
 
@@ -159,7 +176,10 @@ export class UserSessionsListComponent implements OnInit, OnDestroy {
             return 'SESSIONS.USER.STATUS.CUTOFF_PASSED';
         }
 
-        const { canRegister, reason } = this._rsvpService.canRegister(session, user.formula);
+        const { canRegister, reason } = this._rsvpService.canRegister(
+            session,
+            user.formula
+        );
         if (!canRegister) {
             switch (reason) {
                 case 'SESSION_FULL':
@@ -182,7 +202,11 @@ export class UserSessionsListComponent implements OnInit, OnDestroy {
      * Get display time for a session
      */
     getDisplayTime(session: Session): string {
-        const times = getSessionDisplayTime(session.slot, session.startTime, session.endTime);
+        const times = getSessionDisplayTime(
+            session.slot,
+            session.startTime,
+            session.endTime
+        );
         return `${times.start} - ${times.end}`;
     }
 
@@ -191,8 +215,8 @@ export class UserSessionsListComponent implements OnInit, OnDestroy {
      */
     groupSessionsByDate(sessions: Session[]): Map<string, Session[]> {
         const grouped = new Map<string, Session[]>();
-        
-        sessions.forEach(session => {
+
+        sessions.forEach((session) => {
             const dateKey = new Date(session.date).toDateString();
             if (!grouped.has(dateKey)) {
                 grouped.set(dateKey, []);

@@ -1,4 +1,4 @@
-import { AsyncPipe } from '@angular/common';
+import { AsyncPipe, NgForOf, NgIf } from '@angular/common';
 import {
     ChangeDetectionStrategy,
     ChangeDetectorRef,
@@ -47,6 +47,8 @@ import { Observable, Subject, takeUntil } from 'rxjs';
         ReactiveFormsModule,
         MatButtonModule,
         MatCheckboxModule,
+        NgForOf,
+        NgIf,
         MatDatepickerModule,
         MatFormFieldModule,
         MatIconModule,
@@ -177,14 +179,23 @@ export class AdminSessionDetailsComponent implements OnInit, OnDestroy {
 
         const formValue = this.sessionForm.value;
 
+        const startISO = this._combineDateAndTimeISO(
+            formValue.date,
+            formValue.startTime
+        );
+        const endISO = this._combineDateAndTimeISO(
+            formValue.date,
+            formValue.endTime
+        );
+
         if (this.editMode && this.session) {
             // Update existing session
             const updateRequest: UpdateSessionRequest = {
                 siteId: formValue.siteId,
-                date: this._formatDate(formValue.date),
+                date: this._formatDate(formValue.date), // "YYYY-MM-DD"
                 slot: formValue.slot,
-                startTime: formValue.startTime || null,
-                endTime: formValue.endTime || null,
+                startTime: startISO, // ISO string ou null
+                endTime: endISO, // ISO string ou null
                 notes: formValue.notes || null,
                 isPublished: formValue.isPublished,
             };
@@ -202,8 +213,8 @@ export class AdminSessionDetailsComponent implements OnInit, OnDestroy {
                 siteId: formValue.siteId,
                 date: this._formatDate(formValue.date),
                 slot: formValue.slot,
-                startTime: formValue.startTime || null,
-                endTime: formValue.endTime || null,
+                startTime: startISO,
+                endTime: endISO,
                 notes: formValue.notes || null,
                 isPublished: formValue.isPublished,
             };
@@ -245,13 +256,44 @@ export class AdminSessionDetailsComponent implements OnInit, OnDestroy {
     /**
      * Format date to ISO string (YYYY-MM-DD)
      */
-    private _formatDate(date: Date): string {
-        if (typeof date === 'string') {
-            return date;
-        }
-        const year = date.getFullYear();
-        const month = String(date.getMonth() + 1).padStart(2, '0');
-        const day = String(date.getDate()).padStart(2, '0');
+    private _formatDate(date: any): string {
+        if (!date) return ''; // handle null/undefined
+
+        // Convert to Date if it's not already one
+        const d = date instanceof Date ? date : new Date(date);
+
+        const year = d.getFullYear();
+        const month = String(d.getMonth() + 1).padStart(2, '0');
+        const day = String(d.getDate()).padStart(2, '0');
+
         return `${year}-${month}-${day}`;
+    }
+
+    /**
+     * Combine a date and "HH:mm" time to an ISO 8601 string (UTC).
+     * Returns null if no time is provided.
+     */
+    private _combineDateAndTimeISO(
+        date: any,
+        time?: string | null
+    ): string | null {
+        if (!time) return null;
+
+        const d = date instanceof Date ? date : new Date(date);
+        const [hh, mm] = time.split(':').map(Number);
+
+        // Crée un Date en heure locale, puis convertit en ISO (UTC)
+        const combined = new Date(
+            d.getFullYear(),
+            d.getMonth(),
+            d.getDate(),
+            hh ?? 0,
+            mm ?? 0,
+            0,
+            0
+        );
+
+        // Si tu veux éviter le décalage lié au fuseau, vois la NOTE plus bas.
+        return combined.toISOString();
     }
 }
