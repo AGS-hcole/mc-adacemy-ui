@@ -254,6 +254,40 @@ export class SessionsService {
     }
 
     /**
+     * Admin remove a user from a session
+     */
+    adminRemoveAttendee(
+        sessionId: string,
+        attendanceId: string
+    ): Observable<Session> {
+        return this._httpClient
+            .delete<Session>(
+                `${this.apiUrl}/sessions/${sessionId}/attendances/${attendanceId}`
+            )
+            .pipe(
+                tap((updatedSession) => {
+                    // Update the session in the list
+                    const sessions = this._sessions.getValue();
+                    if (sessions) {
+                        const index = sessions.findIndex(
+                            (s) => s.id === sessionId
+                        );
+                        if (index !== -1) {
+                            sessions[index] = updatedSession;
+                            this._sessions.next([...sessions]);
+                        }
+                    }
+
+                    // Update the current session if it matches
+                    const currentSession = this._session.getValue();
+                    if (currentSession && currentSession.id === sessionId) {
+                        this._session.next(updatedSession);
+                    }
+                })
+            );
+    }
+
+    /**
      * Get all sites
      */
     getSites(): Observable<Site[]> {

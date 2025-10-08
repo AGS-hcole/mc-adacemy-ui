@@ -183,6 +183,7 @@
                 "SLOT": "Créneau",
                 "TIME": "Horaire",
                 "SITE": "Site",
+                "PARTICIPANTS": "Participants",
                 "STATUS": "Statut",
                 "ACTIONS": "Actions"
             },
@@ -212,6 +213,17 @@
                 "CANCEL": "Annuler",
                 "SAVE": "Enregistrer",
                 "CREATE": "Créer"
+            },
+            "ATTENDEES": {
+                "TITLE": "Gestion des participants",
+                "ADD_PARTICIPANT": "Ajouter un participant",
+                "SELECT_USER": "Sélectionner un utilisateur",
+                "ADD": "Ajouter",
+                "PARTICIPANTS_LIST": "Liste des participants",
+                "NO_PARTICIPANTS": "Aucun participant pour cette session",
+                "ADMIN_REGISTERED": "Inscrit par admin",
+                "REMOVE": "Retirer",
+                "CLOSE": "Fermer"
             }
         },
         "USER": {
