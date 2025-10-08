@@ -34,7 +34,7 @@ import { MatTooltipModule } from '@angular/material/tooltip';
 import { ActivatedRoute, Router, RouterLink } from '@angular/router';
 import { FuseConfirmationService } from '@fuse/services/confirmation';
 import { TranslocoModule } from '@jsverse/transloco';
-import { User, Role, FormulaType } from 'app/core/user/user.types';
+import { FormulaType, Role, User } from 'app/core/user/user.types';
 import { Subject, takeUntil } from 'rxjs';
 import { UsersListComponent } from '../list/list.component';
 import { UsersService } from '../users.service';
@@ -150,15 +150,12 @@ export class UsersDetailsComponent implements OnInit, OnDestroy {
                     // Get the user
                     this.user = user;
 
-                    // Initialize the userRoles FormArray with the user roles
-                    this.userRoles.clear();
-
                     // Patch values to the form with proper mapping for consent fields
                     const formData = {
                         ...user,
                         privacyConsent: !!user.privacyConsentAt,
                         photoConsent: !!user.photoConsentAt,
-                        marketingConsent: !!user.marketingConsentAt
+                        marketingConsent: !!user.marketingConsentAt,
                     };
                     this.userForm.patchValue(formData);
 
@@ -231,9 +228,13 @@ export class UsersDetailsComponent implements OnInit, OnDestroy {
             fftLicenseNumber: user.fftLicenseNumber || null,
             role: user.role,
             formula: user.formula || null,
-            privacyConsentAt: user.privacyConsent ? new Date().toISOString() : null,
+            privacyConsentAt: user.privacyConsent
+                ? new Date().toISOString()
+                : null,
             photoConsentAt: user.photoConsent ? new Date().toISOString() : null,
-            marketingConsentAt: user.marketingConsent ? new Date().toISOString() : null,
+            marketingConsentAt: user.marketingConsent
+                ? new Date().toISOString()
+                : null,
             notifyEmail: user.notifyEmail,
             notifySMS: user.notifySMS,
             notifyWhatsApp: user.notifyWhatsApp,
@@ -263,9 +264,13 @@ export class UsersDetailsComponent implements OnInit, OnDestroy {
             role: user.role,
             formula: user.formula || null,
             password: null, // Password will be handled separately by the backend
-            privacyConsentAt: user.privacyConsent ? new Date().toISOString() : null,
+            privacyConsentAt: user.privacyConsent
+                ? new Date().toISOString()
+                : null,
             photoConsentAt: user.photoConsent ? new Date().toISOString() : null,
-            marketingConsentAt: user.marketingConsent ? new Date().toISOString() : null,
+            marketingConsentAt: user.marketingConsent
+                ? new Date().toISOString()
+                : null,
             notifyEmail: user.notifyEmail,
             notifySMS: user.notifySMS,
             notifyWhatsApp: user.notifyWhatsApp,
