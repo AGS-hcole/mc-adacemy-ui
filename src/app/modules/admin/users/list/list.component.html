@@ -104,13 +104,13 @@
                                 <!-- Group -->
                                 @if (
                                     i === 0 ||
-                                    user.lastName.charAt(0) !==
-                                        users[i - 1].lastName.charAt(0)
+                                    user.lastname.charAt(0) !==
+                                        users[i - 1].lastname.charAt(0)
                                 ) {
                                     <div
                                         class="text-secondary sticky top-0 z-10 -mt-px border-b border-t bg-gray-50 px-6 py-1 font-medium uppercase md:px-8 dark:bg-gray-900"
                                     >
-                                        {{ user.lastName.charAt(0) }}
+                                        {{ user.lastname.charAt(0) }}
                                     </div>
                                 }
                                 <!-- User -->
@@ -144,8 +144,8 @@
                                                 class="flex h-full w-full items-center justify-center rounded-full bg-gray-200 text-lg uppercase text-gray-600 dark:bg-gray-700 dark:text-gray-200"
                                             >
                                                 {{
-                                                    user.firstName.charAt(0) +
-                                                        user.lastName.charAt(0)
+                                                    user.firstname.charAt(0) +
+                                                        user.lastname.charAt(0)
                                                 }}
                                             </div>
                                         }
@@ -155,9 +155,9 @@
                                             class="truncate font-medium leading-5"
                                         >
                                             {{
-                                                user.lastName +
+                                                user.lastname +
                                                     ' ' +
-                                                    user.firstName
+                                                    user.firstname
                                             }}
                                         </div>
                                         <div
@@ -167,68 +167,19 @@
                                         </div>
                                     </div>
                                     <div class="ml-auto flex">
-                                        @if (user.userRoles.length) {
-                                            <div
-                                                class="mr-6 hidden gap-2 sm:flex"
-                                            >
-                                                @for (
-                                                    userRole of user.userRoles;
-                                                    track trackByFn(
-                                                        $index,
-                                                        userRole.role.id
-                                                    )
-                                                ) {
-                                                    @if (
-                                                        userRole.role.product
-                                                    ) {
-                                                        <img
-                                                            [src]="
-                                                                userRole.role
-                                                                    .product
-                                                                    .iconUrl
-                                                            "
-                                                            class="w-6"
-                                                        />
-                                                    }
-                                                }
-                                            </div>
-                                        }
-                                        <!-- Email Confirmed -->
+                                        <!-- User Role -->
                                         <div class="ml-6">
                                             <mat-icon
-                                                class="text-2xl {{
-                                                    user.emailConfirmed
-                                                        ? 'text-green-500'
-                                                        : 'text-gray-400'
-                                                }}"
-                                                [svgIcon]="
-                                                    'heroicons_outline:envelope'
+                                                class="text-2xl"
+                                                [ngClass]="
+                                                    user.isAdmin
+                                                        ? 'text-red-500'
+                                                        : 'text-blue-500'
                                                 "
-                                            ></mat-icon>
-                                        </div>
-                                        <!-- IsLoginAllowed -->
-                                        <div class="ml-6">
-                                            <mat-icon
-                                                class="text-2xl {{
-                                                    user.isLoginAllowed
-                                                        ? 'text-green-500'
-                                                        : 'text-gray-400'
-                                                }}"
                                                 [svgIcon]="
-                                                    'heroicons_outline:wifi'
-                                                "
-                                            ></mat-icon>
-                                        </div>
-                                        <!-- Is Enabled -->
-                                        <div class="ml-6">
-                                            <mat-icon
-                                                class="ml-auto text-2xl {{
-                                                    user.isEnabled
-                                                        ? 'text-green-500'
-                                                        : 'text-gray-400'
-                                                }}"
-                                                [svgIcon]="
-                                                    'heroicons_outline:check'
+                                                    user.isAdmin
+                                                        ? 'heroicons_outline:shield-check'
+                                                        : 'heroicons_outline:user'
                                                 "
                                             ></mat-icon>
                                         </div>

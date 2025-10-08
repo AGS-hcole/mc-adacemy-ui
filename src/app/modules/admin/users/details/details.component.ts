@@ -14,7 +14,6 @@ import {
     ViewEncapsulation,
 } from '@angular/core';
 import {
-    FormArray,
     FormsModule,
     ReactiveFormsModule,
     UntypedFormBuilder,
@@ -81,11 +80,6 @@ export class UsersDetailsComponent implements OnInit, OnDestroy {
     // -----------------------------------------------------------------------------------------------------
     // @ Getters
     // -----------------------------------------------------------------------------------------------------
-
-    // Get the disks FormArray
-    get userRoles(): FormArray {
-        return this.userForm.get('userRoles') as FormArray;
-    }
 
     /**
      * Constructor
