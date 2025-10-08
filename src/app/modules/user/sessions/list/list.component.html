@@ -1,0 +1,162 @@
+<div class="absolute inset-0 flex flex-col min-w-0 overflow-hidden">
+    <!-- Header -->
+    <div
+        class="relative flex flex-col sm:flex-row flex-0 sm:items-center sm:justify-between py-8 px-6 md:px-8 border-b bg-card dark:bg-transparent">
+        <!-- Title -->
+        <div class="text-4xl font-extrabold tracking-tight">
+            {{ 'SESSIONS.USER.TITLE' | transloco }}
+        </div>
+    </div>
+
+    <!-- Main content -->
+    <div class="flex flex-auto overflow-y-auto">
+        <div class="flex flex-col w-full p-6 md:p-8">
+            <ng-container *ngIf="(sessions$ | async) as sessions">
+                <ng-container *ngIf="(user$ | async) as user">
+                    <!-- Sessions list -->
+                    <ng-container *ngIf="sessions.length > 0; else noSessions">
+                        <div class="grid grid-cols-1 gap-6">
+                            <!-- Group sessions by date -->
+                            <ng-container *ngFor="let dateGroup of groupSessionsByDate(sessions) | keyvalue">
+                                <div class="space-y-4">
+                                    <!-- Date header -->
+                                    <div class="flex items-center gap-3">
+                                        <div class="text-2xl font-bold">
+                                            {{ dateGroup.value[0].date | date: 'fullDate' }}
+                                        </div>
+                                    </div>
+
+                                    <!-- Sessions for this date -->
+                                    <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
+                                        <ng-container *ngFor="let session of dateGroup.value; trackBy: trackByFn">
+                                            <div
+                                                class="flex flex-col border rounded-lg overflow-hidden hover:shadow-lg transition-shadow"
+                                                [ngClass]="{
+                                                    'border-gray-300 dark:border-gray-700': !isRegistered(session, user) && !session.isCancelled,
+                                                    'border-green-500 bg-green-50 dark:bg-green-900/20': isRegistered(session, user),
+                                                    'border-red-500 bg-red-50 dark:bg-red-900/20': session.isCancelled
+                                                }">
+                                                <!-- Card header -->
+                                                <div
+                                                    class="flex items-center justify-between px-4 py-3 border-b"
+                                                    [ngClass]="{
+                                                        'bg-blue-100 dark:bg-blue-900': session.slot === SessionSlot.AM && !session.isCancelled,
+                                                        'bg-amber-100 dark:bg-amber-900': session.slot === SessionSlot.PM && !session.isCancelled,
+                                                        'bg-gray-100 dark:bg-gray-800': session.isCancelled
+                                                    }">
+                                                    <div class="flex items-center gap-2">
+                                                        <mat-icon
+                                                            class="icon-size-5"
+                                                            [svgIcon]="session.slot === SessionSlot.AM ? 'heroicons_outline:sun' : 'heroicons_outline:moon'">
+                                                        </mat-icon>
+                                                        <span class="font-semibold">
+                                                            {{ 'SESSIONS.SLOT.' + session.slot | transloco }}
+                                                        </span>
+                                                    </div>
+                                                    <div class="text-sm font-medium">
+                                                        {{ getDisplayTime(session) }}
+                                                    </div>
+                                                </div>
+
+                                                <!-- Card body -->
+                                                <div class="flex flex-col p-4 space-y-3">
+                                                    <!-- Site -->
+                                                    <div class="flex items-center gap-2">
+                                                        <mat-icon
+                                                            class="icon-size-4 text-secondary"
+                                                            [svgIcon]="'heroicons_outline:map-pin'">
+                                                        </mat-icon>
+                                                        <span class="text-sm">{{ session.site?.name || session.siteId }}</span>
+                                                    </div>
+
+                                                    <!-- Notes -->
+                                                    <div *ngIf="session.notes" class="text-sm text-secondary">
+                                                        {{ session.notes }}
+                                                    </div>
+
+                                                    <!-- Capacity -->
+                                                    <div
+                                                        *ngIf="session.maxAttendees"
+                                                        class="flex items-center gap-2">
+                                                        <mat-icon
+                                                            class="icon-size-4 text-secondary"
+                                                            [svgIcon]="'heroicons_outline:user-group'">
+                                                        </mat-icon>
+                                                        <span class="text-sm">
+                                                            {{ session.currentAttendees || 0 }} / {{ session.maxAttendees }}
+                                                        </span>
+                                                    </div>
+
+                                                    <!-- Status message -->
+                                                    <div class="pt-2 border-t">
+                                                        <div
+                                                            class="text-xs font-medium uppercase tracking-wide"
+                                                            [ngClass]="{
+                                                                'text-green-600 dark:text-green-400': isRegistered(session, user),
+                                                                'text-red-600 dark:text-red-400': session.isCancelled,
+                                                                'text-blue-600 dark:text-blue-400': canRegister(session, user),
+                                                                'text-gray-600 dark:text-gray-400': !canRegister(session, user) && !isRegistered(session, user) && !session.isCancelled
+                                                            }">
+                                                            {{ getStatusMessage(session, user) | transloco }}
+                                                        </div>
+                                                    </div>
+                                                </div>
+
+                                                <!-- Card footer -->
+                                                <div class="px-4 py-3 bg-gray-50 dark:bg-gray-800 border-t">
+                                                    <ng-container *ngIf="isRegistered(session, user)">
+                                                        <button
+                                                            mat-flat-button
+                                                            color="accent"
+                                                            class="w-full"
+                                                            disabled>
+                                                            <mat-icon
+                                                                class="icon-size-5"
+                                                                [svgIcon]="'heroicons_outline:check-circle'">
+                                                            </mat-icon>
+                                                            <span class="ml-2">{{ 'SESSIONS.USER.ACTIONS.REGISTERED' | transloco }}</span>
+                                                        </button>
+                                                    </ng-container>
+                                                    <ng-container *ngIf="!isRegistered(session, user)">
+                                                        <button
+                                                            mat-flat-button
+                                                            [color]="'primary'"
+                                                            class="w-full"
+                                                            [disabled]="!canRegister(session, user)"
+                                                            (click)="registerForSession(session, user)">
+                                                            <mat-icon
+                                                                class="icon-size-5"
+                                                                [svgIcon]="'heroicons_outline:plus-circle'">
+                                                            </mat-icon>
+                                                            <span class="ml-2">{{ 'SESSIONS.USER.ACTIONS.REGISTER' | transloco }}</span>
+                                                        </button>
+                                                    </ng-container>
+                                                </div>
+                                            </div>
+                                        </ng-container>
+                                    </div>
+                                </div>
+                            </ng-container>
+                        </div>
+                    </ng-container>
+
+                    <!-- No sessions -->
+                    <ng-template #noSessions>
+                        <div class="flex flex-auto flex-col items-center justify-center bg-gray-100 dark:bg-transparent">
+                            <mat-icon
+                                class="icon-size-24"
+                                [svgIcon]="'heroicons_outline:calendar'">
+                            </mat-icon>
+                            <div class="mt-4 text-2xl font-semibold tracking-tight text-secondary">
+                                {{ 'SESSIONS.USER.NO_SESSIONS' | transloco }}
+                            </div>
+                            <div class="mt-2 text-md text-secondary">
+                                {{ 'SESSIONS.USER.NO_SESSIONS_DESCRIPTION' | transloco }}
+                            </div>
+                        </div>
+                    </ng-template>
+                </ng-container>
+            </ng-container>
+        </div>
+    </div>
+</div>

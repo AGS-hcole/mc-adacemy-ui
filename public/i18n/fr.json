@@ -74,6 +74,12 @@
             "SUBTITLE": "Gestion de l'application",
             "USERS": {
                 "TITLE": "Utilisateurs"
+            },
+            "SESSIONS": {
+                "TITLE": "Sessions d'entraînement"
+            },
+            "SITES": {
+                "TITLE": "Sites"
             }
         },
         "USER": {
@@ -82,8 +88,8 @@
             "DASHBOARD": {
                 "TITLE": "Tableau de bord"
             },
-            "TRAININGS": {
-                "TITLE": "Entraînements"
+            "SESSIONS": {
+                "TITLE": "Mes sessions"
             }
         }
     },
@@ -146,6 +152,117 @@
                 "SAVE": "Enregistrer",
                 "ADD": "Ajouter",
                 "EDIT": "Modifier"
+            }
+        }
+    },
+    "SESSIONS": {
+        "SLOT": {
+            "AM": "Matin",
+            "PM": "Après-midi"
+        },
+        "STATUS": {
+            "PUBLISHED": "Publié",
+            "DRAFT": "Brouillon",
+            "CANCELLED": "Annulé"
+        },
+        "ADMIN": {
+            "TITLE": "Sessions d'entraînement",
+            "CREATE_SESSION": "Créer une session",
+            "EDIT_SESSION": "Modifier la session",
+            "NO_SESSIONS": "Aucune session trouvée",
+            "FILTERS": {
+                "SITE": "Site",
+                "ALL_SITES": "Tous les sites",
+                "SLOT": "Créneau",
+                "ALL_SLOTS": "Tous les créneaux",
+                "STATUS": "Statut",
+                "ALL_STATUS": "Tous les statuts"
+            },
+            "TABLE": {
+                "SESSION": "Session",
+                "SLOT": "Créneau",
+                "TIME": "Horaire",
+                "SITE": "Site",
+                "STATUS": "Statut",
+                "ACTIONS": "Actions"
+            },
+            "ACTIONS": {
+                "EDIT": "Modifier",
+                "DELETE": "Supprimer",
+                "CANCEL": "Annuler",
+                "PUBLISH": "Publier",
+                "UNPUBLISH": "Dépublier"
+            },
+            "FORM": {
+                "SITE": "Site",
+                "SITE_REQUIRED": "Le site est requis",
+                "DATE": "Date",
+                "DATE_REQUIRED": "La date est requise",
+                "SLOT": "Créneau",
+                "SLOT_REQUIRED": "Le créneau est requis",
+                "START_TIME": "Heure de début",
+                "START_TIME_HINT": "Laissez vide pour utiliser les horaires par défaut",
+                "END_TIME": "Heure de fin",
+                "END_TIME_HINT": "Laissez vide pour utiliser les horaires par défaut",
+                "INVALID_TIME_RANGE": "L'heure de fin doit être après l'heure de début",
+                "NOTES": "Notes",
+                "NOTES_HINT": "Notes ou instructions pour cette session",
+                "IS_PUBLISHED": "Publier cette session",
+                "IS_PUBLISHED_HINT": "Les sessions publiées sont visibles par les utilisateurs",
+                "CANCEL": "Annuler",
+                "SAVE": "Enregistrer",
+                "CREATE": "Créer"
+            }
+        },
+        "USER": {
+            "TITLE": "Mes sessions d'entraînement",
+            "NO_SESSIONS": "Aucune session à venir",
+            "NO_SESSIONS_DESCRIPTION": "Revenez plus tard pour voir les prochaines sessions disponibles",
+            "STATUS": {
+                "AVAILABLE": "Disponible",
+                "REGISTERED": "Inscrit",
+                "CANCELLED": "Annulée",
+                "CUTOFF_PASSED": "Date limite dépassée",
+                "FULL": "Complet",
+                "NOT_PUBLISHED": "Non publiée",
+                "UNAVAILABLE": "Non disponible",
+                "OUT_OF_CONTRACT": "Hors formule"
+            },
+            "ACTIONS": {
+                "REGISTER": "S'inscrire",
+                "REGISTERED": "Inscrit"
+            }
+        }
+    },
+    "SITES": {
+        "ADMIN": {
+            "TITLE": "Sites d'entraînement",
+            "CREATE_SITE": "Créer un site",
+            "EDIT_SITE": "Modifier le site",
+            "NO_SITES": "Aucun site trouvé",
+            "NO_SITES_DESCRIPTION": "Créez un nouveau site pour commencer",
+            "SEARCH": "Rechercher un site",
+            "TABLE": {
+                "NAME": "Nom",
+                "CITY": "Ville",
+                "ADDRESS": "Adresse",
+                "ACTIONS": "Actions"
+            },
+            "ACTIONS": {
+                "EDIT": "Modifier",
+                "DELETE": "Supprimer"
+            },
+            "FORM": {
+                "NAME": "Nom du site",
+                "NAME_REQUIRED": "Le nom est requis",
+                "NAME_HINT": "Nom du site d'entraînement",
+                "CITY": "Ville",
+                "CITY_HINT": "Ville où se trouve le site",
+                "ADDRESS": "Adresse",
+                "ADDRESS_HINT": "Adresse complète du site",
+                "CANCEL": "Annuler",
+                "SAVE": "Enregistrer",
+                "CREATE": "Créer"
             }
         }
     }
