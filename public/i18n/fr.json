@@ -80,6 +80,9 @@
             },
             "SITES": {
                 "TITLE": "Sites"
+            },
+            "TOURNAMENTS": {
+                "TITLE": "Tournois"
             }
         },
         "USER": {
@@ -156,6 +159,16 @@
         }
     },
     "SESSIONS": {
+        "VIEW": {
+            "BREADCRUMB": {
+                "BACK": "Retour aux sessions"
+            },
+            "TITLE": "Détails de la session",
+            "INFO": "Informations",
+            "INFO_DESCRIPTION": "Détails et paramètres de la session",
+            "PARTICIPANTS": "Participants",
+            "PARTICIPANTS_DESCRIPTION": "Gérer les participants inscrits à cette session"
+        },
         "SLOT": {
             "AM": "Matin",
             "PM": "Après-midi"

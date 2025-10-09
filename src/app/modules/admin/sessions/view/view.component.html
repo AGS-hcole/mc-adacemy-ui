@@ -1,71 +1,115 @@
-<div class="absolute inset-0 flex flex-col min-w-0 overflow-hidden">
-    <!-- Header -->
-    <div class="relative flex flex-col sm:flex-row flex-0 sm:items-center sm:justify-between py-8 px-6 md:px-8 border-b bg-card dark:bg-transparent">
-        <!-- Loader -->
-        <div class="absolute inset-x-0 bottom-0" *ngIf="!session">
-            <mat-progress-bar [mode]="'indeterminate'"></mat-progress-bar>
-        </div>
-        
-        <!-- Back button -->
-        <div class="flex items-center">
-            <button
-                mat-icon-button
-                [matTooltip]="'Retour'"
-                (click)="goBack()">
-                <mat-icon [svgIcon]="'heroicons_outline:arrow-left'"></mat-icon>
-            </button>
-            <div class="ml-4" *ngIf="session">
-                <div class="text-2xl font-semibold tracking-tight">
-                    {{ session.date | date: 'fullDate' }}
+<mat-drawer-container class="flex-auto sm:h-full" #drawerContainer>
+    <!-- Drawer -->
+    <mat-drawer
+        class="sm:w-96 dark:bg-gray-900"
+        [autoFocus]="false"
+        [mode]="drawerMode"
+        [opened]="drawerOpened"
+        #drawer
+    >
+        <!-- Header -->
+        <div class="m-8 mr-6 flex-col items-center justify-between">
+            <div class="flex">
+                <a
+                    class="text-secondary -ml-1.5 mb-2 inline-flex items-center font-medium"
+                    [routerLink]="'./..'"
+                >
+                    <mat-icon
+                        class="text-secondary icon-size-5"
+                        [svgIcon]="'heroicons_outline:arrow-left'"
+                    ></mat-icon>
+                    <span class="ml-2">{{
+                        'SESSIONS.VIEW.BREADCRUMB.BACK' | transloco
+                    }}</span>
+                </a>
+            </div>
+            <div class="flex items-center justify-between">
+                <!-- Title -->
+                <div class="flex flex-col items-start gap-1">
+                    <div
+                        class="mb-2 text-4xl font-extrabold leading-none tracking-tight text-primary"
+                    >
+                        {{ 'SESSIONS.VIEW.TITLE' | transloco }}
+                    </div>
+                    <div class="text-secondary text-md">
+                        {{ session?.site?.name }}
+                    </div>
+                    <div class="text-secondary text-md">
+                        {{ session?.date | date: 'dd/MM/yyyy' }}
+                        {{
+                            session?.startTime
+                                ? (session?.startTime | date: 'HH:mm')
+                                : ''
+                        }}
+                        -
+                        {{
+                            session?.endTime
+                                ? (session?.endTime | date: 'HH:mm')
+                                : ''
+                        }}
+                    </div>
                 </div>
-                <div class="text-sm text-secondary">
-                    {{ session.site?.name || session.siteId }}
+                <!-- Close button -->
+                <div class="lg:hidden">
+                    <button mat-icon-button (click)="drawer.close()">
+                        <mat-icon
+                            [svgIcon]="'heroicons_outline:x-mark'"
+                        ></mat-icon>
+                    </button>
                 </div>
             </div>
         </div>
-    </div>
 
-    <!-- Tabs -->
-    <div class="flex overflow-x-auto border-b bg-gray-50 dark:bg-transparent">
-        <nav class="flex space-x-6 px-6 md:px-8" aria-label="Tabs">
-            <a
-                class="flex items-center px-1 py-4 text-sm font-medium border-b-2 transition-colors cursor-pointer"
-                [routerLink]="['./info']"
-                routerLinkActive="border-primary text-primary"
-                [routerLinkActiveOptions]="{exact: false}"
-                #rlaInfo="routerLinkActive"
-                [class.border-transparent]="!rlaInfo.isActive"
-                [class.text-secondary]="!rlaInfo.isActive"
-                [class.hover:text-primary]="!rlaInfo.isActive">
-                <mat-icon
-                    class="icon-size-5 mr-2"
-                    [svgIcon]="'heroicons_outline:information-circle'">
-                </mat-icon>
-                {{ 'SESSIONS.ADMIN.VIEW.TABS.INFO' | transloco }}
-            </a>
-            <a
-                class="flex items-center px-1 py-4 text-sm font-medium border-b-2 transition-colors cursor-pointer"
-                [routerLink]="['./participants']"
-                routerLinkActive="border-primary text-primary"
-                [routerLinkActiveOptions]="{exact: false}"
-                #rlaParticipants="routerLinkActive"
-                [class.border-transparent]="!rlaParticipants.isActive"
-                [class.text-secondary]="!rlaParticipants.isActive"
-                [class.hover:text-primary]="!rlaParticipants.isActive">
-                <mat-icon
-                    class="icon-size-5 mr-2"
-                    [svgIcon]="'heroicons_outline:user-group'">
-                </mat-icon>
-                {{ 'SESSIONS.ADMIN.VIEW.TABS.PARTICIPANTS' | transloco }}
-                <span class="ml-2 px-2 py-0.5 text-xs rounded-full bg-gray-200 dark:bg-gray-700" *ngIf="session">
-                    {{ session.currentAttendees || 0 }}
-                </span>
-            </a>
-        </nav>
-    </div>
+        <!-- Panel links -->
+        <div class="flex flex-col divide-y border-b border-t">
+            @for (panel of panels; track trackByFn($index, panel)) {
+                <div
+                    class="flex cursor-pointer px-8 py-5 hover:bg-gray-50"
+                    [ngClass]="{
+                        'dark:hover:bg-hover hover:bg-gray-100': !isPanelActive(
+                            panel.id
+                        ),
+                        'bg-primary-50 dark:bg-hover': isPanelActive(panel.id),
+                    }"
+                    (click)="goToPanel(panel.id)"
+                >
+                    <mat-icon
+                        [ngClass]="{
+                            'text-hint': !isPanelActive(panel.id),
+                            'text-primary dark:text-primary-500': isPanelActive(
+                                panel.id
+                            ),
+                        }"
+                        [svgIcon]="panel.icon"
+                    ></mat-icon>
+                    <div class="ml-3">
+                        <div
+                            class="font-medium leading-6"
+                            [ngClass]="{
+                                'text-primary dark:text-primary-500':
+                                    isPanelActive(panel.id),
+                            }"
+                        >
+                            {{ 'SESSIONS.VIEW.' + panel.title | transloco }}
+                        </div>
+                        <div class="text-secondary mt-0.5">
+                            {{
+                                'SESSIONS.VIEW.' + panel.title + '_DESCRIPTION'
+                                    | transloco
+                            }}
+                        </div>
+                    </div>
+                </div>
+            }
+        </div>
+    </mat-drawer>
 
-    <!-- Content -->
-    <div class="flex-auto overflow-y-auto">
-        <router-outlet></router-outlet>
-    </div>
-</div>
+    <!-- Drawer content -->
+    <mat-drawer-content class="flex flex-col">
+        <!-- Main -->
+        <div class="flex-auto">
+            <!-- Content -->
+            <router-outlet></router-outlet>
+        </div>
+    </mat-drawer-content>
+</mat-drawer-container>

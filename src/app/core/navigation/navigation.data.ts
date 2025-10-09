@@ -32,6 +32,13 @@ export const adminNavigation: FuseNavigationItem[] = [
         subtitle: 'NAVIGATION.ADMIN.SUBTITLE',
         children: [
             {
+                id: 'sites',
+                title: 'NAVIGATION.ADMIN.SITES.TITLE',
+                type: 'basic',
+                icon: 'heroicons_outline:map-pin',
+                link: '/admin/sites',
+            },
+            {
                 id: 'users',
                 title: 'NAVIGATION.ADMIN.USERS.TITLE',
                 type: 'basic',
@@ -46,11 +53,16 @@ export const adminNavigation: FuseNavigationItem[] = [
                 link: '/admin/sessions',
             },
             {
-                id: 'sites',
-                title: 'NAVIGATION.ADMIN.SITES.TITLE',
+                id: 'tournaments',
+                title: 'NAVIGATION.ADMIN.TOURNAMENTS.TITLE',
                 type: 'basic',
-                icon: 'heroicons_outline:map-pin',
-                link: '/admin/sites',
+                icon: 'heroicons_outline:trophy',
+                link: '/admin/tournaments',
+                disabled: true,
+                badge: {
+                    title: 'Bientôt dispo',
+                    classes: 'bg-gray-500 rounded-full px-2 text-white',
+                },
             },
         ],
     },

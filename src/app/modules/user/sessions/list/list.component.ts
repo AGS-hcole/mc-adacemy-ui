@@ -14,7 +14,6 @@ import { Router } from '@angular/router';
 import { TranslocoModule } from '@jsverse/transloco';
 import { RsvpService } from 'app/core/session/rsvp.service';
 import {
-    getSessionDisplayTime,
     isCutoffPassed,
     isFormulaCompatibleWithSlot,
 } from 'app/core/session/session.helpers';
@@ -202,12 +201,26 @@ export class UserSessionsListComponent implements OnInit, OnDestroy {
      * Get display time for a session
      */
     getDisplayTime(session: Session): string {
-        const times = getSessionDisplayTime(
-            session.slot,
-            session.startTime,
-            session.endTime
-        );
-        return `${times.start} - ${times.end}`;
+        // Helper to parse ISO date string and return local time string in HH:mm
+        const toLocalTime = (
+            isoString: string | undefined,
+            fallback: string
+        ): string => {
+            if (!isoString) return fallback;
+            const date = new Date(isoString);
+            if (isNaN(date.getTime())) return fallback;
+            const pad = (n: number) => n.toString().padStart(2, '0');
+            return `${pad(date.getHours())}:${pad(date.getMinutes())}`;
+        };
+
+        const defaultStart =
+            session.slot === SessionSlot.AM ? '09:00' : '14:00';
+        const defaultEnd = session.slot === SessionSlot.AM ? '12:00' : '17:00';
+
+        const start = toLocalTime(session.startTime, defaultStart);
+        const end = toLocalTime(session.endTime, defaultEnd);
+
+        return `${start} - ${end}`;
     }
 
     /**

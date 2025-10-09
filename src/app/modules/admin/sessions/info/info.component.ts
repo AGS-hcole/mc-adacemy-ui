@@ -1,4 +1,4 @@
-import { AsyncPipe, NgForOf, NgIf } from '@angular/common';
+import { CommonModule } from '@angular/common';
 import {
     ChangeDetectionStrategy,
     ChangeDetectorRef,
@@ -32,8 +32,7 @@ import {
     UpdateSessionRequest,
 } from 'app/core/session/session.types';
 import { SessionsService } from 'app/core/session/sessions.service';
-import { SitesService } from 'app/core/sites/sites.service';
-import { Observable, Subject, takeUntil } from 'rxjs';
+import { combineLatest, Subject, takeUntil } from 'rxjs';
 
 @Component({
     selector: 'session-info',
@@ -42,14 +41,12 @@ import { Observable, Subject, takeUntil } from 'rxjs';
     host: { class: 'block w-full h-full' },
     changeDetection: ChangeDetectionStrategy.OnPush,
     imports: [
-        AsyncPipe,
-        RouterLink,
         FormsModule,
         ReactiveFormsModule,
         MatButtonModule,
         MatCheckboxModule,
-        NgForOf,
-        NgIf,
+        RouterLink,
+        CommonModule,
         MatDatepickerModule,
         MatFormFieldModule,
         MatIconModule,
@@ -60,7 +57,7 @@ import { Observable, Subject, takeUntil } from 'rxjs';
 })
 export class SessionInfoComponent implements OnInit, OnDestroy {
     sessionForm: UntypedFormGroup;
-    sites$: Observable<Site[]>;
+    sites: Site[] = [];
     session: Session | null = null;
     editMode: boolean = false;
 
@@ -76,8 +73,7 @@ export class SessionInfoComponent implements OnInit, OnDestroy {
         private _changeDetectorRef: ChangeDetectorRef,
         private _formBuilder: UntypedFormBuilder,
         private _router: Router,
-        private _sessionsService: SessionsService,
-        private _sitesService: SitesService
+        private _sessionsService: SessionsService
     ) {}
 
     // -----------------------------------------------------------------------------------------------------
@@ -88,38 +84,27 @@ export class SessionInfoComponent implements OnInit, OnDestroy {
      * On init
      */
     ngOnInit(): void {
-        // Get sites from SitesService (automatically loads available sites)
-        this.sites$ = this._sitesService.sites$;
-        this._sitesService.getSites().subscribe();
+        // Init the form
+        this.initForm();
 
-        // Create the form
-        this.sessionForm = this._formBuilder.group({
-            siteId: ['', [Validators.required]],
-            date: ['', [Validators.required]],
-            slot: ['', [Validators.required]],
-            startTime: [''],
-            endTime: [''],
-            notes: [''],
-            isPublished: [false],
-        });
+        // Wait for both session and sites to be loaded before binding
 
-        // Get session if editing
-        this._activatedRoute.params
+        combineLatest([
+            this._sessionsService.session$,
+            this._sessionsService.sites$,
+        ])
             .pipe(takeUntil(this._unsubscribeAll))
-            .subscribe((params) => {
-                if (params['id'] && params['id'] !== 'new') {
+            .subscribe(([session, sites]) => {
+                this.session = session;
+                this.sites = sites;
+
+                if (this.session) {
                     this.editMode = true;
-                    this._sessionsService
-                        .getSessionById(params['id'])
-                        .pipe(takeUntil(this._unsubscribeAll))
-                        .subscribe((session) => {
-                            this.session = session;
-                            this._patchForm(session);
-                            this._changeDetectorRef.markForCheck();
-                        });
-                } else {
-                    this.editMode = false;
+                    this._patchForm(this.session);
                 }
+
+                // Mark for check
+                this._changeDetectorRef.markForCheck();
             });
 
         // Watch slot changes to pre-fill default times
@@ -153,12 +138,26 @@ export class SessionInfoComponent implements OnInit, OnDestroy {
     ngOnDestroy(): void {
         this._unsubscribeAll.next(null);
         this._unsubscribeAll.complete();
-        this._sessionsService.resetSession();
     }
 
     // -----------------------------------------------------------------------------------------------------
     // @ Public methods
     // -----------------------------------------------------------------------------------------------------
+
+    initForm() {
+        this.sessionForm = this._formBuilder.group({
+            siteId: ['', [Validators.required]],
+            date: ['', [Validators.required]],
+            slot: ['', [Validators.required]],
+            startTime: [''],
+            endTime: [''],
+            notes: [''],
+            isPublished: [false],
+        });
+
+        // Mark for check
+        this._changeDetectorRef.markForCheck();
+    }
 
     /**
      * Save session
@@ -220,11 +219,13 @@ export class SessionInfoComponent implements OnInit, OnDestroy {
                 isPublished: formValue.isPublished,
             };
 
-            this._sessionsService.createSession(createRequest).subscribe(() => {
-                this._router.navigate(['../'], {
-                    relativeTo: this._activatedRoute,
+            this._sessionsService
+                .createSession(createRequest)
+                .subscribe((createdSession) => {
+                    this._router.navigate(['../', createdSession.id, 'info'], {
+                        relativeTo: this._activatedRoute,
+                    });
                 });
-            });
         }
     }
 
@@ -247,11 +248,35 @@ export class SessionInfoComponent implements OnInit, OnDestroy {
             siteId: session.siteId,
             date: new Date(session.date),
             slot: session.slot,
-            startTime: session.startTime || '',
-            endTime: session.endTime || '',
+            startTime: session.startTime
+                ? this._extractLocalTime(session.startTime)
+                : '',
+            endTime: session.endTime
+                ? this._extractLocalTime(session.endTime)
+                : '',
             notes: session.notes || '',
             isPublished: session.isPublished,
         });
+    }
+
+    /**
+     * Extracts "HH:mm" in local time from an ISO UTC date string or "HH:mm:ss" string.
+     */
+    private _extractLocalTime(dateTime: string): string {
+        if (!dateTime) return '';
+        // If ISO string, parse as UTC and convert to local time
+        const date = new Date(dateTime);
+        if (!isNaN(date.getTime())) {
+            const hh = String(date.getHours()).padStart(2, '0');
+            const mm = String(date.getMinutes()).padStart(2, '0');
+            return `${hh}:${mm}`;
+        }
+        // If already "HH:mm" or "HH:mm:ss"
+        const timeMatch = dateTime.match(/^(\d{2}):(\d{2})/);
+        if (timeMatch) {
+            return `${timeMatch[1]}:${timeMatch[2]}`;
+        }
+        return '';
     }
 
     /**
