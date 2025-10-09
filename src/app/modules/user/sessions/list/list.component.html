@@ -12,8 +12,8 @@
     <!-- Main content -->
     <div class="flex flex-auto overflow-y-auto">
         <div class="flex w-full flex-col p-6 md:p-8">
-            <ng-container *ngIf="sessions$ | async as sessions">
-                <ng-container *ngIf="user$ | async as user">
+            <ng-container *ngIf="sessions as sessions">
+                <ng-container *ngIf="user as user">
                     <!-- Sessions list -->
                     <ng-container *ngIf="sessions.length > 0; else noSessions">
                         <div class="grid grid-cols-1 gap-6">

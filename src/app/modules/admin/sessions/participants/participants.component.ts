@@ -152,8 +152,9 @@ export class SessionParticipantsComponent implements OnInit, OnDestroy {
         if (!this.session?.attendances) {
             return false;
         }
-        return this.session?.attendances.some(
-            (attendance) => attendance.userId === userId
+        return this.session.attendances.some(
+            (attendance) =>
+                attendance.userId === userId && attendance.status === 'YES'
         );
     }
 

@@ -155,6 +155,15 @@ export class AdminSessionsListComponent implements OnInit, OnDestroy {
     }
 
     /**
+     * Get participants count for a session
+     */
+    getParticipantsCount(session: Session): number {
+        return session.attendances
+            ? session.attendances.filter((a) => a.status === 'YES').length
+            : 0;
+    }
+
+    /**
      * Delete session
      */
     deleteSession(session: Session): void {

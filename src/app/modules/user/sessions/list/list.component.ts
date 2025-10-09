@@ -1,4 +1,4 @@
-import { AsyncPipe, CommonModule, DatePipe, NgClass } from '@angular/common';
+import { CommonModule, DatePipe, NgClass } from '@angular/common';
 import {
     ChangeDetectionStrategy,
     ChangeDetectorRef,
@@ -21,7 +21,7 @@ import { Session, SessionSlot } from 'app/core/session/session.types';
 import { SessionsService } from 'app/core/session/sessions.service';
 import { UserService } from 'app/core/user/user.service';
 import { User } from 'app/core/user/user.types';
-import { Observable, Subject, map, takeUntil } from 'rxjs';
+import { combineLatest, Subject, takeUntil } from 'rxjs';
 
 @Component({
     selector: 'user-sessions-list',
@@ -29,7 +29,6 @@ import { Observable, Subject, map, takeUntil } from 'rxjs';
     encapsulation: ViewEncapsulation.None,
     changeDetection: ChangeDetectionStrategy.OnPush,
     imports: [
-        AsyncPipe,
         DatePipe,
         NgClass,
         MatButtonModule,
@@ -40,8 +39,8 @@ import { Observable, Subject, map, takeUntil } from 'rxjs';
     ],
 })
 export class UserSessionsListComponent implements OnInit, OnDestroy {
-    sessions$: Observable<Session[]>;
-    user$: Observable<User>;
+    sessions: Session[] = [];
+    user: User;
 
     SessionSlot = SessionSlot;
 
@@ -66,21 +65,16 @@ export class UserSessionsListComponent implements OnInit, OnDestroy {
      * On init
      */
     ngOnInit(): void {
-        // Get current user
-        this.user$ = this._userService.user$;
-
-        // Get upcoming sessions
-        this.sessions$ = this._sessionsService
-            .getUpcomingSessions()
-            .pipe(
-                map((sessions) =>
-                    sessions.sort(
-                        (a, b) =>
-                            new Date(a.date).getTime() -
-                            new Date(b.date).getTime()
-                    )
-                )
-            );
+        combineLatest([
+            this._userService.user$,
+            this._sessionsService.getUpcomingSessions(),
+        ])
+            .pipe(takeUntil(this._unsubscribeAll))
+            .subscribe(([user, sessions]) => {
+                this.user = user;
+                this.sessions = sessions;
+                this._changeDetectorRef.markForCheck();
+            });
     }
 
     /**
@@ -115,9 +109,12 @@ export class UserSessionsListComponent implements OnInit, OnDestroy {
             .rsvp(session.id, { status: 'YES', comment: '' })
             .pipe(takeUntil(this._unsubscribeAll))
             .subscribe(() => {
-                // Refresh sessions
-                this._sessionsService.getUpcomingSessions().subscribe();
-                this._changeDetectorRef.markForCheck();
+                this._sessionsService
+                    .getUpcomingSessions()
+                    .subscribe((sessions) => {
+                        this.sessions = sessions;
+                        this._changeDetectorRef.markForCheck();
+                    });
             });
     }
 
@@ -155,7 +152,8 @@ export class UserSessionsListComponent implements OnInit, OnDestroy {
             return false;
         }
         return session.attendances.some(
-            (attendee) => attendee.userId === user.id
+            (attendee) =>
+                attendee.userId === user.id && attendee.status === 'YES'
         );
     }
 

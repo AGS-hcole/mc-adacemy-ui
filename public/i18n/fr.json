@@ -93,6 +93,9 @@
             },
             "SESSIONS": {
                 "TITLE": "Mes sessions"
+            },
+            "TOURNAMENTS": {
+                "TITLE": "Mes tournois"
             }
         }
     },

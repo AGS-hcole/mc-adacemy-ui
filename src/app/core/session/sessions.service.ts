@@ -223,7 +223,7 @@ export class SessionsService {
     adminRsvp(sessionId: string, payload: any): Observable<Session> {
         return this._httpClient
             .post<Session>(
-                `${this.apiUrl}/sessions/${sessionId}/admin-register`,
+                `${this.apiUrl}/sessions/${sessionId}/admin-rsvp`,
                 payload
             )
             .pipe(

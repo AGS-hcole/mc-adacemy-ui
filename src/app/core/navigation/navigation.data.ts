@@ -85,6 +85,18 @@ export const userNavigation: FuseNavigationItem[] = [
                 icon: 'heroicons_outline:calendar',
                 link: '/user/sessions',
             },
+            {
+                id: 'tournaments',
+                title: 'NAVIGATION.USER.TOURNAMENTS.TITLE',
+                type: 'basic',
+                icon: 'heroicons_outline:trophy',
+                link: '/user/tournaments',
+                disabled: true,
+                badge: {
+                    title: 'Bientôt dispo',
+                    classes: 'bg-gray-500 rounded-full px-2 text-white',
+                },
+            },
         ],
     },
 ];
