@@ -103,8 +103,8 @@ export class SessionParticipantsComponent implements OnInit, OnDestroy {
         }
 
         this._sessionsService
-            .adminRegisterUser({
-                sessionId: this.session.id,
+            .adminRsvp(this.session.id, {
+                status: 'YES',
                 userId: this.selectedUserId,
             })
             .pipe(takeUntil(this._unsubscribeAll))
@@ -132,7 +132,10 @@ export class SessionParticipantsComponent implements OnInit, OnDestroy {
         confirmation.afterClosed().subscribe((result) => {
             if (result === 'confirmed') {
                 this._sessionsService
-                    .adminRemoveAttendee(this.session.id, attendanceId)
+                    .adminRsvp(this.session.id, {
+                        status: 'NO',
+                        userId: attendanceId,
+                    })
                     .pipe(takeUntil(this._unsubscribeAll))
                     .subscribe((updatedSession) => {
                         this.session = updatedSession;
@@ -146,10 +149,10 @@ export class SessionParticipantsComponent implements OnInit, OnDestroy {
      * Check if user is already registered
      */
     isUserRegistered(userId: string): boolean {
-        if (!this.session.attendances) {
+        if (!this.session?.attendances) {
             return false;
         }
-        return this.session.attendances.some(
+        return this.session?.attendances.some(
             (attendance) => attendance.userId === userId
         );
     }

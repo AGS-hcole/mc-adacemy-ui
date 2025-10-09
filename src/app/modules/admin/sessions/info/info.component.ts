@@ -39,6 +39,7 @@ import { Observable, Subject, takeUntil } from 'rxjs';
     selector: 'session-info',
     templateUrl: './info.component.html',
     encapsulation: ViewEncapsulation.None,
+    host: { class: 'block w-full h-full' },
     changeDetection: ChangeDetectionStrategy.OnPush,
     imports: [
         AsyncPipe,
