@@ -1,0 +1,123 @@
+<div class="bg-card rounded-lg shadow">
+    <div class="p-6">
+        <div class="mb-4 flex items-center justify-between">
+            <h3 class="text-lg font-semibold">{{ 'REPORTS.TABLE.TITLE' | transloco }}</h3>
+        </div>
+
+        <!-- Loading skeleton -->
+        <div *ngIf="loading" class="space-y-4">
+            <div class="h-12 bg-gray-200 rounded animate-pulse"></div>
+            <div class="h-12 bg-gray-200 rounded animate-pulse"></div>
+            <div class="h-12 bg-gray-200 rounded animate-pulse"></div>
+            <div class="h-12 bg-gray-200 rounded animate-pulse"></div>
+            <div class="h-12 bg-gray-200 rounded animate-pulse"></div>
+        </div>
+
+        <!-- Table -->
+        <div *ngIf="!loading && sessionsList && sessionsList.items.length > 0" class="overflow-x-auto">
+            <table mat-table [dataSource]="sessionsList.items" class="w-full">
+                <!-- Date Column -->
+                <ng-container matColumnDef="date">
+                    <th mat-header-cell *matHeaderCellDef class="font-semibold">
+                        {{ 'REPORTS.TABLE.DATE' | transloco }}
+                    </th>
+                    <td mat-cell *matCellDef="let element">
+                        {{ formatDate(element.date) }}
+                    </td>
+                </ng-container>
+
+                <!-- Title Column -->
+                <ng-container matColumnDef="title">
+                    <th mat-header-cell *matHeaderCellDef class="font-semibold">
+                        {{ 'REPORTS.TABLE.SESSION_TITLE' | transloco }}
+                    </th>
+                    <td mat-cell *matCellDef="let element">
+                        {{ element.title }}
+                    </td>
+                </ng-container>
+
+                <!-- Coach Column -->
+                <ng-container matColumnDef="coach">
+                    <th mat-header-cell *matHeaderCellDef class="font-semibold">
+                        {{ 'REPORTS.TABLE.COACH' | transloco }}
+                    </th>
+                    <td mat-cell *matCellDef="let element">
+                        {{ element.coachName || '-' }}
+                    </td>
+                </ng-container>
+
+                <!-- Contract Type Column -->
+                <ng-container matColumnDef="contractType">
+                    <th mat-header-cell *matHeaderCellDef class="font-semibold">
+                        {{ 'REPORTS.TABLE.CONTRACT' | transloco }}
+                    </th>
+                    <td mat-cell *matCellDef="let element">
+                        <span class="px-2 py-1 text-xs font-medium rounded-full"
+                              [ngClass]="element.contractType === 'UNDER' ? 'bg-green-100 text-green-800' : 'bg-amber-100 text-amber-800'">
+                            {{ getContractTypeLabel(element.contractType) }}
+                        </span>
+                    </td>
+                </ng-container>
+
+                <!-- Attendees Count Column -->
+                <ng-container matColumnDef="attendeesCount">
+                    <th mat-header-cell *matHeaderCellDef class="font-semibold">
+                        {{ 'REPORTS.TABLE.ATTENDEES' | transloco }}
+                    </th>
+                    <td mat-cell *matCellDef="let element">
+                        {{ element.attendeesCount }}
+                    </td>
+                </ng-container>
+
+                <!-- Status Column -->
+                <ng-container matColumnDef="status">
+                    <th mat-header-cell *matHeaderCellDef class="font-semibold">
+                        {{ 'REPORTS.TABLE.STATUS' | transloco }}
+                    </th>
+                    <td mat-cell *matCellDef="let element">
+                        <span class="px-2 py-1 text-xs font-medium rounded-full"
+                              [ngClass]="getStatusClass(element.status)">
+                            {{ getStatusLabel(element.status) }}
+                        </span>
+                    </td>
+                </ng-container>
+
+                <!-- Actions Column -->
+                <ng-container matColumnDef="actions">
+                    <th mat-header-cell *matHeaderCellDef class="font-semibold"></th>
+                    <td mat-cell *matCellDef="let element">
+                        <button
+                            mat-icon-button
+                            [matTooltip]="'REPORTS.ACTIONS.VIEW_SESSION' | transloco"
+                            (click)="onViewSession(element.id)">
+                            <mat-icon class="icon-size-5" svgIcon="heroicons_solid:eye"></mat-icon>
+                        </button>
+                    </td>
+                </ng-container>
+
+                <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+                <tr mat-row *matRowDef="let row; columns: displayedColumns"></tr>
+            </table>
+
+            <!-- Paginator -->
+            <mat-paginator
+                *ngIf="sessionsList"
+                [length]="sessionsList.total"
+                [pageSize]="sessionsList.pageSize"
+                [pageIndex]="sessionsList.page - 1"
+                [pageSizeOptions]="[10, 25, 50, 100]"
+                (page)="onPageChange($event)"
+                showFirstLastButtons>
+            </mat-paginator>
+        </div>
+
+        <!-- Empty state -->
+        <div *ngIf="!loading && (!sessionsList || sessionsList.items.length === 0)"
+             class="flex items-center justify-center py-16 text-secondary">
+            <div class="text-center">
+                <mat-icon class="icon-size-12 mb-4" svgIcon="heroicons_outline:document-text"></mat-icon>
+                <p>{{ 'REPORTS.EMPTY.NO_SESSIONS' | transloco }}</p>
+            </div>
+        </div>
+    </div>
+</div>
