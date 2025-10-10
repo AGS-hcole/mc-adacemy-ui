@@ -155,7 +155,7 @@
                                 <!-- Date -->
                                 <div class="flex flex-col">
                                     <span class="font-medium">{{
-                                        session.date | date: 'fullDate'
+                                        session.date | localizedDate: 'fullDate'
                                     }}</span>
                                     <span
                                         class="text-secondary text-sm"
@@ -374,7 +374,7 @@
                                 <!-- Date and details -->
                                 <div class="flex flex-col">
                                     <span class="font-medium">{{
-                                        session.date | date: 'shortDate'
+                                        session.date | localizedDate: 'shortDate'
                                     }}</span>
                                     <span class="text-secondary text-xs">
                                         {{ getDisplayTime(session) }}
@@ -530,7 +530,7 @@
                                         </mat-icon>
                                         <div class="flex flex-col">
                                             <span class="font-medium">{{
-                                                session.date | date: 'fullDate'
+                                                session.date | localizedDate: 'fullDate'
                                             }}</span>
                                             <span
                                                 class="text-secondary text-sm"

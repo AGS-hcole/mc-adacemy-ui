@@ -8,6 +8,7 @@ import {
     ViewEncapsulation,
 } from '@angular/core';
 import { MatButtonModule } from '@angular/material/button';
+import { DateAdapter } from '@angular/material/core';
 import { MatMenuModule } from '@angular/material/menu';
 import {
     FuseNavigationService,
@@ -35,7 +36,8 @@ export class LanguagesComponent implements OnInit, OnDestroy {
     constructor(
         private _changeDetectorRef: ChangeDetectorRef,
         private _fuseNavigationService: FuseNavigationService,
-        private _translocoService: TranslocoService
+        private _translocoService: TranslocoService,
+        private _dateAdapter: DateAdapter<any>
     ) {}
 
     // -----------------------------------------------------------------------------------------------------
@@ -82,6 +84,9 @@ export class LanguagesComponent implements OnInit, OnDestroy {
     setActiveLang(lang: string): void {
         // Set the active lang
         this._translocoService.setActiveLang(lang);
+        
+        // Update the DateAdapter locale to match the selected language
+        this._dateAdapter.setLocale(lang);
     }
 
     /**
