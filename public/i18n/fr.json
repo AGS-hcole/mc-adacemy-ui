@@ -179,7 +179,7 @@
         "STATUS": {
             "PUBLISHED": "Publié",
             "DRAFT": "Brouillon",
-            "CANCELLED": "Annulé"
+            "CANCELED": "Annulé"
         },
         "ADMIN": {
             "TITLE": "Sessions d'entraînement",

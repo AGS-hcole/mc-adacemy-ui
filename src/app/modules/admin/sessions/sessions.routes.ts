@@ -14,6 +14,21 @@ import { SessionParticipantsComponent } from './participants/participants.compon
 import { SessionsViewComponent } from './view/view.component';
 
 /**
+ * Sessions resolver
+ */
+const sessionsResolver = (
+    route: ActivatedRouteSnapshot,
+    state: RouterStateSnapshot
+) => {
+    const sessionsService = inject(SessionsService);
+    const router = inject(Router);
+
+    return sessionsService
+        .getSessions()
+        .pipe(catchError((error) => handleResolverError(error, state, router)));
+};
+
+/**
  * Session resolver
  */
 const sessionResolver = (
@@ -46,6 +61,10 @@ export default [
     {
         path: '',
         component: AdminSessionsListComponent,
+        resolve: {
+            sites: sitesResolver,
+            sessions: sessionsResolver,
+        },
     },
     {
         path: 'new',

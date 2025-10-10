@@ -39,12 +39,11 @@
                 <mat-option [value]="null">{{
                     'SESSIONS.ADMIN.FILTERS.ALL_SITES' | transloco
                 }}</mat-option>
-                <mat-option
-                    *ngFor="let site of sites$ | async"
-                    [value]="site.id"
-                >
-                    {{ site.name }}
-                </mat-option>
+                @for (site of sites; track site.id) {
+                    <mat-option [value]="site.id">
+                        {{ site.name }}
+                    </mat-option>
+                }
             </mat-select>
         </mat-form-field>
 
@@ -94,7 +93,7 @@
     <!-- Sessions list -->
     <div class="flex flex-auto overflow-hidden">
         <div class="flex flex-auto flex-col overflow-y-auto">
-            <ng-container *ngIf="sessions$ | async as sessions">
+            <ng-container *ngIf="sessions as sessions">
                 <!-- Sessions table -->
                 <ng-container *ngIf="sessions.length > 0; else noSessions">
                     <div class="grid">
@@ -213,24 +212,24 @@
                                         [ngClass]="{
                                             'bg-green-200 text-green-800 dark:bg-green-600 dark:text-green-50':
                                                 session.isPublished &&
-                                                !session.isCancelled,
+                                                !session.isCanceled,
                                             'bg-gray-200 text-gray-800 dark:bg-gray-600 dark:text-gray-50':
                                                 !session.isPublished &&
-                                                !session.isCancelled,
+                                                !session.isCanceled,
                                             'bg-red-200 text-red-800 dark:bg-red-600 dark:text-red-50':
-                                                session.isCancelled,
+                                                session.isCanceled,
                                         }"
                                     >
                                         <ng-container
-                                            *ngIf="session.isCancelled"
+                                            *ngIf="session.isCanceled"
                                         >
                                             {{
-                                                'SESSIONS.STATUS.CANCELLED'
+                                                'SESSIONS.STATUS.CANCELED'
                                                     | transloco
                                             }}
                                         </ng-container>
                                         <ng-container
-                                            *ngIf="!session.isCancelled"
+                                            *ngIf="!session.isCanceled"
                                         >
                                             {{
                                                 session.isPublished
@@ -267,7 +266,7 @@
 
                                     <button
                                         mat-icon-button
-                                        *ngIf="!session.isCancelled"
+                                        *ngIf="!session.isCanceled"
                                         [matTooltip]="
                                             session.isPublished
                                                 ? ('SESSIONS.ADMIN.ACTIONS.UNPUBLISH'
@@ -290,7 +289,7 @@
 
                                     <button
                                         mat-icon-button
-                                        *ngIf="!session.isCancelled"
+                                        *ngIf="!session.isCanceled"
                                         [matTooltip]="
                                             'SESSIONS.ADMIN.ACTIONS.CANCEL'
                                                 | transloco

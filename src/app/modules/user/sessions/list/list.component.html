@@ -54,14 +54,14 @@
                                                             session,
                                                             user
                                                         ) &&
-                                                        !session.isCancelled,
+                                                        !session.isCanceled,
                                                     'border-green-500 bg-green-50 dark:bg-green-900/20':
                                                         isRegistered(
                                                             session,
                                                             user
                                                         ),
                                                     'border-red-500 bg-red-50 dark:bg-red-900/20':
-                                                        session.isCancelled,
+                                                        session.isCanceled,
                                                 }"
                                             >
                                                 <!-- Card header -->
@@ -71,13 +71,13 @@
                                                         'bg-blue-100 dark:bg-blue-900':
                                                             session.slot ===
                                                                 SessionSlot.AM &&
-                                                            !session.isCancelled,
+                                                            !session.isCanceled,
                                                         'bg-amber-100 dark:bg-amber-900':
                                                             session.slot ===
                                                                 SessionSlot.PM &&
-                                                            !session.isCancelled,
+                                                            !session.isCanceled,
                                                         'bg-gray-100 dark:bg-gray-800':
-                                                            session.isCancelled,
+                                                            session.isCanceled,
                                                     }"
                                                 >
                                                     <div
@@ -181,7 +181,7 @@
                                                                         user
                                                                     ),
                                                                 'text-red-600 dark:text-red-400':
-                                                                    session.isCancelled,
+                                                                    session.isCanceled,
                                                                 'text-blue-600 dark:text-blue-400':
                                                                     canRegister(
                                                                         session,
@@ -196,7 +196,7 @@
                                                                         session,
                                                                         user
                                                                     ) &&
-                                                                    !session.isCancelled,
+                                                                    !session.isCanceled,
                                                             }"
                                                         >
                                                             {{
