@@ -1,4 +1,4 @@
-<div class="absolute inset-0 flex min-w-0 flex-col overflow-hidden">
+<div class="absolute inset-0 flex min-w-0 flex-col overflow-y-auto sm:overflow-hidden">
     <!-- Header -->
     <div
         class="bg-card relative flex flex-0 flex-col border-b px-6 py-8 sm:flex-row sm:items-center sm:justify-between md:px-8 dark:bg-transparent"
@@ -25,7 +25,7 @@
 
     <!-- Filters -->
     <div
-        class="flex flex-col items-start gap-0 bg-gray-50 p-6 sm:flex-row sm:items-center sm:gap-4 dark:bg-gray-900"
+        class="flex flex-0 flex-col items-start gap-0 bg-gray-50 p-6 sm:flex-row sm:items-center sm:gap-4 dark:bg-gray-900"
     >
         <!-- Site filter -->
         <mat-form-field class="w-full sm:w-48">
@@ -91,8 +91,8 @@
     </div>
 
     <!-- Sessions list -->
-    <div class="flex flex-auto overflow-hidden">
-        <div class="flex flex-auto flex-col overflow-y-auto">
+    <div class="flex flex-auto sm:overflow-hidden">
+        <div class="flex flex-auto flex-col sm:overflow-y-auto">
             <ng-container *ngIf="sessions as sessions">
                 <!-- Sessions table -->
                 <ng-container *ngIf="sessions.length > 0; else noSessions">
