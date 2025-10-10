@@ -24,19 +24,23 @@ export class ReportsApiService {
         userId?: string,
         contractScope?: string
     ): Observable<SessionsSummaryDto> {
-        let params = new HttpParams()
-            .set('from', from)
-            .set('to', to);
+        const paramsObj: Record<string, string> = {
+            from,
+            to,
+        };
 
         if (userId) {
-            params = params.set('userId', userId);
-        }
-        if (contractScope && contractScope !== 'all') {
-            params = params.set('contractScope', contractScope);
+            paramsObj['userId'] = userId;
         }
 
+        if (contractScope && contractScope !== 'all') {
+            paramsObj['contractScope'] = contractScope;
+        }
+
+        const params = new HttpParams({ fromObject: paramsObj });
+
         return this._httpClient.get<SessionsSummaryDto>(
-            `${this.apiUrl}/v1/reports/sessions/summary`,
+            `${this.apiUrl}/reports/sessions/summary`,
             { params }
         );
     }
@@ -64,7 +68,7 @@ export class ReportsApiService {
         }
 
         return this._httpClient.get<SessionsTimeseriesDto>(
-            `${this.apiUrl}/v1/reports/sessions/timeseries`,
+            `${this.apiUrl}/reports/sessions/timeseries`,
             { params }
         );
     }
@@ -96,7 +100,7 @@ export class ReportsApiService {
         }
 
         return this._httpClient.get<SessionsListDto>(
-            `${this.apiUrl}/v1/reports/sessions/list`,
+            `${this.apiUrl}/reports/sessions/list`,
             { params }
         );
     }
@@ -120,7 +124,7 @@ export class ReportsApiService {
         }
 
         return this._httpClient.get<UsersLookupDto>(
-            `${this.apiUrl}/v1/users/lookup`,
+            `${this.apiUrl}/users/lookup`,
             { params }
         );
     }

@@ -1,9 +1,13 @@
-<div class="flex flex-col w-full min-h-screen">
+<div class="absolute inset-0 flex min-w-0 flex-col overflow-y-auto">
     <!-- Header -->
     <div class="bg-card shadow-sm">
         <div class="px-6 py-8">
-            <h1 class="text-3xl font-bold">{{ 'REPORTS.TITLE' | transloco }}</h1>
-            <p class="text-secondary mt-2">{{ 'REPORTS.DESCRIPTION' | transloco }}</p>
+            <h1 class="text-3xl font-bold">
+                {{ 'REPORTS.TITLE' | transloco }}
+            </h1>
+            <p class="text-secondary mt-2">
+                {{ 'REPORTS.DESCRIPTION' | transloco }}
+            </p>
         </div>
     </div>
 
@@ -12,19 +16,28 @@
         [filters]="filters"
         (filtersChange)="onFiltersChange($event)"
         (apply)="onApplyFilters()"
-        (reset)="onResetFilters()">
+        (reset)="onResetFilters()"
+    >
     </reports-filters>
 
     <!-- Main Content -->
-    <div class="flex-auto p-6 space-y-8">
+    <div class="flex-auto space-y-8 p-6">
         <!-- Error Banner -->
-        <div *ngIf="error" class="bg-red-50 border border-red-200 rounded-lg p-4">
+        <div
+            *ngIf="error"
+            class="rounded-lg border border-red-200 bg-red-50 p-4"
+        >
             <div class="flex items-center justify-between">
                 <div class="flex items-center">
-                    <mat-icon class="text-red-600 icon-size-6 mr-3" svgIcon="heroicons_solid:exclamation-circle"></mat-icon>
+                    <mat-icon
+                        class="mr-3 text-red-600 icon-size-6"
+                        svgIcon="heroicons_solid:exclamation-circle"
+                    ></mat-icon>
                     <div>
-                        <h4 class="text-red-800 font-semibold">{{ 'REPORTS.ERROR.TITLE' | transloco }}</h4>
-                        <p class="text-red-700 text-sm mt-1">{{ error }}</p>
+                        <h4 class="font-semibold text-red-800">
+                            {{ 'REPORTS.ERROR.TITLE' | transloco }}
+                        </h4>
+                        <p class="mt-1 text-sm text-red-700">{{ error }}</p>
                     </div>
                 </div>
                 <button mat-stroked-button color="warn" (click)="retry()">
@@ -34,18 +47,17 @@
         </div>
 
         <!-- KPI Cards -->
-        <reports-kpi-cards
-            [summary]="summary"
-            [loading]="loading">
+        <reports-kpi-cards [summary]="summary" [loading]="loading">
         </reports-kpi-cards>
 
         <!-- Charts -->
-        <div class="grid grid-cols-1 lg:grid-cols-2 gap-8">
+        <div class="grid grid-cols-1 gap-8 lg:grid-cols-2">
             <!-- Timeseries Chart -->
             <div class="lg:col-span-2">
                 <reports-timeseries-chart
                     [timeseries]="timeseries"
-                    [loading]="loading">
+                    [loading]="loading"
+                >
                 </reports-timeseries-chart>
             </div>
 
@@ -53,26 +65,39 @@
             <div class="lg:col-span-2">
                 <reports-contract-share-chart
                     [summary]="summary"
-                    [loading]="loading">
+                    [loading]="loading"
+                >
                 </reports-contract-share-chart>
             </div>
         </div>
 
         <!-- Export Actions -->
-        <div class="flex items-center justify-end gap-2 mb-4">
+        <div class="mb-4 flex items-center justify-end gap-2">
             <button
                 mat-stroked-button
                 (click)="exportCsv()"
-                [disabled]="!sessionsList || sessionsList.items.length === 0">
-                <mat-icon class="icon-size-5" svgIcon="heroicons_solid:document-arrow-down"></mat-icon>
-                <span class="ml-2">{{ 'REPORTS.ACTIONS.EXPORT_CSV' | transloco }}</span>
+                [disabled]="!sessionsList || sessionsList.items.length === 0"
+            >
+                <mat-icon
+                    class="icon-size-5"
+                    svgIcon="heroicons_solid:document-arrow-down"
+                ></mat-icon>
+                <span class="ml-2">{{
+                    'REPORTS.ACTIONS.EXPORT_CSV' | transloco
+                }}</span>
             </button>
             <button
                 mat-stroked-button
                 (click)="exportJson()"
-                [disabled]="!sessionsList || sessionsList.items.length === 0">
-                <mat-icon class="icon-size-5" svgIcon="heroicons_solid:code-bracket"></mat-icon>
-                <span class="ml-2">{{ 'REPORTS.ACTIONS.EXPORT_JSON' | transloco }}</span>
+                [disabled]="!sessionsList || sessionsList.items.length === 0"
+            >
+                <mat-icon
+                    class="icon-size-5"
+                    svgIcon="heroicons_solid:code-bracket"
+                ></mat-icon>
+                <span class="ml-2">{{
+                    'REPORTS.ACTIONS.EXPORT_JSON' | transloco
+                }}</span>
             </button>
         </div>
 
@@ -81,7 +106,8 @@
             [sessionsList]="sessionsList"
             [loading]="loading"
             (pageChange)="onPageChange($event)"
-            (viewSession)="onViewSession($event)">
+            (viewSession)="onViewSession($event)"
+        >
         </reports-table>
     </div>
 </div>
