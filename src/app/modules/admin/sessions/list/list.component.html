@@ -25,7 +25,7 @@
 
     <!-- Filters -->
     <div
-        class="flex flex-col items-start gap-4 bg-gray-50 p-6 sm:flex-row sm:items-center dark:bg-gray-900"
+        class="flex flex-col items-start gap-0 bg-gray-50 p-6 sm:flex-row sm:items-center sm:gap-4 dark:bg-gray-900"
     >
         <!-- Site filter -->
         <mat-form-field class="w-full sm:w-48">
@@ -214,24 +214,24 @@
                                         [ngClass]="{
                                             'bg-green-200 text-green-800 dark:bg-green-600 dark:text-green-50':
                                                 session.isPublished &&
-                                                !session.isCancelled,
+                                                !session.isCanceled,
                                             'bg-gray-200 text-gray-800 dark:bg-gray-600 dark:text-gray-50':
                                                 !session.isPublished &&
-                                                !session.isCancelled,
+                                                !session.isCanceled,
                                             'bg-red-200 text-red-800 dark:bg-red-600 dark:text-red-50':
-                                                session.isCancelled,
+                                                session.isCanceled,
                                         }"
                                     >
                                         <ng-container
-                                            *ngIf="session.isCancelled"
+                                            *ngIf="session.isCanceled"
                                         >
                                             {{
-                                                'SESSIONS.STATUS.CANCELLED'
+                                                'SESSIONS.STATUS.CANCELED'
                                                     | transloco
                                             }}
                                         </ng-container>
                                         <ng-container
-                                            *ngIf="!session.isCancelled"
+                                            *ngIf="!session.isCanceled"
                                         >
                                             {{
                                                 session.isPublished
@@ -268,7 +268,7 @@
 
                                     <button
                                         mat-icon-button
-                                        *ngIf="!session.isCancelled"
+                                        *ngIf="!session.isCanceled"
                                         [matTooltip]="
                                             session.isPublished
                                                 ? ('SESSIONS.ADMIN.ACTIONS.UNPUBLISH'
@@ -291,7 +291,7 @@
 
                                     <button
                                         mat-icon-button
-                                        *ngIf="!session.isCancelled"
+                                        *ngIf="!session.isCanceled"
                                         [matTooltip]="
                                             'SESSIONS.ADMIN.ACTIONS.CANCEL'
                                                 | transloco
@@ -379,7 +379,9 @@
                                     }}</span>
                                     <span class="text-secondary text-xs">
                                         {{ getDisplayTime(session) }}
-                                        <ng-container *ngIf="session.site?.name">
+                                        <ng-container
+                                            *ngIf="session.site?.name"
+                                        >
                                             • {{ session.site.name }}
                                         </ng-container>
                                     </span>
@@ -410,24 +412,24 @@
                                         [ngClass]="{
                                             'bg-green-200 text-green-800 dark:bg-green-600 dark:text-green-50':
                                                 session.isPublished &&
-                                                !session.isCancelled,
+                                                !session.isCanceled,
                                             'bg-gray-200 text-gray-800 dark:bg-gray-600 dark:text-gray-50':
                                                 !session.isPublished &&
-                                                !session.isCancelled,
+                                                !session.isCanceled,
                                             'bg-red-200 text-red-800 dark:bg-red-600 dark:text-red-50':
-                                                session.isCancelled,
+                                                session.isCanceled,
                                         }"
                                     >
                                         <ng-container
-                                            *ngIf="session.isCancelled"
+                                            *ngIf="session.isCanceled"
                                         >
                                             {{
-                                                'SESSIONS.STATUS.CANCELLED'
+                                                'SESSIONS.STATUS.CANCELED'
                                                     | transloco
                                             }}
                                         </ng-container>
                                         <ng-container
-                                            *ngIf="!session.isCancelled"
+                                            *ngIf="!session.isCanceled"
                                         >
                                             {{
                                                 session.isPublished
@@ -464,7 +466,7 @@
 
                                     <button
                                         mat-icon-button
-                                        *ngIf="!session.isCancelled"
+                                        *ngIf="!session.isCanceled"
                                         [matTooltip]="
                                             session.isPublished
                                                 ? ('SESSIONS.ADMIN.ACTIONS.UNPUBLISH'
@@ -512,22 +514,28 @@
                             *ngFor="let session of sessions; trackBy: trackByFn"
                         >
                             <div
-                                class="border-b bg-card p-4 hover:bg-gray-50 dark:hover:bg-gray-900"
+                                class="bg-card border-b p-4 hover:bg-gray-50 dark:hover:bg-gray-900"
                                 (click)="editSession(session.id)"
                             >
                                 <!-- Header with icon and date -->
-                                <div class="mb-3 flex items-start justify-between">
+                                <div
+                                    class="mb-3 flex items-start justify-between"
+                                >
                                     <div class="flex items-start gap-3">
                                         <mat-icon
-                                            class="icon-size-5 mt-1"
-                                            [svgIcon]="'heroicons_outline:calendar'"
+                                            class="mt-1 icon-size-5"
+                                            [svgIcon]="
+                                                'heroicons_outline:calendar'
+                                            "
                                         >
                                         </mat-icon>
                                         <div class="flex flex-col">
                                             <span class="font-medium">{{
                                                 session.date | date: 'fullDate'
                                             }}</span>
-                                            <span class="text-secondary text-sm">
+                                            <span
+                                                class="text-secondary text-sm"
+                                            >
                                                 {{ getDisplayTime(session) }}
                                             </span>
                                         </div>
@@ -538,16 +546,23 @@
                                 <div class="mb-3 flex flex-col gap-2">
                                     <!-- Slot -->
                                     <div class="flex items-center gap-2">
-                                        <span class="text-secondary text-sm font-medium">
-                                            {{ 'SESSIONS.ADMIN.TABLE.SLOT' | transloco }}:
+                                        <span
+                                            class="text-secondary text-sm font-medium"
+                                        >
+                                            {{
+                                                'SESSIONS.ADMIN.TABLE.SLOT'
+                                                    | transloco
+                                            }}:
                                         </span>
                                         <span
                                             class="inline-flex items-center rounded-full px-2.5 py-0.5 text-xs font-bold uppercase tracking-wide"
                                             [ngClass]="{
                                                 'bg-blue-200 text-blue-800 dark:bg-blue-600 dark:text-blue-50':
-                                                    session.slot === SessionSlot.AM,
+                                                    session.slot ===
+                                                    SessionSlot.AM,
                                                 'bg-amber-200 text-amber-800 dark:bg-amber-600 dark:text-amber-50':
-                                                    session.slot === SessionSlot.PM,
+                                                    session.slot ===
+                                                    SessionSlot.PM,
                                             }"
                                         >
                                             {{
@@ -559,20 +574,35 @@
 
                                     <!-- Site -->
                                     <div class="flex items-center gap-2">
-                                        <span class="text-secondary text-sm font-medium">
-                                            {{ 'SESSIONS.ADMIN.TABLE.SITE' | transloco }}:
+                                        <span
+                                            class="text-secondary text-sm font-medium"
+                                        >
+                                            {{
+                                                'SESSIONS.ADMIN.TABLE.SITE'
+                                                    | transloco
+                                            }}:
                                         </span>
                                         <span class="text-sm">
-                                            {{ session.site?.name || session.siteId }}
+                                            {{
+                                                session.site?.name ||
+                                                    session.siteId
+                                            }}
                                         </span>
                                     </div>
 
                                     <!-- Participants -->
                                     <div class="flex items-center gap-2">
-                                        <span class="text-secondary text-sm font-medium">
-                                            {{ 'SESSIONS.ADMIN.TABLE.PARTICIPANTS' | transloco }}:
+                                        <span
+                                            class="text-secondary text-sm font-medium"
+                                        >
+                                            {{
+                                                'SESSIONS.ADMIN.TABLE.PARTICIPANTS'
+                                                    | transloco
+                                            }}:
                                         </span>
-                                        <div class="flex items-center gap-1 text-sm">
+                                        <div
+                                            class="flex items-center gap-1 text-sm"
+                                        >
                                             <mat-icon
                                                 class="icon-size-4"
                                                 [svgIcon]="
@@ -581,39 +611,48 @@
                                             >
                                             </mat-icon>
                                             <span>
-                                                {{ getParticipantsCount(session) }}
+                                                {{
+                                                    getParticipantsCount(
+                                                        session
+                                                    )
+                                                }}
                                             </span>
                                         </div>
                                     </div>
 
                                     <!-- Status -->
                                     <div class="flex items-center gap-2">
-                                        <span class="text-secondary text-sm font-medium">
-                                            {{ 'SESSIONS.ADMIN.TABLE.STATUS' | transloco }}:
+                                        <span
+                                            class="text-secondary text-sm font-medium"
+                                        >
+                                            {{
+                                                'SESSIONS.ADMIN.TABLE.STATUS'
+                                                    | transloco
+                                            }}:
                                         </span>
                                         <span
                                             class="inline-flex items-center rounded-full px-2.5 py-0.5 text-xs font-bold uppercase tracking-wide"
                                             [ngClass]="{
                                                 'bg-green-200 text-green-800 dark:bg-green-600 dark:text-green-50':
                                                     session.isPublished &&
-                                                    !session.isCancelled,
+                                                    !session.isCanceled,
                                                 'bg-gray-200 text-gray-800 dark:bg-gray-600 dark:text-gray-50':
                                                     !session.isPublished &&
-                                                    !session.isCancelled,
+                                                    !session.isCanceled,
                                                 'bg-red-200 text-red-800 dark:bg-red-600 dark:text-red-50':
-                                                    session.isCancelled,
+                                                    session.isCanceled,
                                             }"
                                         >
                                             <ng-container
-                                                *ngIf="session.isCancelled"
+                                                *ngIf="session.isCanceled"
                                             >
                                                 {{
-                                                    'SESSIONS.STATUS.CANCELLED'
+                                                    'SESSIONS.STATUS.CANCELED'
                                                         | transloco
                                                 }}
                                             </ng-container>
                                             <ng-container
-                                                *ngIf="!session.isCancelled"
+                                                *ngIf="!session.isCanceled"
                                             >
                                                 {{
                                                     session.isPublished
@@ -659,7 +698,7 @@
 
                                     <button
                                         mat-icon-button
-                                        *ngIf="!session.isCancelled"
+                                        *ngIf="!session.isCanceled"
                                         [matTooltip]="
                                             session.isPublished
                                                 ? ('SESSIONS.ADMIN.ACTIONS.UNPUBLISH'
@@ -682,7 +721,7 @@
 
                                     <button
                                         mat-icon-button
-                                        *ngIf="!session.isCancelled"
+                                        *ngIf="!session.isCanceled"
                                         [matTooltip]="
                                             'SESSIONS.ADMIN.ACTIONS.CANCEL'
                                                 | transloco
