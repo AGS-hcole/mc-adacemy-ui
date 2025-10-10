@@ -233,7 +233,7 @@
         "STATUS": {
             "PUBLISHED": "Published",
             "DRAFT": "Draft",
-            "CANCELLED": "Cancelled"
+            "CANCELED": "Canceled"
         },
         "ADMIN": {
             "TITLE": "Training Sessions",
@@ -291,7 +291,7 @@
             "STATUS": {
                 "AVAILABLE": "Available",
                 "REGISTERED": "Registered",
-                "CANCELLED": "Cancelled",
+                "CANCELED": "Canceled",
                 "CUTOFF_PASSED": "Registration deadline passed",
                 "FULL": "Full",
                 "NOT_PUBLISHED": "Not published",

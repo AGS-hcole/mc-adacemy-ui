@@ -39,12 +39,11 @@
                 <mat-option [value]="null">{{
                     'SESSIONS.ADMIN.FILTERS.ALL_SITES' | transloco
                 }}</mat-option>
-                <mat-option
-                    *ngFor="let site of sites$ | async"
-                    [value]="site.id"
-                >
-                    {{ site.name }}
-                </mat-option>
+                @for (site of sites; track site.id) {
+                    <mat-option [value]="site.id">
+                        {{ site.name }}
+                    </mat-option>
+                }
             </mat-select>
         </mat-form-field>
 
@@ -94,7 +93,7 @@
     <!-- Sessions list -->
     <div class="flex flex-auto overflow-hidden">
         <div class="flex flex-auto flex-col overflow-y-auto">
-            <ng-container *ngIf="sessions$ | async as sessions">
+            <ng-container *ngIf="sessions as sessions">
                 <!-- Sessions table -->
                 <ng-container *ngIf="sessions.length > 0; else noSessions">
                     <!-- Desktop table (lg and up) -->

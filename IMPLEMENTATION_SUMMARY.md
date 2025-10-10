@@ -44,7 +44,7 @@ This implementation provides a **complete, production-ready training sessions ma
 ✅ **UI/UX**
 
 - Responsive table layout
-- Status badges (Published/Draft/Cancelled)
+- Status badges (Published/Draft/Canceled)
 - Filter controls with live update
 - Empty states with helpful messages
 - Action buttons with icons and tooltips

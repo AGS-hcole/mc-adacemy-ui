@@ -1,4 +1,4 @@
-import { AsyncPipe, DatePipe, NgClass, NgForOf, NgIf } from '@angular/common';
+import { DatePipe, NgClass, NgForOf, NgIf } from '@angular/common';
 import {
     ChangeDetectionStrategy,
     ChangeDetectorRef,
@@ -30,7 +30,7 @@ import {
     Site,
 } from 'app/core/session/session.types';
 import { SessionsService } from 'app/core/session/sessions.service';
-import { Observable, Subject, debounceTime, takeUntil } from 'rxjs';
+import { Subject, combineLatest, debounceTime, takeUntil } from 'rxjs';
 
 @Component({
     selector: 'admin-sessions-list',
@@ -38,7 +38,6 @@ import { Observable, Subject, debounceTime, takeUntil } from 'rxjs';
     encapsulation: ViewEncapsulation.None,
     changeDetection: ChangeDetectionStrategy.OnPush,
     imports: [
-        AsyncPipe,
         DatePipe,
         NgClass,
         FormsModule,
@@ -56,8 +55,8 @@ import { Observable, Subject, debounceTime, takeUntil } from 'rxjs';
     ],
 })
 export class AdminSessionsListComponent implements OnInit, OnDestroy {
-    sessions$: Observable<Session[]>;
-    sites$: Observable<Site[]>;
+    sessions: Session[] = [];
+    sites: Site[];
 
     searchInputControl: UntypedFormControl = new UntypedFormControl();
     selectedSite: string | null = null;
@@ -88,15 +87,16 @@ export class AdminSessionsListComponent implements OnInit, OnDestroy {
      * On init
      */
     ngOnInit(): void {
-        // Get sessions
-        this.sessions$ = this._sessionsService.sessions$;
-
-        // Get sites
-        this.sites$ = this._sessionsService.sites$;
-
-        // Load initial data
-        this._sessionsService.getSites().subscribe();
-        this.loadSessions();
+        combineLatest([
+            this._sessionsService.sites$,
+            this._sessionsService.sessions$,
+        ])
+            .pipe(takeUntil(this._unsubscribeAll))
+            .subscribe(([sites, sessions]) => {
+                this.sites = sites;
+                this.sessions = sessions;
+                this._changeDetectorRef.markForCheck();
+            });
 
         // Subscribe to search input
         this.searchInputControl.valueChanges
