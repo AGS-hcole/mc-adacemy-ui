@@ -77,14 +77,15 @@ export interface SessionAttendee {
         formula?: string | null;
     };
 
-    // RSVP metadata
-    createdByAdmin: boolean; // True if registered via admin override
-    outOfContract: boolean; // True if user's formula doesn't match the session slot
+    status: 'YES' | 'NO';
+    comment?: string | null;
+
+    createdByAdmin: boolean;
+    outOfContract: boolean;
     respondedAt: Date | string;
 
-    // Optional cancellation
-    cancelledAt?: Date | string | null;
-    cancellationReason?: string | null;
+    createdAt?: Date | string;
+    updatedAt?: Date | string | null;
 }
 
 /**

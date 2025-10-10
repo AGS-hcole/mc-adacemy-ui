@@ -3,7 +3,6 @@ import { Injectable } from '@angular/core';
 import { environment } from 'environments/environment';
 import { BehaviorSubject, Observable, map, switchMap, take, tap } from 'rxjs';
 import {
-    AdminRegisterRequest,
     CreateSessionRequest,
     Session,
     SessionFilters,
@@ -221,11 +220,11 @@ export class SessionsService {
     /**
      * Admin register a user to a session (override)
      */
-    adminRegisterUser(request: AdminRegisterRequest): Observable<Session> {
+    adminRsvp(sessionId: string, payload: any): Observable<Session> {
         return this._httpClient
             .post<Session>(
-                `${this.apiUrl}/sessions/${request.sessionId}/admin-register`,
-                { userId: request.userId }
+                `${this.apiUrl}/sessions/${sessionId}/admin-rsvp`,
+                payload
             )
             .pipe(
                 tap((updatedSession) => {
@@ -233,7 +232,7 @@ export class SessionsService {
                     const sessions = this._sessions.getValue();
                     if (sessions) {
                         const index = sessions.findIndex(
-                            (s) => s.id === request.sessionId
+                            (s) => s.id === sessionId
                         );
                         if (index !== -1) {
                             sessions[index] = updatedSession;
@@ -243,10 +242,7 @@ export class SessionsService {
 
                     // Update the current session if it matches
                     const currentSession = this._session.getValue();
-                    if (
-                        currentSession &&
-                        currentSession.id === request.sessionId
-                    ) {
+                    if (currentSession && currentSession.id === sessionId) {
                         this._session.next(updatedSession);
                     }
                 })

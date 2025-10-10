@@ -80,6 +80,9 @@
             },
             "SITES": {
                 "TITLE": "Sites"
+            },
+            "TOURNAMENTS": {
+                "TITLE": "Tournois"
             }
         },
         "USER": {
@@ -90,6 +93,9 @@
             },
             "SESSIONS": {
                 "TITLE": "Mes sessions"
+            },
+            "TOURNAMENTS": {
+                "TITLE": "Mes tournois"
             }
         }
     },
@@ -156,6 +162,16 @@
         }
     },
     "SESSIONS": {
+        "VIEW": {
+            "BREADCRUMB": {
+                "BACK": "Retour aux sessions"
+            },
+            "TITLE": "Détails de la session",
+            "INFO": "Informations",
+            "INFO_DESCRIPTION": "Détails et paramètres de la session",
+            "PARTICIPANTS": "Participants",
+            "PARTICIPANTS_DESCRIPTION": "Gérer les participants inscrits à cette session"
+        },
         "SLOT": {
             "AM": "Matin",
             "PM": "Après-midi"
@@ -170,6 +186,12 @@
             "CREATE_SESSION": "Créer une session",
             "EDIT_SESSION": "Modifier la session",
             "NO_SESSIONS": "Aucune session trouvée",
+            "VIEW": {
+                "TABS": {
+                    "INFO": "Informations",
+                    "PARTICIPANTS": "Participants"
+                }
+            },
             "FILTERS": {
                 "SITE": "Site",
                 "ALL_SITES": "Tous les sites",
@@ -183,6 +205,7 @@
                 "SLOT": "Créneau",
                 "TIME": "Horaire",
                 "SITE": "Site",
+                "PARTICIPANTS": "Participants",
                 "STATUS": "Statut",
                 "ACTIONS": "Actions"
             },
@@ -212,6 +235,17 @@
                 "CANCEL": "Annuler",
                 "SAVE": "Enregistrer",
                 "CREATE": "Créer"
+            },
+            "ATTENDEES": {
+                "TITLE": "Gestion des participants",
+                "ADD_PARTICIPANT": "Ajouter un participant",
+                "SELECT_USER": "Sélectionner un utilisateur",
+                "ADD": "Ajouter",
+                "PARTICIPANTS_LIST": "Liste des participants",
+                "NO_PARTICIPANTS": "Aucun participant pour cette session",
+                "ADMIN_REGISTERED": "Inscrit par admin",
+                "REMOVE": "Retirer",
+                "CLOSE": "Fermer"
             }
         },
         "USER": {

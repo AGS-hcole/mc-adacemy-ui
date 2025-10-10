@@ -155,6 +155,15 @@ export class AdminSessionsListComponent implements OnInit, OnDestroy {
     }
 
     /**
+     * Get participants count for a session
+     */
+    getParticipantsCount(session: Session): number {
+        return session.attendances
+            ? session.attendances.filter((a) => a.status === 'YES').length
+            : 0;
+    }
+
+    /**
      * Delete session
      */
     deleteSession(session: Session): void {
@@ -223,12 +232,25 @@ export class AdminSessionsListComponent implements OnInit, OnDestroy {
      * Get display time for session
      */
     getDisplayTime(session: Session): string {
-        const start =
-            session.startTime ||
-            (session.slot === SessionSlot.AM ? '09:00' : '14:00');
-        const end =
-            session.endTime ||
-            (session.slot === SessionSlot.AM ? '12:00' : '17:00');
+        // Helper to parse ISO date string and return local time string in HH:mm
+        const toLocalTime = (
+            isoString: string | undefined,
+            fallback: string
+        ): string => {
+            if (!isoString) return fallback;
+            const date = new Date(isoString);
+            if (isNaN(date.getTime())) return fallback;
+            const pad = (n: number) => n.toString().padStart(2, '0');
+            return `${pad(date.getHours())}:${pad(date.getMinutes())}`;
+        };
+
+        const defaultStart =
+            session.slot === SessionSlot.AM ? '09:00' : '14:00';
+        const defaultEnd = session.slot === SessionSlot.AM ? '12:00' : '17:00';
+
+        const start = toLocalTime(session.startTime, defaultStart);
+        const end = toLocalTime(session.endTime, defaultEnd);
+
         return `${start} - ${end}`;
     }
 
