@@ -10,6 +10,7 @@ import {
     ViewEncapsulation,
 } from '@angular/core';
 import { MatIconModule } from '@angular/material/icon';
+import { MatButtonModule } from '@angular/material/button';
 import {
     MatDrawer,
     MatDrawerContainer,
@@ -37,6 +38,7 @@ import { panels } from './view.data';
         RouterOutlet,
         MatSidenavModule,
         MatIconModule,
+        MatButtonModule,
         LocalizedDatePipe,
         TranslocoModule,
         RouterLink,
