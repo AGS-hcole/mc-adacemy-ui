@@ -224,6 +224,12 @@
       },
       "SITES": {
         "TITLE": "Sites"
+      },
+      "TOURNAMENTS": {
+        "TITLE": "Tournaments"
+      },
+      "REPORTS": {
+        "TITLE": "Reports"
       }
     },
     "USER": {
@@ -234,6 +240,9 @@
       },
       "SESSIONS": {
         "TITLE": "My Sessions"
+      },
+      "TOURNAMENTS": {
+        "TITLE": "My Tournaments"
       }
     }
   },
