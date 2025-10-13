@@ -1,0 +1,111 @@
+<div class="flex flex-col min-h-screen bg-gray-50">
+    <!-- Header -->
+    <div class="bg-white shadow-sm sticky top-0 z-10">
+        <div class="max-w-4xl mx-auto px-4 py-6">
+            <h1 class="text-3xl font-bold text-center mb-4">{{ 'ONBOARDING.TITLE' | transloco }}</h1>
+            
+            <!-- Progress bar -->
+            <div class="mb-4">
+                <mat-progress-bar mode="determinate" [value]="progress" color="primary"></mat-progress-bar>
+            </div>
+            
+            <!-- Step indicators -->
+            <div class="flex justify-between items-center">
+                @for (step of steps; track step; let i = $index) {
+                    <div class="flex flex-col items-center flex-1">
+                        <div class="flex items-center justify-center w-10 h-10 rounded-full border-2 mb-2"
+                             [class.bg-primary]="i <= currentStep"
+                             [class.border-primary]="i <= currentStep"
+                             [class.text-white]="i <= currentStep"
+                             [class.border-gray-300]="i > currentStep"
+                             [class.text-gray-400]="i > currentStep">
+                            @if (i < currentStep) {
+                                <mat-icon>check</mat-icon>
+                            } @else {
+                                <span>{{ i + 1 }}</span>
+                            }
+                        </div>
+                        <span class="text-xs text-center hidden sm:block"
+                              [class.font-semibold]="i === currentStep"
+                              [class.text-gray-500]="i !== currentStep">
+                            {{ 'ONBOARDING.STEPS.' + step | transloco }}
+                        </span>
+                    </div>
+                    @if (i < steps.length - 1) {
+                        <div class="flex-1 h-0.5 mx-2"
+                             [class.bg-primary]="i < currentStep"
+                             [class.bg-gray-300]="i >= currentStep"></div>
+                    }
+                }
+            </div>
+        </div>
+    </div>
+
+    <!-- Content -->
+    <div class="flex-1 max-w-4xl w-full mx-auto px-4 py-8">
+        <div class="bg-white rounded-2xl shadow-lg p-6 md:p-8">
+            @switch (currentStep) {
+                @case (0) {
+                    <onboarding-profile-step 
+                        [draft]="draft.profile"
+                        [email]="currentEmail"
+                        (formChange)="onProfileChange($event)">
+                    </onboarding-profile-step>
+                }
+                @case (1) {
+                    <onboarding-contract-step 
+                        [draft]="draft.contract"
+                        [hasPhone]="!!draft.profile.phone"
+                        (formChange)="onContractChange($event)">
+                    </onboarding-contract-step>
+                }
+                @case (2) {
+                    <onboarding-consents-step 
+                        [draft]="draft.consents"
+                        (formChange)="onConsentsChange($event)">
+                    </onboarding-consents-step>
+                }
+                @case (3) {
+                    <onboarding-summary-step 
+                        [draft]="draft"
+                        [email]="currentEmail">
+                    </onboarding-summary-step>
+                }
+            }
+        </div>
+    </div>
+
+    <!-- Footer with actions -->
+    <div class="bg-white border-t sticky bottom-0">
+        <div class="max-w-4xl mx-auto px-4 py-4">
+            <div class="flex justify-between items-center">
+                <button mat-stroked-button 
+                        [disabled]="!canGoBack || isSubmitting"
+                        (click)="previousStep()">
+                    <mat-icon>arrow_back</mat-icon>
+                    {{ 'ONBOARDING.ACTIONS.BACK' | transloco }}
+                </button>
+
+                @if (!isLastStep) {
+                    <button mat-flat-button 
+                            color="primary"
+                            [disabled]="!canGoNext || isSubmitting"
+                            (click)="nextStep()">
+                        {{ 'ONBOARDING.ACTIONS.NEXT' | transloco }}
+                        <mat-icon>arrow_forward</mat-icon>
+                    </button>
+                } @else {
+                    <button mat-flat-button 
+                            color="primary"
+                            [disabled]="!canGoNext || isSubmitting"
+                            (click)="finish()">
+                        @if (isSubmitting) {
+                            <mat-icon class="animate-spin">sync</mat-icon>
+                        }
+                        {{ 'ONBOARDING.ACTIONS.FINISH' | transloco }}
+                    </button>
+                }
+            </div>
+        </div>
+    </div>
+</div>

@@ -299,5 +299,73 @@
                 "CREATE": "Créer"
             }
         }
+    },
+    "ONBOARDING": {
+        "TITLE": "Complétez votre profil",
+        "STEPS": {
+            "PROFILE": "Profil",
+            "CONTRACT": "Contrat & Notifications",
+            "CONSENTS": "Consentements",
+            "SUMMARY": "Résumé"
+        },
+        "ACTIONS": {
+            "BACK": "Retour",
+            "NEXT": "Suivant",
+            "FINISH": "Terminer"
+        },
+        "PROFILE": {
+            "FIRSTNAME": "Prénom",
+            "FIRSTNAME_REQUIRED": "Le prénom est requis",
+            "FIRSTNAME_MIN": "Le prénom doit contenir au moins 2 caractères",
+            "LASTNAME": "Nom",
+            "LASTNAME_REQUIRED": "Le nom est requis",
+            "LASTNAME_MIN": "Le nom doit contenir au moins 2 caractères",
+            "EMAIL": "Email",
+            "PHONE": "Téléphone",
+            "PHONE_PATTERN": "Format de téléphone invalide",
+            "BIRTHDATE": "Date de naissance",
+            "BIRTHDATE_INVALID": "Date invalide",
+            "FFT_NUMBER": "Numéro de licence FFT",
+            "AVATAR": "Photo de profil",
+            "AVATAR_HINT": "Télécharger une photo de profil (max 2MB, PNG/JPEG)",
+            "AVATAR_UPLOAD": "Télécharger",
+            "AVATAR_REMOVE": "Supprimer",
+            "BACKGROUND": "Image de couverture",
+            "BACKGROUND_HINT": "Télécharger une image de couverture (max 4MB, PNG/JPEG)",
+            "BACKGROUND_UPLOAD": "Télécharger",
+            "BACKGROUND_REMOVE": "Supprimer"
+        },
+        "CONTRACT": {
+            "FORMULA": "Formule d'entraînement",
+            "FORMULA_REQUIRED": "La formule est requise",
+            "FORMULA_OPTIONS": {
+                "MORNING": "Matin (AM)",
+                "AFTERNOON": "Après-midi (PM)",
+                "FULL": "Accès complet (AM + PM)"
+            },
+            "NOTIFY_EMAIL": "Notifications par email",
+            "NOTIFY_SMS": "Notifications par SMS",
+            "NOTIFY_WHATSAPP": "Notifications par WhatsApp",
+            "SMS_HINT": "Nécessite un numéro de téléphone valide.",
+            "SMS_WARNING": "Un numéro de téléphone est requis pour les notifications SMS"
+        },
+        "CONSENTS": {
+            "TITLE": "Consentements légaux",
+            "PRIVACY": "J'accepte la Politique de confidentialité et les Conditions d'utilisation.",
+            "PRIVACY_REQUIRED": "Le consentement de confidentialité est requis",
+            "PHOTO": "J'autorise l'utilisation de mon image pour les communications de l'académie.",
+            "MARKETING": "J'accepte de recevoir des communications marketing.",
+            "LINK_PRIVACY": "Lire la Politique de confidentialité"
+        },
+        "SUMMARY": {
+            "CHECK": "Veuillez vérifier vos informations avant de terminer.",
+            "PROFILE_TITLE": "Informations de profil",
+            "CONTRACT_TITLE": "Contrat & Notifications",
+            "CONSENTS_TITLE": "Consentements légaux",
+            "FORMULA": "Formule",
+            "NOTIFICATIONS": "Notifications"
+        },
+        "SUCCESS": "Votre profil est complet. Bienvenue !",
+        "ERROR": "Une erreur s'est produite. Veuillez réessayer."
     }
 }

@@ -1,0 +1,56 @@
+<div class="w-full">
+    <h2 class="text-2xl font-semibold mb-6">{{ 'ONBOARDING.STEPS.CONTRACT' | transloco }}</h2>
+    
+    <form [formGroup]="form" class="space-y-6">
+        <!-- Formula Selection -->
+        <mat-form-field class="w-full">
+            <mat-label>{{ 'ONBOARDING.CONTRACT.FORMULA' | transloco }}</mat-label>
+            <mat-select formControlName="formula">
+                @for (option of formulaOptions; track option) {
+                    <mat-option [value]="option">
+                        {{ 'ONBOARDING.CONTRACT.FORMULA_OPTIONS.' + option | transloco }}
+                    </mat-option>
+                }
+            </mat-select>
+            @if (form.get('formula')?.hasError('required')) {
+                <mat-error>{{ 'ONBOARDING.CONTRACT.FORMULA_REQUIRED' | transloco }}</mat-error>
+            }
+        </mat-form-field>
+
+        <!-- Notification Preferences -->
+        <div class="space-y-4">
+            <h3 class="text-lg font-medium">{{ 'ONBOARDING.SUMMARY.NOTIFICATIONS' | transloco }}</h3>
+            
+            <!-- Email notifications -->
+            <div class="flex items-center justify-between">
+                <div>
+                    <label class="font-medium">{{ 'ONBOARDING.CONTRACT.NOTIFY_EMAIL' | transloco }}</label>
+                </div>
+                <mat-slide-toggle formControlName="notifyEmail" color="primary"></mat-slide-toggle>
+            </div>
+
+            <!-- SMS notifications -->
+            <div class="flex items-center justify-between">
+                <div class="flex-1">
+                    <label class="font-medium">{{ 'ONBOARDING.CONTRACT.NOTIFY_SMS' | transloco }}</label>
+                    <p class="text-sm text-gray-500">{{ 'ONBOARDING.CONTRACT.SMS_HINT' | transloco }}</p>
+                    @if (showSmsWarning) {
+                        <p class="text-sm text-amber-600 mt-1">
+                            ⚠️ {{ 'ONBOARDING.CONTRACT.SMS_WARNING' | transloco }}
+                        </p>
+                    }
+                </div>
+                <mat-slide-toggle formControlName="notifySMS" color="primary"></mat-slide-toggle>
+            </div>
+
+            <!-- WhatsApp notifications -->
+            <div class="flex items-center justify-between">
+                <div class="flex-1">
+                    <label class="font-medium">{{ 'ONBOARDING.CONTRACT.NOTIFY_WHATSAPP' | transloco }}</label>
+                    <p class="text-sm text-gray-500">{{ 'ONBOARDING.CONTRACT.SMS_HINT' | transloco }}</p>
+                </div>
+                <mat-slide-toggle formControlName="notifyWhatsApp" color="primary"></mat-slide-toggle>
+            </div>
+        </div>
+    </form>
+</div>
