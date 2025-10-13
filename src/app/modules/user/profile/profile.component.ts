@@ -12,7 +12,16 @@ import { TranslocoModule } from '@jsverse/transloco';
 import { UserService } from 'app/core/user/user.service';
 import { User } from 'app/core/user/user.types';
 import { AvatarService } from 'app/modules/onboarding/services/avatar.service';
+import { Observable, of } from 'rxjs';
 import { finalize } from 'rxjs/operators';
+
+interface FeedItem {
+    id: string;
+    icon: string;
+    title: string;
+    description: string;
+    date: Date;
+}
 
 @Component({
     selector: 'user-profile',
@@ -39,6 +48,9 @@ export class ProfileComponent implements OnInit {
     avatarFile: File | null = null;
     backgroundFile: File | null = null;
     isSaving = false;
+    editMode = false;
+    isCurrentUser = true; // For now, always true since we're viewing our own profile
+    feed$: Observable<FeedItem[]> = of([]); // Placeholder for future implementation
     
     private fb = inject(FormBuilder);
     private userService = inject(UserService);
@@ -59,6 +71,10 @@ export class ProfileComponent implements OnInit {
                 }
             }
         });
+
+        // Initialize placeholder feed
+        // TODO: Replace with actual API call to get user sessions and tournament results
+        this.initializeFeed();
     }
 
     private initializeForm(user: User): void {
@@ -70,6 +86,23 @@ export class ProfileComponent implements OnInit {
             birthDate: [user.birthDate ? new Date(user.birthDate) : null],
             fftLicenseNumber: [user.fftLicenseNumber || ''],
         });
+    }
+
+    private initializeFeed(): void {
+        // Placeholder data - will be replaced with real API data
+        // TODO: Fetch actual sessions and tournament results from backend
+        const placeholderFeed: FeedItem[] = [
+            // Empty for now, will be populated when sessions and tournaments are added
+        ];
+        this.feed$ = of(placeholderFeed);
+    }
+
+    toggleEditMode(): void {
+        this.editMode = !this.editMode;
+        if (!this.editMode && this.user) {
+            // Reset form when canceling edit
+            this.initializeForm(this.user);
+        }
     }
 
     onAvatarSelect(event: Event): void {
@@ -163,6 +196,7 @@ export class ProfileComponent implements OnInit {
                     }
 
                     this.isSaving = false;
+                    this.editMode = false;
                 })
             )
             .subscribe({

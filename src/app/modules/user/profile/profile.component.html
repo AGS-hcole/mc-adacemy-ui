@@ -1,237 +1,307 @@
 <div class="flex min-w-0 flex-auto flex-col">
-    <!-- Header -->
-    <div
-        class="bg-card flex flex-0 flex-col border-b p-6 sm:flex-row sm:items-center sm:justify-between sm:px-10 sm:py-8 dark:bg-transparent"
-    >
-        <div class="min-w-0 flex-1">
-            <!-- Title -->
-            <div class="mt-2">
-                <h2
-                    class="truncate text-3xl font-extrabold leading-7 tracking-tight sm:leading-10 md:text-4xl"
-                >
-                    {{ 'PROFILE.TITLE' | transloco }}
-                </h2>
+    <!-- Cover Image -->
+    <div class="relative h-40 sm:h-48 md:h-64">
+        @if (backgroundPreview) {
+            <img [src]="backgroundPreview" class="h-full w-full object-cover" alt="Cover">
+        } @else {
+            <div class="h-full w-full bg-gradient-to-r from-indigo-500 to-purple-600"></div>
+        }
+        
+        <!-- Cover Upload Button -->
+        @if (isCurrentUser) {
+            <div class="absolute bottom-4 right-4">
+                <input type="file" #backgroundInput accept="image/png,image/jpeg,image/jpg" 
+                       (change)="onBackgroundSelect($event)" class="hidden" />
+                <button type="button" mat-mini-fab color="primary" 
+                        (click)="backgroundInput.click()"
+                        [attr.aria-label]="'PROFILE.CHANGE_COVER' | transloco">
+                    <mat-icon>photo_camera</mat-icon>
+                </button>
             </div>
+        }
+    </div>
+
+    <!-- Profile Header -->
+    <div class="bg-card relative flex flex-auto flex-col px-6 py-8 sm:flex-row sm:px-10">
+        <!-- Avatar -->
+        <div class="flex flex-col items-center sm:items-start">
+            <div class="relative -mt-16 sm:-mt-20">
+                @if (avatarPreview) {
+                    <img [src]="avatarPreview" class="h-32 w-32 rounded-full border-4 border-white object-cover ring-4 ring-gray-300 sm:h-40 sm:w-40" alt="Avatar">
+                } @else {
+                    <div class="flex h-32 w-32 items-center justify-center rounded-full border-4 border-white bg-gray-300 ring-4 ring-gray-300 sm:h-40 sm:w-40">
+                        <mat-icon class="text-5xl text-gray-600">person</mat-icon>
+                    </div>
+                }
+                
+                <!-- Avatar Upload Button -->
+                @if (isCurrentUser) {
+                    <div class="absolute bottom-0 right-0">
+                        <input type="file" #avatarInput accept="image/png,image/jpeg,image/jpg" 
+                               (change)="onAvatarSelect($event)" class="hidden" />
+                        <button type="button" mat-mini-fab color="accent" 
+                                (click)="avatarInput.click()"
+                                [attr.aria-label]="'PROFILE.CHANGE_AVATAR' | transloco">
+                            <mat-icon>photo_camera</mat-icon>
+                        </button>
+                    </div>
+                }
+            </div>
+        </div>
+
+        <!-- User Info -->
+        <div class="mt-4 flex flex-auto flex-col items-center sm:ml-8 sm:mt-0 sm:items-start">
+            <div class="text-center sm:text-left">
+                <div class="text-2xl font-bold leading-none">
+                    {{ user?.firstname }} {{ user?.lastname }}
+                </div>
+                <div class="mt-1 text-secondary">
+                    {{ user?.email }}
+                </div>
+                @if (user?.phone) {
+                    <div class="mt-1 flex items-center justify-center text-secondary sm:justify-start">
+                        <mat-icon class="icon-size-5 mr-1.5">phone</mat-icon>
+                        {{ user?.phone }}
+                    </div>
+                }
+            </div>
+            
+            <!-- Action Buttons -->
+            @if (isCurrentUser) {
+                <div class="mt-6 flex items-center gap-2">
+                    <button mat-raised-button color="primary" (click)="toggleEditMode()">
+                        <mat-icon class="icon-size-5">edit</mat-icon>
+                        <span class="ml-2">{{ 'PROFILE.EDIT' | transloco }}</span>
+                    </button>
+                </div>
+            }
         </div>
     </div>
 
-    <!-- Main -->
+    <!-- Main Content -->
     <div class="flex-auto p-6 sm:p-10">
-        <div class="max-w-3xl">
-            <form [formGroup]="form" (ngSubmit)="onSubmit()" class="space-y-6">
-                <!-- Name fields in grid -->
-                <div class="grid grid-cols-1 gap-6 md:grid-cols-2">
-                    <!-- First name -->
-                    <mat-form-field class="w-full">
-                        <mat-label>{{
-                            'PROFILE.FIRSTNAME' | transloco
-                        }}</mat-label>
-                        <input
-                            matInput
-                            formControlName="firstname"
-                            [attr.aria-label]="'PROFILE.FIRSTNAME' | transloco"
-                            [attr.aria-required]="true"
-                        />
-                        @if (form.get('firstname')?.hasError('required')) {
-                            <mat-error>{{
-                                'PROFILE.FIRSTNAME_REQUIRED' | transloco
-                            }}</mat-error>
-                        }
-                        @if (form.get('firstname')?.hasError('minlength')) {
-                            <mat-error>{{
-                                'PROFILE.FIRSTNAME_MIN' | transloco
-                            }}</mat-error>
-                        }
-                    </mat-form-field>
-
-                    <!-- Last name -->
-                    <mat-form-field class="w-full">
-                        <mat-label>{{
-                            'PROFILE.LASTNAME' | transloco
-                        }}</mat-label>
-                        <input
-                            matInput
-                            formControlName="lastname"
-                            [attr.aria-label]="'PROFILE.LASTNAME' | transloco"
-                            [attr.aria-required]="true"
-                        />
-                        @if (form.get('lastname')?.hasError('required')) {
-                            <mat-error>{{
-                                'PROFILE.LASTNAME_REQUIRED' | transloco
-                            }}</mat-error>
-                        }
-                        @if (form.get('lastname')?.hasError('minlength')) {
-                            <mat-error>{{
-                                'PROFILE.LASTNAME_MIN' | transloco
-                            }}</mat-error>
-                        }
-                    </mat-form-field>
-                </div>
-
-                <!-- Email (readonly) -->
-                <mat-form-field class="w-full">
-                    <mat-label>{{ 'PROFILE.EMAIL' | transloco }}</mat-label>
-                    <input
-                        matInput
-                        formControlName="email"
-                        [attr.aria-label]="'PROFILE.EMAIL' | transloco"
-                    />
-                    <mat-hint>{{
-                        'PROFILE.EMAIL_READONLY' | transloco
-                    }}</mat-hint>
-                </mat-form-field>
-
-                <!-- Phone and birth date -->
-                <div class="grid grid-cols-1 gap-6 md:grid-cols-2">
-                    <!-- Phone -->
-                    <mat-form-field class="w-full">
-                        <mat-label>{{ 'PROFILE.PHONE' | transloco }}</mat-label>
-                        <input matInput formControlName="phone" />
-                        @if (form.get('phone')?.hasError('pattern')) {
-                            <mat-error>{{
-                                'PROFILE.PHONE_PATTERN' | transloco
-                            }}</mat-error>
-                        }
-                    </mat-form-field>
-
-                    <!-- Birth date -->
-                    <mat-form-field class="w-full">
-                        <mat-label>{{
-                            'PROFILE.BIRTHDATE' | transloco
-                        }}</mat-label>
-                        <input
-                            matInput
-                            [matDatepicker]="birthDatePicker"
-                            formControlName="birthDate"
-                            [max]="maxBirthDate"
-                            [min]="minBirthDate"
-                        />
-                        <mat-datepicker-toggle
-                            matSuffix
-                            [for]="birthDatePicker"
-                        ></mat-datepicker-toggle>
-                        <mat-datepicker #birthDatePicker></mat-datepicker>
-                    </mat-form-field>
-                </div>
-
-                <!-- FFT License Number -->
-                <mat-form-field class="w-full">
-                    <mat-label>{{
-                        'PROFILE.FFT_NUMBER' | transloco
-                    }}</mat-label>
-                    <input matInput formControlName="fftLicenseNumber" />
-                </mat-form-field>
-
-                <!-- Avatar Upload -->
-                <div class="space-y-2">
-                    <label class="text-sm font-medium">{{
-                        'PROFILE.AVATAR' | transloco
-                    }}</label>
-                    <p class="text-sm text-gray-500">
-                        {{ 'PROFILE.AVATAR_HINT' | transloco }}
-                    </p>
-
-                    @if (avatarPreview) {
-                        <div class="flex items-center gap-4">
-                            <img
-                                [src]="avatarPreview"
-                                class="h-24 w-24 rounded-full border-2 object-cover"
-                            />
-                            <button
-                                type="button"
-                                mat-stroked-button
-                                color="warn"
-                                (click)="removeAvatar()"
-                            >
-                                <mat-icon>delete</mat-icon>
-                                {{ 'PROFILE.AVATAR_REMOVE' | transloco }}
-                            </button>
+        <div class="mx-auto grid max-w-7xl grid-cols-1 gap-6 lg:grid-cols-3">
+            <!-- Left Sidebar -->
+            <div class="space-y-6 lg:col-span-1">
+                <!-- About Card -->
+                <div class="bg-card rounded-lg p-6 shadow">
+                    <div class="mb-4 text-lg font-semibold">
+                        {{ 'PROFILE.ABOUT' | transloco }}
+                    </div>
+                    
+                    @if (user?.birthDate) {
+                        <div class="mb-3 flex items-start">
+                            <mat-icon class="icon-size-5 mr-3 mt-0.5 text-secondary">cake</mat-icon>
+                            <div class="flex-1">
+                                <div class="text-xs text-secondary">{{ 'PROFILE.BIRTHDATE' | transloco }}</div>
+                                <div class="mt-1">{{ user?.birthDate | date:'longDate' }}</div>
+                            </div>
                         </div>
-                    } @else {
-                        <div>
-                            <input
-                                type="file"
-                                #avatarInput
-                                accept="image/png,image/jpeg,image/jpg"
-                                (change)="onAvatarSelect($event)"
-                                class="hidden"
-                            />
-                            <button
-                                type="button"
-                                mat-stroked-button
-                                (click)="avatarInput.click()"
-                            >
-                                <mat-icon>upload</mat-icon>
-                                {{ 'PROFILE.AVATAR_UPLOAD' | transloco }}
-                            </button>
+                    }
+                    
+                    @if (user?.fftLicenseNumber) {
+                        <div class="mb-3 flex items-start">
+                            <mat-icon class="icon-size-5 mr-3 mt-0.5 text-secondary">badge</mat-icon>
+                            <div class="flex-1">
+                                <div class="text-xs text-secondary">{{ 'PROFILE.FFT_NUMBER' | transloco }}</div>
+                                <div class="mt-1">{{ user?.fftLicenseNumber }}</div>
+                            </div>
+                        </div>
+                    }
+                    
+                    @if (user?.formula) {
+                        <div class="mb-3 flex items-start">
+                            <mat-icon class="icon-size-5 mr-3 mt-0.5 text-secondary">schedule</mat-icon>
+                            <div class="flex-1">
+                                <div class="text-xs text-secondary">{{ 'PROFILE.FORMULA' | transloco }}</div>
+                                <div class="mt-1">{{ user?.formula }}</div>
+                            </div>
                         </div>
                     }
                 </div>
 
-                <!-- Background Upload -->
-                <div class="space-y-2">
-                    <label class="text-sm font-medium">{{
-                        'PROFILE.BACKGROUND' | transloco
-                    }}</label>
-                    <p class="text-sm text-gray-500">
-                        {{ 'PROFILE.BACKGROUND_HINT' | transloco }}
-                    </p>
+                <!-- Stats Card -->
+                <div class="bg-card rounded-lg p-6 shadow">
+                    <div class="mb-4 text-lg font-semibold">
+                        {{ 'PROFILE.STATS.TITLE' | transloco }}
+                    </div>
+                    <div class="grid grid-cols-2 gap-4">
+                        <div class="text-center">
+                            <div class="text-2xl font-bold text-primary">0</div>
+                            <div class="mt-1 text-xs text-secondary">{{ 'PROFILE.STATS.SESSIONS' | transloco }}</div>
+                        </div>
+                        <div class="text-center">
+                            <div class="text-2xl font-bold text-primary">0</div>
+                            <div class="mt-1 text-xs text-secondary">{{ 'PROFILE.STATS.TOURNAMENTS' | transloco }}</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
 
-                    @if (backgroundPreview) {
-                        <div class="space-y-4">
-                            <img
-                                [src]="backgroundPreview"
-                                class="h-32 w-full rounded-lg border-2 object-cover"
-                            />
-                            <button
-                                type="button"
-                                mat-stroked-button
-                                color="warn"
-                                (click)="removeBackground()"
-                            >
-                                <mat-icon>delete</mat-icon>
-                                {{ 'PROFILE.BACKGROUND_REMOVE' | transloco }}
-                            </button>
+            <!-- Main Content Area -->
+            <div class="space-y-6 lg:col-span-2">
+                <!-- Edit Form (when in edit mode) -->
+                @if (editMode) {
+                    <div class="bg-card rounded-lg p-6 shadow">
+                        <form [formGroup]="form" (ngSubmit)="onSubmit()" class="space-y-6">
+                            <div class="mb-4 text-lg font-semibold">
+                                {{ 'PROFILE.EDIT_INFO' | transloco }}
+                            </div>
+                            
+                            <!-- Name fields in grid -->
+                            <div class="grid grid-cols-1 gap-6 md:grid-cols-2">
+                                <!-- First name -->
+                                <mat-form-field class="w-full">
+                                    <mat-label>{{
+                                        'PROFILE.FIRSTNAME' | transloco
+                                    }}</mat-label>
+                                    <input
+                                        matInput
+                                        formControlName="firstname"
+                                        [attr.aria-label]="'PROFILE.FIRSTNAME' | transloco"
+                                        [attr.aria-required]="true"
+                                    />
+                                    @if (form.get('firstname')?.hasError('required')) {
+                                        <mat-error>{{
+                                            'PROFILE.FIRSTNAME_REQUIRED' | transloco
+                                        }}</mat-error>
+                                    }
+                                    @if (form.get('firstname')?.hasError('minlength')) {
+                                        <mat-error>{{
+                                            'PROFILE.FIRSTNAME_MIN' | transloco
+                                        }}</mat-error>
+                                    }
+                                </mat-form-field>
+
+                                <!-- Last name -->
+                                <mat-form-field class="w-full">
+                                    <mat-label>{{
+                                        'PROFILE.LASTNAME' | transloco
+                                    }}</mat-label>
+                                    <input
+                                        matInput
+                                        formControlName="lastname"
+                                        [attr.aria-label]="'PROFILE.LASTNAME' | transloco"
+                                        [attr.aria-required]="true"
+                                    />
+                                    @if (form.get('lastname')?.hasError('required')) {
+                                        <mat-error>{{
+                                            'PROFILE.LASTNAME_REQUIRED' | transloco
+                                        }}</mat-error>
+                                    }
+                                    @if (form.get('lastname')?.hasError('minlength')) {
+                                        <mat-error>{{
+                                            'PROFILE.LASTNAME_MIN' | transloco
+                                        }}</mat-error>
+                                    }
+                                </mat-form-field>
+                            </div>
+
+                            <!-- Phone and birth date -->
+                            <div class="grid grid-cols-1 gap-6 md:grid-cols-2">
+                                <!-- Phone -->
+                                <mat-form-field class="w-full">
+                                    <mat-label>{{ 'PROFILE.PHONE' | transloco }}</mat-label>
+                                    <input matInput formControlName="phone" />
+                                    @if (form.get('phone')?.hasError('pattern')) {
+                                        <mat-error>{{
+                                            'PROFILE.PHONE_PATTERN' | transloco
+                                        }}</mat-error>
+                                    }
+                                </mat-form-field>
+
+                                <!-- Birth date -->
+                                <mat-form-field class="w-full">
+                                    <mat-label>{{
+                                        'PROFILE.BIRTHDATE' | transloco
+                                    }}</mat-label>
+                                    <input
+                                        matInput
+                                        [matDatepicker]="birthDatePicker"
+                                        formControlName="birthDate"
+                                        [max]="maxBirthDate"
+                                        [min]="minBirthDate"
+                                    />
+                                    <mat-datepicker-toggle
+                                        matSuffix
+                                        [for]="birthDatePicker"
+                                    ></mat-datepicker-toggle>
+                                    <mat-datepicker #birthDatePicker></mat-datepicker>
+                                </mat-form-field>
+                            </div>
+
+                            <!-- FFT License Number -->
+                            <mat-form-field class="w-full">
+                                <mat-label>{{
+                                    'PROFILE.FFT_NUMBER' | transloco
+                                }}</mat-label>
+                                <input matInput formControlName="fftLicenseNumber" />
+                            </mat-form-field>
+
+                            <!-- Submit buttons -->
+                            <div class="flex items-center justify-end gap-2 border-t pt-6">
+                                <button type="button" mat-stroked-button (click)="toggleEditMode()">
+                                    {{ 'PROFILE.CANCEL' | transloco }}
+                                </button>
+                                <button
+                                    mat-flat-button
+                                    color="primary"
+                                    type="submit"
+                                    [disabled]="form.invalid || isSaving"
+                                >
+                                    @if (isSaving) {
+                                        <mat-spinner
+                                            diameter="20"
+                                            class="mr-2"
+                                        ></mat-spinner>
+                                    }
+                                    {{ 'PROFILE.SAVE' | transloco }}
+                                </button>
+                            </div>
+                        </form>
+                    </div>
+                }
+
+                <!-- Activity Feed -->
+                <div class="bg-card rounded-lg p-6 shadow">
+                    <div class="mb-6 flex items-center justify-between">
+                        <div class="text-lg font-semibold">
+                            {{ 'PROFILE.ACTIVITY.TITLE' | transloco }}
                         </div>
-                    } @else {
-                        <div>
-                            <input
-                                type="file"
-                                #backgroundInput
-                                accept="image/png,image/jpeg,image/jpg"
-                                (change)="onBackgroundSelect($event)"
-                                class="hidden"
-                            />
-                            <button
-                                type="button"
-                                mat-stroked-button
-                                (click)="backgroundInput.click()"
-                            >
-                                <mat-icon>upload</mat-icon>
-                                {{ 'PROFILE.BACKGROUND_UPLOAD' | transloco }}
-                            </button>
-                        </div>
+                        <mat-icon class="text-secondary">rss_feed</mat-icon>
+                    </div>
+                    
+                    <!-- Feed Items (Placeholder) -->
+                    @if (feed$ | async; as feedItems) {
+                        @if (feedItems.length > 0) {
+                            <div class="space-y-4">
+                                @for (item of feedItems; track item.id) {
+                                    <div class="flex items-start gap-4 border-b pb-4 last:border-b-0">
+                                        <div class="flex h-10 w-10 items-center justify-center rounded-full bg-primary-50">
+                                            <mat-icon class="icon-size-5 text-primary">{{ item.icon }}</mat-icon>
+                                        </div>
+                                        <div class="flex-1">
+                                            <div class="font-medium">{{ item.title }}</div>
+                                            <div class="mt-1 text-sm text-secondary">{{ item.description }}</div>
+                                            <div class="mt-2 text-xs text-hint">{{ item.date | date:'medium' }}</div>
+                                        </div>
+                                    </div>
+                                }
+                            </div>
+                        } @else {
+                            <div class="flex flex-col items-center justify-center py-12 text-center">
+                                <mat-icon class="icon-size-16 text-hint">inbox</mat-icon>
+                                <div class="mt-4 text-lg font-medium text-secondary">
+                                    {{ 'PROFILE.ACTIVITY.EMPTY' | transloco }}
+                                </div>
+                                <div class="mt-2 text-sm text-hint">
+                                    {{ 'PROFILE.ACTIVITY.EMPTY_DESC' | transloco }}
+                                </div>
+                            </div>
+                        }
                     }
                 </div>
-
-                <!-- Submit button -->
-                <div class="flex items-center justify-end border-t pt-6">
-                    <button
-                        mat-flat-button
-                        color="primary"
-                        type="submit"
-                        [disabled]="form.invalid || isSaving"
-                    >
-                        @if (isSaving) {
-                            <mat-spinner
-                                diameter="20"
-                                class="mr-2"
-                            ></mat-spinner>
-                        }
-                        {{ 'PROFILE.SAVE' | transloco }}
-                    </button>
-                </div>
-            </form>
+            </div>
         </div>
     </div>
 </div>
