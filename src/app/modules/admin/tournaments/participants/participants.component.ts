@@ -40,6 +40,7 @@ import { Subject, takeUntil } from 'rxjs';
 export class TournamentParticipantsComponent implements OnInit, OnDestroy {
     tournament: Tournament | null = null;
     availableUsers: UserLookupResult[] = [];
+    filteredUsers: UserLookupResult[] = [];
     selectedParticipantIds: string[] = [];
     userSearchTerm = '';
 
@@ -97,8 +98,26 @@ export class TournamentParticipantsComponent implements OnInit, OnDestroy {
             .pipe(takeUntil(this._unsubscribeAll))
             .subscribe((users) => {
                 this.availableUsers = users;
+                this._applyFilter();
                 this._changeDetectorRef.markForCheck();
             });
+    }
+
+    /**
+     * Apply search filter to users
+     */
+    private _applyFilter(): void {
+        if (!this.userSearchTerm) {
+            this.filteredUsers = this.availableUsers;
+        } else {
+            const term = this.userSearchTerm.toLowerCase();
+            this.filteredUsers = this.availableUsers.filter(
+                (user) =>
+                    user.firstname.toLowerCase().includes(term) ||
+                    user.lastname.toLowerCase().includes(term) ||
+                    user.email.toLowerCase().includes(term)
+            );
+        }
     }
 
     // -----------------------------------------------------------------------------------------------------
@@ -106,19 +125,11 @@ export class TournamentParticipantsComponent implements OnInit, OnDestroy {
     // -----------------------------------------------------------------------------------------------------
 
     /**
-     * Get filtered users for participant selection
+     * Handle search term change
      */
-    get filteredUsers(): UserLookupResult[] {
-        if (!this.userSearchTerm) {
-            return this.availableUsers;
-        }
-        const term = this.userSearchTerm.toLowerCase();
-        return this.availableUsers.filter(
-            (user) =>
-                user.firstname.toLowerCase().includes(term) ||
-                user.lastname.toLowerCase().includes(term) ||
-                user.email.toLowerCase().includes(term)
-        );
+    onSearchChange(): void {
+        this._applyFilter();
+        this._changeDetectorRef.markForCheck();
     }
 
     /**
