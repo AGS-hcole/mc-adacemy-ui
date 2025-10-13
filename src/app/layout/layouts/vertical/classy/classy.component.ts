@@ -48,6 +48,7 @@ export class ClassyLayoutComponent implements OnInit, OnDestroy {
     isScreenSmall: boolean;
     navigation: Navigation;
     user: User;
+    avatarUrl: string | null = null;
     private _unsubscribeAll: Subject<any> = new Subject<any>();
 
     /**
@@ -95,6 +96,11 @@ export class ClassyLayoutComponent implements OnInit, OnDestroy {
             .pipe(takeUntil(this._unsubscribeAll))
             .subscribe((user: User) => {
                 this.user = user;
+
+                // Set avatar URL if user exists
+                if (user) {
+                    this.avatarUrl = this._userService.getAvatarUrl();
+                }
             });
 
         // Subscribe to media changes
@@ -143,6 +149,14 @@ export class ClassyLayoutComponent implements OnInit, OnDestroy {
             // Toggle the opened status
             navigation.toggle();
         }
+    }
+
+    /**
+     * Handle avatar error (when avatar is not found)
+     */
+    onAvatarError(): void {
+        this.avatarUrl = null;
+        this._changeDetectorRef.markForCheck();
     }
 
     // -----------------------------------------------------------------------------------------------------

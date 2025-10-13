@@ -66,4 +66,11 @@ export class UserService {
         formData.append('background', file);
         return this._httpClient.post(`${this.apiUrl}/users/me/background`, formData);
     }
+
+    /**
+     * Get avatar URL
+     */
+    getAvatarUrl(): string {
+        return `${this.apiUrl}/users/me/avatar`;
+    }
 }

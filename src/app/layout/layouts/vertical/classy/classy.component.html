@@ -21,18 +21,14 @@
         <!-- User -->
         <div class="flex w-full flex-col items-center p-4">
             <div class="relative h-24 w-24">
-                @if (user.avatarData) {
+                @if (avatarUrl) {
                     <img
                         class="h-full w-full rounded-full"
-                        [src]="
-                            'data:' +
-                            user.avatarMime +
-                            ';base64,' +
-                            user.avatarData
-                        "
+                        [src]="avatarUrl"
+                        (error)="onAvatarError()"
                     />
                 }
-                @if (!user.avatarData) {
+                @if (!avatarUrl) {
                     <mat-icon
                         class="icon-size-24"
                         [svgIcon]="'heroicons_solid:user-circle'"

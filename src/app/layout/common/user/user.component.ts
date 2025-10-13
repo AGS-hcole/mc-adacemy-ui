@@ -39,6 +39,7 @@ export class UserComponent implements OnInit, OnDestroy {
 
     @Input() showAvatar: boolean = true;
     user: User;
+    avatarUrl: string | null = null;
 
     private _unsubscribeAll: Subject<any> = new Subject<any>();
 
@@ -65,6 +66,11 @@ export class UserComponent implements OnInit, OnDestroy {
             .subscribe((user: User) => {
                 this.user = user;
 
+                // Set avatar URL if user exists
+                if (user) {
+                    this.avatarUrl = this._userService.getAvatarUrl();
+                }
+
                 // Mark for check
                 this._changeDetectorRef.markForCheck();
             });
@@ -88,5 +94,13 @@ export class UserComponent implements OnInit, OnDestroy {
      */
     signOut(): void {
         this._router.navigate(['/sign-out']);
+    }
+
+    /**
+     * Handle avatar error (when avatar is not found)
+     */
+    onAvatarError(): void {
+        this.avatarUrl = null;
+        this._changeDetectorRef.markForCheck();
     }
 }
