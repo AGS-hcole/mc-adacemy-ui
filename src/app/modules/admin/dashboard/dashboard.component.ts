@@ -14,6 +14,7 @@ import { MatInputModule } from '@angular/material/input';
 import { MatSelectModule } from '@angular/material/select';
 import { MatSlideToggleModule } from '@angular/material/slide-toggle';
 import { MatTooltipModule } from '@angular/material/tooltip';
+import { Router } from '@angular/router';
 import { TranslocoModule } from '@jsverse/transloco';
 import { DashboardService } from 'app/core/dashboard/dashboard.service';
 import { DashboardStats } from 'app/core/dashboard/dashboard.types';
@@ -46,7 +47,8 @@ export class DashboardComponent implements OnInit, OnDestroy {
      */
     constructor(
         private _dashboardService: DashboardService,
-        private _changeDetectorRef: ChangeDetectorRef
+        private _changeDetectorRef: ChangeDetectorRef,
+        private _router: Router
     ) {}
 
     ngOnInit(): void {
@@ -83,6 +85,27 @@ export class DashboardComponent implements OnInit, OnDestroy {
                     this._changeDetectorRef.markForCheck();
                 },
             });
+    }
+
+    /**
+     * Navigate to sites management
+     */
+    navigateToSites(): void {
+        this._router.navigate(['/admin/sites']);
+    }
+
+    /**
+     * Navigate to users management
+     */
+    navigateToUsers(): void {
+        this._router.navigate(['/admin/users']);
+    }
+
+    /**
+     * Navigate to sessions management
+     */
+    navigateToSessions(): void {
+        this._router.navigate(['/admin/sessions']);
     }
 
     /**
