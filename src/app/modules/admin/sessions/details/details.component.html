@@ -34,8 +34,8 @@
                     </mat-error>
                 </mat-form-field>
 
-                <!-- Date -->
-                <mat-form-field class="w-full mt-4">
+                <!-- Date - Single (Edit Mode) -->
+                <mat-form-field class="w-full mt-4" *ngIf="editMode">
                     <mat-label>{{ 'SESSIONS.ADMIN.FORM.DATE' | transloco }}</mat-label>
                     <input
                         matInput
@@ -50,6 +50,52 @@
                         {{ 'SESSIONS.ADMIN.FORM.DATE_REQUIRED' | transloco }}
                     </mat-error>
                 </mat-form-field>
+
+                <!-- Date - Multiple (Create Mode) -->
+                <div *ngIf="!editMode" class="w-full mt-4">
+                    <mat-form-field class="w-full">
+                        <mat-label>{{ 'SESSIONS.ADMIN.FORM.DATE_MULTIPLE' | transloco }}</mat-label>
+                        <input
+                            matInput
+                            [matDatepicker]="datePickerMulti"
+                            formControlName="date"
+                            (dateChange)="addDate()">
+                        <mat-datepicker-toggle
+                            matIconSuffix
+                            [for]="datePickerMulti">
+                        </mat-datepicker-toggle>
+                        <mat-datepicker #datePickerMulti></mat-datepicker>
+                        <mat-hint>{{ 'SESSIONS.ADMIN.FORM.DATE_MULTIPLE_HINT' | transloco }}</mat-hint>
+                    </mat-form-field>
+
+                    <!-- Selected dates chips -->
+                    <div class="mt-2" *ngIf="selectedDates.length > 0">
+                        <div class="text-sm text-secondary mb-2">
+                            {{ 'SESSIONS.ADMIN.FORM.SELECTED_DATES' | transloco }} ({{ selectedDates.length }})
+                        </div>
+                        <div class="flex flex-wrap gap-2">
+                            <div
+                                *ngFor="let date of selectedDates; let i = index"
+                                class="flex items-center gap-1 px-3 py-1 bg-primary-100 dark:bg-primary-800 text-primary-800 dark:text-primary-100 rounded-full text-sm">
+                                <span>{{ formatDateDisplay(date) }}</span>
+                                <button
+                                    type="button"
+                                    (click)="removeDate(i)"
+                                    class="ml-1 hover:bg-primary-200 dark:hover:bg-primary-700 rounded-full p-0.5">
+                                    <mat-icon
+                                        class="icon-size-4"
+                                        [svgIcon]="'heroicons_solid:x-mark'">
+                                    </mat-icon>
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Error message if no dates selected -->
+                    <div class="text-warn text-sm mt-2" *ngIf="selectedDates.length === 0">
+                        {{ 'SESSIONS.ADMIN.FORM.DATE_REQUIRED' | transloco }}
+                    </div>
+                </div>
 
                 <!-- Slot -->
                 <mat-form-field class="w-full mt-4">
