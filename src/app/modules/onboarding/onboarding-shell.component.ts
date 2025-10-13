@@ -6,7 +6,7 @@ import { MatIconModule } from '@angular/material/icon';
 import { MatProgressBarModule } from '@angular/material/progress-bar';
 import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 import { MatSnackBar, MatSnackBarModule } from '@angular/material/snack-bar';
-import { Router } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { TranslocoModule } from '@jsverse/transloco';
 import { AuthService } from 'app/core/auth/auth.service';
 import { UserService } from 'app/core/user/user.service';
@@ -88,6 +88,7 @@ export class OnboardingShellComponent implements OnInit, OnDestroy {
     private avatarService = inject(AvatarService);
     private router = inject(Router);
     private snackBar = inject(MatSnackBar);
+    private _activatedRoute = inject(ActivatedRoute);
 
     ngOnInit(): void {
         // Load draft from localStorage
@@ -96,10 +97,10 @@ export class OnboardingShellComponent implements OnInit, OnDestroy {
             this.draft = { ...this.draft, ...savedDraft };
         }
 
-        // Get current user email from auth
-        this.userService.user$
+        // Get current user from resolver
+        this._activatedRoute.data
             .pipe(takeUntil(this.destroy$))
-            .subscribe((user) => {
+            .subscribe(({ user }) => {
                 if (user?.email) {
                     this.currentEmail = user.email;
                     // Prefill with existing data
