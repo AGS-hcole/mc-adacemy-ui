@@ -16,6 +16,7 @@ import {
 } from '@angular/forms';
 import { MatButtonModule } from '@angular/material/button';
 import { MatCheckboxModule } from '@angular/material/checkbox';
+import { MatChipsModule } from '@angular/material/chips';
 import { MatDatepickerModule } from '@angular/material/datepicker';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatIconModule } from '@angular/material/icon';
@@ -32,7 +33,7 @@ import {
     UpdateSessionRequest,
 } from 'app/core/session/session.types';
 import { SessionsService } from 'app/core/session/sessions.service';
-import { combineLatest, Subject, takeUntil } from 'rxjs';
+import { combineLatest, forkJoin, Subject, takeUntil } from 'rxjs';
 
 @Component({
     selector: 'session-info',
@@ -45,6 +46,7 @@ import { combineLatest, Subject, takeUntil } from 'rxjs';
         ReactiveFormsModule,
         MatButtonModule,
         MatCheckboxModule,
+        MatChipsModule,
         RouterLink,
         CommonModule,
         MatDatepickerModule,
@@ -60,6 +62,7 @@ export class SessionInfoComponent implements OnInit, OnDestroy {
     sites: Site[] = [];
     session: Session | null = null;
     editMode: boolean = false;
+    selectedDates: Date[] = [];
 
     SessionSlot = SessionSlot;
 
@@ -147,7 +150,7 @@ export class SessionInfoComponent implements OnInit, OnDestroy {
     initForm() {
         this.sessionForm = this._formBuilder.group({
             siteId: ['', [Validators.required]],
-            date: ['', [Validators.required]],
+            date: [''], // No longer required for multi-date in create mode
             slot: ['', [Validators.required]],
             startTime: [''],
             endTime: [''],
@@ -163,6 +166,18 @@ export class SessionInfoComponent implements OnInit, OnDestroy {
      * Save session
      */
     saveSession(): void {
+        // In edit mode, validate date field is required
+        if (this.editMode && !this.sessionForm.get('date').value) {
+            this.sessionForm.get('date').setErrors({ required: true });
+            return;
+        }
+
+        // In create mode, validate at least one date is selected
+        if (!this.editMode && this.selectedDates.length === 0) {
+            // Show error - no dates selected
+            return;
+        }
+
         if (this.sessionForm.invalid) {
             return;
         }
@@ -179,17 +194,17 @@ export class SessionInfoComponent implements OnInit, OnDestroy {
 
         const formValue = this.sessionForm.value;
 
-        const startISO = this._combineDateAndTimeISO(
-            formValue.date,
-            formValue.startTime
-        );
-        const endISO = this._combineDateAndTimeISO(
-            formValue.date,
-            formValue.endTime
-        );
-
         if (this.editMode && this.session) {
             // Update existing session
+            const startISO = this._combineDateAndTimeISO(
+                formValue.date,
+                formValue.startTime
+            );
+            const endISO = this._combineDateAndTimeISO(
+                formValue.date,
+                formValue.endTime
+            );
+
             const updateRequest: UpdateSessionRequest = {
                 siteId: formValue.siteId,
                 date: this._formatDate(formValue.date), // "YYYY-MM-DD"
@@ -208,24 +223,42 @@ export class SessionInfoComponent implements OnInit, OnDestroy {
                     });
                 });
         } else {
-            // Create new session
-            const createRequest: CreateSessionRequest = {
-                siteId: formValue.siteId,
-                date: this._formatDate(formValue.date),
-                slot: formValue.slot,
-                startTime: startISO,
-                endTime: endISO,
-                notes: formValue.notes || null,
-                isPublished: formValue.isPublished,
-            };
+            // Create new sessions - one per selected date
+            const createRequests = this.selectedDates.map((date) => {
+                const startISO = this._combineDateAndTimeISO(
+                    date,
+                    formValue.startTime
+                );
+                const endISO = this._combineDateAndTimeISO(
+                    date,
+                    formValue.endTime
+                );
 
-            this._sessionsService
-                .createSession(createRequest)
-                .subscribe((createdSession) => {
-                    this._router.navigate(['../', createdSession.id, 'info'], {
+                const createRequest: CreateSessionRequest = {
+                    siteId: formValue.siteId,
+                    date: this._formatDate(date),
+                    slot: formValue.slot,
+                    startTime: startISO,
+                    endTime: endISO,
+                    notes: formValue.notes || null,
+                    isPublished: formValue.isPublished,
+                };
+
+                return this._sessionsService.createSession(createRequest);
+            });
+
+            // Execute all create requests in parallel
+            forkJoin(createRequests).subscribe({
+                next: () => {
+                    this._router.navigate(['../'], {
                         relativeTo: this._activatedRoute,
                     });
-                });
+                },
+                error: (error) => {
+                    console.error('Error creating sessions:', error);
+                    // Could add error handling UI here
+                },
+            });
         }
     }
 
@@ -234,6 +267,52 @@ export class SessionInfoComponent implements OnInit, OnDestroy {
      */
     cancel(): void {
         this._router.navigate(['../'], { relativeTo: this._activatedRoute });
+    }
+
+    /**
+     * Add selected date to the list
+     */
+    addDate(): void {
+        const dateValue = this.sessionForm.get('date').value;
+        if (!dateValue) {
+            return;
+        }
+
+        const newDate =
+            dateValue instanceof Date ? dateValue : new Date(dateValue);
+
+        // Check if date already exists
+        const dateExists = this.selectedDates.some(
+            (d) => this._formatDate(d) === this._formatDate(newDate)
+        );
+
+        if (!dateExists) {
+            this.selectedDates.push(newDate);
+            // Sort dates chronologically
+            this.selectedDates.sort((a, b) => a.getTime() - b.getTime());
+            this.sessionForm.patchValue({ date: '' });
+            this._changeDetectorRef.markForCheck();
+        }
+    }
+
+    /**
+     * Remove a date from the selected dates list
+     */
+    removeDate(index: number): void {
+        this.selectedDates.splice(index, 1);
+        this._changeDetectorRef.markForCheck();
+    }
+
+    /**
+     * Format date for display
+     */
+    formatDateDisplay(date: Date): string {
+        return date.toLocaleDateString('fr-FR', {
+            weekday: 'short',
+            year: 'numeric',
+            month: 'short',
+            day: 'numeric',
+        });
     }
 
     // -----------------------------------------------------------------------------------------------------
