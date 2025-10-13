@@ -26,4 +26,8 @@ export default [
         path: 'sites',
         loadChildren: () => import('app/modules/admin/sites/sites.routes'),
     },
+    {
+        path: 'reports',
+        loadChildren: () => import('app/modules/admin/reports/reports.routes'),
+    },
 ] as Routes;

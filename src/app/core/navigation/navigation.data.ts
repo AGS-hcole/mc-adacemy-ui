@@ -53,6 +53,13 @@ export const adminNavigation: FuseNavigationItem[] = [
                 link: '/admin/sessions',
             },
             {
+                id: 'reports',
+                title: 'NAVIGATION.ADMIN.REPORTS.TITLE',
+                type: 'basic',
+                icon: 'heroicons_outline:chart-bar',
+                link: '/admin/reports',
+            },
+            {
                 id: 'tournaments',
                 title: 'NAVIGATION.ADMIN.TOURNAMENTS.TITLE',
                 type: 'basic',

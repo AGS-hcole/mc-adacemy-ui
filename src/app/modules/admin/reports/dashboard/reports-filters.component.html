@@ -1,0 +1,71 @@
+<div class="sticky top-0 z-10 bg-card shadow">
+    <div class="p-6">
+        <form [formGroup]="filtersForm" class="flex flex-wrap gap-4">
+            <!-- Period Preset -->
+            <mat-form-field class="flex-auto min-w-48">
+                <mat-label>{{ 'REPORTS.FILTERS.PERIOD' | transloco }}</mat-label>
+                <mat-select formControlName="preset">
+                    <mat-option *ngFor="let option of presetOptions" [value]="option.value">
+                        {{ option.label | transloco }}
+                    </mat-option>
+                </mat-select>
+            </mat-form-field>
+
+            <!-- Date From (Custom) -->
+            <mat-form-field class="flex-auto min-w-48" *ngIf="isCustomPreset">
+                <mat-label>{{ 'REPORTS.FILTERS.DATE_FROM' | transloco }}</mat-label>
+                <input matInput [matDatepicker]="pickerFrom" formControlName="dateFrom">
+                <mat-datepicker-toggle matSuffix [for]="pickerFrom"></mat-datepicker-toggle>
+                <mat-datepicker #pickerFrom></mat-datepicker>
+            </mat-form-field>
+
+            <!-- Date To (Custom) -->
+            <mat-form-field class="flex-auto min-w-48" *ngIf="isCustomPreset">
+                <mat-label>{{ 'REPORTS.FILTERS.DATE_TO' | transloco }}</mat-label>
+                <input matInput [matDatepicker]="pickerTo" formControlName="dateTo">
+                <mat-datepicker-toggle matSuffix [for]="pickerTo"></mat-datepicker-toggle>
+                <mat-datepicker #pickerTo></mat-datepicker>
+            </mat-form-field>
+
+            <!-- User Filter -->
+            <mat-form-field class="flex-auto min-w-64">
+                <mat-label>{{ 'REPORTS.FILTERS.USER' | transloco }}</mat-label>
+                <mat-select formControlName="userId">
+                    <mat-option [value]="null">{{ 'REPORTS.FILTERS.ALL_USERS' | transloco }}</mat-option>
+                    <mat-option *ngFor="let user of users" [value]="user.id">
+                        {{ user.name }}
+                    </mat-option>
+                </mat-select>
+            </mat-form-field>
+
+            <!-- Contract Scope -->
+            <mat-form-field class="flex-auto min-w-48">
+                <mat-label>{{ 'REPORTS.FILTERS.CONTRACT_SCOPE' | transloco }}</mat-label>
+                <mat-select formControlName="contractScope">
+                    <mat-option *ngFor="let option of contractScopeOptions" [value]="option.value">
+                        {{ option.label | transloco }}
+                    </mat-option>
+                </mat-select>
+            </mat-form-field>
+
+            <!-- Actions -->
+            <div class="flex items-center gap-2">
+                <button
+                    mat-raised-button
+                    color="primary"
+                    (click)="onApply()"
+                    type="button">
+                    <mat-icon class="icon-size-5" svgIcon="heroicons_solid:funnel"></mat-icon>
+                    <span class="ml-2">{{ 'REPORTS.ACTIONS.APPLY' | transloco }}</span>
+                </button>
+                <button
+                    mat-stroked-button
+                    (click)="onReset()"
+                    type="button">
+                    <mat-icon class="icon-size-5" svgIcon="heroicons_solid:arrow-path"></mat-icon>
+                    <span class="ml-2">{{ 'REPORTS.ACTIONS.RESET' | transloco }}</span>
+                </button>
+            </div>
+        </form>
+    </div>
+</div>
