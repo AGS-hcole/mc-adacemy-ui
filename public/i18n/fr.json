@@ -102,6 +102,18 @@
             }
         }
     },
+    "DASHBOARD": {
+        "LOADING": "Chargement...",
+        "STATS": {
+            "SITES": "Sites",
+            "TOTAL_USERS": "Utilisateurs totaux",
+            "ADMINS": "Administrateurs",
+            "REGULAR_USERS": "Utilisateurs",
+            "ACTIVE_SESSIONS": "Sessions actives",
+            "UPCOMING_TOURNAMENTS": "Tournois à venir",
+            "COMING_SOON": "Bientôt disponible"
+        }
+    },
     "HOME": {
         "DASHBOARD": {
             "TITLE": "MyCenter Academy",

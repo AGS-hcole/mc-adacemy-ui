@@ -38,7 +38,140 @@
         <div
             class="mx-auto flex w-full max-w-xs flex-auto flex-col sm:max-w-5xl"
         >
-            <!-- No Dashboard -->
+            <!-- Loading state -->
+            <div *ngIf="loading" class="flex items-center justify-center py-12">
+                <div class="text-secondary text-lg">
+                    {{ 'DASHBOARD.LOADING' | transloco }}
+                </div>
+            </div>
+
+            <!-- Dashboard Stats -->
+            <div *ngIf="!loading && stats" class="grid gap-6 md:grid-cols-2 lg:grid-cols-3">
+                <!-- Sites Card -->
+                <div class="flex flex-col rounded-2xl bg-card p-6 shadow">
+                    <div class="flex items-center">
+                        <div
+                            class="flex h-12 w-12 items-center justify-center rounded-full bg-blue-100 dark:bg-blue-800"
+                        >
+                            <mat-icon
+                                class="text-blue-600 dark:text-blue-200"
+                                [svgIcon]="'heroicons_outline:map-pin'"
+                            ></mat-icon>
+                        </div>
+                    </div>
+                    <div class="mt-4 text-3xl font-bold tracking-tight">
+                        {{ stats.sites.total }}
+                    </div>
+                    <div class="text-secondary mt-1 text-sm font-medium">
+                        {{ 'DASHBOARD.STATS.SITES' | transloco }}
+                    </div>
+                </div>
+
+                <!-- Total Users Card -->
+                <div class="flex flex-col rounded-2xl bg-card p-6 shadow">
+                    <div class="flex items-center">
+                        <div
+                            class="flex h-12 w-12 items-center justify-center rounded-full bg-green-100 dark:bg-green-800"
+                        >
+                            <mat-icon
+                                class="text-green-600 dark:text-green-200"
+                                [svgIcon]="'heroicons_outline:user-group'"
+                            ></mat-icon>
+                        </div>
+                    </div>
+                    <div class="mt-4 text-3xl font-bold tracking-tight">
+                        {{ stats.users.total }}
+                    </div>
+                    <div class="text-secondary mt-1 text-sm font-medium">
+                        {{ 'DASHBOARD.STATS.TOTAL_USERS' | transloco }}
+                    </div>
+                </div>
+
+                <!-- Admin Users Card -->
+                <div class="flex flex-col rounded-2xl bg-card p-6 shadow">
+                    <div class="flex items-center">
+                        <div
+                            class="flex h-12 w-12 items-center justify-center rounded-full bg-purple-100 dark:bg-purple-800"
+                        >
+                            <mat-icon
+                                class="text-purple-600 dark:text-purple-200"
+                                [svgIcon]="'heroicons_outline:shield-check'"
+                            ></mat-icon>
+                        </div>
+                    </div>
+                    <div class="mt-4 text-3xl font-bold tracking-tight">
+                        {{ stats.users.admins }}
+                    </div>
+                    <div class="text-secondary mt-1 text-sm font-medium">
+                        {{ 'DASHBOARD.STATS.ADMINS' | transloco }}
+                    </div>
+                </div>
+
+                <!-- Regular Users Card -->
+                <div class="flex flex-col rounded-2xl bg-card p-6 shadow">
+                    <div class="flex items-center">
+                        <div
+                            class="flex h-12 w-12 items-center justify-center rounded-full bg-teal-100 dark:bg-teal-800"
+                        >
+                            <mat-icon
+                                class="text-teal-600 dark:text-teal-200"
+                                [svgIcon]="'heroicons_outline:user'"
+                            ></mat-icon>
+                        </div>
+                    </div>
+                    <div class="mt-4 text-3xl font-bold tracking-tight">
+                        {{ stats.users.regularUsers }}
+                    </div>
+                    <div class="text-secondary mt-1 text-sm font-medium">
+                        {{ 'DASHBOARD.STATS.REGULAR_USERS' | transloco }}
+                    </div>
+                </div>
+
+                <!-- Active Sessions Card -->
+                <div class="flex flex-col rounded-2xl bg-card p-6 shadow">
+                    <div class="flex items-center">
+                        <div
+                            class="flex h-12 w-12 items-center justify-center rounded-full bg-orange-100 dark:bg-orange-800"
+                        >
+                            <mat-icon
+                                class="text-orange-600 dark:text-orange-200"
+                                [svgIcon]="'heroicons_outline:calendar'"
+                            ></mat-icon>
+                        </div>
+                    </div>
+                    <div class="mt-4 text-3xl font-bold tracking-tight">
+                        {{ stats.sessions.active }}
+                    </div>
+                    <div class="text-secondary mt-1 text-sm font-medium">
+                        {{ 'DASHBOARD.STATS.ACTIVE_SESSIONS' | transloco }}
+                    </div>
+                </div>
+
+                <!-- Upcoming Tournaments Card -->
+                <div class="flex flex-col rounded-2xl bg-card p-6 shadow">
+                    <div class="flex items-center">
+                        <div
+                            class="flex h-12 w-12 items-center justify-center rounded-full bg-yellow-100 dark:bg-yellow-800"
+                        >
+                            <mat-icon
+                                class="text-yellow-600 dark:text-yellow-200"
+                                [svgIcon]="'heroicons_outline:trophy'"
+                            ></mat-icon>
+                        </div>
+                    </div>
+                    <div class="mt-4 text-3xl font-bold tracking-tight">
+                        {{ stats.tournaments.upcoming }}
+                    </div>
+                    <div class="text-secondary mt-1 text-sm font-medium">
+                        {{ 'DASHBOARD.STATS.UPCOMING_TOURNAMENTS' | transloco }}
+                    </div>
+                    <div
+                        class="mt-2 rounded bg-gray-100 px-2 py-1 text-xs text-gray-600 dark:bg-gray-800 dark:text-gray-400"
+                    >
+                        {{ 'DASHBOARD.STATS.COMING_SOON' | transloco }}
+                    </div>
+                </div>
+            </div>
         </div>
     </div>
 </div>
