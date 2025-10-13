@@ -1,5 +1,28 @@
-import { Routes } from '@angular/router';
+import { inject } from '@angular/core';
+import {
+    ActivatedRouteSnapshot,
+    Router,
+    RouterStateSnapshot,
+    Routes,
+} from '@angular/router';
+import { DashboardService } from 'app/core/dashboard/dashboard.service';
+import { handleResolverError } from 'app/shared/helpers/router-error-handler';
+import { catchError } from 'rxjs';
 import { DashboardComponent } from './dashboard/dashboard.component';
+
+/** Stats resolver
+ */
+const statsResolver = (
+    route: ActivatedRouteSnapshot,
+    state: RouterStateSnapshot
+) => {
+    const dashboardService = inject(DashboardService);
+    const router = inject(Router);
+
+    return dashboardService
+        .getDashboardStats()
+        .pipe(catchError((error) => handleResolverError(error, state, router)));
+};
 
 export default [
     /**
@@ -13,6 +36,9 @@ export default [
     {
         path: 'dashboard',
         component: DashboardComponent,
+        resolve: {
+            stats: statsResolver,
+        },
     },
     {
         path: 'users',
@@ -20,7 +46,8 @@ export default [
     },
     {
         path: 'sessions',
-        loadChildren: () => import('app/modules/admin/sessions/sessions.routes'),
+        loadChildren: () =>
+            import('app/modules/admin/sessions/sessions.routes'),
     },
     {
         path: 'sites',

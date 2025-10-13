@@ -1,4 +1,16 @@
 {
+    "DASHBOARD": {
+        "LOADING": "Yükleniyor...",
+        "STATS": {
+            "SITES": "Siteler",
+            "TOTAL_USERS": "Toplam Kullanıcılar",
+            "ADMINS": "Yöneticiler",
+            "REGULAR_USERS": "Kullanıcılar",
+            "ACTIVE_SESSIONS": "Aktif Oturumlar",
+            "UPCOMING_TOURNAMENTS": "Yaklaşan Turnuvalar",
+            "COMING_SOON": "Çok Yakında"
+        }
+    },
     "welcome-back": "Hoşgeldin",
     "Project": "Proje",
     "Analytics": "Analitik",

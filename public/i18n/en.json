@@ -1,4 +1,16 @@
 {
+    "DASHBOARD": {
+        "LOADING": "Loading...",
+        "STATS": {
+            "SITES": "Sites",
+            "TOTAL_USERS": "Total Users",
+            "ADMINS": "Administrators",
+            "REGULAR_USERS": "Users",
+            "ACTIVE_SESSIONS": "Active Sessions",
+            "UPCOMING_TOURNAMENTS": "Upcoming Tournaments",
+            "COMING_SOON": "Coming Soon"
+        }
+    },
     "HOME": {
         "NAVIGATION": {
             "TITLE": "Home",
