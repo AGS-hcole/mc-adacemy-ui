@@ -14,4 +14,9 @@ export default [
         path: 'sessions',
         loadChildren: () => import('app/modules/user/sessions/sessions.routes'),
     },
+    {
+        path: 'tournaments',
+        loadChildren: () =>
+            import('app/modules/user/tournaments/tournaments.routes'),
+    },
 ] as Routes;

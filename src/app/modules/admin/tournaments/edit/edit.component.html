@@ -1,0 +1,327 @@
+<div class="flex min-w-0 flex-auto flex-col">
+    <!-- Header -->
+    <div
+        class="flex flex-col gap-4 bg-card p-6 dark:bg-transparent sm:flex-row sm:items-center sm:justify-between md:px-8">
+        <div>
+            <div class="text-4xl font-extrabold leading-none tracking-tight">
+                {{
+                    (isNew
+                        ? 'TOURNAMENTS.ADMIN.CREATE'
+                        : 'TOURNAMENTS.ADMIN.EDIT'
+                    ) | transloco
+                }}
+            </div>
+            <div
+                class="mt-2 text-lg text-secondary"
+                *ngIf="!isNew && tournament">
+                {{ tournament.title }}
+                <span
+                    class="ml-2 inline-flex items-center rounded-full px-2.5 py-0.5 text-xs font-medium"
+                    [ngClass]="{
+                        'bg-yellow-100 text-yellow-800':
+                            tournament.status === TournamentStatus.DRAFT,
+                        'bg-green-100 text-green-800':
+                            tournament.status === TournamentStatus.PUBLISHED
+                    }">
+                    {{ 'TOURNAMENTS.STATUS.' + tournament.status | transloco }}
+                </span>
+            </div>
+        </div>
+        <div class="flex shrink-0 items-center gap-2">
+            <button mat-stroked-button (click)="cancel()">
+                {{ 'TOURNAMENTS.FORMS.CANCEL' | transloco }}
+            </button>
+            <button
+                mat-flat-button
+                [color]="'primary'"
+                [disabled]="tournamentForm.invalid"
+                (click)="save()">
+                {{ 'TOURNAMENTS.FORMS.SAVE' | transloco }}
+            </button>
+            <button
+                mat-flat-button
+                [color]="'accent'"
+                *ngIf="
+                    !isNew && tournament?.status === TournamentStatus.DRAFT
+                "
+                (click)="publish()">
+                {{ 'TOURNAMENTS.ADMIN.ACTIONS.PUBLISH' | transloco }}
+            </button>
+        </div>
+    </div>
+
+    <!-- Content -->
+    <div class="flex-auto overflow-y-auto p-6 md:px-8">
+        <form [formGroup]="tournamentForm" class="space-y-6">
+            <!-- Basic Information -->
+            <div class="rounded-lg bg-card p-6 shadow">
+                <h2 class="mb-4 text-2xl font-semibold">
+                    {{ 'TOURNAMENTS.FORMS.BASIC_INFO' | transloco }}
+                </h2>
+
+                <div class="grid grid-cols-1 gap-4 md:grid-cols-2">
+                    <mat-form-field class="w-full">
+                        <mat-label>{{
+                            'TOURNAMENTS.FORMS.TITLE' | transloco
+                        }}</mat-label>
+                        <input matInput formControlName="title" />
+                        <mat-error>{{
+                            'TOURNAMENTS.FORMS.TITLE_REQUIRED' | transloco
+                        }}</mat-error>
+                    </mat-form-field>
+
+                    <mat-form-field class="w-full">
+                        <mat-label>{{
+                            'TOURNAMENTS.FORMS.TYPE' | transloco
+                        }}</mat-label>
+                        <mat-select formControlName="type">
+                            <mat-option [value]="TournamentType.SINGLES">{{
+                                'TOURNAMENTS.TYPE.SINGLES' | transloco
+                            }}</mat-option>
+                            <mat-option [value]="TournamentType.DOUBLES">{{
+                                'TOURNAMENTS.TYPE.DOUBLES' | transloco
+                            }}</mat-option>
+                        </mat-select>
+                        <mat-error>{{
+                            'TOURNAMENTS.FORMS.TYPE_REQUIRED' | transloco
+                        }}</mat-error>
+                    </mat-form-field>
+
+                    <mat-form-field class="w-full">
+                        <mat-label>{{
+                            'TOURNAMENTS.FORMS.STARTS_AT' | transloco
+                        }}</mat-label>
+                        <input
+                            matInput
+                            [matDatepicker]="startsPicker"
+                            formControlName="startsAt" />
+                        <mat-datepicker-toggle
+                            matSuffix
+                            [for]="startsPicker"></mat-datepicker-toggle>
+                        <mat-datepicker #startsPicker></mat-datepicker>
+                        <mat-error>{{
+                            'TOURNAMENTS.FORMS.STARTS_AT_REQUIRED' | transloco
+                        }}</mat-error>
+                    </mat-form-field>
+
+                    <mat-form-field class="w-full">
+                        <mat-label>{{
+                            'TOURNAMENTS.FORMS.ENDS_AT' | transloco
+                        }}</mat-label>
+                        <input
+                            matInput
+                            [matDatepicker]="endsPicker"
+                            formControlName="endsAt" />
+                        <mat-datepicker-toggle
+                            matSuffix
+                            [for]="endsPicker"></mat-datepicker-toggle>
+                        <mat-datepicker #endsPicker></mat-datepicker>
+                        <mat-error>{{
+                            'TOURNAMENTS.FORMS.ENDS_AT_REQUIRED' | transloco
+                        }}</mat-error>
+                    </mat-form-field>
+                </div>
+            </div>
+
+            <!-- Address -->
+            <div class="rounded-lg bg-card p-6 shadow">
+                <h2 class="mb-4 text-2xl font-semibold">
+                    {{ 'TOURNAMENTS.FORMS.ADDRESS' | transloco }}
+                </h2>
+
+                <div class="grid grid-cols-1 gap-4 md:grid-cols-2">
+                    <mat-form-field class="w-full md:col-span-2">
+                        <mat-label>{{
+                            'TOURNAMENTS.FORMS.ADDRESS_LINE1' | transloco
+                        }}</mat-label>
+                        <input matInput formControlName="addressLine1" />
+                        <mat-error>{{
+                            'TOURNAMENTS.FORMS.ADDRESS_LINE1_REQUIRED'
+                                | transloco
+                        }}</mat-error>
+                    </mat-form-field>
+
+                    <mat-form-field class="w-full md:col-span-2">
+                        <mat-label>{{
+                            'TOURNAMENTS.FORMS.ADDRESS_LINE2' | transloco
+                        }}</mat-label>
+                        <input matInput formControlName="addressLine2" />
+                    </mat-form-field>
+
+                    <mat-form-field class="w-full">
+                        <mat-label>{{
+                            'TOURNAMENTS.FORMS.POSTAL_CODE' | transloco
+                        }}</mat-label>
+                        <input matInput formControlName="postalCode" />
+                        <mat-error>{{
+                            'TOURNAMENTS.FORMS.POSTAL_CODE_REQUIRED' | transloco
+                        }}</mat-error>
+                    </mat-form-field>
+
+                    <mat-form-field class="w-full">
+                        <mat-label>{{
+                            'TOURNAMENTS.FORMS.CITY' | transloco
+                        }}</mat-label>
+                        <input matInput formControlName="city" />
+                        <mat-error>{{
+                            'TOURNAMENTS.FORMS.CITY_REQUIRED' | transloco
+                        }}</mat-error>
+                    </mat-form-field>
+
+                    <mat-form-field class="w-full">
+                        <mat-label>{{
+                            'TOURNAMENTS.FORMS.COUNTRY' | transloco
+                        }}</mat-label>
+                        <input matInput formControlName="country" />
+                        <mat-error>{{
+                            'TOURNAMENTS.FORMS.COUNTRY_REQUIRED' | transloco
+                        }}</mat-error>
+                    </mat-form-field>
+
+                    <mat-form-field class="w-full">
+                        <mat-label>{{
+                            'TOURNAMENTS.FORMS.LATITUDE' | transloco
+                        }}</mat-label>
+                        <input
+                            matInput
+                            type="number"
+                            formControlName="latitude" />
+                    </mat-form-field>
+
+                    <mat-form-field class="w-full">
+                        <mat-label>{{
+                            'TOURNAMENTS.FORMS.LONGITUDE' | transloco
+                        }}</mat-label>
+                        <input
+                            matInput
+                            type="number"
+                            formControlName="longitude" />
+                    </mat-form-field>
+                </div>
+            </div>
+
+            <!-- Participants (only for existing tournaments) -->
+            <div class="rounded-lg bg-card p-6 shadow" *ngIf="!isNew">
+                <h2 class="mb-4 text-2xl font-semibold">
+                    {{ 'TOURNAMENTS.FORMS.PARTICIPANTS' | transloco }}
+                </h2>
+
+                <div class="mb-4">
+                    <mat-form-field class="w-full">
+                        <mat-label>{{
+                            'TOURNAMENTS.FORMS.SEARCH_USERS' | transloco
+                        }}</mat-label>
+                        <input
+                            matInput
+                            [(ngModel)]="userSearchTerm"
+                            [ngModelOptions]="{ standalone: true }" />
+                        <mat-icon matPrefix>search</mat-icon>
+                    </mat-form-field>
+                </div>
+
+                <div class="mb-4 max-h-64 overflow-y-auto rounded border">
+                    <div
+                        *ngFor="let user of filteredUsers; trackBy: trackByFn"
+                        class="flex cursor-pointer items-center border-b p-2 hover:bg-gray-50 dark:hover:bg-gray-800"
+                        (click)="toggleParticipant(user.id)">
+                        <input
+                            type="checkbox"
+                            [checked]="
+                                selectedParticipantIds.includes(user.id)
+                            "
+                            class="mr-3" />
+                        <div class="flex-1">
+                            <div class="font-medium">
+                                {{ user.firstname }} {{ user.lastname }}
+                            </div>
+                            <div class="text-sm text-secondary">
+                                {{ user.email }}
+                                <span
+                                    *ngIf="user.currentRanking"
+                                    class="ml-2 text-xs">
+                                    Ranking: {{ user.currentRanking }}
+                                </span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="flex gap-2">
+                    <button
+                        mat-stroked-button
+                        [color]="'primary'"
+                        (click)="saveParticipants()">
+                        {{ 'TOURNAMENTS.FORMS.SAVE_PARTICIPANTS' | transloco }}
+                    </button>
+                    <div class="text-sm text-secondary">
+                        {{ selectedParticipants.length }}
+                        {{ 'TOURNAMENTS.FORMS.SELECTED' | transloco }}
+                    </div>
+                </div>
+            </div>
+
+            <!-- Teams (only for existing tournaments with participants) -->
+            <div
+                class="rounded-lg bg-card p-6 shadow"
+                *ngIf="!isNew && tournament?.participants?.length > 0">
+                <div class="mb-4 flex items-center justify-between">
+                    <h2 class="text-2xl font-semibold">
+                        {{ 'TOURNAMENTS.FORMS.TEAMS' | transloco }}
+                    </h2>
+                    <button
+                        mat-stroked-button
+                        [color]="'primary'"
+                        (click)="generateTeams()">
+                        {{
+                            'TOURNAMENTS.FORMS.GENERATE_TEAMS' | transloco
+                        }}
+                    </button>
+                </div>
+
+                <div
+                    cdkDropList
+                    [cdkDropListData]="teams"
+                    (cdkDropListDropped)="dropTeam($event)"
+                    class="space-y-2">
+                    <div
+                        *ngFor="let team of teams; let i = index; trackBy: trackByFn"
+                        cdkDrag
+                        class="flex items-center gap-4 rounded border bg-white p-4 shadow-sm dark:bg-gray-800">
+                        <mat-icon class="cursor-move text-gray-400"
+                            >drag_indicator</mat-icon
+                        >
+                        <div class="flex-1">
+                            <div class="font-medium">
+                                Team {{ i + 1 }}
+                                <span
+                                    *ngIf="team.placement"
+                                    class="ml-2 inline-flex items-center rounded-full bg-yellow-100 px-2.5 py-0.5 text-xs font-medium text-yellow-800">
+                                    {{ team.placement }}{{ team.placement === 1 ? 'st' : team.placement === 2 ? 'nd' : team.placement === 3 ? 'rd' : 'th' }} place
+                                </span>
+                            </div>
+                            <div class="mt-2 space-y-1">
+                                <div
+                                    *ngFor="let member of team.members"
+                                    class="text-sm">
+                                    {{ member.user?.firstname }}
+                                    {{ member.user?.lastname }}
+                                    <span
+                                        *ngIf="member.currentRanking"
+                                        class="ml-2 text-xs text-secondary">
+                                        ({{ member.currentRanking }})
+                                    </span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div
+                    class="mt-4 text-center text-sm text-secondary"
+                    *ngIf="teams.length === 0">
+                    {{ 'TOURNAMENTS.FORMS.NO_TEAMS' | transloco }}
+                </div>
+            </div>
+        </form>
+    </div>
+</div>

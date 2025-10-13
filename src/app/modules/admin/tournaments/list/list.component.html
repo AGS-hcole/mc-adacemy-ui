@@ -1,0 +1,283 @@
+<div class="flex min-w-0 flex-auto flex-col">
+    <!-- Header -->
+    <div
+        class="flex flex-col gap-4 bg-card p-6 dark:bg-transparent sm:flex-row sm:items-center sm:justify-between md:px-8">
+        <div>
+            <div class="text-4xl font-extrabold leading-none tracking-tight">
+                {{ 'TOURNAMENTS.ADMIN.TITLE' | transloco }}
+            </div>
+        </div>
+        <div class="flex shrink-0 items-center">
+            <button
+                mat-flat-button
+                [color]="'primary'"
+                (click)="createTournament()">
+                <mat-icon [svgIcon]="'heroicons_outline:plus'"></mat-icon>
+                <span class="ml-2">{{
+                    'TOURNAMENTS.ADMIN.CREATE' | transloco
+                }}</span>
+            </button>
+        </div>
+    </div>
+
+    <!-- Filters -->
+    <div class="flex flex-wrap gap-4 px-6 py-4 md:px-8">
+        <mat-form-field class="fuse-mat-dense w-full sm:w-64">
+            <mat-icon
+                class="icon-size-5"
+                matPrefix
+                [svgIcon]="'heroicons_solid:magnifying-glass'"></mat-icon>
+            <input
+                matInput
+                [formControl]="searchControl"
+                [placeholder]="'TOURNAMENTS.ADMIN.FILTERS.SEARCH' | transloco"
+                [autocomplete]="'off'" />
+        </mat-form-field>
+
+        <mat-form-field class="fuse-mat-dense w-full sm:w-44">
+            <mat-select
+                [formControl]="statusControl"
+                [placeholder]="'TOURNAMENTS.ADMIN.FILTERS.STATUS' | transloco">
+                <mat-option [value]="null">{{
+                    'TOURNAMENTS.ADMIN.FILTERS.ALL_STATUS' | transloco
+                }}</mat-option>
+                <mat-option [value]="TournamentStatus.DRAFT">{{
+                    'TOURNAMENTS.STATUS.DRAFT' | transloco
+                }}</mat-option>
+                <mat-option [value]="TournamentStatus.PUBLISHED">{{
+                    'TOURNAMENTS.STATUS.PUBLISHED' | transloco
+                }}</mat-option>
+                <mat-option [value]="TournamentStatus.ARCHIVED">{{
+                    'TOURNAMENTS.STATUS.ARCHIVED' | transloco
+                }}</mat-option>
+            </mat-select>
+        </mat-form-field>
+
+        <mat-form-field class="fuse-mat-dense w-full sm:w-44">
+            <mat-select
+                [formControl]="typeControl"
+                [placeholder]="'TOURNAMENTS.ADMIN.FILTERS.TYPE' | transloco">
+                <mat-option [value]="null">{{
+                    'TOURNAMENTS.ADMIN.FILTERS.ALL_TYPES' | transloco
+                }}</mat-option>
+                <mat-option [value]="TournamentType.SINGLES">{{
+                    'TOURNAMENTS.TYPE.SINGLES' | transloco
+                }}</mat-option>
+                <mat-option [value]="TournamentType.DOUBLES">{{
+                    'TOURNAMENTS.TYPE.DOUBLES' | transloco
+                }}</mat-option>
+            </mat-select>
+        </mat-form-field>
+    </div>
+
+    <!-- Content -->
+    <div class="flex flex-auto flex-col overflow-hidden">
+        <div class="overflow-x-auto sm:-mx-6">
+            <div class="inline-block min-w-full py-2 align-middle sm:px-6">
+                <!-- Table -->
+                <div
+                    class="overflow-hidden shadow ring-1 ring-black ring-opacity-5 sm:rounded-lg"
+                    *ngIf="filteredTournaments.length > 0">
+                    <table class="min-w-full divide-y divide-gray-300">
+                        <thead class="bg-gray-50 dark:bg-gray-800">
+                            <tr>
+                                <th
+                                    scope="col"
+                                    class="px-3 py-3.5 text-left text-sm font-semibold">
+                                    {{
+                                        'TOURNAMENTS.ADMIN.TABLE.TITLE'
+                                            | transloco
+                                    }}
+                                </th>
+                                <th
+                                    scope="col"
+                                    class="px-3 py-3.5 text-left text-sm font-semibold">
+                                    {{
+                                        'TOURNAMENTS.ADMIN.TABLE.TYPE'
+                                            | transloco
+                                    }}
+                                </th>
+                                <th
+                                    scope="col"
+                                    class="px-3 py-3.5 text-left text-sm font-semibold">
+                                    {{
+                                        'TOURNAMENTS.ADMIN.TABLE.DATES'
+                                            | transloco
+                                    }}
+                                </th>
+                                <th
+                                    scope="col"
+                                    class="px-3 py-3.5 text-left text-sm font-semibold">
+                                    {{
+                                        'TOURNAMENTS.ADMIN.TABLE.LOCATION'
+                                            | transloco
+                                    }}
+                                </th>
+                                <th
+                                    scope="col"
+                                    class="px-3 py-3.5 text-left text-sm font-semibold">
+                                    {{
+                                        'TOURNAMENTS.ADMIN.TABLE.STATUS'
+                                            | transloco
+                                    }}
+                                </th>
+                                <th
+                                    scope="col"
+                                    class="relative px-3 py-3.5 text-right text-sm font-semibold">
+                                    {{
+                                        'TOURNAMENTS.ADMIN.TABLE.ACTIONS'
+                                            | transloco
+                                    }}
+                                </th>
+                            </tr>
+                        </thead>
+                        <tbody
+                            class="divide-y divide-gray-200 bg-white dark:divide-gray-700 dark:bg-gray-900">
+                            <tr
+                                *ngFor="
+                                    let tournament of filteredTournaments;
+                                    trackBy: trackByFn
+                                ">
+                                <td
+                                    class="whitespace-nowrap px-3 py-4 text-sm">
+                                    {{ tournament.title }}
+                                </td>
+                                <td
+                                    class="whitespace-nowrap px-3 py-4 text-sm">
+                                    <span
+                                        class="inline-flex items-center rounded-full px-2.5 py-0.5 text-xs font-medium"
+                                        [ngClass]="{
+                                            'bg-blue-100 text-blue-800 dark:bg-blue-900 dark:text-blue-200':
+                                                tournament.type ===
+                                                TournamentType.SINGLES,
+                                            'bg-purple-100 text-purple-800 dark:bg-purple-900 dark:text-purple-200':
+                                                tournament.type ===
+                                                TournamentType.DOUBLES
+                                        }">
+                                        {{
+                                            'TOURNAMENTS.TYPE.' + tournament.type
+                                                | transloco
+                                        }}
+                                    </span>
+                                </td>
+                                <td
+                                    class="whitespace-nowrap px-3 py-4 text-sm">
+                                    {{
+                                        tournament.startsAt
+                                            | localizedDate: 'short'
+                                    }}
+                                    -
+                                    {{
+                                        tournament.endsAt
+                                            | localizedDate: 'short'
+                                    }}
+                                </td>
+                                <td
+                                    class="whitespace-nowrap px-3 py-4 text-sm">
+                                    {{ tournament.address.city }},
+                                    {{ tournament.address.country }}
+                                </td>
+                                <td
+                                    class="whitespace-nowrap px-3 py-4 text-sm">
+                                    <span
+                                        class="inline-flex items-center rounded-full px-2.5 py-0.5 text-xs font-medium"
+                                        [ngClass]="{
+                                            'bg-yellow-100 text-yellow-800 dark:bg-yellow-900 dark:text-yellow-200':
+                                                tournament.status ===
+                                                TournamentStatus.DRAFT,
+                                            'bg-green-100 text-green-800 dark:bg-green-900 dark:text-green-200':
+                                                tournament.status ===
+                                                TournamentStatus.PUBLISHED,
+                                            'bg-gray-100 text-gray-800 dark:bg-gray-700 dark:text-gray-200':
+                                                tournament.status ===
+                                                TournamentStatus.ARCHIVED
+                                        }">
+                                        {{
+                                            'TOURNAMENTS.STATUS.' +
+                                                tournament.status | transloco
+                                        }}
+                                    </span>
+                                </td>
+                                <td
+                                    class="relative whitespace-nowrap px-3 py-4 text-right text-sm">
+                                    <button
+                                        mat-icon-button
+                                        [matTooltip]="
+                                            'TOURNAMENTS.ADMIN.ACTIONS.EDIT'
+                                                | transloco
+                                        "
+                                        (click)="editTournament(tournament.id)">
+                                        <mat-icon
+                                            class="icon-size-5"
+                                            [svgIcon]="
+                                                'heroicons_solid:pencil'
+                                            "></mat-icon>
+                                    </button>
+                                    <button
+                                        mat-icon-button
+                                        [matTooltip]="
+                                            'TOURNAMENTS.ADMIN.ACTIONS.PUBLISH'
+                                                | transloco
+                                        "
+                                        *ngIf="
+                                            tournament.status ===
+                                            TournamentStatus.DRAFT
+                                        "
+                                        (click)="publishTournament(tournament)">
+                                        <mat-icon
+                                            class="icon-size-5"
+                                            [svgIcon]="
+                                                'heroicons_solid:arrow-up-circle'
+                                            "></mat-icon>
+                                    </button>
+                                    <button
+                                        mat-icon-button
+                                        [matTooltip]="
+                                            'TOURNAMENTS.ADMIN.ACTIONS.ARCHIVE'
+                                                | transloco
+                                        "
+                                        *ngIf="
+                                            tournament.status ===
+                                            TournamentStatus.PUBLISHED
+                                        "
+                                        (click)="archiveTournament(tournament)">
+                                        <mat-icon
+                                            class="icon-size-5"
+                                            [svgIcon]="
+                                                'heroicons_solid:archive-box'
+                                            "></mat-icon>
+                                    </button>
+                                    <button
+                                        mat-icon-button
+                                        [matTooltip]="
+                                            'TOURNAMENTS.ADMIN.ACTIONS.DELETE'
+                                                | transloco
+                                        "
+                                        (click)="deleteTournament(tournament)">
+                                        <mat-icon
+                                            class="icon-size-5"
+                                            [svgIcon]="
+                                                'heroicons_solid:trash'
+                                            "></mat-icon>
+                                    </button>
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+
+                <!-- Empty state -->
+                <div
+                    class="flex flex-col items-center justify-center py-16"
+                    *ngIf="filteredTournaments.length === 0">
+                    <mat-icon
+                        class="icon-size-24 mb-4 text-gray-400"
+                        [svgIcon]="'heroicons_outline:trophy'"></mat-icon>
+                    <div class="text-2xl font-semibold">
+                        {{ 'TOURNAMENTS.ADMIN.NO_TOURNAMENTS' | transloco }}
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
