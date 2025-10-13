@@ -4,11 +4,13 @@ import { FormGroup } from '@angular/forms';
 import { MatButtonModule } from '@angular/material/button';
 import { MatIconModule } from '@angular/material/icon';
 import { MatProgressBarModule } from '@angular/material/progress-bar';
+import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 import { MatSnackBar, MatSnackBarModule } from '@angular/material/snack-bar';
 import { Router } from '@angular/router';
 import { TranslocoModule } from '@jsverse/transloco';
 import { AuthService } from 'app/core/auth/auth.service';
 import { UserService } from 'app/core/user/user.service';
+import { LogoComponent } from 'app/shared/components/logo/logo.component';
 import { catchError, forkJoin, of, Subject, switchMap, takeUntil } from 'rxjs';
 import { OnboardingDraft, UpdateConsentsDto, UpdateUserDto } from './models/onboarding.types';
 import { AvatarService } from './services/avatar.service';
@@ -26,8 +28,10 @@ import { SummaryStepComponent } from './steps/summary-step.component';
         MatButtonModule,
         MatIconModule,
         MatProgressBarModule,
+        MatProgressSpinnerModule,
         MatSnackBarModule,
         TranslocoModule,
+        LogoComponent,
         ProfileStepComponent,
         ContractStepComponent,
         ConsentsStepComponent,
