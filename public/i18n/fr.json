@@ -454,6 +454,7 @@
     },
     "PROFILE": {
         "TITLE": "Mon Profil",
+        "NAME": "Nom complet",
         "FIRSTNAME": "Prénom",
         "FIRSTNAME_REQUIRED": "Le prénom est requis",
         "FIRSTNAME_MIN": "Le prénom doit contenir au moins 2 caractères",

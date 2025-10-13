@@ -22,9 +22,9 @@
     </div>
 
     <!-- Profile Header -->
-    <div class="bg-card relative flex flex-auto flex-col px-6 py-8 sm:flex-row sm:px-10">
+    <div class="bg-card relative flex flex-auto flex-col items-center px-6 py-8 sm:px-10">
         <!-- Avatar -->
-        <div class="flex flex-col items-center sm:items-start">
+        <div class="flex flex-col items-center">
             <div class="relative -mt-16 sm:-mt-20">
                 @if (avatarPreview) {
                     <img [src]="avatarPreview" class="h-32 w-32 rounded-full border-4 border-white object-cover ring-4 ring-gray-300 sm:h-40 sm:w-40" alt="Avatar">
@@ -48,34 +48,6 @@
                 }
             </div>
         </div>
-
-        <!-- User Info -->
-        <div class="mt-4 flex flex-auto flex-col items-center sm:ml-8 sm:mt-0 sm:items-start">
-            <div class="text-center sm:text-left">
-                <div class="text-2xl font-bold leading-none">
-                    {{ user?.firstname }} {{ user?.lastname }}
-                </div>
-                <div class="mt-1 text-secondary">
-                    {{ user?.email }}
-                </div>
-                @if (user?.phone) {
-                    <div class="mt-1 flex items-center justify-center text-secondary sm:justify-start">
-                        <mat-icon class="icon-size-5 mr-1.5">phone</mat-icon>
-                        {{ user?.phone }}
-                    </div>
-                }
-            </div>
-            
-            <!-- Action Buttons -->
-            @if (isCurrentUser) {
-                <div class="mt-6 flex items-center gap-2">
-                    <button mat-raised-button color="primary" (click)="toggleEditMode()">
-                        <mat-icon class="icon-size-5">edit</mat-icon>
-                        <span class="ml-2">{{ 'PROFILE.EDIT' | transloco }}</span>
-                    </button>
-                </div>
-            }
-        </div>
     </div>
 
     <!-- Main Content -->
@@ -85,9 +57,46 @@
             <div class="space-y-6 lg:col-span-1">
                 <!-- About Card -->
                 <div class="bg-card rounded-lg p-6 shadow">
-                    <div class="mb-4 text-lg font-semibold">
-                        {{ 'PROFILE.ABOUT' | transloco }}
+                    <div class="mb-4 flex items-center justify-between">
+                        <div class="text-lg font-semibold">
+                            {{ 'PROFILE.ABOUT' | transloco }}
+                        </div>
+                        @if (isCurrentUser) {
+                            <button mat-icon-button color="primary" (click)="toggleEditMode()" 
+                                    [attr.aria-label]="'PROFILE.EDIT' | transloco">
+                                <mat-icon>edit</mat-icon>
+                            </button>
+                        }
                     </div>
+                    
+                    <!-- Name -->
+                    <div class="mb-3 flex items-start">
+                        <mat-icon class="icon-size-5 mr-3 mt-0.5 text-secondary">person</mat-icon>
+                        <div class="flex-1">
+                            <div class="text-xs text-secondary">{{ 'PROFILE.NAME' | transloco }}</div>
+                            <div class="mt-1 font-medium">{{ user?.firstname }} {{ user?.lastname }}</div>
+                        </div>
+                    </div>
+
+                    <!-- Email -->
+                    <div class="mb-3 flex items-start">
+                        <mat-icon class="icon-size-5 mr-3 mt-0.5 text-secondary">email</mat-icon>
+                        <div class="flex-1">
+                            <div class="text-xs text-secondary">{{ 'PROFILE.EMAIL' | transloco }}</div>
+                            <div class="mt-1">{{ user?.email }}</div>
+                        </div>
+                    </div>
+
+                    <!-- Phone -->
+                    @if (user?.phone) {
+                        <div class="mb-3 flex items-start">
+                            <mat-icon class="icon-size-5 mr-3 mt-0.5 text-secondary">phone</mat-icon>
+                            <div class="flex-1">
+                                <div class="text-xs text-secondary">{{ 'PROFILE.PHONE' | transloco }}</div>
+                                <div class="mt-1">{{ user?.phone }}</div>
+                            </div>
+                        </div>
+                    }
                     
                     @if (user?.birthDate) {
                         <div class="mb-3 flex items-start">
