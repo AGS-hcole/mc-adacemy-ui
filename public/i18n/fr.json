@@ -260,7 +260,9 @@
                 "IS_PUBLISHED_HINT": "Les sessions publiées sont visibles par les utilisateurs",
                 "CANCEL": "Annuler",
                 "SAVE": "Enregistrer",
-                "CREATE": "Créer"
+                "CREATE": "Créer",
+                "CREATE_MODE_TITLE": "Dates multiples",
+                "CREATE_MODE_INFO": "En sélectionnant plusieurs dates, une session distincte sera créée pour chaque date choisie avec les mêmes paramètres."
             },
             "ATTENDEES": {
                 "TITLE": "Gestion des participants",

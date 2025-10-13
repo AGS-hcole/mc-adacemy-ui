@@ -23,6 +23,7 @@ import { MatIconModule } from '@angular/material/icon';
 import { MatInputModule } from '@angular/material/input';
 import { MatSelectModule } from '@angular/material/select';
 import { ActivatedRoute, Router, RouterLink } from '@angular/router';
+import { FuseAlertComponent } from '@fuse/components/alert';
 import { TranslocoModule } from '@jsverse/transloco';
 import { validateTimeRange } from 'app/core/session/session.helpers';
 import {
@@ -51,6 +52,7 @@ import { combineLatest, forkJoin, Subject, takeUntil } from 'rxjs';
         CommonModule,
         MatDatepickerModule,
         MatFormFieldModule,
+        FuseAlertComponent,
         MatIconModule,
         MatInputModule,
         MatSelectModule,

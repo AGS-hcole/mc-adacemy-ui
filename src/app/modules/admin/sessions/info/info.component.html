@@ -43,6 +43,18 @@
                     </mat-error>
                 </mat-form-field>
 
+                @if (!editMode) {
+                    <fuse-alert [type]="'info'" [appearance]="'outline'">
+                        <span fuseAlertTitle>
+                            {{
+                                'SESSIONS.ADMIN.FORM.CREATE_MODE_TITLE'
+                                    | transloco
+                            }}
+                        </span>
+                        {{ 'SESSIONS.ADMIN.FORM.CREATE_MODE_INFO' | transloco }}
+                    </fuse-alert>
+                }
+
                 <!-- Date - Single (Edit Mode) -->
                 <mat-form-field class="mt-4 w-full" *ngIf="editMode">
                     <mat-label>{{
