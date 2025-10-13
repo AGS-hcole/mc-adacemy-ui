@@ -1,0 +1,220 @@
+<div class="flex min-w-0 flex-auto flex-col">
+    <!-- Header -->
+    <div
+        class="flex flex-col gap-4 bg-card p-6 dark:bg-transparent sm:flex-row sm:items-center sm:justify-between md:px-8">
+        <div>
+            <div class="text-4xl font-extrabold leading-none tracking-tight">
+                {{
+                    (isNew
+                        ? 'TOURNAMENTS.ADMIN.CREATE'
+                        : 'TOURNAMENTS.VIEW.INFO'
+                    ) | transloco
+                }}
+            </div>
+            <div
+                class="mt-2 text-lg text-secondary"
+                *ngIf="!isNew && tournament">
+                {{ tournament.title }}
+                <span
+                    class="ml-2 inline-flex items-center rounded-full px-2.5 py-0.5 text-xs font-medium"
+                    [ngClass]="{
+                        'bg-yellow-100 text-yellow-800':
+                            tournament.status === TournamentStatus.DRAFT,
+                        'bg-green-100 text-green-800':
+                            tournament.status === TournamentStatus.PUBLISHED
+                    }">
+                    {{ 'TOURNAMENTS.STATUS.' + tournament.status | transloco }}
+                </span>
+            </div>
+        </div>
+        <div class="flex shrink-0 items-center gap-2">
+            <button mat-stroked-button (click)="cancel()">
+                {{ 'TOURNAMENTS.FORMS.CANCEL' | transloco }}
+            </button>
+            <button
+                mat-flat-button
+                [color]="'primary'"
+                [disabled]="tournamentForm.invalid"
+                (click)="save()">
+                {{ 'TOURNAMENTS.FORMS.SAVE' | transloco }}
+            </button>
+            <button
+                mat-flat-button
+                [color]="'accent'"
+                *ngIf="
+                    !isNew && tournament?.status === TournamentStatus.DRAFT
+                "
+                (click)="publish()">
+                {{ 'TOURNAMENTS.ADMIN.ACTIONS.PUBLISH' | transloco }}
+            </button>
+        </div>
+    </div>
+
+    <!-- Content -->
+    <div class="flex-auto overflow-y-auto p-6 md:px-8">
+        <form [formGroup]="tournamentForm" class="space-y-6">
+            <!-- Two cards side by side on large screens -->
+            <div class="grid grid-cols-1 gap-6 lg:grid-cols-2">
+                <!-- Basic Information Card -->
+                <div class="rounded-lg bg-card p-6 shadow">
+                    <h2 class="mb-4 text-2xl font-semibold">
+                        {{ 'TOURNAMENTS.FORMS.BASIC_INFO' | transloco }}
+                    </h2>
+
+                    <div class="space-y-4">
+                        <mat-form-field class="w-full">
+                            <mat-label>{{
+                                'TOURNAMENTS.FORMS.TITLE' | transloco
+                            }}</mat-label>
+                            <input matInput formControlName="title" />
+                            <mat-error>{{
+                                'TOURNAMENTS.FORMS.TITLE_REQUIRED' | transloco
+                            }}</mat-error>
+                        </mat-form-field>
+
+                        <mat-form-field class="w-full">
+                            <mat-label>{{
+                                'TOURNAMENTS.FORMS.TYPE' | transloco
+                            }}</mat-label>
+                            <mat-select formControlName="type">
+                                <mat-option [value]="TournamentType.P250">{{
+                                    'TOURNAMENTS.TYPE.P250' | transloco
+                                }}</mat-option>
+                                <mat-option [value]="TournamentType.P500">{{
+                                    'TOURNAMENTS.TYPE.P500' | transloco
+                                }}</mat-option>
+                                <mat-option [value]="TournamentType.P1000">{{
+                                    'TOURNAMENTS.TYPE.P1000' | transloco
+                                }}</mat-option>
+                                <mat-option [value]="TournamentType.P1500">{{
+                                    'TOURNAMENTS.TYPE.P1500' | transloco
+                                }}</mat-option>
+                                <mat-option [value]="TournamentType.P2000">{{
+                                    'TOURNAMENTS.TYPE.P2000' | transloco
+                                }}</mat-option>
+                            </mat-select>
+                            <mat-error>{{
+                                'TOURNAMENTS.FORMS.TYPE_REQUIRED' | transloco
+                            }}</mat-error>
+                        </mat-form-field>
+
+                        <mat-form-field class="w-full">
+                            <mat-label>{{
+                                'TOURNAMENTS.FORMS.STARTS_AT' | transloco
+                            }}</mat-label>
+                            <input
+                                matInput
+                                [matDatepicker]="startsPicker"
+                                formControlName="startsAt" />
+                            <mat-datepicker-toggle
+                                matSuffix
+                                [for]="startsPicker"></mat-datepicker-toggle>
+                            <mat-datepicker #startsPicker></mat-datepicker>
+                            <mat-error>{{
+                                'TOURNAMENTS.FORMS.STARTS_AT_REQUIRED' | transloco
+                            }}</mat-error>
+                        </mat-form-field>
+
+                        <mat-form-field class="w-full">
+                            <mat-label>{{
+                                'TOURNAMENTS.FORMS.ENDS_AT' | transloco
+                            }}</mat-label>
+                            <input
+                                matInput
+                                [matDatepicker]="endsPicker"
+                                formControlName="endsAt" />
+                            <mat-datepicker-toggle
+                                matSuffix
+                                [for]="endsPicker"></mat-datepicker-toggle>
+                            <mat-datepicker #endsPicker></mat-datepicker>
+                            <mat-error>{{
+                                'TOURNAMENTS.FORMS.ENDS_AT_REQUIRED' | transloco
+                            }}</mat-error>
+                        </mat-form-field>
+                    </div>
+                </div>
+
+                <!-- Address Card -->
+                <div class="rounded-lg bg-card p-6 shadow">
+                    <h2 class="mb-4 text-2xl font-semibold">
+                        {{ 'TOURNAMENTS.FORMS.ADDRESS' | transloco }}
+                    </h2>
+
+                    <div class="space-y-4">
+                        <mat-form-field class="w-full">
+                            <mat-label>{{
+                                'TOURNAMENTS.FORMS.ADDRESS_LINE1' | transloco
+                            }}</mat-label>
+                            <input matInput formControlName="addressLine1" />
+                            <mat-error>{{
+                                'TOURNAMENTS.FORMS.ADDRESS_LINE1_REQUIRED'
+                                    | transloco
+                            }}</mat-error>
+                        </mat-form-field>
+
+                        <mat-form-field class="w-full">
+                            <mat-label>{{
+                                'TOURNAMENTS.FORMS.ADDRESS_LINE2' | transloco
+                            }}</mat-label>
+                            <input matInput formControlName="addressLine2" />
+                        </mat-form-field>
+
+                        <div class="grid grid-cols-2 gap-4">
+                            <mat-form-field class="w-full">
+                                <mat-label>{{
+                                    'TOURNAMENTS.FORMS.POSTAL_CODE' | transloco
+                                }}</mat-label>
+                                <input matInput formControlName="postalCode" />
+                                <mat-error>{{
+                                    'TOURNAMENTS.FORMS.POSTAL_CODE_REQUIRED' | transloco
+                                }}</mat-error>
+                            </mat-form-field>
+
+                            <mat-form-field class="w-full">
+                                <mat-label>{{
+                                    'TOURNAMENTS.FORMS.CITY' | transloco
+                                }}</mat-label>
+                                <input matInput formControlName="city" />
+                                <mat-error>{{
+                                    'TOURNAMENTS.FORMS.CITY_REQUIRED' | transloco
+                                }}</mat-error>
+                            </mat-form-field>
+                        </div>
+
+                        <mat-form-field class="w-full">
+                            <mat-label>{{
+                                'TOURNAMENTS.FORMS.COUNTRY' | transloco
+                            }}</mat-label>
+                            <input matInput formControlName="country" />
+                            <mat-error>{{
+                                'TOURNAMENTS.FORMS.COUNTRY_REQUIRED' | transloco
+                            }}</mat-error>
+                        </mat-form-field>
+
+                        <div class="grid grid-cols-2 gap-4">
+                            <mat-form-field class="w-full">
+                                <mat-label>{{
+                                    'TOURNAMENTS.FORMS.LATITUDE' | transloco
+                                }}</mat-label>
+                                <input
+                                    matInput
+                                    type="number"
+                                    formControlName="latitude" />
+                            </mat-form-field>
+
+                            <mat-form-field class="w-full">
+                                <mat-label>{{
+                                    'TOURNAMENTS.FORMS.LONGITUDE' | transloco
+                                }}</mat-label>
+                                <input
+                                    matInput
+                                    type="number"
+                                    formControlName="longitude" />
+                            </mat-form-field>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </form>
+    </div>
+</div>
