@@ -1,6 +1,11 @@
 import { CommonModule } from '@angular/common';
 import { Component, inject, OnInit } from '@angular/core';
-import { FormBuilder, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
+import {
+    FormBuilder,
+    FormGroup,
+    ReactiveFormsModule,
+    Validators,
+} from '@angular/forms';
 import { MatButtonModule } from '@angular/material/button';
 import { MatCheckboxModule } from '@angular/material/checkbox';
 import { MatNativeDateModule } from '@angular/material/core';
@@ -10,6 +15,7 @@ import { MatIconModule } from '@angular/material/icon';
 import { MatInputModule } from '@angular/material/input';
 import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 import { MatSlideToggleModule } from '@angular/material/slide-toggle';
+import { MatSnackBar } from '@angular/material/snack-bar';
 import { ActivatedRoute } from '@angular/router';
 import { TranslocoModule } from '@jsverse/transloco';
 import { UserService } from 'app/core/user/user.service';
@@ -56,11 +62,12 @@ export class ProfileComponent implements OnInit {
     editMode = false;
     isCurrentUser = true; // For now, always true since we're viewing our own profile
     feed$: Observable<FeedItem[]> = of([]); // Placeholder for future implementation
-    
+
     private fb = inject(FormBuilder);
     private userService = inject(UserService);
     private avatarService = inject(AvatarService);
     private _activatedRoute = inject(ActivatedRoute);
+    private snackBar = inject(MatSnackBar);
 
     readonly maxBirthDate = new Date();
     readonly minBirthDate = new Date('1900-01-01');
@@ -89,10 +96,13 @@ export class ProfileComponent implements OnInit {
                 }
             },
             error: (error) => {
-                console.log('No avatar available or error loading avatar:', error);
+                console.log(
+                    'No avatar available or error loading avatar:',
+                    error
+                );
                 // No avatar, use default
                 this.avatarPreview = null;
-            }
+            },
         });
 
         // Load background from API endpoint
@@ -103,19 +113,31 @@ export class ProfileComponent implements OnInit {
                 }
             },
             error: (error) => {
-                console.log('No background available or error loading background:', error);
+                console.log(
+                    'No background available or error loading background:',
+                    error
+                );
                 // No background, use default gradient
                 this.backgroundPreview = null;
-            }
+            },
         });
     }
 
     private initializeForm(user: User): void {
         this.form = this.fb.group({
-            firstname: [user.firstname || '', [Validators.required, Validators.minLength(2)]],
-            lastname: [user.lastname || '', [Validators.required, Validators.minLength(2)]],
+            firstname: [
+                user.firstname || '',
+                [Validators.required, Validators.minLength(2)],
+            ],
+            lastname: [
+                user.lastname || '',
+                [Validators.required, Validators.minLength(2)],
+            ],
             email: [{ value: user.email || '', disabled: true }],
-            phone: [user.phone || '', Validators.pattern(/^\+?[0-9\s.-]{7,15}$/)],
+            phone: [
+                user.phone || '',
+                Validators.pattern(/^\+?[0-9\s.-]{7,15}$/),
+            ],
             birthDate: [user.birthDate ? new Date(user.birthDate) : null],
             fftLicenseNumber: [user.fftLicenseNumber || ''],
             // Notification preferences
@@ -151,14 +173,14 @@ export class ProfileComponent implements OnInit {
         if (input.files && input.files[0]) {
             const file = input.files[0];
             const validation = this.avatarService.validateImage(file, 2);
-            
+
             if (!validation.valid) {
                 alert(validation.error);
                 return;
             }
 
             this.avatarFile = file;
-            this.avatarService.readFileAsDataUrl(file).subscribe(dataUrl => {
+            this.avatarService.readFileAsDataUrl(file).subscribe((dataUrl) => {
                 this.avatarPreview = dataUrl;
             });
         }
@@ -169,14 +191,14 @@ export class ProfileComponent implements OnInit {
         if (input.files && input.files[0]) {
             const file = input.files[0];
             const validation = this.avatarService.validateImage(file, 4);
-            
+
             if (!validation.valid) {
                 alert(validation.error);
                 return;
             }
 
             this.backgroundFile = file;
-            this.avatarService.readFileAsDataUrl(file).subscribe(dataUrl => {
+            this.avatarService.readFileAsDataUrl(file).subscribe((dataUrl) => {
                 this.backgroundPreview = dataUrl;
             });
         }
@@ -204,7 +226,9 @@ export class ProfileComponent implements OnInit {
             firstname: formValue.firstname,
             lastname: formValue.lastname,
             phone: formValue.phone || null,
-            birthDate: formValue.birthDate ? formValue.birthDate.toISOString().split('T')[0] : null,
+            birthDate: formValue.birthDate
+                ? formValue.birthDate.toISOString().split('T')[0]
+                : null,
             fftLicenseNumber: formValue.fftLicenseNumber || null,
             notifyEmail: formValue.notifyEmail,
             notifySMS: formValue.notifySMS,
@@ -212,33 +236,42 @@ export class ProfileComponent implements OnInit {
         };
 
         // Update user profile
-        this.userService.updateMe(updateData)
+        this.userService
+            .updateMe(updateData)
             .pipe(
                 finalize(() => {
                     // Upload avatar if provided
                     if (this.avatarFile) {
-                        this.userService.uploadAvatar(this.avatarFile).subscribe({
-                            next: () => {
-                                console.log('Avatar uploaded successfully');
-                                this.loadUserImages(); // Reload images
-                            },
-                            error: (error) => {
-                                console.error('Error uploading avatar:', error);
-                            }
-                        });
+                        this.userService
+                            .uploadAvatar(this.avatarFile)
+                            .subscribe({
+                                next: () => {
+                                    this.loadUserImages();
+                                },
+                                error: (error) => {
+                                    console.error(
+                                        'Error uploading avatar:',
+                                        error
+                                    );
+                                },
+                            });
                     }
 
                     // Upload background if provided
                     if (this.backgroundFile) {
-                        this.userService.uploadBackground(this.backgroundFile).subscribe({
-                            next: () => {
-                                console.log('Background uploaded successfully');
-                                this.loadUserImages(); // Reload images
-                            },
-                            error: (error) => {
-                                console.error('Error uploading background:', error);
-                            }
-                        });
+                        this.userService
+                            .uploadBackground(this.backgroundFile)
+                            .subscribe({
+                                next: () => {
+                                    this.loadUserImages();
+                                },
+                                error: (error) => {
+                                    console.error(
+                                        'Error uploading background:',
+                                        error
+                                    );
+                                },
+                            });
                     }
 
                     // Update consents if current user
@@ -248,14 +281,17 @@ export class ProfileComponent implements OnInit {
                             photoConsent: formValue.photoConsent,
                             marketingConsent: formValue.marketingConsent,
                         };
-                        this.userService.updateConsents(consentsData).subscribe({
-                            next: () => {
-                                console.log('Consents updated successfully');
-                            },
-                            error: (error) => {
-                                console.error('Error updating consents:', error);
-                            }
-                        });
+                        this.userService
+                            .updateConsents(consentsData)
+                            .subscribe({
+                                next: () => {},
+                                error: (error) => {
+                                    console.error(
+                                        'Error updating consents:',
+                                        error
+                                    );
+                                },
+                            });
                     }
 
                     this.isSaving = false;
@@ -264,13 +300,39 @@ export class ProfileComponent implements OnInit {
             )
             .subscribe({
                 next: () => {
-                    alert('Profile updated successfully!');
+                    // Show success message
+                    this.snackBar.open(
+                        this.getTranslation('PROFILE.UPDATE_SUCCESS'),
+                        '',
+                        {
+                            duration: 3000,
+                            verticalPosition: 'top',
+                            panelClass: ['success-snackbar'],
+                        }
+                    );
+
+                    // Toggle edit mode off
+                    this.toggleEditMode();
                 },
                 error: (error) => {
                     console.error('Error updating profile:', error);
-                    alert('Error updating profile. Please try again.');
+                    // Show error message
+                    this.snackBar.open(
+                        this.getTranslation('PROFILE.UPDATE_ERROR'),
+                        '',
+                        {
+                            duration: 3000,
+                            verticalPosition: 'top',
+                            panelClass: ['error-snackbar'],
+                        }
+                    );
                     this.isSaving = false;
-                }
+                },
             });
+    }
+
+    private getTranslation(key: string): string {
+        // Simple fallback for translation (Transloco handles this better in template)
+        return key.split('.').pop() || key;
     }
 }
