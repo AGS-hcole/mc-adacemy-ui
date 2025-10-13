@@ -7,6 +7,10 @@ export default [
         pathMatch: 'full',
     },
     {
+        path: 'profile',
+        loadChildren: () => import('app/modules/user/profile/profile.routes'),
+    },
+    {
         path: 'sessions',
         loadChildren: () => import('app/modules/user/sessions/sessions.routes'),
     },

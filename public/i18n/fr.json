@@ -94,6 +94,9 @@
             "DASHBOARD": {
                 "TITLE": "Tableau de bord"
             },
+            "PROFILE": {
+                "TITLE": "Profil"
+            },
             "SESSIONS": {
                 "TITLE": "Mes sessions"
             },
@@ -447,6 +450,62 @@
         },
         "ERROR": {
             "TITLE": "Erreur de chargement"
+        }
+    },
+    "PROFILE": {
+        "TITLE": "Mon Profil",
+        "NAME": "Nom complet",
+        "FIRSTNAME": "Prénom",
+        "FIRSTNAME_REQUIRED": "Le prénom est requis",
+        "FIRSTNAME_MIN": "Le prénom doit contenir au moins 2 caractères",
+        "LASTNAME": "Nom",
+        "LASTNAME_REQUIRED": "Le nom est requis",
+        "LASTNAME_MIN": "Le nom doit contenir au moins 2 caractères",
+        "EMAIL": "Email",
+        "EMAIL_READONLY": "L'adresse email ne peut pas être modifiée",
+        "PHONE": "Téléphone",
+        "PHONE_PATTERN": "Format de téléphone invalide",
+        "BIRTHDATE": "Date de naissance",
+        "FFT_NUMBER": "Numéro de licence FFT",
+        "FORMULA": "Formule",
+        "AVATAR": "Photo de profil",
+        "AVATAR_HINT": "Télécharger une photo de profil (max 2MB, PNG/JPEG)",
+        "AVATAR_UPLOAD": "Télécharger",
+        "AVATAR_REMOVE": "Supprimer",
+        "BACKGROUND": "Image de couverture",
+        "BACKGROUND_HINT": "Télécharger une image de couverture (max 4MB, PNG/JPEG)",
+        "BACKGROUND_UPLOAD": "Télécharger",
+        "BACKGROUND_REMOVE": "Supprimer",
+        "CHANGE_AVATAR": "Changer la photo de profil",
+        "CHANGE_COVER": "Changer l'image de couverture",
+        "EDIT": "Modifier",
+        "EDIT_INFO": "Modifier les informations",
+        "CANCEL": "Annuler",
+        "SAVE": "Enregistrer les modifications",
+        "ABOUT": "À propos",
+        "STATS": {
+            "TITLE": "Statistiques",
+            "SESSIONS": "Sessions",
+            "TOURNAMENTS": "Tournois"
+        },
+        "NOTIFICATIONS": {
+            "TITLE": "Préférences de notifications",
+            "DESCRIPTION": "Choisissez comment vous souhaitez recevoir les notifications",
+            "EMAIL": "Notifications par email",
+            "SMS": "Notifications par SMS",
+            "WHATSAPP": "Notifications WhatsApp"
+        },
+        "CONSENTS": {
+            "TITLE": "Consentements",
+            "DESCRIPTION": "Gérez vos consentements et autorisations",
+            "PRIVACY": "J'accepte la politique de confidentialité et les conditions d'utilisation",
+            "PHOTO": "J'autorise l'utilisation de mon image pour les communications de l'académie",
+            "MARKETING": "J'accepte de recevoir des communications marketing"
+        },
+        "ACTIVITY": {
+            "TITLE": "Activité récente",
+            "EMPTY": "Aucune activité pour le moment",
+            "EMPTY_DESC": "Vos sessions et résultats de tournois apparaîtront ici"
         }
     }
 }
