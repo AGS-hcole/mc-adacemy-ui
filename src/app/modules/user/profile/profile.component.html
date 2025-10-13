@@ -1,6 +1,6 @@
 <div class="flex min-w-0 flex-auto flex-col">
     <!-- Cover Image -->
-    <div class="relative h-40 sm:h-48 md:h-64">
+    <div class="relative h-48 sm:h-64 md:h-80">
         @if (backgroundPreview) {
             <img
                 [src]="backgroundPreview"
@@ -42,7 +42,7 @@
     >
         <!-- Avatar -->
         <div class="flex flex-col items-center">
-            <div class="relative -mt-16 sm:-mt-20">
+            <div class="relative -mt-26">
                 @if (avatarPreview) {
                     <img
                         [src]="avatarPreview"
@@ -363,10 +363,16 @@
                             <!-- Notification Preferences -->
                             <div class="space-y-4 border-t pt-6">
                                 <div class="text-base font-semibold">
-                                    {{ 'PROFILE.NOTIFICATIONS.TITLE' | transloco }}
+                                    {{
+                                        'PROFILE.NOTIFICATIONS.TITLE'
+                                            | transloco
+                                    }}
                                 </div>
-                                <p class="text-sm text-secondary">
-                                    {{ 'PROFILE.NOTIFICATIONS.DESCRIPTION' | transloco }}
+                                <p class="text-secondary text-sm">
+                                    {{
+                                        'PROFILE.NOTIFICATIONS.DESCRIPTION'
+                                            | transloco
+                                    }}
                                 </p>
 
                                 <div class="space-y-3">
@@ -374,21 +380,30 @@
                                         formControlName="notifyEmail"
                                         color="primary"
                                     >
-                                        {{ 'PROFILE.NOTIFICATIONS.EMAIL' | transloco }}
+                                        {{
+                                            'PROFILE.NOTIFICATIONS.EMAIL'
+                                                | transloco
+                                        }}
                                     </mat-slide-toggle>
 
                                     <mat-slide-toggle
                                         formControlName="notifySMS"
                                         color="primary"
                                     >
-                                        {{ 'PROFILE.NOTIFICATIONS.SMS' | transloco }}
+                                        {{
+                                            'PROFILE.NOTIFICATIONS.SMS'
+                                                | transloco
+                                        }}
                                     </mat-slide-toggle>
 
                                     <mat-slide-toggle
                                         formControlName="notifyWhatsApp"
                                         color="primary"
                                     >
-                                        {{ 'PROFILE.NOTIFICATIONS.WHATSAPP' | transloco }}
+                                        {{
+                                            'PROFILE.NOTIFICATIONS.WHATSAPP'
+                                                | transloco
+                                        }}
                                     </mat-slide-toggle>
                                 </div>
                             </div>
@@ -397,10 +412,15 @@
                             @if (isCurrentUser) {
                                 <div class="space-y-4 border-t pt-6">
                                     <div class="text-base font-semibold">
-                                        {{ 'PROFILE.CONSENTS.TITLE' | transloco }}
+                                        {{
+                                            'PROFILE.CONSENTS.TITLE' | transloco
+                                        }}
                                     </div>
-                                    <p class="text-sm text-secondary">
-                                        {{ 'PROFILE.CONSENTS.DESCRIPTION' | transloco }}
+                                    <p class="text-secondary text-sm">
+                                        {{
+                                            'PROFILE.CONSENTS.DESCRIPTION'
+                                                | transloco
+                                        }}
                                     </p>
 
                                     <div class="space-y-3">
@@ -408,21 +428,30 @@
                                             formControlName="privacyConsent"
                                             color="primary"
                                         >
-                                            {{ 'PROFILE.CONSENTS.PRIVACY' | transloco }}
+                                            {{
+                                                'PROFILE.CONSENTS.PRIVACY'
+                                                    | transloco
+                                            }}
                                         </mat-checkbox>
 
                                         <mat-checkbox
                                             formControlName="photoConsent"
                                             color="primary"
                                         >
-                                            {{ 'PROFILE.CONSENTS.PHOTO' | transloco }}
+                                            {{
+                                                'PROFILE.CONSENTS.PHOTO'
+                                                    | transloco
+                                            }}
                                         </mat-checkbox>
 
                                         <mat-checkbox
                                             formControlName="marketingConsent"
                                             color="primary"
                                         >
-                                            {{ 'PROFILE.CONSENTS.MARKETING' | transloco }}
+                                            {{
+                                                'PROFILE.CONSENTS.MARKETING'
+                                                    | transloco
+                                            }}
                                         </mat-checkbox>
                                     </div>
                                 </div>

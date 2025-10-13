@@ -12,7 +12,7 @@ import { MatButtonModule } from '@angular/material/button';
 import { MatDividerModule } from '@angular/material/divider';
 import { MatIconModule } from '@angular/material/icon';
 import { MatMenuModule } from '@angular/material/menu';
-import { Router } from '@angular/router';
+import { Router, RouterLink } from '@angular/router';
 import { TranslocoModule } from '@jsverse/transloco';
 import { UserService } from 'app/core/user/user.service';
 import { User } from 'app/core/user/user.types';
@@ -28,6 +28,7 @@ import { Subject, takeUntil } from 'rxjs';
         MatButtonModule,
         MatMenuModule,
         MatIconModule,
+        RouterLink,
         MatDividerModule,
         TranslocoModule,
     ],
