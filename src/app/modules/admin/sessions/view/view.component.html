@@ -35,7 +35,7 @@
                         {{ session?.site?.name }}
                     </div>
                     <div class="text-secondary text-md">
-                        {{ session?.date | date: 'dd/MM/yyyy' }}
+                        {{ session?.date | localizedDate: 'shortDate' }}
                         {{
                             session?.startTime
                                 ? (session?.startTime | date: 'HH:mm')

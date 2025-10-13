@@ -1,6 +1,5 @@
 import { Overlay, OverlayRef } from '@angular/cdk/overlay';
 import { TextFieldModule } from '@angular/cdk/text-field';
-import { DatePipe } from '@angular/common';
 import {
     ChangeDetectionStrategy,
     ChangeDetectorRef,
@@ -36,6 +35,7 @@ import { ActivatedRoute, Router, RouterLink } from '@angular/router';
 import { FuseConfirmationService } from '@fuse/services/confirmation';
 import { TranslocoModule } from '@jsverse/transloco';
 import { FormulaType, Role, User } from 'app/core/user/user.types';
+import { LocalizedDatePipe } from 'app/shared/pipes/localized-date.pipe';
 import { Subject, takeUntil } from 'rxjs';
 import { UsersListComponent } from '../list/list.component';
 import { UsersService } from '../users.service';
@@ -62,7 +62,7 @@ import { UsersService } from '../users.service';
         TextFieldModule,
         TranslocoModule,
         MatSlideToggleModule,
-        DatePipe,
+        LocalizedDatePipe,
     ],
 })
 export class UsersDetailsComponent implements OnInit, OnDestroy {

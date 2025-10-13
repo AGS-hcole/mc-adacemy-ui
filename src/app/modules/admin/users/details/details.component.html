@@ -111,7 +111,7 @@
                             ></mat-icon>
                             <div class="ml-6 leading-6">
                                 <div class="font-medium">{{ 'HOME.USERS.DETAILS.BIRTH_DATE' | transloco }}</div>
-                                <div class="text-secondary">{{ user.birthDate | date:'dd/MM/yyyy' }}</div>
+                                <div class="text-secondary">{{ user.birthDate | localizedDate:'shortDate' }}</div>
                             </div>
                         </div>
                     }
@@ -172,7 +172,7 @@
                             <div class="flex-1">
                                 <div class="text-sm">{{ 'HOME.USERS.DETAILS.PRIVACY_CONSENT' | transloco }}</div>
                                 @if (user.privacyConsentAt) {
-                                    <div class="text-xs text-secondary">{{ user.privacyConsentAt | date:'dd/MM/yyyy HH:mm' }}</div>
+                                    <div class="text-xs text-secondary">{{ user.privacyConsentAt | localizedDate:'short' }}</div>
                                 }
                             </div>
                         </div>
@@ -186,7 +186,7 @@
                             <div class="flex-1">
                                 <div class="text-sm">{{ 'HOME.USERS.DETAILS.PHOTO_CONSENT' | transloco }}</div>
                                 @if (user.photoConsentAt) {
-                                    <div class="text-xs text-secondary">{{ user.photoConsentAt | date:'dd/MM/yyyy HH:mm' }}</div>
+                                    <div class="text-xs text-secondary">{{ user.photoConsentAt | localizedDate:'short' }}</div>
                                 }
                             </div>
                         </div>
@@ -200,7 +200,7 @@
                             <div class="flex-1">
                                 <div class="text-sm">{{ 'HOME.USERS.DETAILS.MARKETING_CONSENT' | transloco }}</div>
                                 @if (user.marketingConsentAt) {
-                                    <div class="text-xs text-secondary">{{ user.marketingConsentAt | date:'dd/MM/yyyy HH:mm' }}</div>
+                                    <div class="text-xs text-secondary">{{ user.marketingConsentAt | localizedDate:'short' }}</div>
                                 }
                             </div>
                         </div>
