@@ -72,23 +72,18 @@ export class AdminSiteDetailsComponent implements OnInit, OnDestroy {
             city: [''],
         });
 
-        // Get site if editing
-        this._activatedRoute.params
+        // Get site from resolver
+        this._activatedRoute.data
             .pipe(takeUntil(this._unsubscribeAll))
-            .subscribe((params) => {
-                if (params['id'] && params['id'] !== 'new') {
+            .subscribe(({ site }) => {
+                if (site) {
+                    this.site = site;
                     this.editMode = true;
-                    this._sitesService
-                        .getSiteById(params['id'])
-                        .pipe(takeUntil(this._unsubscribeAll))
-                        .subscribe((site) => {
-                            this.site = site;
-                            this._patchForm(site);
-                            this._changeDetectorRef.markForCheck();
-                        });
+                    this._patchForm(site);
                 } else {
                     this.editMode = false;
                 }
+                this._changeDetectorRef.markForCheck();
             });
     }
 

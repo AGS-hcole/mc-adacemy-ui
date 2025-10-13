@@ -70,11 +70,8 @@ export class AdminSitesListComponent implements OnInit, OnDestroy {
      * On init
      */
     ngOnInit(): void {
-        // Get sites
+        // Get sites from resolver
         this.sites$ = this._sitesService.sites$;
-
-        // Load initial data
-        this._sitesService.getSites().subscribe();
 
         // Subscribe to search input
         this.searchInputControl.valueChanges

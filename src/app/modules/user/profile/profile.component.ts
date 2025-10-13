@@ -10,6 +10,7 @@ import { MatIconModule } from '@angular/material/icon';
 import { MatInputModule } from '@angular/material/input';
 import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 import { MatSlideToggleModule } from '@angular/material/slide-toggle';
+import { ActivatedRoute } from '@angular/router';
 import { TranslocoModule } from '@jsverse/transloco';
 import { UserService } from 'app/core/user/user.service';
 import { User } from 'app/core/user/user.types';
@@ -59,12 +60,14 @@ export class ProfileComponent implements OnInit {
     private fb = inject(FormBuilder);
     private userService = inject(UserService);
     private avatarService = inject(AvatarService);
+    private _activatedRoute = inject(ActivatedRoute);
 
     readonly maxBirthDate = new Date();
     readonly minBirthDate = new Date('1900-01-01');
 
     ngOnInit(): void {
-        this.userService.user$.subscribe(user => {
+        // Get user from resolver
+        this._activatedRoute.data.subscribe(({ user }) => {
             if (user) {
                 this.user = user;
                 this.initializeForm(user);
