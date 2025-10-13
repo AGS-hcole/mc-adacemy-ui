@@ -11,8 +11,12 @@ import { TranslocoModule } from '@jsverse/transloco';
 import { AuthService } from 'app/core/auth/auth.service';
 import { UserService } from 'app/core/user/user.service';
 import { LogoComponent } from 'app/shared/components/logo/logo.component';
-import { catchError, forkJoin, of, Subject, switchMap, takeUntil } from 'rxjs';
-import { OnboardingDraft, UpdateConsentsDto, UpdateUserDto } from './models/onboarding.types';
+import { catchError, of, Subject, switchMap, takeUntil } from 'rxjs';
+import {
+    OnboardingDraft,
+    UpdateConsentsDto,
+    UpdateUserDto,
+} from './models/onboarding.types';
 import { AvatarService } from './services/avatar.service';
 import { OnboardingDraftService } from './services/onboarding-draft.service';
 import { ConsentsStepComponent } from './steps/consents-step.component';
@@ -42,7 +46,7 @@ import { SummaryStepComponent } from './steps/summary-step.component';
 export class OnboardingShellComponent implements OnInit, OnDestroy {
     currentStep = 0;
     steps = ['PROFILE', 'CONTRACT', 'CONSENTS', 'SUMMARY'];
-    
+
     draft: OnboardingDraft = {
         profile: {
             firstname: '',
@@ -93,20 +97,30 @@ export class OnboardingShellComponent implements OnInit, OnDestroy {
         }
 
         // Get current user email from auth
-        this.userService.user$.pipe(takeUntil(this.destroy$)).subscribe(user => {
-            if (user?.email) {
-                this.currentEmail = user.email;
-                // Prefill with existing data
-                if (user.firstname) this.draft.profile.firstname = user.firstname;
-                if (user.lastname) this.draft.profile.lastname = user.lastname;
-                if (user.phone) this.draft.profile.phone = user.phone;
-                if (user.birthDate) this.draft.profile.birthDate = new Date(user.birthDate).toISOString().split('T')[0];
-                if (user.fftLicenseNumber) this.draft.profile.fftLicenseNumber = user.fftLicenseNumber;
-                this.draft.contract.notifyEmail = user.notifyEmail ?? true;
-                this.draft.contract.notifySMS = user.notifySMS ?? false;
-                this.draft.contract.notifyWhatsApp = user.notifyWhatsApp ?? false;
-            }
-        });
+        this.userService.user$
+            .pipe(takeUntil(this.destroy$))
+            .subscribe((user) => {
+                if (user?.email) {
+                    this.currentEmail = user.email;
+                    // Prefill with existing data
+                    if (user.firstname)
+                        this.draft.profile.firstname = user.firstname;
+                    if (user.lastname)
+                        this.draft.profile.lastname = user.lastname;
+                    if (user.phone) this.draft.profile.phone = user.phone;
+                    if (user.birthDate)
+                        this.draft.profile.birthDate = new Date(user.birthDate)
+                            .toISOString()
+                            .split('T')[0];
+                    if (user.fftLicenseNumber)
+                        this.draft.profile.fftLicenseNumber =
+                            user.fftLicenseNumber;
+                    this.draft.contract.notifyEmail = user.notifyEmail ?? true;
+                    this.draft.contract.notifySMS = user.notifySMS ?? false;
+                    this.draft.contract.notifyWhatsApp =
+                        user.notifyWhatsApp ?? false;
+                }
+            });
     }
 
     ngOnDestroy(): void {
@@ -141,9 +155,12 @@ export class OnboardingShellComponent implements OnInit, OnDestroy {
         return this.currentStep === this.steps.length - 1;
     }
 
-    onProfileChange(event: { form: FormGroup; data: OnboardingDraft['profile'] }): void {
+    onProfileChange(event: {
+        form: FormGroup;
+        data: OnboardingDraft['profile'];
+    }): void {
         this.profileForm = event.form;
-        
+
         // Store files separately
         if (event.data.avatarFile !== undefined) {
             this.avatarFile = event.data.avatarFile;
@@ -151,23 +168,29 @@ export class OnboardingShellComponent implements OnInit, OnDestroy {
         if (event.data.backgroundFile !== undefined) {
             this.backgroundFile = event.data.backgroundFile;
         }
-        
+
         // Update draft without files (for localStorage)
         const profileData = { ...event.data };
         delete profileData.avatarFile;
         delete profileData.backgroundFile;
-        
+
         this.draft.profile = { ...this.draft.profile, ...profileData };
         this.saveDraft();
     }
 
-    onContractChange(event: { form: FormGroup; data: OnboardingDraft['contract'] }): void {
+    onContractChange(event: {
+        form: FormGroup;
+        data: OnboardingDraft['contract'];
+    }): void {
         this.contractForm = event.form;
         this.draft.contract = event.data;
         this.saveDraft();
     }
 
-    onConsentsChange(event: { form: FormGroup; data: OnboardingDraft['consents'] }): void {
+    onConsentsChange(event: {
+        form: FormGroup;
+        data: OnboardingDraft['consents'];
+    }): void {
         this.consentsForm = event.form;
         this.draft.consents = event.data;
         this.saveDraft();
@@ -211,7 +234,8 @@ export class OnboardingShellComponent implements OnInit, OnDestroy {
             notifyWhatsApp: this.draft.contract.notifyWhatsApp,
         };
 
-        this.userService.updateMe(updateData)
+        this.userService
+            .updateMe(updateData)
             .pipe(
                 // Step 2: Upload avatar if provided
                 switchMap(() => {
@@ -223,7 +247,9 @@ export class OnboardingShellComponent implements OnInit, OnDestroy {
                 // Step 3: Upload background if provided
                 switchMap(() => {
                     if (this.backgroundFile) {
-                        return this.userService.uploadBackground(this.backgroundFile);
+                        return this.userService.uploadBackground(
+                            this.backgroundFile
+                        );
                     }
                     return of(null);
                 }),
@@ -238,7 +264,7 @@ export class OnboardingShellComponent implements OnInit, OnDestroy {
                 }),
                 // Step 5: Refetch user to update mustOnboard flag
                 switchMap(() => this.authService.getMe()),
-                catchError(error => {
+                catchError((error) => {
                     console.error('Onboarding submission failed:', error);
                     this.snackBar.open(
                         this.getTranslation('ONBOARDING.ERROR'),
@@ -250,7 +276,7 @@ export class OnboardingShellComponent implements OnInit, OnDestroy {
                 }),
                 takeUntil(this.destroy$)
             )
-            .subscribe(response => {
+            .subscribe((response) => {
                 if (response) {
                     // Clear draft
                     this.draftService.clearDraft();
@@ -263,9 +289,7 @@ export class OnboardingShellComponent implements OnInit, OnDestroy {
                     );
 
                     // Redirect to dashboard
-                    setTimeout(() => {
-                        this.router.navigate(['/']);
-                    }, 1000);
+                    this.router.navigate(['/']);
                 }
             });
     }
