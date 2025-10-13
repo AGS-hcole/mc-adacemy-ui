@@ -43,8 +43,20 @@
                     </mat-error>
                 </mat-form-field>
 
-                <!-- Date -->
-                <mat-form-field class="mt-4 w-full">
+                @if (!editMode) {
+                    <fuse-alert [type]="'info'" [appearance]="'outline'">
+                        <span fuseAlertTitle>
+                            {{
+                                'SESSIONS.ADMIN.FORM.CREATE_MODE_TITLE'
+                                    | transloco
+                            }}
+                        </span>
+                        {{ 'SESSIONS.ADMIN.FORM.CREATE_MODE_INFO' | transloco }}
+                    </fuse-alert>
+                }
+
+                <!-- Date - Single (Edit Mode) -->
+                <mat-form-field class="mt-4 w-full" *ngIf="editMode">
                     <mat-label>{{
                         'SESSIONS.ADMIN.FORM.DATE' | transloco
                     }}</mat-label>
@@ -62,6 +74,70 @@
                         {{ 'SESSIONS.ADMIN.FORM.DATE_REQUIRED' | transloco }}
                     </mat-error>
                 </mat-form-field>
+
+                <!-- Date - Multiple (Create Mode) -->
+                <div *ngIf="!editMode" class="mt-4 w-full">
+                    <mat-form-field class="w-full">
+                        <mat-label>{{
+                            'SESSIONS.ADMIN.FORM.DATE_MULTIPLE' | transloco
+                        }}</mat-label>
+                        <input
+                            matInput
+                            [matDatepicker]="datePickerMulti"
+                            formControlName="date"
+                            (dateChange)="addDate()"
+                        />
+                        <mat-datepicker-toggle
+                            matIconSuffix
+                            [for]="datePickerMulti"
+                        >
+                        </mat-datepicker-toggle>
+                        <mat-datepicker #datePickerMulti></mat-datepicker>
+                        <mat-hint>{{
+                            'SESSIONS.ADMIN.FORM.DATE_MULTIPLE_HINT' | transloco
+                        }}</mat-hint>
+                    </mat-form-field>
+
+                    <!-- Selected dates chips -->
+                    <div class="mt-2" *ngIf="selectedDates.length > 0">
+                        <div class="text-secondary mb-2 text-sm">
+                            {{
+                                'SESSIONS.ADMIN.FORM.SELECTED_DATES' | transloco
+                            }}
+                            ({{ selectedDates.length }})
+                        </div>
+                        <div class="flex flex-wrap gap-2">
+                            <div
+                                *ngFor="
+                                    let date of selectedDates;
+                                    let i = index
+                                "
+                                class="flex items-center gap-1 rounded-full bg-primary-100 px-3 py-1 text-sm text-primary-800 dark:bg-primary-800 dark:text-primary-100"
+                            >
+                                <span>{{ formatDateDisplay(date) }}</span>
+                                <button
+                                    type="button"
+                                    (click)="removeDate(i)"
+                                    class="ml-1 rounded-full p-0.5 hover:bg-primary-200 dark:hover:bg-primary-700"
+                                >
+                                    <mat-icon
+                                        class="icon-size-4"
+                                        [svgIcon]="'heroicons_solid:x-mark'"
+                                    >
+                                    </mat-icon>
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Error message if no dates selected -->
+                    <div
+                        class="mt-2 text-sm text-warn"
+                        *ngIf="selectedDates.length === 0"
+                    >
+                        {{ 'SESSIONS.ADMIN.FORM.DATE_REQUIRED' | transloco }}
+                    </div>
+                </div>
 
                 <!-- Slot -->
                 <mat-form-field class="mt-4 w-full">
