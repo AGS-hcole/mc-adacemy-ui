@@ -75,11 +75,20 @@
                             'TOURNAMENTS.FORMS.TYPE' | transloco
                         }}</mat-label>
                         <mat-select formControlName="type">
-                            <mat-option [value]="TournamentType.SINGLES">{{
-                                'TOURNAMENTS.TYPE.SINGLES' | transloco
+                            <mat-option [value]="TournamentType.P250">{{
+                                'TOURNAMENTS.TYPE.P250' | transloco
                             }}</mat-option>
-                            <mat-option [value]="TournamentType.DOUBLES">{{
-                                'TOURNAMENTS.TYPE.DOUBLES' | transloco
+                            <mat-option [value]="TournamentType.P500">{{
+                                'TOURNAMENTS.TYPE.P500' | transloco
+                            }}</mat-option>
+                            <mat-option [value]="TournamentType.P1000">{{
+                                'TOURNAMENTS.TYPE.P1000' | transloco
+                            }}</mat-option>
+                            <mat-option [value]="TournamentType.P1500">{{
+                                'TOURNAMENTS.TYPE.P1500' | transloco
+                            }}</mat-option>
+                            <mat-option [value]="TournamentType.P2000">{{
+                                'TOURNAMENTS.TYPE.P2000' | transloco
                             }}</mat-option>
                         </mat-select>
                         <mat-error>{{

@@ -150,7 +150,7 @@ export class TournamentListComponent implements OnInit, OnDestroy {
             const matchesSearch =
                 !search ||
                 tournament.title.toLowerCase().includes(search) ||
-                tournament.address.city.toLowerCase().includes(search);
+                tournament.city.toLowerCase().includes(search);
 
             const matchesStatus = !status || tournament.status === status;
             const matchesType = !type || tournament.type === type;

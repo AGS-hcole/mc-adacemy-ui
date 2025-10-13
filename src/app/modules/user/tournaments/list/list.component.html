@@ -34,10 +34,10 @@
                                     [ngClass]="{
                                         'bg-blue-100 text-blue-800':
                                             tournament.type ===
-                                            TournamentType.SINGLES,
+                                            TournamentType.P250,
                                         'bg-purple-100 text-purple-800':
                                             tournament.type ===
-                                            TournamentType.DOUBLES
+                                            TournamentType.P1000
                                     }">
                                     {{
                                         'TOURNAMENTS.TYPE.' + tournament.type
@@ -70,8 +70,8 @@
                                     >location_on</mat-icon
                                 >
                                 <span>
-                                    {{ tournament.address.city }},
-                                    {{ tournament.address.country }}
+                                    {{ tournament.city }},
+                                    {{ tournament.country }}
                                 </span>
                             </div>
 
@@ -144,10 +144,10 @@
                                     [ngClass]="{
                                         'bg-blue-100 text-blue-800':
                                             tournament.type ===
-                                            TournamentType.SINGLES,
+                                            TournamentType.P250,
                                         'bg-purple-100 text-purple-800':
                                             tournament.type ===
-                                            TournamentType.DOUBLES
+                                            TournamentType.P1000
                                     }">
                                     {{
                                         'TOURNAMENTS.TYPE.' + tournament.type
@@ -180,8 +180,8 @@
                                     >location_on</mat-icon
                                 >
                                 <span>
-                                    {{ tournament.address.city }},
-                                    {{ tournament.address.country }}
+                                    {{ tournament.city }},
+                                    {{ tournament.country }}
                                 </span>
                             </div>
 

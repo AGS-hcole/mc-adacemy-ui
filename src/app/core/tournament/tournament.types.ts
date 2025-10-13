@@ -5,8 +5,11 @@ export type UUID = string;
  * Tournament type enum
  */
 export enum TournamentType {
-    SINGLES = 'SINGLES',
-    DOUBLES = 'DOUBLES',
+    P250 = 'P250',
+    P500 = 'P500',
+    P1000 = 'P1000',
+    P1500 = 'P1500',
+    P2000 = 'P2000',
 }
 
 /**
@@ -19,15 +22,16 @@ export enum TournamentStatus {
 }
 
 /**
- * RSVP status for tournament participants
+ * Participation status for tournament participants
  */
-export enum RsvpStatus {
+export enum ParticipationStatus {
+    PENDING = 'PENDING',
     CONFIRMED = 'CONFIRMED',
     DECLINED = 'DECLINED',
 }
 
 /**
- * Address model
+ * Address model (not used in main Tournament, kept for reference)
  */
 export interface Address {
     line1: string;
@@ -83,7 +87,7 @@ export interface TournamentParticipant {
         email: string;
         currentRanking?: number | null;
     };
-    rsvpStatus?: RsvpStatus | null;
+    status?: ParticipationStatus | null;
     feedback?: string | null;
     currentRanking?: number | null;
     createdAt: Date | string;
@@ -98,8 +102,14 @@ export interface Tournament {
     type: TournamentType;
     status: TournamentStatus;
 
-    // Address
-    address: Address;
+    // Address fields (flattened)
+    addressLine1: string;
+    addressLine2?: string | null;
+    postalCode: string;
+    city: string;
+    country: string;
+    latitude?: number | null;
+    longitude?: number | null;
 
     // Dates
     startsAt: Date | string;
@@ -122,7 +132,7 @@ export interface TournamentFilters {
     type?: TournamentType | null;
     startDate?: string | null;
     endDate?: string | null;
-    search?: string | null;
+    q?: string | null; // Search query
 }
 
 /**
@@ -131,7 +141,13 @@ export interface TournamentFilters {
 export interface CreateTournamentRequest {
     title: string;
     type: TournamentType;
-    address: Address;
+    addressLine1: string;
+    addressLine2?: string | null;
+    postalCode: string;
+    city: string;
+    country: string;
+    latitude?: number | null;
+    longitude?: number | null;
     startsAt: string; // ISO date string
     endsAt: string; // ISO date string
 }
@@ -143,9 +159,15 @@ export interface UpdateTournamentRequest {
     title?: string;
     type?: TournamentType;
     status?: TournamentStatus;
-    address?: Address;
+    addressLine1?: string;
+    addressLine2?: string | null;
+    postalCode?: string;
+    city?: string;
+    country?: string;
+    latitude?: number | null;
+    longitude?: number | null;
     startsAt?: string; // ISO date string
-    endsAt?: string; // ISO date string
+    endsAt?: string; // ISO date string;
 }
 
 /**
@@ -173,7 +195,7 @@ export interface SetTeamPlacementRequest {
  * RSVP request
  */
 export interface TournamentRsvpRequest {
-    status: RsvpStatus;
+    status: ParticipationStatus;
 }
 
 /**

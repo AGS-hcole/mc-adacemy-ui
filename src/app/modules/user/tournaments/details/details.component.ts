@@ -15,7 +15,7 @@ import { MatInputModule } from '@angular/material/input';
 import { ActivatedRoute, Router } from '@angular/router';
 import { TranslocoModule } from '@jsverse/transloco';
 import {
-    RsvpStatus,
+    ParticipationStatus,
     Tournament,
     TournamentStatus,
     TournamentType,
@@ -48,7 +48,7 @@ export class UserTournamentDetailsComponent implements OnInit, OnDestroy {
 
     TournamentType = TournamentType;
     TournamentStatus = TournamentStatus;
-    RsvpStatus = RsvpStatus;
+    ParticipationStatus = ParticipationStatus;
 
     private _unsubscribeAll: Subject<void> = new Subject<void>();
 
@@ -184,7 +184,7 @@ export class UserTournamentDetailsComponent implements OnInit, OnDestroy {
         if (!this.tournament) return;
 
         this._tournamentsService
-            .rsvp(this.tournament.id, RsvpStatus.CONFIRMED)
+            .rsvp(this.tournament.id, ParticipationStatus.CONFIRMED)
             .pipe(takeUntil(this._unsubscribeAll))
             .subscribe(() => {
                 this._changeDetectorRef.markForCheck();
@@ -198,7 +198,7 @@ export class UserTournamentDetailsComponent implements OnInit, OnDestroy {
         if (!this.tournament) return;
 
         this._tournamentsService
-            .rsvp(this.tournament.id, RsvpStatus.DECLINED)
+            .rsvp(this.tournament.id, ParticipationStatus.DECLINED)
             .pipe(takeUntil(this._unsubscribeAll))
             .subscribe(() => {
                 this._changeDetectorRef.markForCheck();

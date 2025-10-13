@@ -515,8 +515,11 @@
   },
   "TOURNAMENTS": {
     "TYPE": {
-      "SINGLES": "Simple",
-      "DOUBLES": "Double"
+      "P250": "P250",
+      "P500": "P500",
+      "P1000": "P1000",
+      "P1500": "P1500",
+      "P2000": "P2000"
     },
     "STATUS": {
       "DRAFT": "Brouillon",
@@ -527,7 +530,8 @@
       "CONFIRM": "Confirmer",
       "DECLINE": "Décliner",
       "CONFIRMED": "Confirmé",
-      "DECLINED": "Décliné"
+      "DECLINED": "Décliné",
+      "PENDING": "En attente"
     },
     "ADMIN": {
       "TITLE": "Tournois",

@@ -153,28 +153,28 @@ export class TournamentEditComponent implements OnInit, OnDestroy {
         this.tournamentForm = this._formBuilder.group({
             title: [this.tournament?.title || '', [Validators.required]],
             type: [
-                this.tournament?.type || TournamentType.DOUBLES,
+                this.tournament?.type || TournamentType.P1000,
                 [Validators.required],
             ],
             addressLine1: [
-                this.tournament?.address?.line1 || '',
+                this.tournament?.addressLine1 || '',
                 [Validators.required],
             ],
-            addressLine2: [this.tournament?.address?.line2 || ''],
+            addressLine2: [this.tournament?.addressLine2 || ''],
             postalCode: [
-                this.tournament?.address?.postalCode || '',
+                this.tournament?.postalCode || '',
                 [Validators.required],
             ],
             city: [
-                this.tournament?.address?.city || '',
+                this.tournament?.city || '',
                 [Validators.required],
             ],
             country: [
-                this.tournament?.address?.country || '',
+                this.tournament?.country || '',
                 [Validators.required],
             ],
-            latitude: [this.tournament?.address?.latitude || null],
-            longitude: [this.tournament?.address?.longitude || null],
+            latitude: [this.tournament?.latitude || null],
+            longitude: [this.tournament?.longitude || null],
             startsAt: [
                 this.tournament?.startsAt || null,
                 [Validators.required],
@@ -308,15 +308,13 @@ export class TournamentEditComponent implements OnInit, OnDestroy {
             const request: CreateTournamentRequest = {
                 title: formValue.title,
                 type: formValue.type,
-                address: {
-                    line1: formValue.addressLine1,
-                    line2: formValue.addressLine2,
-                    postalCode: formValue.postalCode,
-                    city: formValue.city,
-                    country: formValue.country,
-                    latitude: formValue.latitude,
-                    longitude: formValue.longitude,
-                },
+                addressLine1: formValue.addressLine1,
+                addressLine2: formValue.addressLine2,
+                postalCode: formValue.postalCode,
+                city: formValue.city,
+                country: formValue.country,
+                latitude: formValue.latitude,
+                longitude: formValue.longitude,
                 startsAt,
                 endsAt,
             };
@@ -333,15 +331,13 @@ export class TournamentEditComponent implements OnInit, OnDestroy {
             const request: UpdateTournamentRequest = {
                 title: formValue.title,
                 type: formValue.type,
-                address: {
-                    line1: formValue.addressLine1,
-                    line2: formValue.addressLine2,
-                    postalCode: formValue.postalCode,
-                    city: formValue.city,
-                    country: formValue.country,
-                    latitude: formValue.latitude,
-                    longitude: formValue.longitude,
-                },
+                addressLine1: formValue.addressLine1,
+                addressLine2: formValue.addressLine2,
+                postalCode: formValue.postalCode,
+                city: formValue.city,
+                country: formValue.country,
+                latitude: formValue.latitude,
+                longitude: formValue.longitude,
                 startsAt,
                 endsAt,
             };

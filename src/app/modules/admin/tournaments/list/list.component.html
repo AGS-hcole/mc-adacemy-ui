@@ -60,11 +60,20 @@
                 <mat-option [value]="null">{{
                     'TOURNAMENTS.ADMIN.FILTERS.ALL_TYPES' | transloco
                 }}</mat-option>
-                <mat-option [value]="TournamentType.SINGLES">{{
-                    'TOURNAMENTS.TYPE.SINGLES' | transloco
+                <mat-option [value]="TournamentType.P250">{{
+                    'TOURNAMENTS.TYPE.P250' | transloco
                 }}</mat-option>
-                <mat-option [value]="TournamentType.DOUBLES">{{
-                    'TOURNAMENTS.TYPE.DOUBLES' | transloco
+                <mat-option [value]="TournamentType.P500">{{
+                    'TOURNAMENTS.TYPE.P500' | transloco
+                }}</mat-option>
+                <mat-option [value]="TournamentType.P1000">{{
+                    'TOURNAMENTS.TYPE.P1000' | transloco
+                }}</mat-option>
+                <mat-option [value]="TournamentType.P1500">{{
+                    'TOURNAMENTS.TYPE.P1500' | transloco
+                }}</mat-option>
+                <mat-option [value]="TournamentType.P2000">{{
+                    'TOURNAMENTS.TYPE.P2000' | transloco
                 }}</mat-option>
             </mat-select>
         </mat-form-field>
@@ -149,10 +158,19 @@
                                         [ngClass]="{
                                             'bg-blue-100 text-blue-800 dark:bg-blue-900 dark:text-blue-200':
                                                 tournament.type ===
-                                                TournamentType.SINGLES,
+                                                TournamentType.P250,
+                                            'bg-green-100 text-green-800 dark:bg-green-900 dark:text-green-200':
+                                                tournament.type ===
+                                                TournamentType.P500,
                                             'bg-purple-100 text-purple-800 dark:bg-purple-900 dark:text-purple-200':
                                                 tournament.type ===
-                                                TournamentType.DOUBLES
+                                                TournamentType.P1000,
+                                            'bg-orange-100 text-orange-800 dark:bg-orange-900 dark:text-orange-200':
+                                                tournament.type ===
+                                                TournamentType.P1500,
+                                            'bg-red-100 text-red-800 dark:bg-red-900 dark:text-red-200':
+                                                tournament.type ===
+                                                TournamentType.P2000
                                         }">
                                         {{
                                             'TOURNAMENTS.TYPE.' + tournament.type
@@ -174,8 +192,8 @@
                                 </td>
                                 <td
                                     class="whitespace-nowrap px-3 py-4 text-sm">
-                                    {{ tournament.address.city }},
-                                    {{ tournament.address.country }}
+                                    {{ tournament.city }},
+                                    {{ tournament.country }}
                                 </td>
                                 <td
                                     class="whitespace-nowrap px-3 py-4 text-sm">

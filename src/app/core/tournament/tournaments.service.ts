@@ -4,9 +4,9 @@ import { environment } from 'environments/environment';
 import { BehaviorSubject, Observable, map, tap } from 'rxjs';
 import {
     CreateTournamentRequest,
+    ParticipationStatus,
     ReorderTeamsRequest,
     ReplaceParticipantsRequest,
-    RsvpStatus,
     SetTeamPlacementRequest,
     Tournament,
     TournamentFeedbackRequest,
@@ -71,8 +71,8 @@ export class TournamentsService {
             if (filters.endDate) {
                 params = params.set('endDate', filters.endDate);
             }
-            if (filters.search) {
-                params = params.set('search', filters.search);
+            if (filters.q) {
+                params = params.set('q', filters.q);
             }
         }
 
@@ -121,7 +121,7 @@ export class TournamentsService {
      */
     update(id: string, payload: UpdateTournamentRequest): Observable<Tournament> {
         return this._httpClient
-            .patch<Tournament>(`${this.apiUrl}/tournaments/${id}`, payload)
+            .put<Tournament>(`${this.apiUrl}/tournaments/${id}`, payload)
             .pipe(
                 tap((tournament) => {
                     // Update in the list
@@ -163,7 +163,7 @@ export class TournamentsService {
      */
     publish(id: string): Observable<Tournament> {
         return this._httpClient
-            .post<Tournament>(`${this.apiUrl}/tournaments/${id}/publish`, {})
+            .put<Tournament>(`${this.apiUrl}/tournaments/${id}/publish`, {})
             .pipe(
                 tap((tournament) => {
                     // Update in the list
@@ -187,7 +187,7 @@ export class TournamentsService {
      */
     archive(id: string): Observable<Tournament> {
         return this._httpClient
-            .post<Tournament>(`${this.apiUrl}/tournaments/${id}/archive`, {})
+            .put<Tournament>(`${this.apiUrl}/tournaments/${id}/archive`, {})
             .pipe(
                 tap((tournament) => {
                     // Update in the list
@@ -248,7 +248,7 @@ export class TournamentsService {
     reorderTeams(id: string, teamOrder: string[]): Observable<Tournament> {
         const payload: ReorderTeamsRequest = { teamOrder };
         return this._httpClient
-            .post<Tournament>(
+            .put<Tournament>(
                 `${this.apiUrl}/tournaments/${id}/reorder-teams`,
                 payload
             )
@@ -269,7 +269,7 @@ export class TournamentsService {
     ): Observable<Tournament> {
         const payload: SetTeamPlacementRequest = { placement };
         return this._httpClient
-            .patch<Tournament>(
+            .put<Tournament>(
                 `${this.apiUrl}/tournaments/${id}/teams/${teamId}/placement`,
                 payload
             )
@@ -294,7 +294,7 @@ export class TournamentsService {
         params = params.set('scope', scope);
 
         return this._httpClient.get<Tournament[]>(
-            `${this.apiUrl}/tournaments/mine`,
+            `${this.apiUrl}/v1/my/tournaments`,
             { params }
         );
     }
@@ -302,10 +302,10 @@ export class TournamentsService {
     /**
      * RSVP to tournament
      */
-    rsvp(id: string, status: RsvpStatus): Observable<Tournament> {
+    rsvp(id: string, status: ParticipationStatus): Observable<Tournament> {
         const payload: TournamentRsvpRequest = { status };
         return this._httpClient
-            .post<Tournament>(`${this.apiUrl}/tournaments/${id}/rsvp`, payload)
+            .put<Tournament>(`${this.apiUrl}/tournaments/${id}/rsvp`, payload)
             .pipe(
                 tap((tournament) => {
                     this._tournament.next(tournament);
@@ -319,7 +319,7 @@ export class TournamentsService {
     feedback(id: string, feedback: string): Observable<Tournament> {
         const payload: TournamentFeedbackRequest = { feedback };
         return this._httpClient
-            .post<Tournament>(
+            .put<Tournament>(
                 `${this.apiUrl}/tournaments/${id}/feedback`,
                 payload
             )
