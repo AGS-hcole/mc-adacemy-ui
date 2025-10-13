@@ -1,6 +1,13 @@
 import { CommonModule } from '@angular/common';
-import { Component, EventEmitter, Input, OnDestroy, OnInit, Output } from '@angular/core';
-import { FormBuilder, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
+import {
+    Component,
+    EventEmitter,
+    Input,
+    OnDestroy,
+    OnInit,
+    Output,
+} from '@angular/core';
+import { FormBuilder, FormGroup, ReactiveFormsModule } from '@angular/forms';
 import { MatButtonModule } from '@angular/material/button';
 import { MatDatepickerModule } from '@angular/material/datepicker';
 import { MatFormFieldModule } from '@angular/material/form-field';
@@ -8,10 +15,15 @@ import { MatIconModule } from '@angular/material/icon';
 import { MatInputModule } from '@angular/material/input';
 import { MatSelectModule } from '@angular/material/select';
 import { TranslocoModule } from '@jsverse/transloco';
-import { DateTime } from 'luxon';
-import { Subject, debounceTime, takeUntil } from 'rxjs';
 import { ReportsApiService } from 'app/core/reports/reports-api.service';
-import { ContractScope, PeriodPreset, ReportsFilters, UserLookupItem } from 'app/core/reports/reports.types';
+import {
+    ContractScope,
+    PeriodPreset,
+    ReportsFilters,
+    UserLookupItem,
+} from 'app/core/reports/reports.types';
+import { DateTime } from 'luxon';
+import { Subject, takeUntil } from 'rxjs';
 
 @Component({
     selector: 'reports-filters',
@@ -38,7 +50,7 @@ export class ReportsFiltersComponent implements OnInit, OnDestroy {
     filtersForm!: FormGroup;
     users: UserLookupItem[] = [];
     loadingUsers = false;
-    
+
     private _unsubscribeAll = new Subject<void>();
 
     presetOptions: { value: PeriodPreset; label: string }[] = [
@@ -77,8 +89,16 @@ export class ReportsFiltersComponent implements OnInit, OnDestroy {
     private createForm(): void {
         this.filtersForm = this._fb.group({
             preset: [this.filters.preset],
-            dateFrom: [this.filters.from ? DateTime.fromISO(this.filters.from).toJSDate() : null],
-            dateTo: [this.filters.to ? DateTime.fromISO(this.filters.to).toJSDate() : null],
+            dateFrom: [
+                this.filters.from
+                    ? DateTime.fromISO(this.filters.from).toJSDate()
+                    : null,
+            ],
+            dateTo: [
+                this.filters.to
+                    ? DateTime.fromISO(this.filters.to).toJSDate()
+                    : null,
+            ],
             userId: [this.filters.userId],
             contractScope: [this.filters.contractScope],
         });
@@ -88,15 +108,19 @@ export class ReportsFiltersComponent implements OnInit, OnDestroy {
      * Subscribe to preset changes
      */
     private subscribeToPresetChanges(): void {
-        this.filtersForm.get('preset')!.valueChanges
-            .pipe(takeUntil(this._unsubscribeAll))
+        this.filtersForm
+            .get('preset')!
+            .valueChanges.pipe(takeUntil(this._unsubscribeAll))
             .subscribe((preset: PeriodPreset) => {
                 if (preset !== 'custom') {
                     const dates = this.getDateRangeFromPreset(preset);
-                    this.filtersForm.patchValue({
-                        dateFrom: dates.from,
-                        dateTo: dates.to,
-                    }, { emitEvent: false });
+                    this.filtersForm.patchValue(
+                        {
+                            dateFrom: dates.from,
+                            dateTo: dates.to,
+                        },
+                        { emitEvent: false }
+                    );
                 }
             });
     }
@@ -106,7 +130,8 @@ export class ReportsFiltersComponent implements OnInit, OnDestroy {
      */
     private loadUsers(): void {
         this.loadingUsers = true;
-        this._api.lookupUsers('academician', '', 1, 100)
+        this._api
+            .lookupUsers('academician', '', 1, 100)
             .pipe(takeUntil(this._unsubscribeAll))
             .subscribe({
                 next: (response) => {
@@ -123,7 +148,10 @@ export class ReportsFiltersComponent implements OnInit, OnDestroy {
     /**
      * Get date range from preset
      */
-    private getDateRangeFromPreset(preset: PeriodPreset): { from: Date; to: Date } {
+    private getDateRangeFromPreset(preset: PeriodPreset): {
+        from: Date;
+        to: Date;
+    } {
         const now = DateTime.now().setZone('Europe/Paris');
 
         switch (preset) {
@@ -160,16 +188,26 @@ export class ReportsFiltersComponent implements OnInit, OnDestroy {
      * Apply filters
      */
     onApply(): void {
-        const formValue = this.filtersForm.value;
+        const { dateFrom, dateTo, preset, userId, contractScope } =
+            this.filtersForm.value;
         const filters: Partial<ReportsFilters> = {
-            preset: formValue.preset,
-            userId: formValue.userId || undefined,
-            contractScope: formValue.contractScope,
+            preset,
+            userId: userId || undefined,
+            contractScope,
         };
 
-        if (formValue.dateFrom && formValue.dateTo) {
-            filters.from = DateTime.fromJSDate(formValue.dateFrom).toISODate()!;
-            filters.to = DateTime.fromJSDate(formValue.dateTo).toISODate()!;
+        if (dateFrom && dateTo) {
+            const fromDate =
+                dateFrom instanceof Date
+                    ? DateTime.fromJSDate(dateFrom)
+                    : DateTime.fromISO(dateFrom);
+            const toDate =
+                dateTo instanceof Date
+                    ? DateTime.fromJSDate(dateTo)
+                    : DateTime.fromISO(dateTo);
+
+            filters.from = fromDate.toISODate()!;
+            filters.to = toDate.toISODate()!;
         }
 
         this.filtersChange.emit(filters);
