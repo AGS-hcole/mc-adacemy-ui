@@ -41,6 +41,7 @@ export class UserComponent implements OnInit, OnDestroy {
     user: User;
     avatarUrl: string | null = null;
 
+    private _objectUrl?: string;
     private _unsubscribeAll: Subject<any> = new Subject<any>();
 
     /**
@@ -66,13 +67,27 @@ export class UserComponent implements OnInit, OnDestroy {
             .subscribe((user: User) => {
                 this.user = user;
 
-                // Set avatar URL if user exists
-                if (user) {
-                    this.avatarUrl = this._userService.getAvatarUrl();
-                }
-
                 // Mark for check
                 this._changeDetectorRef.markForCheck();
+            });
+
+        this._userService
+            .getAvatarBlob()
+            .pipe(takeUntil(this._unsubscribeAll))
+            .subscribe({
+                next: (blob) => {
+                    if (blob && blob.size > 0) {
+                        this._objectUrl = URL.createObjectURL(blob);
+                        this.avatarUrl = this._objectUrl;
+                    } else {
+                        this.avatarUrl = null;
+                    }
+                    this._changeDetectorRef.markForCheck();
+                },
+                error: () => {
+                    this.avatarUrl = null;
+                    this._changeDetectorRef.markForCheck();
+                },
             });
     }
 

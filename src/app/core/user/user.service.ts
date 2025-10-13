@@ -2,7 +2,7 @@ import { HttpClient } from '@angular/common/http';
 import { inject, Injectable } from '@angular/core';
 import { User } from 'app/core/user/user.types';
 import { environment } from 'environments/environment';
-import { BehaviorSubject, map, Observable, tap } from 'rxjs';
+import { BehaviorSubject, Observable, tap } from 'rxjs';
 
 @Injectable({ providedIn: 'root' })
 export class UserService {
@@ -45,7 +45,11 @@ export class UserService {
     /**
      * Update user consents
      */
-    updateConsents(data: { privacyConsent: boolean; photoConsent: boolean; marketingConsent: boolean }): Observable<any> {
+    updateConsents(data: {
+        privacyConsent: boolean;
+        photoConsent: boolean;
+        marketingConsent: boolean;
+    }): Observable<any> {
         return this._httpClient.put(`${this.apiUrl}/users/me/consents`, data);
     }
 
@@ -55,7 +59,10 @@ export class UserService {
     uploadAvatar(file: File): Observable<any> {
         const formData = new FormData();
         formData.append('avatar', file);
-        return this._httpClient.post(`${this.apiUrl}/users/me/avatar`, formData);
+        return this._httpClient.post(
+            `${this.apiUrl}/users/me/avatar`,
+            formData
+        );
     }
 
     /**
@@ -64,13 +71,18 @@ export class UserService {
     uploadBackground(file: File): Observable<any> {
         const formData = new FormData();
         formData.append('background', file);
-        return this._httpClient.post(`${this.apiUrl}/users/me/background`, formData);
+        return this._httpClient.post(
+            `${this.apiUrl}/users/me/background`,
+            formData
+        );
     }
 
     /**
-     * Get avatar URL
+     * Get avatar Blob
      */
-    getAvatarUrl(): string {
-        return `${this.apiUrl}/users/me/avatar`;
+    getAvatarBlob() {
+        return this._httpClient.get(`${this.apiUrl}/users/me/avatar`, {
+            responseType: 'blob' as const,
+        });
     }
 }

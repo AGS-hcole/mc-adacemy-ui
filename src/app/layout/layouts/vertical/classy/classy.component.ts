@@ -24,7 +24,7 @@ import { UserService } from 'app/core/user/user.service';
 import { Role, User } from 'app/core/user/user.types';
 import { LanguagesComponent } from 'app/layout/common/languages/languages.component';
 import { UserComponent } from 'app/layout/common/user/user.component';
-import { Subject, takeUntil } from 'rxjs';
+import { of, Subject, switchMap, takeUntil } from 'rxjs';
 import { LogoComponent } from '../../../../shared/components/logo/logo.component';
 
 @Component({
@@ -49,6 +49,8 @@ export class ClassyLayoutComponent implements OnInit, OnDestroy {
     navigation: Navigation;
     user: User;
     avatarUrl: string | null = null;
+
+    private _avatarObjectUrl?: string;
     private _unsubscribeAll: Subject<any> = new Subject<any>();
 
     /**
@@ -93,14 +95,34 @@ export class ClassyLayoutComponent implements OnInit, OnDestroy {
 
         // Subscribe to the user service
         this._userService.user$
-            .pipe(takeUntil(this._unsubscribeAll))
-            .subscribe((user: User) => {
-                this.user = user;
-
-                // Set avatar URL if user exists
-                if (user) {
-                    this.avatarUrl = this._userService.getAvatarUrl();
-                }
+            .pipe(
+                takeUntil(this._unsubscribeAll),
+                switchMap((user: User | null) => {
+                    this.user = user;
+                    // Si pas d’utilisateur => reset avatar
+                    if (!user) {
+                        this._revokeAvatarUrl();
+                        this.avatarUrl = null;
+                        this._changeDetectorRef.markForCheck();
+                        return of(null);
+                    }
+                    // Sinon, on récupère le Blob depuis /users/me/avatar
+                    return this._userService.getAvatarBlob();
+                })
+            )
+            .subscribe({
+                next: (blob) => {
+                    if (!blob) return;
+                    this._revokeAvatarUrl();
+                    this._avatarObjectUrl = URL.createObjectURL(blob);
+                    this.avatarUrl = this._avatarObjectUrl;
+                    this._changeDetectorRef.markForCheck();
+                },
+                error: () => {
+                    this._revokeAvatarUrl();
+                    this.avatarUrl = null;
+                    this._changeDetectorRef.markForCheck();
+                },
             });
 
         // Subscribe to media changes
@@ -162,6 +184,13 @@ export class ClassyLayoutComponent implements OnInit, OnDestroy {
     // -----------------------------------------------------------------------------------------------------
     // @ Private methods
     // -----------------------------------------------------------------------------------------------------
+
+    private _revokeAvatarUrl(): void {
+        if (this._avatarObjectUrl) {
+            URL.revokeObjectURL(this._avatarObjectUrl);
+            this._avatarObjectUrl = undefined;
+        }
+    }
 
     /**
      * Set the current navigation

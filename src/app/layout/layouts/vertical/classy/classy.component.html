@@ -23,12 +23,14 @@
             <div class="relative h-24 w-24">
                 @if (avatarUrl) {
                     <img
-                        class="h-full w-full rounded-full"
+                        class="h-full w-full rounded-full object-cover"
                         [src]="avatarUrl"
+                        alt="User avatar"
+                        loading="lazy"
+                        decoding="async"
                         (error)="onAvatarError()"
                     />
-                }
-                @if (!avatarUrl) {
+                } @else {
                     <mat-icon
                         class="icon-size-24"
                         [svgIcon]="'heroicons_solid:user-circle'"

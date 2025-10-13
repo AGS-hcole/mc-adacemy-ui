@@ -1,15 +1,10 @@
 <!-- Button -->
 <button mat-icon-button [matMenuTriggerFor]="userActions">
     <span class="relative">
-        @if (showAvatar && avatarUrl) {
-            <img
-                class="h-7 w-7 rounded-full"
-                [src]="avatarUrl"
-                (error)="onAvatarError()"
-            />
-        }
-        @if (!showAvatar || !avatarUrl) {
-            <mat-icon [svgIcon]="'heroicons_outline:user-circle'"></mat-icon>
+        @if (avatarUrl) {
+            <img class="h-7 w-7 rounded-full" [src]="avatarUrl" alt="avatar" />
+        } @else {
+            <mat-icon svgIcon="heroicons_outline:user-circle"></mat-icon>
         }
         <span
             class="absolute bottom-0 right-0 h-2 w-2 rounded-full bg-green-500"
