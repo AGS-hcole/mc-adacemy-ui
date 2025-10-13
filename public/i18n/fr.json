@@ -94,6 +94,9 @@
             "DASHBOARD": {
                 "TITLE": "Tableau de bord"
             },
+            "PROFILE": {
+                "TITLE": "Profil"
+            },
             "SESSIONS": {
                 "TITLE": "Mes sessions"
             },
@@ -448,5 +451,29 @@
         "ERROR": {
             "TITLE": "Erreur de chargement"
         }
+    },
+    "PROFILE": {
+        "TITLE": "Mon Profil",
+        "FIRSTNAME": "Prénom",
+        "FIRSTNAME_REQUIRED": "Le prénom est requis",
+        "FIRSTNAME_MIN": "Le prénom doit contenir au moins 2 caractères",
+        "LASTNAME": "Nom",
+        "LASTNAME_REQUIRED": "Le nom est requis",
+        "LASTNAME_MIN": "Le nom doit contenir au moins 2 caractères",
+        "EMAIL": "Email",
+        "EMAIL_READONLY": "L'adresse email ne peut pas être modifiée",
+        "PHONE": "Téléphone",
+        "PHONE_PATTERN": "Format de téléphone invalide",
+        "BIRTHDATE": "Date de naissance",
+        "FFT_NUMBER": "Numéro de licence FFT",
+        "AVATAR": "Photo de profil",
+        "AVATAR_HINT": "Télécharger une photo de profil (max 2MB, PNG/JPEG)",
+        "AVATAR_UPLOAD": "Télécharger",
+        "AVATAR_REMOVE": "Supprimer",
+        "BACKGROUND": "Image de couverture",
+        "BACKGROUND_HINT": "Télécharger une image de couverture (max 4MB, PNG/JPEG)",
+        "BACKGROUND_UPLOAD": "Télécharger",
+        "BACKGROUND_REMOVE": "Supprimer",
+        "SAVE": "Enregistrer les modifications"
     }
 }

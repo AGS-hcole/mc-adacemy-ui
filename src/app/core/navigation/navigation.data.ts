@@ -86,6 +86,13 @@ export const userNavigation: FuseNavigationItem[] = [
         subtitle: 'NAVIGATION.USER.SUBTITLE',
         children: [
             {
+                id: 'profile',
+                title: 'NAVIGATION.USER.PROFILE.TITLE',
+                type: 'basic',
+                icon: 'heroicons_outline:user',
+                link: '/user/profile',
+            },
+            {
                 id: 'sessions',
                 title: 'NAVIGATION.USER.SESSIONS.TITLE',
                 type: 'basic',
