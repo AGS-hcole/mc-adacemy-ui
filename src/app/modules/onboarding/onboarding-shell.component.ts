@@ -62,6 +62,10 @@ export class OnboardingShellComponent implements OnInit, OnDestroy {
         },
     };
 
+    // Track files separately since they can't be serialized
+    private avatarFile: File | null = null;
+    private backgroundFile: File | null = null;
+
     currentEmail = '';
     isSubmitting = false;
 
@@ -137,7 +141,21 @@ export class OnboardingShellComponent implements OnInit, OnDestroy {
 
     onProfileChange(event: { form: FormGroup; data: OnboardingDraft['profile'] }): void {
         this.profileForm = event.form;
-        this.draft.profile = { ...this.draft.profile, ...event.data };
+        
+        // Store files separately
+        if (event.data.avatarFile !== undefined) {
+            this.avatarFile = event.data.avatarFile;
+        }
+        if (event.data.backgroundFile !== undefined) {
+            this.backgroundFile = event.data.backgroundFile;
+        }
+        
+        // Update draft without files (for localStorage)
+        const profileData = { ...event.data };
+        delete profileData.avatarFile;
+        delete profileData.backgroundFile;
+        
+        this.draft.profile = { ...this.draft.profile, ...profileData };
         this.saveDraft();
     }
 
@@ -196,15 +214,15 @@ export class OnboardingShellComponent implements OnInit, OnDestroy {
             .pipe(
                 // Step 2: Upload avatar if provided
                 switchMap(() => {
-                    if (this.draft.profile.avatarFile) {
-                        return this.userService.uploadAvatar(this.draft.profile.avatarFile);
+                    if (this.avatarFile) {
+                        return this.userService.uploadAvatar(this.avatarFile);
                     }
                     return of(null);
                 }),
                 // Step 3: Upload background if provided
                 switchMap(() => {
-                    if (this.draft.profile.backgroundFile) {
-                        return this.userService.uploadBackground(this.draft.profile.backgroundFile);
+                    if (this.backgroundFile) {
+                        return this.userService.uploadBackground(this.backgroundFile);
                     }
                     return of(null);
                 }),

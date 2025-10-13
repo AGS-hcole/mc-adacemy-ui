@@ -23,6 +23,7 @@ export class OnboardingDraftService {
 
     /**
      * Save draft to localStorage (partial update)
+     * Note: Files (avatarFile, backgroundFile) are intentionally excluded from serialization
      */
     saveDraft(draft: Partial<OnboardingDraft>): void {
         try {
@@ -34,6 +35,13 @@ export class OnboardingDraftService {
                 contract: { ...existing.contract, ...(draft.contract || {}) },
                 consents: { ...existing.consents, ...(draft.consents || {}) },
             };
+            
+            // Remove non-serializable File objects before saving
+            if (updated.profile) {
+                const { avatarFile, backgroundFile, ...serializableProfile } = updated.profile;
+                updated.profile = serializableProfile as any;
+            }
+            
             localStorage.setItem(STORAGE_KEY, JSON.stringify(updated));
         } catch (error) {
             console.error('Failed to save onboarding draft:', error);

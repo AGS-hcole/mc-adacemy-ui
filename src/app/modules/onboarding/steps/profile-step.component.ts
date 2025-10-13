@@ -35,6 +35,8 @@ export class ProfileStepComponent implements OnInit {
     form!: FormGroup;
     avatarPreview: string | null = null;
     backgroundPreview: string | null = null;
+    avatarFile: File | null = null;
+    backgroundFile: File | null = null;
     
     private fb = inject(FormBuilder);
     private avatarService = inject(AvatarService);
@@ -71,9 +73,10 @@ export class ProfileStepComponent implements OnInit {
                 return;
             }
 
+            this.avatarFile = file;
             this.avatarService.readFileAsDataUrl(file).subscribe(dataUrl => {
                 this.avatarPreview = dataUrl;
-                this.emitFormState(file, null);
+                this.emitFormState();
             });
         }
     }
@@ -89,24 +92,27 @@ export class ProfileStepComponent implements OnInit {
                 return;
             }
 
+            this.backgroundFile = file;
             this.avatarService.readFileAsDataUrl(file).subscribe(dataUrl => {
                 this.backgroundPreview = dataUrl;
-                this.emitFormState(null, file);
+                this.emitFormState();
             });
         }
     }
 
     removeAvatar(): void {
         this.avatarPreview = null;
-        this.emitFormState(undefined, null);
+        this.avatarFile = null;
+        this.emitFormState();
     }
 
     removeBackground(): void {
         this.backgroundPreview = null;
-        this.emitFormState(null, undefined);
+        this.backgroundFile = null;
+        this.emitFormState();
     }
 
-    private emitFormState(avatarFile: File | null | undefined = null, backgroundFile: File | null | undefined = null): void {
+    private emitFormState(): void {
         const formValue = this.form.value;
         const data: OnboardingDraft['profile'] = {
             firstname: formValue.firstname || '',
@@ -114,17 +120,9 @@ export class ProfileStepComponent implements OnInit {
             phone: formValue.phone || '',
             birthDate: formValue.birthDate ? formValue.birthDate.toISOString().split('T')[0] : null,
             fftLicenseNumber: formValue.fftLicenseNumber || '',
+            avatarFile: this.avatarFile,
+            backgroundFile: this.backgroundFile,
         };
-
-        // Handle avatar file
-        if (avatarFile !== null) {
-            data.avatarFile = avatarFile || null;
-        }
-
-        // Handle background file
-        if (backgroundFile !== null) {
-            data.backgroundFile = backgroundFile || null;
-        }
 
         this.formChange.emit({ form: this.form, data });
     }
