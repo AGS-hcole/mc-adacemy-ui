@@ -1,0 +1,29 @@
+<div class="bg-card rounded-lg shadow p-6 mb-8">
+    <div class="mb-4">
+        <h3 class="text-lg font-semibold">{{ 'REPORTS.CHART.SESSIONS_OVER_TIME' | transloco }}</h3>
+    </div>
+    
+    <div *ngIf="loading" class="h-[350px] bg-gray-200 rounded animate-pulse"></div>
+    
+    <div *ngIf="!loading && timeseries">
+        <apx-chart
+            #chart
+            [series]="chartOptions.series!"
+            [chart]="chartOptions.chart!"
+            [xaxis]="chartOptions.xaxis!"
+            [yaxis]="chartOptions.yaxis!"
+            [dataLabels]="chartOptions.dataLabels!"
+            [grid]="chartOptions.grid!"
+            [stroke]="chartOptions.stroke!"
+            [tooltip]="chartOptions.tooltip!"
+            [legend]="chartOptions.legend!">
+        </apx-chart>
+    </div>
+    
+    <div *ngIf="!loading && !timeseries" class="flex items-center justify-center h-[350px] text-secondary">
+        <div class="text-center">
+            <mat-icon class="icon-size-12 mb-4" svgIcon="heroicons_outline:chart-bar"></mat-icon>
+            <p>{{ 'REPORTS.EMPTY.NO_DATA' | transloco }}</p>
+        </div>
+    </div>
+</div>

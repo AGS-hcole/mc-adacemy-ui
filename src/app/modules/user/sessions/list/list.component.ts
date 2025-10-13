@@ -1,4 +1,4 @@
-import { CommonModule, DatePipe, NgClass } from '@angular/common';
+import { CommonModule, NgClass } from '@angular/common';
 import {
     ChangeDetectionStrategy,
     ChangeDetectorRef,
@@ -21,6 +21,7 @@ import { Session, SessionSlot } from 'app/core/session/session.types';
 import { SessionsService } from 'app/core/session/sessions.service';
 import { UserService } from 'app/core/user/user.service';
 import { User } from 'app/core/user/user.types';
+import { LocalizedDatePipe } from 'app/shared/pipes/localized-date.pipe';
 import { combineLatest, Subject, takeUntil } from 'rxjs';
 
 @Component({
@@ -29,7 +30,7 @@ import { combineLatest, Subject, takeUntil } from 'rxjs';
     encapsulation: ViewEncapsulation.None,
     changeDetection: ChangeDetectionStrategy.OnPush,
     imports: [
-        DatePipe,
+        LocalizedDatePipe,
         NgClass,
         MatButtonModule,
         MatIconModule,

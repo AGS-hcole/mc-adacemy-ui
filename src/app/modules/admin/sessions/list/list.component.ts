@@ -1,4 +1,4 @@
-import { DatePipe, NgClass, NgForOf, NgIf } from '@angular/common';
+import { NgClass, NgForOf, NgIf } from '@angular/common';
 import {
     ChangeDetectionStrategy,
     ChangeDetectorRef,
@@ -30,6 +30,7 @@ import {
     Site,
 } from 'app/core/session/session.types';
 import { SessionsService } from 'app/core/session/sessions.service';
+import { LocalizedDatePipe } from 'app/shared/pipes/localized-date.pipe';
 import { Subject, combineLatest, debounceTime, takeUntil } from 'rxjs';
 
 @Component({
@@ -38,7 +39,7 @@ import { Subject, combineLatest, debounceTime, takeUntil } from 'rxjs';
     encapsulation: ViewEncapsulation.None,
     changeDetection: ChangeDetectionStrategy.OnPush,
     imports: [
-        DatePipe,
+        LocalizedDatePipe,
         NgClass,
         FormsModule,
         ReactiveFormsModule,

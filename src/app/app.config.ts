@@ -1,8 +1,10 @@
+import { registerLocaleData } from '@angular/common';
 import { provideHttpClient } from '@angular/common/http';
 import {
     ApplicationConfig,
     inject,
     isDevMode,
+    LOCALE_ID,
     provideAppInitializer,
 } from '@angular/core';
 import { LuxonDateAdapter } from '@angular/material-luxon-adapter';
@@ -14,8 +16,16 @@ import { TranslocoService, provideTransloco } from '@jsverse/transloco';
 import { appRoutes } from 'app/app.routes';
 import { provideAuth } from 'app/core/auth/auth.provider';
 import { provideIcons } from 'app/core/icons/icons.provider';
+import { LocaleService } from 'app/core/locale/locale.service';
 import { firstValueFrom } from 'rxjs';
 import { TranslocoHttpLoader } from './core/transloco/transloco.http-loader';
+
+import localeFr from '@angular/common/locales/fr';
+import localeEn from '@angular/common/locales/en';
+
+// Register locale data for French and English
+registerLocaleData(localeFr, 'fr');
+registerLocaleData(localeEn, 'en');
 
 export const appConfig: ApplicationConfig = {
     providers: [
@@ -25,6 +35,16 @@ export const appConfig: ApplicationConfig = {
             appRoutes,
             withInMemoryScrolling({ scrollPositionRestoration: 'enabled' })
         ),
+
+        // Locale ID provider that updates dynamically based on active language
+        {
+            provide: LOCALE_ID,
+            useFactory: () => {
+                const translocoService = inject(TranslocoService);
+                const activeLang = translocoService.getActiveLang();
+                return activeLang || 'fr';
+            },
+        },
 
         // Material Date Adapter
         {
@@ -68,10 +88,19 @@ export const appConfig: ApplicationConfig = {
         }),
         provideAppInitializer(() => {
             const translocoService = inject(TranslocoService);
+            const dateAdapter = inject(DateAdapter);
             const defaultLang = translocoService.getDefaultLang();
+            
             translocoService.setActiveLang(defaultLang);
+            dateAdapter.setLocale(defaultLang);
 
             return firstValueFrom(translocoService.load(defaultLang));
+        }),
+        // Initialize LocaleService to listen to language changes
+        provideAppInitializer(() => {
+            const localeService = inject(LocaleService);
+            // Service will automatically subscribe to language changes in its constructor
+            return Promise.resolve();
         }),
 
         // Fuse

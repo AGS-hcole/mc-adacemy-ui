@@ -81,6 +81,9 @@
             "SITES": {
                 "TITLE": "Sites"
             },
+            "REPORTS": {
+                "TITLE": "Reporting"
+            },
             "TOURNAMENTS": {
                 "TITLE": "Tournois"
             }
@@ -367,5 +370,63 @@
         },
         "SUCCESS": "Votre profil est complet. Bienvenue !",
         "ERROR": "Une erreur s'est produite. Veuillez réessayer."
+    },
+    "REPORTS": {
+        "TITLE": "Reporting",
+        "DESCRIPTION": "Vue d'ensemble de l'activité de formation sur une période choisie",
+        "FILTERS": {
+            "PERIOD": "Période",
+            "USER": "Académicien",
+            "ALL_USERS": "Tous les académiciens",
+            "CONTRACT_SCOPE": "Type de contrat",
+            "DATE_FROM": "Date de début",
+            "DATE_TO": "Date de fin",
+            "PRESET": {
+                "LAST_7": "7 derniers jours",
+                "LAST_30": "30 derniers jours",
+                "THIS_MONTH": "Ce mois-ci",
+                "PREV_MONTH": "Mois précédent",
+                "CUSTOM": "Période personnalisée"
+            },
+            "CONTRACT": {
+                "ALL": "Tous",
+                "UNDER": "Sous contrat",
+                "OFF": "Hors contrat"
+            }
+        },
+        "KPI": {
+            "TOTAL": "Sessions",
+            "UNDER": "Sous contrat",
+            "OFF": "Hors contrat",
+            "UNIQUE": "Académiciens actifs"
+        },
+        "CHART": {
+            "SESSIONS_OVER_TIME": "Sessions dans le temps",
+            "CONTRACT_SHARE": "Répartition contrat"
+        },
+        "TABLE": {
+            "TITLE": "Détails des sessions",
+            "DATE": "Date",
+            "SESSION_TITLE": "Intitulé",
+            "COACH": "Coach",
+            "CONTRACT": "Contrat",
+            "ATTENDEES": "Participants",
+            "STATUS": "Statut"
+        },
+        "ACTIONS": {
+            "APPLY": "Appliquer",
+            "RESET": "Réinitialiser",
+            "EXPORT_CSV": "Exporter CSV",
+            "EXPORT_JSON": "Exporter JSON",
+            "VIEW_SESSION": "Voir la session",
+            "RETRY": "Réessayer"
+        },
+        "EMPTY": {
+            "NO_DATA": "Aucune donnée disponible",
+            "NO_SESSIONS": "Aucune session trouvée pour cette période"
+        },
+        "ERROR": {
+            "TITLE": "Erreur de chargement"
+        }
     }
 }
