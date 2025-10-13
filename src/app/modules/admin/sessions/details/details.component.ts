@@ -224,8 +224,8 @@ export class AdminSessionDetailsComponent implements OnInit, OnDestroy {
                 });
         } else {
             // Create new sessions - one per selected date
-            const createRequests: Observable<Session>[] = this.selectedDates.map(
-                (date) => {
+            const createRequests: Observable<Session>[] =
+                this.selectedDates.map((date) => {
                     const startISO = this._combineDateAndTimeISO(
                         date,
                         formValue.startTime
@@ -246,8 +246,7 @@ export class AdminSessionDetailsComponent implements OnInit, OnDestroy {
                     };
 
                     return this._sessionsService.createSession(createRequest);
-                }
-            );
+                });
 
             // Execute all create requests in parallel
             forkJoin(createRequests).subscribe({
@@ -280,7 +279,8 @@ export class AdminSessionDetailsComponent implements OnInit, OnDestroy {
             return;
         }
 
-        const newDate = dateValue instanceof Date ? dateValue : new Date(dateValue);
+        const newDate =
+            dateValue instanceof Date ? dateValue : new Date(dateValue);
 
         // Check if date already exists
         const dateExists = this.selectedDates.some(
