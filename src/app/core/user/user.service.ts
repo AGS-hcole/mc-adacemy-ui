@@ -85,4 +85,13 @@ export class UserService {
             responseType: 'blob' as const,
         });
     }
+
+    /**
+     * Get background Blob
+     */
+    getBackgroundBlob() {
+        return this._httpClient.get(`${this.apiUrl}/users/me/background`, {
+            responseType: 'blob' as const,
+        });
+    }
 }

@@ -2,12 +2,14 @@ import { CommonModule } from '@angular/common';
 import { Component, inject, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
 import { MatButtonModule } from '@angular/material/button';
+import { MatCheckboxModule } from '@angular/material/checkbox';
 import { MatNativeDateModule } from '@angular/material/core';
 import { MatDatepickerModule } from '@angular/material/datepicker';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatIconModule } from '@angular/material/icon';
 import { MatInputModule } from '@angular/material/input';
 import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
+import { MatSlideToggleModule } from '@angular/material/slide-toggle';
 import { TranslocoModule } from '@jsverse/transloco';
 import { UserService } from 'app/core/user/user.service';
 import { User } from 'app/core/user/user.types';
@@ -36,6 +38,8 @@ interface FeedItem {
         MatDatepickerModule,
         MatNativeDateModule,
         MatProgressSpinnerModule,
+        MatSlideToggleModule,
+        MatCheckboxModule,
         TranslocoModule,
     ],
     templateUrl: './profile.component.html',
@@ -64,17 +68,43 @@ export class ProfileComponent implements OnInit {
             if (user) {
                 this.user = user;
                 this.initializeForm(user);
-                
-                // Set avatar preview from existing data
-                if (user.avatarUrl) {
-                    this.avatarPreview = user.avatarUrl;
-                }
+                this.loadUserImages();
             }
         });
 
         // Initialize placeholder feed
         // TODO: Replace with actual API call to get user sessions and tournament results
         this.initializeFeed();
+    }
+
+    private loadUserImages(): void {
+        // Load avatar from API endpoint
+        this.userService.getAvatarBlob().subscribe({
+            next: (blob) => {
+                if (blob && blob.size > 0) {
+                    this.avatarPreview = URL.createObjectURL(blob);
+                }
+            },
+            error: (error) => {
+                console.log('No avatar available or error loading avatar:', error);
+                // No avatar, use default
+                this.avatarPreview = null;
+            }
+        });
+
+        // Load background from API endpoint
+        this.userService.getBackgroundBlob().subscribe({
+            next: (blob) => {
+                if (blob && blob.size > 0) {
+                    this.backgroundPreview = URL.createObjectURL(blob);
+                }
+            },
+            error: (error) => {
+                console.log('No background available or error loading background:', error);
+                // No background, use default gradient
+                this.backgroundPreview = null;
+            }
+        });
     }
 
     private initializeForm(user: User): void {
@@ -85,6 +115,14 @@ export class ProfileComponent implements OnInit {
             phone: [user.phone || '', Validators.pattern(/^\+?[0-9\s.-]{7,15}$/)],
             birthDate: [user.birthDate ? new Date(user.birthDate) : null],
             fftLicenseNumber: [user.fftLicenseNumber || ''],
+            // Notification preferences
+            notifyEmail: [user.notifyEmail || false],
+            notifySMS: [user.notifySMS || false],
+            notifyWhatsApp: [user.notifyWhatsApp || false],
+            // Consents
+            privacyConsent: [!!user.privacyConsentAt],
+            photoConsent: [!!user.photoConsentAt],
+            marketingConsent: [!!user.marketingConsentAt],
         });
     }
 
@@ -165,6 +203,9 @@ export class ProfileComponent implements OnInit {
             phone: formValue.phone || null,
             birthDate: formValue.birthDate ? formValue.birthDate.toISOString().split('T')[0] : null,
             fftLicenseNumber: formValue.fftLicenseNumber || null,
+            notifyEmail: formValue.notifyEmail,
+            notifySMS: formValue.notifySMS,
+            notifyWhatsApp: formValue.notifyWhatsApp,
         };
 
         // Update user profile
@@ -176,6 +217,7 @@ export class ProfileComponent implements OnInit {
                         this.userService.uploadAvatar(this.avatarFile).subscribe({
                             next: () => {
                                 console.log('Avatar uploaded successfully');
+                                this.loadUserImages(); // Reload images
                             },
                             error: (error) => {
                                 console.error('Error uploading avatar:', error);
@@ -188,9 +230,27 @@ export class ProfileComponent implements OnInit {
                         this.userService.uploadBackground(this.backgroundFile).subscribe({
                             next: () => {
                                 console.log('Background uploaded successfully');
+                                this.loadUserImages(); // Reload images
                             },
                             error: (error) => {
                                 console.error('Error uploading background:', error);
+                            }
+                        });
+                    }
+
+                    // Update consents if current user
+                    if (this.isCurrentUser) {
+                        const consentsData = {
+                            privacyConsent: formValue.privacyConsent,
+                            photoConsent: formValue.photoConsent,
+                            marketingConsent: formValue.marketingConsent,
+                        };
+                        this.userService.updateConsents(consentsData).subscribe({
+                            next: () => {
+                                console.log('Consents updated successfully');
+                            },
+                            error: (error) => {
+                                console.error('Error updating consents:', error);
                             }
                         });
                     }

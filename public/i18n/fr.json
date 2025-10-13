@@ -488,6 +488,20 @@
             "SESSIONS": "Sessions",
             "TOURNAMENTS": "Tournois"
         },
+        "NOTIFICATIONS": {
+            "TITLE": "Préférences de notifications",
+            "DESCRIPTION": "Choisissez comment vous souhaitez recevoir les notifications",
+            "EMAIL": "Notifications par email",
+            "SMS": "Notifications par SMS",
+            "WHATSAPP": "Notifications WhatsApp"
+        },
+        "CONSENTS": {
+            "TITLE": "Consentements",
+            "DESCRIPTION": "Gérez vos consentements et autorisations",
+            "PRIVACY": "J'accepte la politique de confidentialité et les conditions d'utilisation",
+            "PHOTO": "J'autorise l'utilisation de mon image pour les communications de l'académie",
+            "MARKETING": "J'accepte de recevoir des communications marketing"
+        },
         "ACTIVITY": {
             "TITLE": "Activité récente",
             "EMPTY": "Aucune activité pour le moment",
