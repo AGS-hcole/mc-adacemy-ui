@@ -1,0 +1,177 @@
+<div
+    class="flex min-w-0 flex-auto flex-col items-center sm:flex-row sm:justify-center md:items-start md:justify-start"
+>
+    <!-- Left side - Background and branding (hidden on mobile) -->
+    <div
+        class="relative hidden h-full flex-auto items-center justify-center overflow-hidden bg-gray-800 p-16 md:flex lg:px-28 dark:border-r"
+    >
+        <!-- Background image -->
+        <img class="absolute inset-0 pointer-events-none w-full h-full object-cover" src="background.png" alt="Background" />
+        
+        <!-- Content -->
+        <div class="relative z-10 w-full max-w-2xl">
+            <div class="w-full max-w-xs">
+                <img
+                    src="images/logo/logo-text-on-dark.svg"
+                    alt="MyCenter Academy Logo"
+                />
+            </div>
+            <div class="mt-6 text-lg leading-6 tracking-tight text-gray-400">
+                {{ 'AUTH.SUBTITLE' | transloco }}
+            </div>
+            <div class="mt-8 flex items-center">
+                <div class="flex flex-0 items-center -space-x-1.5">
+                    <img
+                        class="h-10 w-10 flex-0 rounded-full object-cover ring-4 ring-gray-800 ring-offset-1 ring-offset-gray-800"
+                        src="images/avatars/female-18.jpg"
+                    />
+                    <img
+                        class="h-10 w-10 flex-0 rounded-full object-cover ring-4 ring-gray-800 ring-offset-1 ring-offset-gray-800"
+                        src="images/avatars/female-11.jpg"
+                    />
+                    <img
+                        class="h-10 w-10 flex-0 rounded-full object-cover ring-4 ring-gray-800 ring-offset-1 ring-offset-gray-800"
+                        src="images/avatars/male-09.jpg"
+                    />
+                    <img
+                        class="h-10 w-10 flex-0 rounded-full object-cover ring-4 ring-gray-800 ring-offset-1 ring-offset-gray-800"
+                        src="images/avatars/male-16.jpg"
+                    />
+                </div>
+                <div class="ml-4 font-medium tracking-tight text-gray-400">
+                    {{ 'AUTH.DESCRIPTION' | transloco }}
+                </div>
+            </div>
+        </div>
+    </div>
+    
+    <!-- Right side - Onboarding form content -->
+    <div
+        class="w-full px-4 py-8 sm:bg-card sm:w-auto sm:rounded-2xl sm:p-12 sm:shadow md:flex md:h-full md:w-160 md:justify-end md:rounded-none md:p-8 md:shadow-none"
+    >
+        <div class="mx-auto w-full sm:mx-0">
+            <!-- Logo (mobile only) -->
+            <app-logo
+                class="md:hidden"
+                svgUrl="images/logo/logo.svg"
+                customClass="w-24 text-primary"
+            ></app-logo>
+
+            <!-- Title and Progress -->
+            <div class="mt-8 md:mt-0">
+                <div class="text-4xl font-extrabold leading-tight tracking-tight">
+                    {{ 'ONBOARDING.TITLE' | transloco }}
+                </div>
+                
+                <!-- Progress bar -->
+                <div class="mt-6">
+                    <mat-progress-bar mode="determinate" [value]="progress" color="primary"></mat-progress-bar>
+                </div>
+                
+                <!-- Step indicators -->
+                <div class="mt-4 flex justify-between items-center">
+                    @for (step of steps; track step; let i = $index) {
+                        <div class="flex flex-col items-center flex-1">
+                            <div class="flex items-center justify-center w-8 h-8 rounded-full border-2 mb-1 text-sm"
+                                 [class.bg-primary]="i <= currentStep"
+                                 [class.border-primary]="i <= currentStep"
+                                 [class.text-white]="i <= currentStep"
+                                 [class.border-gray-300]="i > currentStep"
+                                 [class.text-gray-400]="i > currentStep">
+                                @if (i < currentStep) {
+                                    <mat-icon class="icon-size-5">check</mat-icon>
+                                } @else {
+                                    <span>{{ i + 1 }}</span>
+                                }
+                            </div>
+                            <span class="text-xs text-center hidden sm:block"
+                                  [class.font-semibold]="i === currentStep"
+                                  [class.text-gray-500]="i !== currentStep">
+                                {{ 'ONBOARDING.STEPS.' + step | transloco }}
+                            </span>
+                        </div>
+                        @if (i < steps.length - 1) {
+                            <div class="flex-1 h-0.5 mx-1"
+                                 [class.bg-primary]="i < currentStep"
+                                 [class.bg-gray-300]="i >= currentStep"></div>
+                        }
+                    }
+                </div>
+            </div>
+
+            <!-- Form content -->
+            <div class="mt-8">
+                @switch (currentStep) {
+                    @case (0) {
+                        <onboarding-profile-step 
+                            [draft]="draft.profile"
+                            [email]="currentEmail"
+                            (formChange)="onProfileChange($event)">
+                        </onboarding-profile-step>
+                    }
+                    @case (1) {
+                        <onboarding-contract-step 
+                            [draft]="draft.contract"
+                            [hasPhone]="!!draft.profile.phone"
+                            (formChange)="onContractChange($event)">
+                        </onboarding-contract-step>
+                    }
+                    @case (2) {
+                        <onboarding-consents-step 
+                            [draft]="draft.consents"
+                            (formChange)="onConsentsChange($event)">
+                        </onboarding-consents-step>
+                    }
+                    @case (3) {
+                        <onboarding-summary-step 
+                            [draft]="draft"
+                            [email]="currentEmail">
+                        </onboarding-summary-step>
+                    }
+                }
+            </div>
+
+            <!-- Navigation buttons -->
+            <div class="mt-8 flex items-center justify-between">
+                @if (canGoBack) {
+                    <button mat-stroked-button 
+                            [disabled]="isSubmitting"
+                            (click)="previousStep()">
+                        <mat-icon>arrow_back</mat-icon>
+                        {{ 'ONBOARDING.ACTIONS.BACK' | transloco }}
+                    </button>
+                } @else {
+                    <div></div>
+                }
+
+                @if (!isLastStep) {
+                    <button 
+                        class="fuse-mat-button-large"
+                        mat-flat-button 
+                        color="primary"
+                        [disabled]="!canGoNext || isSubmitting"
+                        (click)="nextStep()">
+                        {{ 'ONBOARDING.ACTIONS.NEXT' | transloco }}
+                        <mat-icon>arrow_forward</mat-icon>
+                    </button>
+                } @else {
+                    <button 
+                        class="fuse-mat-button-large"
+                        mat-flat-button 
+                        color="primary"
+                        [disabled]="!canGoNext || isSubmitting"
+                        (click)="finish()">
+                        @if (isSubmitting) {
+                            <mat-progress-spinner
+                                [diameter]="24"
+                                [mode]="'indeterminate'"
+                            ></mat-progress-spinner>
+                        } @else {
+                            <span>{{ 'ONBOARDING.ACTIONS.FINISH' | transloco }}</span>
+                        }
+                    </button>
+                }
+            </div>
+        </div>
+    </div>
+</div>

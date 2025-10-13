@@ -1,0 +1,35 @@
+<div class="w-full">
+    <form [formGroup]="form" class="space-y-6">
+        <!-- Privacy consent (required) -->
+        <div class="flex items-start space-x-3">
+            <mat-checkbox formControlName="acceptPrivacy" color="primary" class="mt-1"></mat-checkbox>
+            <div class="flex-1">
+                <label class="font-medium">{{ 'ONBOARDING.CONSENTS.PRIVACY' | transloco }}</label>
+                @if (form.get('acceptPrivacy')?.hasError('required')) {
+                    <p class="text-sm text-red-600 mt-1">{{ 'ONBOARDING.CONSENTS.PRIVACY_REQUIRED' | transloco }}</p>
+                }
+                <p class="text-sm text-gray-500 mt-1">
+                    <a href="/privacy-policy" target="_blank" class="text-primary underline">
+                        {{ 'ONBOARDING.CONSENTS.LINK_PRIVACY' | transloco }}
+                    </a>
+                </p>
+            </div>
+        </div>
+
+        <!-- Photo consent (optional) -->
+        <div class="flex items-start space-x-3">
+            <mat-checkbox formControlName="acceptPhoto" color="primary" class="mt-1"></mat-checkbox>
+            <div class="flex-1">
+                <label class="font-medium">{{ 'ONBOARDING.CONSENTS.PHOTO' | transloco }}</label>
+            </div>
+        </div>
+
+        <!-- Marketing consent (optional) -->
+        <div class="flex items-start space-x-3">
+            <mat-checkbox formControlName="acceptMarketing" color="primary" class="mt-1"></mat-checkbox>
+            <div class="flex-1">
+                <label class="font-medium">{{ 'ONBOARDING.CONSENTS.MARKETING' | transloco }}</label>
+            </div>
+        </div>
+    </form>
+</div>

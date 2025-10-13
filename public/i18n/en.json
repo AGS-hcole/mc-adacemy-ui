@@ -335,5 +335,73 @@
                 "CREATE": "Create"
             }
         }
+    },
+    "ONBOARDING": {
+        "TITLE": "Complete your profile",
+        "STEPS": {
+            "PROFILE": "Profile",
+            "CONTRACT": "Contract & Notifications",
+            "CONSENTS": "Consents",
+            "SUMMARY": "Summary"
+        },
+        "ACTIONS": {
+            "BACK": "Back",
+            "NEXT": "Next",
+            "FINISH": "Finish"
+        },
+        "PROFILE": {
+            "FIRSTNAME": "First name",
+            "FIRSTNAME_REQUIRED": "First name is required",
+            "FIRSTNAME_MIN": "First name must be at least 2 characters",
+            "LASTNAME": "Last name",
+            "LASTNAME_REQUIRED": "Last name is required",
+            "LASTNAME_MIN": "Last name must be at least 2 characters",
+            "EMAIL": "Email",
+            "PHONE": "Phone",
+            "PHONE_PATTERN": "Invalid phone number format",
+            "BIRTHDATE": "Date of birth",
+            "BIRTHDATE_INVALID": "Invalid date",
+            "FFT_NUMBER": "FFT license number",
+            "AVATAR": "Profile picture",
+            "AVATAR_HINT": "Upload a profile picture (max 2MB, PNG/JPEG)",
+            "AVATAR_UPLOAD": "Upload",
+            "AVATAR_REMOVE": "Remove",
+            "BACKGROUND": "Profile cover",
+            "BACKGROUND_HINT": "Upload a cover image (max 4MB, PNG/JPEG)",
+            "BACKGROUND_UPLOAD": "Upload",
+            "BACKGROUND_REMOVE": "Remove"
+        },
+        "CONTRACT": {
+            "FORMULA": "Training formula",
+            "FORMULA_REQUIRED": "Formula is required",
+            "FORMULA_OPTIONS": {
+                "MORNING": "Morning (AM)",
+                "AFTERNOON": "Afternoon (PM)",
+                "FULL": "Full access (AM + PM)"
+            },
+            "NOTIFY_EMAIL": "Email notifications",
+            "NOTIFY_SMS": "SMS notifications",
+            "NOTIFY_WHATSAPP": "WhatsApp notifications",
+            "SMS_HINT": "Requires a valid phone number.",
+            "SMS_WARNING": "Phone number is required for SMS notifications"
+        },
+        "CONSENTS": {
+            "TITLE": "Legal consents",
+            "PRIVACY": "I accept the Privacy Policy and Terms of Use.",
+            "PRIVACY_REQUIRED": "Privacy consent is required",
+            "PHOTO": "I authorize the use of my image for academy communications.",
+            "MARKETING": "I agree to receive marketing communications.",
+            "LINK_PRIVACY": "Read the Privacy Policy"
+        },
+        "SUMMARY": {
+            "CHECK": "Please verify your information before finishing.",
+            "PROFILE_TITLE": "Profile Information",
+            "CONTRACT_TITLE": "Contract & Notifications",
+            "CONSENTS_TITLE": "Legal Consents",
+            "FORMULA": "Formula",
+            "NOTIFICATIONS": "Notifications"
+        },
+        "SUCCESS": "Your profile is complete. Welcome!",
+        "ERROR": "Something went wrong. Please try again."
     }
 }

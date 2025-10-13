@@ -2,6 +2,7 @@ import { Route } from '@angular/router';
 import { initialDataResolver } from 'app/app.resolvers';
 import { AuthGuard } from 'app/core/auth/guards/auth.guard';
 import { NoAuthGuard } from 'app/core/auth/guards/noAuth.guard';
+import { OnboardingGuard } from 'app/core/auth/guards/onboarding.guard';
 import { LayoutComponent } from 'app/layout/layout.component';
 import { RoleRedirectGuard } from './core/auth/guards/role-redirect.guard';
 
@@ -69,14 +70,22 @@ export const appRoutes: Route[] = [
                 loadChildren: () =>
                     import('app/modules/auth/sign-out/sign-out.routes'),
             },
+            {
+                path: 'onboarding',
+                canActivate: [OnboardingGuard],
+                loadChildren: () =>
+                    import('app/modules/onboarding/onboarding.routes').then(
+                        (m) => m.ONBOARDING_ROUTES
+                    ),
+            },
         ],
     },
 
     // Admin routes
     {
         path: '',
-        canActivate: [AuthGuard],
-        canActivateChild: [AuthGuard],
+        canActivate: [AuthGuard, OnboardingGuard],
+        canActivateChild: [AuthGuard, OnboardingGuard],
         component: LayoutComponent,
         resolve: {
             initialData: initialDataResolver,

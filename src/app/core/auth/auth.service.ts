@@ -11,6 +11,7 @@ export class AuthService {
     private _authenticated: boolean = false;
     private _httpClient = inject(HttpClient);
     private _userService = inject(UserService);
+    private _mustOnboard: boolean = false;
 
     // -----------------------------------------------------------------------------------------------------
     // @ Accessors
@@ -38,9 +39,35 @@ export class AuthService {
         return localStorage.getItem('refreshToken') ?? '';
     }
 
+    /**
+     * Getter for mustOnboard flag
+     */
+    get mustOnboard(): boolean {
+        return this._mustOnboard;
+    }
+
     // -----------------------------------------------------------------------------------------------------
     // @ Public methods
     // -----------------------------------------------------------------------------------------------------
+
+    /**
+     * Get current user with mustOnboard flag
+     */
+    getMe(): Observable<any> {
+        return this._httpClient.get(`${this.apiUrl}/auth/me`).pipe(
+            switchMap((response: any) => {
+                // Update mustOnboard flag
+                this._mustOnboard = response.mustOnboard ?? (response.user?.privacyConsentAt == null);
+                
+                // Update user
+                if (response.user) {
+                    this._userService.user = response.user;
+                }
+                
+                return of(response);
+            })
+        );
+    }
 
     /**
      * Forgot password
@@ -94,6 +121,9 @@ export class AuthService {
                     // Store the user on the user service
                     this._userService.user = response.user;
 
+                    // Set mustOnboard flag
+                    this._mustOnboard = response.mustOnboard ?? (response.user?.privacyConsentAt == null);
+
                     // Return a new observable with the response
                     return of(response);
                 })
@@ -135,6 +165,9 @@ export class AuthService {
 
                     // Store the user on the user service
                     this._userService.user = response.user;
+
+                    // Set mustOnboard flag
+                    this._mustOnboard = response.mustOnboard ?? (response.user?.privacyConsentAt == null);
 
                     // Return true
                     return of(true);
