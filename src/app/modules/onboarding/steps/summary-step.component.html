@@ -46,20 +46,10 @@
             <!-- Contract & Notifications -->
             <div class="bg-gray-50 rounded-lg p-6">
                 <h3 class="text-lg font-semibold mb-4 flex items-center gap-2">
-                    <mat-icon>description</mat-icon>
+                    <mat-icon>notifications</mat-icon>
                     {{ 'ONBOARDING.SUMMARY.CONTRACT_TITLE' | transloco }}
                 </h3>
                 <dl class="space-y-4">
-                    <div>
-                        <dt class="text-sm text-gray-500">{{ 'ONBOARDING.SUMMARY.FORMULA' | transloco }}</dt>
-                        <dd class="font-medium">
-                            @if (draft.contract.formula) {
-                                {{ 'ONBOARDING.CONTRACT.FORMULA_OPTIONS.' + draft.contract.formula | transloco }}
-                            } @else {
-                                -
-                            }
-                        </dd>
-                    </div>
                     <div>
                         <dt class="text-sm text-gray-500 mb-2">{{ 'ONBOARDING.SUMMARY.NOTIFICATIONS' | transloco }}</dt>
                         <dd class="space-y-1">

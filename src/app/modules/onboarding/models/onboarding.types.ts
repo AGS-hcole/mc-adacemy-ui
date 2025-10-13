@@ -33,7 +33,6 @@ export interface OnboardingDraft {
         backgroundFile?: File | null;
     };
     contract: {
-        formula: FormulaType | null;
         notifyEmail: boolean;
         notifySMS: boolean;
         notifyWhatsApp: boolean;
@@ -51,7 +50,6 @@ export interface UpdateUserDto {
     phone?: string | null;
     birthDate?: string | null;
     fftLicenseNumber?: string | null;
-    formula?: FormulaType | null;
     notifyEmail?: boolean;
     notifySMS?: boolean;
     notifyWhatsApp?: boolean;

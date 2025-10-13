@@ -50,7 +50,6 @@ export class OnboardingShellComponent implements OnInit, OnDestroy {
             backgroundFile: null,
         },
         contract: {
-            formula: null,
             notifyEmail: true,
             notifySMS: false,
             notifyWhatsApp: false,
@@ -99,7 +98,6 @@ export class OnboardingShellComponent implements OnInit, OnDestroy {
                 if (user.phone) this.draft.profile.phone = user.phone;
                 if (user.birthDate) this.draft.profile.birthDate = new Date(user.birthDate).toISOString().split('T')[0];
                 if (user.fftLicenseNumber) this.draft.profile.fftLicenseNumber = user.fftLicenseNumber;
-                if (user.formula) this.draft.contract.formula = user.formula as any;
                 this.draft.contract.notifyEmail = user.notifyEmail ?? true;
                 this.draft.contract.notifySMS = user.notifySMS ?? false;
                 this.draft.contract.notifyWhatsApp = user.notifyWhatsApp ?? false;
@@ -204,7 +202,6 @@ export class OnboardingShellComponent implements OnInit, OnDestroy {
             phone: this.draft.profile.phone || null,
             birthDate: this.draft.profile.birthDate || null,
             fftLicenseNumber: this.draft.profile.fftLicenseNumber || null,
-            formula: this.draft.contract.formula || null,
             notifyEmail: this.draft.contract.notifyEmail,
             notifySMS: this.draft.contract.notifySMS,
             notifyWhatsApp: this.draft.contract.notifyWhatsApp,

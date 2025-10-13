@@ -74,7 +74,6 @@ export class OnboardingDraftService {
                 backgroundFile: null,
             },
             contract: {
-                formula: null,
                 notifyEmail: true,
                 notifySMS: false,
                 notifyWhatsApp: false,

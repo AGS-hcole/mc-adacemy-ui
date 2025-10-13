@@ -2,21 +2,6 @@
     <h2 class="text-2xl font-semibold mb-6">{{ 'ONBOARDING.STEPS.CONTRACT' | transloco }}</h2>
     
     <form [formGroup]="form" class="space-y-6">
-        <!-- Formula Selection -->
-        <mat-form-field class="w-full">
-            <mat-label>{{ 'ONBOARDING.CONTRACT.FORMULA' | transloco }}</mat-label>
-            <mat-select formControlName="formula">
-                @for (option of formulaOptions; track option) {
-                    <mat-option [value]="option">
-                        {{ 'ONBOARDING.CONTRACT.FORMULA_OPTIONS.' + option | transloco }}
-                    </mat-option>
-                }
-            </mat-select>
-            @if (form.get('formula')?.hasError('required')) {
-                <mat-error>{{ 'ONBOARDING.CONTRACT.FORMULA_REQUIRED' | transloco }}</mat-error>
-            }
-        </mat-form-field>
-
         <!-- Notification Preferences -->
         <div class="space-y-4">
             <h3 class="text-lg font-medium">{{ 'ONBOARDING.SUMMARY.NOTIFICATIONS' | transloco }}</h3>

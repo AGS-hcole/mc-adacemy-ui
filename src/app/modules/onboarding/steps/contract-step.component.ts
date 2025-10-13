@@ -1,11 +1,9 @@
 import { CommonModule } from '@angular/common';
 import { Component, EventEmitter, inject, Input, OnInit, Output } from '@angular/core';
-import { FormBuilder, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
-import { MatFormFieldModule } from '@angular/material/form-field';
-import { MatSelectModule } from '@angular/material/select';
+import { FormBuilder, FormGroup, ReactiveFormsModule } from '@angular/forms';
 import { MatSlideToggleModule } from '@angular/material/slide-toggle';
 import { TranslocoModule } from '@jsverse/transloco';
-import { FormulaType, OnboardingDraft } from '../models/onboarding.types';
+import { OnboardingDraft } from '../models/onboarding.types';
 
 @Component({
     selector: 'onboarding-contract-step',
@@ -13,8 +11,6 @@ import { FormulaType, OnboardingDraft } from '../models/onboarding.types';
     imports: [
         CommonModule,
         ReactiveFormsModule,
-        MatFormFieldModule,
-        MatSelectModule,
         MatSlideToggleModule,
         TranslocoModule,
     ],
@@ -26,13 +22,11 @@ export class ContractStepComponent implements OnInit {
     @Output() formChange = new EventEmitter<{ form: FormGroup; data: OnboardingDraft['contract'] }>();
 
     form!: FormGroup;
-    formulaOptions: FormulaType[] = ['MORNING', 'AFTERNOON', 'FULL'];
     
     private fb = inject(FormBuilder);
 
     ngOnInit(): void {
         this.form = this.fb.group({
-            formula: [this.draft?.formula || null, Validators.required],
             notifyEmail: [this.draft?.notifyEmail ?? true],
             notifySMS: [this.draft?.notifySMS ?? false],
             notifyWhatsApp: [this.draft?.notifyWhatsApp ?? false],
@@ -54,7 +48,6 @@ export class ContractStepComponent implements OnInit {
     private emitFormState(): void {
         const formValue = this.form.value;
         const data: OnboardingDraft['contract'] = {
-            formula: formValue.formula,
             notifyEmail: formValue.notifyEmail,
             notifySMS: formValue.notifySMS,
             notifyWhatsApp: formValue.notifyWhatsApp,
