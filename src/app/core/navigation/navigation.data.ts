@@ -65,11 +65,6 @@ export const adminNavigation: FuseNavigationItem[] = [
                 type: 'basic',
                 icon: 'heroicons_outline:trophy',
                 link: '/admin/tournaments',
-                disabled: true,
-                badge: {
-                    title: 'Bientôt dispo',
-                    classes: 'bg-gray-500 rounded-full px-2 text-white',
-                },
             },
         ],
     },
@@ -98,11 +93,6 @@ export const userNavigation: FuseNavigationItem[] = [
                 type: 'basic',
                 icon: 'heroicons_outline:trophy',
                 link: '/user/tournaments',
-                disabled: true,
-                badge: {
-                    title: 'Bientôt dispo',
-                    classes: 'bg-gray-500 rounded-full px-2 text-white',
-                },
             },
         ],
     },

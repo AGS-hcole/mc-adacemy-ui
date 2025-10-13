@@ -1,0 +1,219 @@
+<div class="flex min-w-0 flex-auto flex-col">
+    <!-- Header -->
+    <div class="flex flex-col gap-4 bg-card p-6 dark:bg-transparent sm:flex-row sm:items-center md:px-8">
+        <div>
+            <div class="text-4xl font-extrabold leading-none tracking-tight">
+                {{ 'TOURNAMENTS.USER.TITLE' | transloco }}
+            </div>
+        </div>
+    </div>
+
+    <!-- Tabs -->
+    <mat-tab-group class="px-6 md:px-8" [animationDuration]="'300'">
+        <!-- Upcoming -->
+        <mat-tab [label]="'TOURNAMENTS.USER.UPCOMING' | transloco">
+            <div class="py-6">
+                <div
+                    class="grid grid-cols-1 gap-6 md:grid-cols-2 lg:grid-cols-3"
+                    *ngIf="upcomingTournaments.length > 0">
+                    <div
+                        *ngFor="
+                            let tournament of upcomingTournaments;
+                            trackBy: trackByFn
+                        "
+                        class="group cursor-pointer overflow-hidden rounded-lg bg-card shadow transition-shadow hover:shadow-lg"
+                        (click)="viewTournament(tournament.id)">
+                        <div class="p-6">
+                            <!-- Header -->
+                            <div class="mb-4 flex items-start justify-between">
+                                <h3 class="text-xl font-semibold">
+                                    {{ tournament.title }}
+                                </h3>
+                                <span
+                                    class="inline-flex items-center rounded-full px-2.5 py-0.5 text-xs font-medium"
+                                    [ngClass]="{
+                                        'bg-blue-100 text-blue-800':
+                                            tournament.type ===
+                                            TournamentType.P250,
+                                        'bg-purple-100 text-purple-800':
+                                            tournament.type ===
+                                            TournamentType.P1000
+                                    }">
+                                    {{
+                                        'TOURNAMENTS.TYPE.' + tournament.type
+                                            | transloco
+                                    }}
+                                </span>
+                            </div>
+
+                            <!-- Dates -->
+                            <div class="mb-3 flex items-center text-sm text-secondary">
+                                <mat-icon class="icon-size-5 mr-2"
+                                    >event</mat-icon
+                                >
+                                <span>
+                                    {{
+                                        tournament.startsAt
+                                            | localizedDate: 'short'
+                                    }}
+                                    -
+                                    {{
+                                        tournament.endsAt
+                                            | localizedDate: 'short'
+                                    }}
+                                </span>
+                            </div>
+
+                            <!-- Location -->
+                            <div class="mb-3 flex items-center text-sm text-secondary">
+                                <mat-icon class="icon-size-5 mr-2"
+                                    >location_on</mat-icon
+                                >
+                                <span>
+                                    {{ tournament.city }},
+                                    {{ tournament.country }}
+                                </span>
+                            </div>
+
+                            <!-- Team Info -->
+                            <div
+                                class="mb-3 flex items-center text-sm"
+                                *ngIf="getMyTeam(tournament) as teamInfo">
+                                <mat-icon class="icon-size-5 mr-2"
+                                    >group</mat-icon
+                                >
+                                <span *ngIf="teamInfo.teammate">
+                                    {{ 'TOURNAMENTS.USER.TEAMMATE' | transloco }}:
+                                    {{ teamInfo.teammate.firstname }}
+                                    {{ teamInfo.teammate.lastname }}
+                                </span>
+                                <span *ngIf="!teamInfo.teammate">
+                                    {{ 'TOURNAMENTS.USER.NO_TEAMMATE' | transloco }}
+                                </span>
+                            </div>
+
+                            <!-- RSVP Status -->
+                            <div class="mt-4">
+                                <span
+                                    class="inline-flex items-center rounded-full px-2.5 py-0.5 text-xs font-medium"
+                                    [ngClass]="getRsvpBadgeClass(tournament)">
+                                    {{
+                                        'TOURNAMENTS.USER.RSVP_STATUS' | transloco
+                                    }}
+                                </span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Empty state -->
+                <div
+                    class="flex flex-col items-center justify-center py-16"
+                    *ngIf="upcomingTournaments.length === 0">
+                    <mat-icon
+                        class="icon-size-24 mb-4 text-gray-400"
+                        [svgIcon]="'heroicons_outline:trophy'"></mat-icon>
+                    <div class="text-2xl font-semibold">
+                        {{ 'TOURNAMENTS.USER.NO_UPCOMING' | transloco }}
+                    </div>
+                </div>
+            </div>
+        </mat-tab>
+
+        <!-- Past -->
+        <mat-tab [label]="'TOURNAMENTS.USER.PAST' | transloco">
+            <div class="py-6">
+                <div
+                    class="grid grid-cols-1 gap-6 md:grid-cols-2 lg:grid-cols-3"
+                    *ngIf="pastTournaments.length > 0">
+                    <div
+                        *ngFor="
+                            let tournament of pastTournaments;
+                            trackBy: trackByFn
+                        "
+                        class="group cursor-pointer overflow-hidden rounded-lg bg-card shadow transition-shadow hover:shadow-lg"
+                        (click)="viewTournament(tournament.id)">
+                        <div class="p-6">
+                            <!-- Header -->
+                            <div class="mb-4 flex items-start justify-between">
+                                <h3 class="text-xl font-semibold">
+                                    {{ tournament.title }}
+                                </h3>
+                                <span
+                                    class="inline-flex items-center rounded-full px-2.5 py-0.5 text-xs font-medium"
+                                    [ngClass]="{
+                                        'bg-blue-100 text-blue-800':
+                                            tournament.type ===
+                                            TournamentType.P250,
+                                        'bg-purple-100 text-purple-800':
+                                            tournament.type ===
+                                            TournamentType.P1000
+                                    }">
+                                    {{
+                                        'TOURNAMENTS.TYPE.' + tournament.type
+                                            | transloco
+                                    }}
+                                </span>
+                            </div>
+
+                            <!-- Dates -->
+                            <div class="mb-3 flex items-center text-sm text-secondary">
+                                <mat-icon class="icon-size-5 mr-2"
+                                    >event</mat-icon
+                                >
+                                <span>
+                                    {{
+                                        tournament.startsAt
+                                            | localizedDate: 'short'
+                                    }}
+                                    -
+                                    {{
+                                        tournament.endsAt
+                                            | localizedDate: 'short'
+                                    }}
+                                </span>
+                            </div>
+
+                            <!-- Location -->
+                            <div class="mb-3 flex items-center text-sm text-secondary">
+                                <mat-icon class="icon-size-5 mr-2"
+                                    >location_on</mat-icon
+                                >
+                                <span>
+                                    {{ tournament.city }},
+                                    {{ tournament.country }}
+                                </span>
+                            </div>
+
+                            <!-- Placement -->
+                            <div
+                                class="mt-4"
+                                *ngIf="getMyTeam(tournament) as teamInfo">
+                                <span
+                                    class="inline-flex items-center rounded-full bg-yellow-100 px-2.5 py-0.5 text-xs font-medium text-yellow-800"
+                                    *ngIf="teamInfo.team.placement">
+                                    {{
+                                        teamInfo.team.placement
+                                    }}{{ teamInfo.team.placement === 1 ? 'st' : teamInfo.team.placement === 2 ? 'nd' : teamInfo.team.placement === 3 ? 'rd' : 'th' }}
+                                    {{ 'TOURNAMENTS.USER.PLACE' | transloco }}
+                                </span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Empty state -->
+                <div
+                    class="flex flex-col items-center justify-center py-16"
+                    *ngIf="pastTournaments.length === 0">
+                    <mat-icon
+                        class="icon-size-24 mb-4 text-gray-400"
+                        [svgIcon]="'heroicons_outline:trophy'"></mat-icon>
+                    <div class="text-2xl font-semibold">
+                        {{ 'TOURNAMENTS.USER.NO_PAST' | transloco }}
+                    </div>
+                </div>
+            </div>
+        </mat-tab>
+    </mat-tab-group>
+</div>

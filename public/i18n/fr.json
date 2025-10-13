@@ -1,518 +1,622 @@
 {
-    "SHARED": {
-        "UNDER_CONSTRUCTION": "En construction",
-        "UNDER_CONSTRUCTION_DESCRIPTION": "Cette fonctionnalité est en cours de développement et sera bientôt disponible.",
-        "CLIPBOARD": {
-            "COPYTO": "Copier dans le presse-papiers",
-            "SUCCESS": "Copié dans le presse-papiers",
-            "ERROR": "Erreur lors de la copie dans le presse-papiers"
-        },
-        "USER": {
-            "SIGNED_IN_AS": "Connecté en tant que",
-            "PROFILE": "Profil",
-            "SIGN_OUT": "Se déconnecter"
-        }
+  "SHARED": {
+    "UNDER_CONSTRUCTION": "En construction",
+    "UNDER_CONSTRUCTION_DESCRIPTION": "Cette fonctionnalité est en cours de développement et sera bientôt disponible.",
+    "CLIPBOARD": {
+      "COPYTO": "Copier dans le presse-papiers",
+      "SUCCESS": "Copié dans le presse-papiers",
+      "ERROR": "Erreur lors de la copie dans le presse-papiers"
     },
-    "AUTH": {
-        "SUBTITLE": "My Center Academy, l’école où les passionnés de padel deviennent les champions de demain. Entraînements, suivi personnalisé et esprit d’équipe pour révéler tout votre potentiel.",
-        "DESCRIPTION": "Découvrez les talents de demain, formés à My Center Academy.",
-        "SIGNIN": {
-            "TITLE": "Se connecter",
-            "EMAIL": "Adresse e-mail",
-            "EMAIL_REQUIRED": "L'adresse e-mail est requise",
-            "EMAIL_INVALID": "Veuillez entrer une adresse e-mail valide",
-            "PASSWORD": "Mot de passe",
-            "PASSWORD_REQUIRED": "Le mot de passe est requis",
-            "REMEMBER_ME": "Se souvenir de moi",
-            "FORGOT_PASSWORD": "Mot de passe oublié ?",
-            "SIGNIN": "Se connecter"
-        },
-        "SIGN_OUT": {
-            "TITLE": "Déconnexion",
-            "REDIRECTING": "Redirection dans ",
-            "REDIRECTED": "Vous êtes maintenant redirigé !",
-            "GOTO": "Aller à",
-            "SIGN_IN": "se connecter"
-        },
-        "RESET_PASSWORD": {
-            "TITLE": "Réinitialiser le mot de passe",
-            "SUBTITLE": "Entrez votre adresse e-mail pour recevoir un lien de réinitialisation de mot de passe.",
-            "PASSWORD": "Nouveau mot de passe",
-            "PASSWORD_REQUIRED": "Le mot de passe est requis",
-            "PASSWORD_CONFIRM": "Confirmer le mot de passe",
-            "PASSWORD_CONFIRM_REQUIRED": "La confirmation du mot de passe est requise",
-            "PASSWORD_MUST_MATCH": "Les mots de passe doivent correspondre",
-            "SUBMIT": "Réinitialiser le mot de passe",
-            "RETURNTO": "Retour à",
-            "SIGN_IN": "se connecter"
-        },
-        "FORGOT_PASSWORD": {
-            "TITLE": "Mot de passe oublié",
-            "SUBTITLE": "Entrez votre adresse e-mail pour recevoir un lien de réinitialisation de mot de passe.",
-            "EMAIL": "Adresse e-mail",
-            "EMAIL_REQUIRED": "L'adresse e-mail est requise",
-            "EMAIL_INVALID": "Veuillez entrer une adresse e-mail valide",
-            "SEND_LINK": "Envoyer le lien de réinitialisation",
-            "RETURNTO": "Retour à",
-            "SIGN_IN": "se connecter"
-        },
-        "CONFIRMATION_REQUIRED": {
-            "TITLE": "Confirmation requise",
-            "DESCRIPTION": "Un e-mail de confirmation avec des instructions a été envoyé à votre adresse e-mail. Suivez ces instructions pour confirmer votre adresse e-mail et activer votre compte.",
-            "RETURNTO": "Retour à",
-            "SIGN_IN": "se connecter"
-        }
+    "USER": {
+      "SIGNED_IN_AS": "Connecté en tant que",
+      "PROFILE": "Profil",
+      "SIGN_OUT": "Se déconnecter"
+    }
+  },
+  "AUTH": {
+    "SUBTITLE": "My Center Academy, l’école où les passionnés de padel deviennent les champions de demain. Entraînements, suivi personnalisé et esprit d’équipe pour révéler tout votre potentiel.",
+    "DESCRIPTION": "Découvrez les talents de demain, formés à My Center Academy.",
+    "SIGNIN": {
+      "TITLE": "Se connecter",
+      "EMAIL": "Adresse e-mail",
+      "EMAIL_REQUIRED": "L'adresse e-mail est requise",
+      "EMAIL_INVALID": "Veuillez entrer une adresse e-mail valide",
+      "PASSWORD": "Mot de passe",
+      "PASSWORD_REQUIRED": "Le mot de passe est requis",
+      "REMEMBER_ME": "Se souvenir de moi",
+      "FORGOT_PASSWORD": "Mot de passe oublié ?",
+      "SIGNIN": "Se connecter"
     },
-    "NAVIGATION": {
-        "TITLE": "Accueil",
-        "SUBTITLE": "Informations générales",
-        "DASHBOARD": {
-            "TITLE": "Tableau de bord"
-        },
-        "ADMIN": {
-            "TITLE": "Administration",
-            "SUBTITLE": "Gestion de l'application",
-            "USERS": {
-                "TITLE": "Utilisateurs"
-            },
-            "SESSIONS": {
-                "TITLE": "Sessions d'entraînement"
-            },
-            "SITES": {
-                "TITLE": "Sites"
-            },
-            "REPORTS": {
-                "TITLE": "Reporting"
-            },
-            "TOURNAMENTS": {
-                "TITLE": "Tournois"
-            }
-        },
-        "USER": {
-            "TITLE": "Utilisateur",
-            "SUBTITLE": "Espace utilisateur",
-            "DASHBOARD": {
-                "TITLE": "Tableau de bord"
-            },
-            "PROFILE": {
-                "TITLE": "Profil"
-            },
-            "SESSIONS": {
-                "TITLE": "Mes sessions"
-            },
-            "TOURNAMENTS": {
-                "TITLE": "Mes tournois"
-            }
-        }
+    "SIGN_OUT": {
+      "TITLE": "Déconnexion",
+      "REDIRECTING": "Redirection dans ",
+      "REDIRECTED": "Vous êtes maintenant redirigé !",
+      "GOTO": "Aller à",
+      "SIGN_IN": "se connecter"
     },
+    "RESET_PASSWORD": {
+      "TITLE": "Réinitialiser le mot de passe",
+      "SUBTITLE": "Entrez votre adresse e-mail pour recevoir un lien de réinitialisation de mot de passe.",
+      "PASSWORD": "Nouveau mot de passe",
+      "PASSWORD_REQUIRED": "Le mot de passe est requis",
+      "PASSWORD_CONFIRM": "Confirmer le mot de passe",
+      "PASSWORD_CONFIRM_REQUIRED": "La confirmation du mot de passe est requise",
+      "PASSWORD_MUST_MATCH": "Les mots de passe doivent correspondre",
+      "SUBMIT": "Réinitialiser le mot de passe",
+      "RETURNTO": "Retour à",
+      "SIGN_IN": "se connecter"
+    },
+    "FORGOT_PASSWORD": {
+      "TITLE": "Mot de passe oublié",
+      "SUBTITLE": "Entrez votre adresse e-mail pour recevoir un lien de réinitialisation de mot de passe.",
+      "EMAIL": "Adresse e-mail",
+      "EMAIL_REQUIRED": "L'adresse e-mail est requise",
+      "EMAIL_INVALID": "Veuillez entrer une adresse e-mail valide",
+      "SEND_LINK": "Envoyer le lien de réinitialisation",
+      "RETURNTO": "Retour à",
+      "SIGN_IN": "se connecter"
+    },
+    "CONFIRMATION_REQUIRED": {
+      "TITLE": "Confirmation requise",
+      "DESCRIPTION": "Un e-mail de confirmation avec des instructions a été envoyé à votre adresse e-mail. Suivez ces instructions pour confirmer votre adresse e-mail et activer votre compte.",
+      "RETURNTO": "Retour à",
+      "SIGN_IN": "se connecter"
+    }
+  },
+  "NAVIGATION": {
+    "TITLE": "Accueil",
+    "SUBTITLE": "Informations générales",
     "DASHBOARD": {
-        "LOADING": "Chargement...",
-        "SECTIONS": {
-            "GENERAL": "Informations générales",
-            "ACTIVITIES": "Activités"
-        },
-        "ACTIONS": {
-            "VIEW_SESSIONS": "Voir les sessions"
-        },
-        "STATS": {
-            "SITES": "Sites",
-            "TOTAL_USERS": "Utilisateurs totaux",
-            "ADMINS": "Administrateurs",
-            "REGULAR_USERS": "Utilisateurs",
-            "ACTIVE_SESSIONS": "Sessions actives",
-            "UPCOMING_TOURNAMENTS": "Tournois à venir",
-            "COMING_SOON": "Bientôt disponible",
-            "REGULAR_USERS_HINT": "Académiciens (rôle : utilisateur)"
-        }
+      "TITLE": "Tableau de bord"
     },
-    "HOME": {
-        "DASHBOARD": {
-            "TITLE": "MyCenter Academy",
-            "SUBTITLE": "Bienvenue sur MCA",
-            "TITLEDETAILS": "My Center Academy, l’école où les passionnés de padel deviennent les champions de demain. Entraînements, suivi personnalisé et esprit d’équipe pour révéler tout votre potentiel."
-        },
-        "USERS": {
-            "TITLE": "Utilisateurs",
-            "SEARCH": "Rechercher un utilisateur",
-            "ADD": "Ajouter",
-            "NO_USERS": "Aucun utilisateur trouvé",
-            "USER": "Utilisateur",
-            "USERS": "Utilisateurs",
-            "DETAILS": {
-                "ROLES": "Rôles",
-                "ROLE": "Rôle",
-                "PH_EMAIL": "Adresse e-mail",
-                "EMAIL": "Adresse e-mail",
-                "PH_FIRSTNAME": "Prénom",
-                "FIRSTNAME": "Prénom",
-                "PH_LASTNAME": "Nom",
-                "LASTNAME": "Nom",
-                "PH_PHONE": "Numéro de téléphone",
-                "PHONE": "Téléphone",
-                "PH_BIRTH_DATE": "Date de naissance",
-                "BIRTH_DATE": "Date de naissance",
-                "PH_FFT_LICENSE": "Numéro de licence FFT",
-                "FFT_LICENSE": "Licence FFT",
-                "FORMULA": "Formule",
-                "NO_FORMULA": "Aucune formule",
-                "CONSENTS": "Consentements (RGPD)",
-                "PRIVACY_CONSENT": "Consentement aux conditions d'utilisation et politique de confidentialité",
-                "PHOTO_CONSENT": "Consentement à l'utilisation de photos",
-                "MARKETING_CONSENT": "Consentement marketing et communications",
-                "NOTIFICATIONS": "Préférences de Notifications",
-                "NOTIFY_EMAIL": "Notifications par e-mail",
-                "NOTIFY_SMS": "Notifications par SMS",
-                "NOTIFY_WHATSAPP": "Notifications WhatsApp",
-                "COMMUNICATION_PLAN": "Plan de communication",
-                "PH_COMMUNICATION_PLAN": "Sélectionner un plan de communication",
-                "ALLOW_LOGIN": "Autoriser la connexion"
-            },
-            "ROLES": {
-                "ADD": "Ajouter",
-                "EDIT": "Modifier",
-                "USER": "Utilisateur",
-                "ADMIN": "Administrateur"
-            },
-            "FORMULAS": {
-                "MORNING": "Matin",
-                "AFTERNOON": "Après-midi",
-                "FULL": "Journée complète"
-            },
-            "ACTIONS": {
-                "DELETE": "Supprimer",
-                "CANCEL": "Annuler",
-                "SAVE": "Enregistrer",
-                "ADD": "Ajouter",
-                "EDIT": "Modifier"
-            }
-        }
+    "ADMIN": {
+      "TITLE": "Administration",
+      "SUBTITLE": "Gestion de l'application",
+      "USERS": {
+        "TITLE": "Utilisateurs"
+      },
+      "SESSIONS": {
+        "TITLE": "Sessions d'entraînement"
+      },
+      "SITES": {
+        "TITLE": "Sites"
+      },
+      "REPORTS": {
+        "TITLE": "Reporting"
+      },
+      "TOURNAMENTS": {
+        "TITLE": "Tournois"
+      }
     },
-    "SESSIONS": {
-        "VIEW": {
-            "BREADCRUMB": {
-                "BACK": "Retour aux sessions"
-            },
-            "TITLE": "Détails de la session",
-            "INFO": "Informations",
-            "INFO_DESCRIPTION": "Détails et paramètres de la session",
-            "PARTICIPANTS": "Participants",
-            "PARTICIPANTS_DESCRIPTION": "Gérer les participants inscrits à cette session"
-        },
-        "SLOT": {
-            "AM": "Matin",
-            "PM": "Après-midi"
-        },
-        "STATUS": {
-            "PUBLISHED": "Publié",
-            "DRAFT": "Brouillon",
-            "CANCELED": "Annulé"
-        },
-        "ADMIN": {
-            "TITLE": "Sessions d'entraînement",
-            "CREATE_SESSION": "Créer une session",
-            "EDIT_SESSION": "Modifier la session",
-            "NO_SESSIONS": "Aucune session trouvée",
-            "VIEW": {
-                "TABS": {
-                    "INFO": "Informations",
-                    "PARTICIPANTS": "Participants"
-                }
-            },
-            "FILTERS": {
-                "SITE": "Site",
-                "ALL_SITES": "Tous les sites",
-                "SLOT": "Créneau",
-                "ALL_SLOTS": "Tous les créneaux",
-                "STATUS": "Statut",
-                "ALL_STATUS": "Tous les statuts"
-            },
-            "TABLE": {
-                "SESSION": "Session",
-                "SLOT": "Créneau",
-                "TIME": "Horaire",
-                "SITE": "Site",
-                "PARTICIPANTS": "Participants",
-                "STATUS": "Statut",
-                "ACTIONS": "Actions"
-            },
-            "ACTIONS": {
-                "EDIT": "Modifier",
-                "DELETE": "Supprimer",
-                "CANCEL": "Annuler",
-                "PUBLISH": "Publier",
-                "UNPUBLISH": "Dépublier"
-            },
-            "FORM": {
-                "SITE": "Site",
-                "SITE_REQUIRED": "Le site est requis",
-                "DATE": "Date",
-                "DATE_REQUIRED": "La date est requise",
-                "DATE_MULTIPLE": "Sélectionner des dates",
-                "DATE_MULTIPLE_HINT": "Cliquez sur une date pour l'ajouter à la liste",
-                "SELECTED_DATES": "Dates sélectionnées",
-                "SLOT": "Créneau",
-                "SLOT_REQUIRED": "Le créneau est requis",
-                "START_TIME": "Heure de début",
-                "START_TIME_HINT": "Laissez vide pour utiliser les horaires par défaut",
-                "END_TIME": "Heure de fin",
-                "END_TIME_HINT": "Laissez vide pour utiliser les horaires par défaut",
-                "INVALID_TIME_RANGE": "L'heure de fin doit être après l'heure de début",
-                "NOTES": "Notes",
-                "NOTES_HINT": "Notes ou instructions pour cette session",
-                "IS_PUBLISHED": "Publier cette session",
-                "IS_PUBLISHED_HINT": "Les sessions publiées sont visibles par les utilisateurs",
-                "CANCEL": "Annuler",
-                "SAVE": "Enregistrer",
-                "CREATE": "Créer",
-                "CREATE_MODE_TITLE": "Dates multiples",
-                "CREATE_MODE_INFO": "En sélectionnant plusieurs dates, une session distincte sera créée pour chaque date choisie avec les mêmes paramètres."
-            },
-            "ATTENDEES": {
-                "TITLE": "Gestion des participants",
-                "ADD_PARTICIPANT": "Ajouter un participant",
-                "SELECT_USER": "Sélectionner un utilisateur",
-                "ADD": "Ajouter",
-                "PARTICIPANTS_LIST": "Liste des participants",
-                "NO_PARTICIPANTS": "Aucun participant pour cette session",
-                "ADMIN_REGISTERED": "Inscrit par admin",
-                "REMOVE": "Retirer",
-                "CLOSE": "Fermer"
-            }
-        },
-        "USER": {
-            "TITLE": "Mes sessions d'entraînement",
-            "NO_SESSIONS": "Aucune session à venir",
-            "NO_SESSIONS_DESCRIPTION": "Revenez plus tard pour voir les prochaines sessions disponibles",
-            "STATUS": {
-                "AVAILABLE": "Disponible",
-                "REGISTERED": "Inscrit",
-                "CANCELLED": "Annulée",
-                "CUTOFF_PASSED": "Date limite dépassée",
-                "FULL": "Complet",
-                "NOT_PUBLISHED": "Non publiée",
-                "UNAVAILABLE": "Non disponible",
-                "OUT_OF_CONTRACT": "Hors formule"
-            },
-            "ACTIONS": {
-                "REGISTER": "S'inscrire",
-                "REGISTERED": "Inscrit"
-            }
-        }
+    "USER": {
+      "TITLE": "Utilisateur",
+      "SUBTITLE": "Espace utilisateur",
+      "DASHBOARD": {
+        "TITLE": "Tableau de bord"
+      },
+      "PROFILE": {
+        "TITLE": "Profil"
+      },
+      "SESSIONS": {
+        "TITLE": "Mes sessions"
+      },
+      "TOURNAMENTS": {
+        "TITLE": "Mes tournois"
+      }
+    }
+  },
+  "DASHBOARD": {
+    "LOADING": "Chargement...",
+    "SECTIONS": {
+      "GENERAL": "Informations générales",
+      "ACTIVITIES": "Activités"
     },
-    "SITES": {
-        "ADMIN": {
-            "TITLE": "Sites d'entraînement",
-            "CREATE_SITE": "Créer un site",
-            "EDIT_SITE": "Modifier le site",
-            "NO_SITES": "Aucun site trouvé",
-            "NO_SITES_DESCRIPTION": "Créez un nouveau site pour commencer",
-            "SEARCH": "Rechercher un site",
-            "TABLE": {
-                "NAME": "Nom",
-                "CITY": "Ville",
-                "ADDRESS": "Adresse",
-                "ACTIONS": "Actions"
-            },
-            "ACTIONS": {
-                "EDIT": "Modifier",
-                "DELETE": "Supprimer"
-            },
-            "FORM": {
-                "NAME": "Nom du site",
-                "NAME_REQUIRED": "Le nom est requis",
-                "NAME_HINT": "Nom du site d'entraînement",
-                "CITY": "Ville",
-                "CITY_HINT": "Ville où se trouve le site",
-                "ADDRESS": "Adresse",
-                "ADDRESS_HINT": "Adresse complète du site",
-                "CANCEL": "Annuler",
-                "SAVE": "Enregistrer",
-                "CREATE": "Créer"
-            }
-        }
+    "ACTIONS": {
+      "VIEW_SESSIONS": "Voir les sessions"
     },
-    "ONBOARDING": {
-        "TITLE": "Complétez votre profil",
-        "STEPS": {
-            "PROFILE": "Profil",
-            "CONTRACT": "Contrat & Notifications",
-            "CONSENTS": "Consentements",
-            "SUMMARY": "Résumé"
-        },
-        "ACTIONS": {
-            "BACK": "Retour",
-            "NEXT": "Suivant",
-            "FINISH": "Terminer"
-        },
-        "PROFILE": {
-            "FIRSTNAME": "Prénom",
-            "FIRSTNAME_REQUIRED": "Le prénom est requis",
-            "FIRSTNAME_MIN": "Le prénom doit contenir au moins 2 caractères",
-            "LASTNAME": "Nom",
-            "LASTNAME_REQUIRED": "Le nom est requis",
-            "LASTNAME_MIN": "Le nom doit contenir au moins 2 caractères",
-            "EMAIL": "Email",
-            "PHONE": "Téléphone",
-            "PHONE_PATTERN": "Format de téléphone invalide",
-            "BIRTHDATE": "Date de naissance",
-            "BIRTHDATE_INVALID": "Date invalide",
-            "FFT_NUMBER": "Numéro de licence FFT",
-            "AVATAR": "Photo de profil",
-            "AVATAR_HINT": "Télécharger une photo de profil (max 2MB, PNG/JPEG)",
-            "AVATAR_UPLOAD": "Télécharger",
-            "AVATAR_REMOVE": "Supprimer",
-            "BACKGROUND": "Image de couverture",
-            "BACKGROUND_HINT": "Télécharger une image de couverture (max 4MB, PNG/JPEG)",
-            "BACKGROUND_UPLOAD": "Télécharger",
-            "BACKGROUND_REMOVE": "Supprimer"
-        },
-        "CONTRACT": {
-            "FORMULA": "Formule d'entraînement",
-            "FORMULA_REQUIRED": "La formule est requise",
-            "FORMULA_OPTIONS": {
-                "MORNING": "Matin (AM)",
-                "AFTERNOON": "Après-midi (PM)",
-                "FULL": "Accès complet (AM + PM)"
-            },
-            "NOTIFY_EMAIL": "Notifications par email",
-            "NOTIFY_SMS": "Notifications par SMS",
-            "NOTIFY_WHATSAPP": "Notifications par WhatsApp",
-            "SMS_HINT": "Nécessite un numéro de téléphone valide.",
-            "SMS_WARNING": "Un numéro de téléphone est requis pour les notifications SMS"
-        },
-        "CONSENTS": {
-            "TITLE": "Consentements légaux",
-            "PRIVACY": "J'accepte la Politique de confidentialité et les Conditions d'utilisation.",
-            "PRIVACY_REQUIRED": "Le consentement de confidentialité est requis",
-            "PHOTO": "J'autorise l'utilisation de mon image pour les communications de l'académie.",
-            "MARKETING": "J'accepte de recevoir des communications marketing.",
-            "LINK_PRIVACY": "Lire la Politique de confidentialité"
-        },
-        "SUMMARY": {
-            "CHECK": "Veuillez vérifier vos informations avant de terminer.",
-            "PROFILE_TITLE": "Informations de profil",
-            "CONTRACT_TITLE": "Contrat & Notifications",
-            "CONSENTS_TITLE": "Consentements légaux",
-            "FORMULA": "Formule",
-            "NOTIFICATIONS": "Notifications"
-        },
-        "SUCCESS": "Votre profil est complet. Bienvenue !",
-        "ERROR": "Une erreur s'est produite. Veuillez réessayer."
+    "STATS": {
+      "SITES": "Sites",
+      "TOTAL_USERS": "Utilisateurs totaux",
+      "ADMINS": "Administrateurs",
+      "REGULAR_USERS": "Utilisateurs",
+      "ACTIVE_SESSIONS": "Sessions actives",
+      "UPCOMING_TOURNAMENTS": "Tournois à venir",
+      "COMING_SOON": "Bientôt disponible",
+      "REGULAR_USERS_HINT": "Académiciens (rôle : utilisateur)"
+    }
+  },
+  "HOME": {
+    "DASHBOARD": {
+      "TITLE": "MyCenter Academy",
+      "SUBTITLE": "Bienvenue sur MCA",
+      "TITLEDETAILS": "My Center Academy, l’école où les passionnés de padel deviennent les champions de demain. Entraînements, suivi personnalisé et esprit d’équipe pour révéler tout votre potentiel."
     },
-    "REPORTS": {
-        "TITLE": "Reporting",
-        "DESCRIPTION": "Vue d'ensemble de l'activité de formation sur une période choisie",
-        "FILTERS": {
-            "PERIOD": "Période",
-            "USER": "Académicien",
-            "ALL_USERS": "Tous les académiciens",
-            "CONTRACT_SCOPE": "Type de contrat",
-            "DATE_FROM": "Date de début",
-            "DATE_TO": "Date de fin",
-            "PRESET": {
-                "LAST_7": "7 derniers jours",
-                "LAST_30": "30 derniers jours",
-                "THIS_MONTH": "Ce mois-ci",
-                "PREV_MONTH": "Mois précédent",
-                "CUSTOM": "Période personnalisée"
-            },
-            "CONTRACT": {
-                "ALL": "Tous",
-                "UNDER": "Sous contrat",
-                "OFF": "Hors contrat"
-            }
-        },
-        "KPI": {
-            "TOTAL": "Sessions",
-            "UNDER": "Sous contrat",
-            "OFF": "Hors contrat",
-            "UNIQUE": "Académiciens actifs"
-        },
-        "CHART": {
-            "SESSIONS_OVER_TIME": "Sessions dans le temps",
-            "CONTRACT_SHARE": "Répartition contrat"
-        },
-        "TABLE": {
-            "TITLE": "Détails des sessions",
-            "DATE": "Date",
-            "SESSION_TITLE": "Intitulé",
-            "COACH": "Coach",
-            "CONTRACT": "Contrat",
-            "ATTENDEES": "Participants",
-            "STATUS": "Statut"
-        },
-        "ACTIONS": {
-            "APPLY": "Appliquer",
-            "RESET": "Réinitialiser",
-            "EXPORT_CSV": "Exporter CSV",
-            "EXPORT_JSON": "Exporter JSON",
-            "VIEW_SESSION": "Voir la session",
-            "RETRY": "Réessayer"
-        },
-        "EMPTY": {
-            "NO_DATA": "Aucune donnée disponible",
-            "NO_SESSIONS": "Aucune session trouvée pour cette période"
-        },
-        "ERROR": {
-            "TITLE": "Erreur de chargement"
+    "USERS": {
+      "TITLE": "Utilisateurs",
+      "SEARCH": "Rechercher un utilisateur",
+      "ADD": "Ajouter",
+      "NO_USERS": "Aucun utilisateur trouvé",
+      "USER": "Utilisateur",
+      "USERS": "Utilisateurs",
+      "DETAILS": {
+        "ROLES": "Rôles",
+        "ROLE": "Rôle",
+        "PH_EMAIL": "Adresse e-mail",
+        "EMAIL": "Adresse e-mail",
+        "PH_FIRSTNAME": "Prénom",
+        "FIRSTNAME": "Prénom",
+        "PH_LASTNAME": "Nom",
+        "LASTNAME": "Nom",
+        "PH_PHONE": "Numéro de téléphone",
+        "PHONE": "Téléphone",
+        "PH_BIRTH_DATE": "Date de naissance",
+        "BIRTH_DATE": "Date de naissance",
+        "PH_FFT_LICENSE": "Numéro de licence FFT",
+        "FFT_LICENSE": "Licence FFT",
+        "FORMULA": "Formule",
+        "NO_FORMULA": "Aucune formule",
+        "CONSENTS": "Consentements (RGPD)",
+        "PRIVACY_CONSENT": "Consentement aux conditions d'utilisation et politique de confidentialité",
+        "PHOTO_CONSENT": "Consentement à l'utilisation de photos",
+        "MARKETING_CONSENT": "Consentement marketing et communications",
+        "NOTIFICATIONS": "Préférences de Notifications",
+        "NOTIFY_EMAIL": "Notifications par e-mail",
+        "NOTIFY_SMS": "Notifications par SMS",
+        "NOTIFY_WHATSAPP": "Notifications WhatsApp",
+        "COMMUNICATION_PLAN": "Plan de communication",
+        "PH_COMMUNICATION_PLAN": "Sélectionner un plan de communication",
+        "ALLOW_LOGIN": "Autoriser la connexion"
+      },
+      "ROLES": {
+        "ADD": "Ajouter",
+        "EDIT": "Modifier",
+        "USER": "Utilisateur",
+        "ADMIN": "Administrateur"
+      },
+      "FORMULAS": {
+        "MORNING": "Matin",
+        "AFTERNOON": "Après-midi",
+        "FULL": "Journée complète"
+      },
+      "ACTIONS": {
+        "DELETE": "Supprimer",
+        "CANCEL": "Annuler",
+        "SAVE": "Enregistrer",
+        "ADD": "Ajouter",
+        "EDIT": "Modifier"
+      }
+    }
+  },
+  "SESSIONS": {
+    "VIEW": {
+      "BREADCRUMB": {
+        "BACK": "Retour aux sessions"
+      },
+      "TITLE": "Détails de la session",
+      "INFO": "Informations",
+      "INFO_DESCRIPTION": "Détails et paramètres de la session",
+      "PARTICIPANTS": "Participants",
+      "PARTICIPANTS_DESCRIPTION": "Gérer les participants inscrits à cette session"
+    },
+    "SLOT": {
+      "AM": "Matin",
+      "PM": "Après-midi"
+    },
+    "STATUS": {
+      "PUBLISHED": "Publié",
+      "DRAFT": "Brouillon",
+      "CANCELED": "Annulé"
+    },
+    "ADMIN": {
+      "TITLE": "Sessions d'entraînement",
+      "CREATE_SESSION": "Créer une session",
+      "EDIT_SESSION": "Modifier la session",
+      "NO_SESSIONS": "Aucune session trouvée",
+      "VIEW": {
+        "TABS": {
+          "INFO": "Informations",
+          "PARTICIPANTS": "Participants"
         }
+      },
+      "FILTERS": {
+        "SITE": "Site",
+        "ALL_SITES": "Tous les sites",
+        "SLOT": "Créneau",
+        "ALL_SLOTS": "Tous les créneaux",
+        "STATUS": "Statut",
+        "ALL_STATUS": "Tous les statuts"
+      },
+      "TABLE": {
+        "SESSION": "Session",
+        "SLOT": "Créneau",
+        "TIME": "Horaire",
+        "SITE": "Site",
+        "PARTICIPANTS": "Participants",
+        "STATUS": "Statut",
+        "ACTIONS": "Actions"
+      },
+      "ACTIONS": {
+        "EDIT": "Modifier",
+        "DELETE": "Supprimer",
+        "CANCEL": "Annuler",
+        "PUBLISH": "Publier",
+        "UNPUBLISH": "Dépublier"
+      },
+      "FORM": {
+        "SITE": "Site",
+        "SITE_REQUIRED": "Le site est requis",
+        "DATE": "Date",
+        "DATE_REQUIRED": "La date est requise",
+        "DATE_MULTIPLE": "Sélectionner des dates",
+        "DATE_MULTIPLE_HINT": "Cliquez sur une date pour l'ajouter à la liste",
+        "SELECTED_DATES": "Dates sélectionnées",
+        "SLOT": "Créneau",
+        "SLOT_REQUIRED": "Le créneau est requis",
+        "START_TIME": "Heure de début",
+        "START_TIME_HINT": "Laissez vide pour utiliser les horaires par défaut",
+        "END_TIME": "Heure de fin",
+        "END_TIME_HINT": "Laissez vide pour utiliser les horaires par défaut",
+        "INVALID_TIME_RANGE": "L'heure de fin doit être après l'heure de début",
+        "NOTES": "Notes",
+        "NOTES_HINT": "Notes ou instructions pour cette session",
+        "IS_PUBLISHED": "Publier cette session",
+        "IS_PUBLISHED_HINT": "Les sessions publiées sont visibles par les utilisateurs",
+        "CANCEL": "Annuler",
+        "SAVE": "Enregistrer",
+        "CREATE": "Créer",
+        "CREATE_MODE_TITLE": "Dates multiples",
+        "CREATE_MODE_INFO": "En sélectionnant plusieurs dates, une session distincte sera créée pour chaque date choisie avec les mêmes paramètres."
+      },
+      "ATTENDEES": {
+        "TITLE": "Gestion des participants",
+        "ADD_PARTICIPANT": "Ajouter un participant",
+        "SELECT_USER": "Sélectionner un utilisateur",
+        "ADD": "Ajouter",
+        "PARTICIPANTS_LIST": "Liste des participants",
+        "NO_PARTICIPANTS": "Aucun participant pour cette session",
+        "ADMIN_REGISTERED": "Inscrit par admin",
+        "REMOVE": "Retirer",
+        "CLOSE": "Fermer"
+      }
+    },
+    "USER": {
+      "TITLE": "Mes sessions d'entraînement",
+      "NO_SESSIONS": "Aucune session à venir",
+      "NO_SESSIONS_DESCRIPTION": "Revenez plus tard pour voir les prochaines sessions disponibles",
+      "STATUS": {
+        "AVAILABLE": "Disponible",
+        "REGISTERED": "Inscrit",
+        "CANCELLED": "Annulée",
+        "CUTOFF_PASSED": "Date limite dépassée",
+        "FULL": "Complet",
+        "NOT_PUBLISHED": "Non publiée",
+        "UNAVAILABLE": "Non disponible",
+        "OUT_OF_CONTRACT": "Hors formule"
+      },
+      "ACTIONS": {
+        "REGISTER": "S'inscrire",
+        "REGISTERED": "Inscrit"
+      }
+    }
+  },
+  "SITES": {
+    "ADMIN": {
+      "TITLE": "Sites d'entraînement",
+      "CREATE_SITE": "Créer un site",
+      "EDIT_SITE": "Modifier le site",
+      "NO_SITES": "Aucun site trouvé",
+      "NO_SITES_DESCRIPTION": "Créez un nouveau site pour commencer",
+      "SEARCH": "Rechercher un site",
+      "TABLE": {
+        "NAME": "Nom",
+        "CITY": "Ville",
+        "ADDRESS": "Adresse",
+        "ACTIONS": "Actions"
+      },
+      "ACTIONS": {
+        "EDIT": "Modifier",
+        "DELETE": "Supprimer"
+      },
+      "FORM": {
+        "NAME": "Nom du site",
+        "NAME_REQUIRED": "Le nom est requis",
+        "NAME_HINT": "Nom du site d'entraînement",
+        "CITY": "Ville",
+        "CITY_HINT": "Ville où se trouve le site",
+        "ADDRESS": "Adresse",
+        "ADDRESS_HINT": "Adresse complète du site",
+        "CANCEL": "Annuler",
+        "SAVE": "Enregistrer",
+        "CREATE": "Créer"
+      }
+    }
+  },
+  "ONBOARDING": {
+    "TITLE": "Complétez votre profil",
+    "STEPS": {
+      "PROFILE": "Profil",
+      "CONTRACT": "Contrat & Notifications",
+      "CONSENTS": "Consentements",
+      "SUMMARY": "Résumé"
+    },
+    "ACTIONS": {
+      "BACK": "Retour",
+      "NEXT": "Suivant",
+      "FINISH": "Terminer"
     },
     "PROFILE": {
-        "TITLE": "Mon Profil",
-        "NAME": "Nom complet",
-        "FIRSTNAME": "Prénom",
-        "FIRSTNAME_REQUIRED": "Le prénom est requis",
-        "FIRSTNAME_MIN": "Le prénom doit contenir au moins 2 caractères",
-        "LASTNAME": "Nom",
-        "LASTNAME_REQUIRED": "Le nom est requis",
-        "LASTNAME_MIN": "Le nom doit contenir au moins 2 caractères",
-        "EMAIL": "Email",
-        "EMAIL_READONLY": "L'adresse email ne peut pas être modifiée",
-        "PHONE": "Téléphone",
-        "PHONE_PATTERN": "Format de téléphone invalide",
-        "BIRTHDATE": "Date de naissance",
-        "FFT_NUMBER": "Numéro de licence FFT",
-        "FORMULA": "Formule",
-        "AVATAR": "Photo de profil",
-        "AVATAR_HINT": "Télécharger une photo de profil (max 2MB, PNG/JPEG)",
-        "AVATAR_UPLOAD": "Télécharger",
-        "AVATAR_REMOVE": "Supprimer",
-        "BACKGROUND": "Image de couverture",
-        "BACKGROUND_HINT": "Télécharger une image de couverture (max 4MB, PNG/JPEG)",
-        "BACKGROUND_UPLOAD": "Télécharger",
-        "BACKGROUND_REMOVE": "Supprimer",
-        "CHANGE_AVATAR": "Changer la photo de profil",
-        "CHANGE_COVER": "Changer l'image de couverture",
-        "EDIT": "Modifier",
-        "EDIT_INFO": "Modifier les informations",
-        "CANCEL": "Annuler",
-        "SAVE": "Enregistrer les modifications",
-        "ABOUT": "À propos",
-        "UPDATE_SUCCESS": "Profil mis à jour avec succès",
-        "UPDATE_ERROR": "Erreur lors de la mise à jour du profil. Veuillez réessayer.",
-        "STATS": {
-            "TITLE": "Statistiques",
-            "SESSIONS": "Sessions",
-            "TOURNAMENTS": "Tournois"
-        },
-        "NOTIFICATIONS": {
-            "TITLE": "Préférences de notifications",
-            "DESCRIPTION": "Choisissez comment vous souhaitez recevoir les notifications",
-            "EMAIL": "Notifications par email",
-            "SMS": "Notifications par SMS",
-            "WHATSAPP": "Notifications WhatsApp"
-        },
-        "CONSENTS": {
-            "TITLE": "Consentements",
-            "DESCRIPTION": "Gérez vos consentements et autorisations",
-            "PRIVACY": "J'accepte la politique de confidentialité et les conditions d'utilisation",
-            "PHOTO": "J'autorise l'utilisation de mon image pour les communications de l'académie",
-            "MARKETING": "J'accepte de recevoir des communications marketing"
-        },
-        "ACTIVITY": {
-            "TITLE": "Activité récente",
-            "EMPTY": "Aucune activité pour le moment",
-            "EMPTY_DESC": "Vos sessions et résultats de tournois apparaîtront ici"
-        }
+      "FIRSTNAME": "Prénom",
+      "FIRSTNAME_REQUIRED": "Le prénom est requis",
+      "FIRSTNAME_MIN": "Le prénom doit contenir au moins 2 caractères",
+      "LASTNAME": "Nom",
+      "LASTNAME_REQUIRED": "Le nom est requis",
+      "LASTNAME_MIN": "Le nom doit contenir au moins 2 caractères",
+      "EMAIL": "Email",
+      "PHONE": "Téléphone",
+      "PHONE_PATTERN": "Format de téléphone invalide",
+      "BIRTHDATE": "Date de naissance",
+      "BIRTHDATE_INVALID": "Date invalide",
+      "FFT_NUMBER": "Numéro de licence FFT",
+      "AVATAR": "Photo de profil",
+      "AVATAR_HINT": "Télécharger une photo de profil (max 2MB, PNG/JPEG)",
+      "AVATAR_UPLOAD": "Télécharger",
+      "AVATAR_REMOVE": "Supprimer",
+      "BACKGROUND": "Image de couverture",
+      "BACKGROUND_HINT": "Télécharger une image de couverture (max 4MB, PNG/JPEG)",
+      "BACKGROUND_UPLOAD": "Télécharger",
+      "BACKGROUND_REMOVE": "Supprimer"
+    },
+    "CONTRACT": {
+      "FORMULA": "Formule d'entraînement",
+      "FORMULA_REQUIRED": "La formule est requise",
+      "FORMULA_OPTIONS": {
+        "MORNING": "Matin (AM)",
+        "AFTERNOON": "Après-midi (PM)",
+        "FULL": "Accès complet (AM + PM)"
+      },
+      "NOTIFY_EMAIL": "Notifications par email",
+      "NOTIFY_SMS": "Notifications par SMS",
+      "NOTIFY_WHATSAPP": "Notifications par WhatsApp",
+      "SMS_HINT": "Nécessite un numéro de téléphone valide.",
+      "SMS_WARNING": "Un numéro de téléphone est requis pour les notifications SMS"
+    },
+    "CONSENTS": {
+      "TITLE": "Consentements légaux",
+      "PRIVACY": "J'accepte la Politique de confidentialité et les Conditions d'utilisation.",
+      "PRIVACY_REQUIRED": "Le consentement de confidentialité est requis",
+      "PHOTO": "J'autorise l'utilisation de mon image pour les communications de l'académie.",
+      "MARKETING": "J'accepte de recevoir des communications marketing.",
+      "LINK_PRIVACY": "Lire la Politique de confidentialité"
+    },
+    "SUMMARY": {
+      "CHECK": "Veuillez vérifier vos informations avant de terminer.",
+      "PROFILE_TITLE": "Informations de profil",
+      "CONTRACT_TITLE": "Contrat & Notifications",
+      "CONSENTS_TITLE": "Consentements légaux",
+      "FORMULA": "Formule",
+      "NOTIFICATIONS": "Notifications"
+    },
+    "SUCCESS": "Votre profil est complet. Bienvenue !",
+    "ERROR": "Une erreur s'est produite. Veuillez réessayer."
+  },
+  "REPORTS": {
+    "TITLE": "Reporting",
+    "DESCRIPTION": "Vue d'ensemble de l'activité de formation sur une période choisie",
+    "FILTERS": {
+      "PERIOD": "Période",
+      "USER": "Académicien",
+      "ALL_USERS": "Tous les académiciens",
+      "CONTRACT_SCOPE": "Type de contrat",
+      "DATE_FROM": "Date de début",
+      "DATE_TO": "Date de fin",
+      "PRESET": {
+        "LAST_7": "7 derniers jours",
+        "LAST_30": "30 derniers jours",
+        "THIS_MONTH": "Ce mois-ci",
+        "PREV_MONTH": "Mois précédent",
+        "CUSTOM": "Période personnalisée"
+      },
+      "CONTRACT": {
+        "ALL": "Tous",
+        "UNDER": "Sous contrat",
+        "OFF": "Hors contrat"
+      }
+    },
+    "KPI": {
+      "TOTAL": "Sessions",
+      "UNDER": "Sous contrat",
+      "OFF": "Hors contrat",
+      "UNIQUE": "Académiciens actifs"
+    },
+    "CHART": {
+      "SESSIONS_OVER_TIME": "Sessions dans le temps",
+      "CONTRACT_SHARE": "Répartition contrat"
+    },
+    "TABLE": {
+      "TITLE": "Détails des sessions",
+      "DATE": "Date",
+      "SESSION_TITLE": "Intitulé",
+      "COACH": "Coach",
+      "CONTRACT": "Contrat",
+      "ATTENDEES": "Participants",
+      "STATUS": "Statut"
+    },
+    "ACTIONS": {
+      "APPLY": "Appliquer",
+      "RESET": "Réinitialiser",
+      "EXPORT_CSV": "Exporter CSV",
+      "EXPORT_JSON": "Exporter JSON",
+      "VIEW_SESSION": "Voir la session",
+      "RETRY": "Réessayer"
+    },
+    "EMPTY": {
+      "NO_DATA": "Aucune donnée disponible",
+      "NO_SESSIONS": "Aucune session trouvée pour cette période"
+    },
+    "ERROR": {
+      "TITLE": "Erreur de chargement"
     }
+  },
+  "PROFILE": {
+    "TITLE": "Mon Profil",
+    "NAME": "Nom complet",
+    "FIRSTNAME": "Prénom",
+    "FIRSTNAME_REQUIRED": "Le prénom est requis",
+    "FIRSTNAME_MIN": "Le prénom doit contenir au moins 2 caractères",
+    "LASTNAME": "Nom",
+    "LASTNAME_REQUIRED": "Le nom est requis",
+    "LASTNAME_MIN": "Le nom doit contenir au moins 2 caractères",
+    "EMAIL": "Email",
+    "EMAIL_READONLY": "L'adresse email ne peut pas être modifiée",
+    "PHONE": "Téléphone",
+    "PHONE_PATTERN": "Format de téléphone invalide",
+    "BIRTHDATE": "Date de naissance",
+    "FFT_NUMBER": "Numéro de licence FFT",
+    "FORMULA": "Formule",
+    "AVATAR": "Photo de profil",
+    "AVATAR_HINT": "Télécharger une photo de profil (max 2MB, PNG/JPEG)",
+    "AVATAR_UPLOAD": "Télécharger",
+    "AVATAR_REMOVE": "Supprimer",
+    "BACKGROUND": "Image de couverture",
+    "BACKGROUND_HINT": "Télécharger une image de couverture (max 4MB, PNG/JPEG)",
+    "BACKGROUND_UPLOAD": "Télécharger",
+    "BACKGROUND_REMOVE": "Supprimer",
+    "CHANGE_AVATAR": "Changer la photo de profil",
+    "CHANGE_COVER": "Changer l'image de couverture",
+    "EDIT": "Modifier",
+    "EDIT_INFO": "Modifier les informations",
+    "CANCEL": "Annuler",
+    "SAVE": "Enregistrer les modifications",
+    "ABOUT": "À propos",
+    "STATS": {
+      "TITLE": "Statistiques",
+      "SESSIONS": "Sessions",
+      "TOURNAMENTS": "Tournois"
+    },
+    "NOTIFICATIONS": {
+      "TITLE": "Préférences de notifications",
+      "DESCRIPTION": "Choisissez comment vous souhaitez recevoir les notifications",
+      "EMAIL": "Notifications par email",
+      "SMS": "Notifications par SMS",
+      "WHATSAPP": "Notifications WhatsApp"
+    },
+    "CONSENTS": {
+      "TITLE": "Consentements",
+      "DESCRIPTION": "Gérez vos consentements et autorisations",
+      "PRIVACY": "J'accepte la politique de confidentialité et les conditions d'utilisation",
+      "PHOTO": "J'autorise l'utilisation de mon image pour les communications de l'académie",
+      "MARKETING": "J'accepte de recevoir des communications marketing"
+    },
+    "ACTIVITY": {
+      "TITLE": "Activité récente",
+      "EMPTY": "Aucune activité pour le moment",
+      "EMPTY_DESC": "Vos sessions et résultats de tournois apparaîtront ici"
+    }
+  },
+  "TOURNAMENTS": {
+    "TYPE": {
+      "P250": "P250",
+      "P500": "P500",
+      "P1000": "P1000",
+      "P1500": "P1500",
+      "P2000": "P2000"
+    },
+    "STATUS": {
+      "DRAFT": "Brouillon",
+      "PUBLISHED": "Publié",
+      "ARCHIVED": "Archivé"
+    },
+    "RSVP": {
+      "CONFIRM": "Confirmer",
+      "DECLINE": "Décliner",
+      "CONFIRMED": "Confirmé",
+      "DECLINED": "Décliné",
+      "PENDING": "En attente"
+    },
+    "ADMIN": {
+      "TITLE": "Tournois",
+      "CREATE": "Créer un tournoi",
+      "EDIT": "Modifier le tournoi",
+      "NO_TOURNAMENTS": "Aucun tournoi trouvé",
+      "FILTERS": {
+        "SEARCH": "Rechercher des tournois...",
+        "STATUS": "Statut",
+        "ALL_STATUS": "Tous les statuts",
+        "TYPE": "Type",
+        "ALL_TYPES": "Tous les types"
+      },
+      "TABLE": {
+        "TITLE": "Titre",
+        "TYPE": "Type",
+        "DATES": "Dates",
+        "LOCATION": "Lieu",
+        "STATUS": "Statut",
+        "ACTIONS": "Actions"
+      },
+      "ACTIONS": {
+        "EDIT": "Modifier",
+        "DELETE": "Supprimer",
+        "PUBLISH": "Publier",
+        "ARCHIVE": "Archiver"
+      }
+    },
+    "USER": {
+      "TITLE": "Mes tournois",
+      "UPCOMING": "À venir",
+      "PAST": "Passés",
+      "NO_UPCOMING": "Aucun tournoi à venir",
+      "NO_PAST": "Aucun tournoi passé",
+      "INFO": "Informations du tournoi",
+      "DATES": "Dates",
+      "LOCATION": "Lieu",
+      "MY_TEAM": "Mon équipe",
+      "YOU": "Vous",
+      "TEAMMATE": "Coéquipier",
+      "NO_TEAMMATE": "Solo",
+      "RANKING": "Classement",
+      "PLACE": "Place",
+      "RSVP": "Réponse",
+      "CURRENT_STATUS": "Statut actuel",
+      "RSVP_STATUS": "Statut de réponse",
+      "FEEDBACK": "Commentaire",
+      "PARTICIPANTS": "Participants",
+      "TEAMS": "Équipes"
+    },
+    "FORMS": {
+      "BASIC_INFO": "Informations de base",
+      "TITLE": "Titre",
+      "TITLE_REQUIRED": "Le titre est requis",
+      "TYPE": "Type",
+      "TYPE_REQUIRED": "Le type est requis",
+      "STARTS_AT": "Début",
+      "STARTS_AT_REQUIRED": "La date de début est requise",
+      "ENDS_AT": "Fin",
+      "ENDS_AT_REQUIRED": "La date de fin est requise",
+      "ADDRESS": "Adresse",
+      "ADDRESS_LINE1": "Adresse ligne 1",
+      "ADDRESS_LINE1_REQUIRED": "L'adresse ligne 1 est requise",
+      "ADDRESS_LINE2": "Adresse ligne 2 (Optionnel)",
+      "POSTAL_CODE": "Code postal",
+      "POSTAL_CODE_REQUIRED": "Le code postal est requis",
+      "CITY": "Ville",
+      "CITY_REQUIRED": "La ville est requise",
+      "COUNTRY": "Pays",
+      "COUNTRY_REQUIRED": "Le pays est requis",
+      "LATITUDE": "Latitude (Optionnel)",
+      "LONGITUDE": "Longitude (Optionnel)",
+      "PARTICIPANTS": "Participants",
+      "SEARCH_USERS": "Rechercher des utilisateurs...",
+      "SAVE_PARTICIPANTS": "Enregistrer les participants",
+      "SELECTED": "sélectionné(s)",
+      "TEAMS": "Équipes",
+      "GENERATE_TEAMS": "Générer des paires homogènes",
+      "NO_TEAMS": "Aucune équipe générée",
+      "SAVE": "Enregistrer",
+      "CANCEL": "Annuler"
+    },
+    "FEEDBACK": {
+      "PLACEHOLDER": "Partagez vos commentaires sur ce tournoi...",
+      "SUBMIT": "Soumettre le commentaire"
+    }
+  }
 }
