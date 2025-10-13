@@ -13,6 +13,7 @@ MyCenter Academy App UIest une interface d'administration Angular pour la gestio
 - 🎨 UI moderne basée sur Tailwind CSS et Fuse Angular
 - 🗃️ Gestion utilisateurs, présence, calendrier, tournois et paramètres
 - 📊 Modules d'applications métiers : SVault, Veeam 365, IaaS, etc.
+- 📱 **Progressive Web App (PWA)** : Installable sur mobile et desktop, fonctionne hors ligne
 
 ---
 
@@ -71,6 +72,28 @@ src/
 ├── assets/               # Fichiers publics (icônes, favicons)
 └── environments/         # Configs env prod/dev
 ```
+
+---
+
+## 📱 Progressive Web App (PWA)
+
+L'application est entièrement compatible PWA, permettant :
+
+### Installation sur mobile
+1. Ouvrez l'application dans votre navigateur mobile (Chrome, Safari, Firefox)
+2. Suivez les instructions pour "Ajouter à l'écran d'accueil"
+3. L'application s'ouvrira comme une app native
+
+### Fonctionnement hors ligne
+- Service Worker intégré pour la mise en cache intelligente
+- Accès aux données récemment consultées même sans connexion
+- Synchronisation automatique lors de la reconnexion
+
+### Caractéristiques PWA
+- Icônes optimisées pour tous les appareils (72x72 à 512x512)
+- Thème couleur personnalisé (#1976d2)
+- Mode standalone (plein écran sans barre de navigation du navigateur)
+- Support iOS avec icônes Apple Touch
 
 ---
 

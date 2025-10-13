@@ -1,0 +1,59 @@
+{
+  "$schema": "./node_modules/@angular/service-worker/config/schema.json",
+  "index": "/index.html",
+  "assetGroups": [
+    {
+      "name": "app",
+      "installMode": "prefetch",
+      "resources": {
+        "files": [
+          "/favicon-16x16.png",
+          "/favicon-32x32.png",
+          "/index.html",
+          "/manifest.webmanifest",
+          "/*.css",
+          "/*.js"
+        ]
+      }
+    },
+    {
+      "name": "assets",
+      "installMode": "lazy",
+      "updateMode": "prefetch",
+      "resources": {
+        "files": [
+          "/background.png",
+          "/images/**",
+          "/icons/**",
+          "/fonts/**"
+        ]
+      }
+    }
+  ],
+  "dataGroups": [
+    {
+      "name": "api-performance",
+      "urls": [
+        "https://portal.ags-cloud.fr/api/v1/**"
+      ],
+      "cacheConfig": {
+        "maxSize": 100,
+        "maxAge": "3h",
+        "timeout": "10s",
+        "strategy": "performance"
+      }
+    },
+    {
+      "name": "api-freshness",
+      "urls": [
+        "https://portal.ags-cloud.fr/api/v1/auth/**"
+      ],
+      "cacheConfig": {
+        "maxSize": 20,
+        "maxAge": "1h",
+        "timeout": "5s",
+        "strategy": "freshness"
+      }
+    }
+  ]
+}
