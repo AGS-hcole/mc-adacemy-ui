@@ -104,6 +104,13 @@
     },
     "DASHBOARD": {
         "LOADING": "Chargement...",
+        "SECTIONS": {
+            "GENERAL": "Informations générales",
+            "ACTIVITIES": "Activités"
+        },
+        "ACTIONS": {
+            "VIEW_SESSIONS": "Voir les sessions"
+        },
         "STATS": {
             "SITES": "Sites",
             "TOTAL_USERS": "Utilisateurs totaux",
@@ -111,7 +118,8 @@
             "REGULAR_USERS": "Utilisateurs",
             "ACTIVE_SESSIONS": "Sessions actives",
             "UPCOMING_TOURNAMENTS": "Tournois à venir",
-            "COMING_SOON": "Bientôt disponible"
+            "COMING_SOON": "Bientôt disponible",
+            "REGULAR_USERS_HINT": "Académiciens (rôle : utilisateur)"
         }
     },
     "HOME": {

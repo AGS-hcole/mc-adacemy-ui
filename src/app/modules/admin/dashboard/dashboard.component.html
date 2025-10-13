@@ -34,156 +34,168 @@
     </div>
 
     <!-- Main -->
-    <div class="flex flex-auto p-6 sm:p-10">
-        <div
-            class="mx-auto flex w-full max-w-xs flex-auto flex-col sm:max-w-5xl"
-        >
-            <!-- Loading state -->
-            <div *ngIf="loading" class="flex items-center justify-center py-12">
-                <div class="text-secondary text-lg">
-                    {{ 'DASHBOARD.LOADING' | transloco }}
-                </div>
-            </div>
-
-            <!-- Dashboard Stats -->
-            <div *ngIf="!loading && stats" class="grid gap-6 md:grid-cols-2 lg:grid-cols-3">
-                <!-- Sites Card -->
-                <div 
-                    class="bg-card rounded-lg shadow p-6 cursor-pointer hover:shadow-lg transition-shadow"
-                    (click)="navigateToSites()"
+    <div class="-mt-px flex-auto border-t pt-4 sm:pt-6">
+        <div class="mx-auto w-full max-w-screen-xl px-6 sm:px-8">
+            <!-- 2 panels side-by-side -->
+            <div class="grid grid-cols-1 gap-6 lg:grid-cols-2">
+                <!-- Panel 1: General information -->
+                <div
+                    class="bg-card flex flex-col overflow-hidden rounded-2xl shadow"
                 >
-                    <div class="flex items-center justify-between">
-                        <div>
-                            <div class="text-secondary text-sm font-medium">
-                                {{ 'DASHBOARD.STATS.SITES' | transloco }}
-                            </div>
-                            <div class="mt-2 text-3xl font-bold">
-                                {{ stats.sites.total }}
+                    <div
+                        class="flex items-center justify-between border-b px-6 py-4"
+                    >
+                        <div
+                            class="truncate text-lg font-medium leading-6 tracking-tight"
+                        >
+                            {{
+                                'DASHBOARD.SECTIONS.GENERAL'
+                                    | transloco: { defaultValue: 'General' }
+                            }}
+                        </div>
+                    </div>
+
+                    <div *ngIf="stats" class="grid gap-6 p-6 sm:grid-cols-2">
+                        <!-- Sites -->
+                        <div
+                            class="bg-default cursor-pointer rounded-2xl p-6 shadow transition-shadow hover:shadow-lg"
+                            (click)="navigateToSites()"
+                        >
+                            <div class="flex items-center justify-between">
+                                <div>
+                                    <div
+                                        class="text-secondary text-sm font-medium"
+                                    >
+                                        {{
+                                            'DASHBOARD.STATS.SITES' | transloco
+                                        }}
+                                    </div>
+                                    <div class="mt-2 text-4xl font-bold">
+                                        {{ stats.sites.total }}
+                                    </div>
+                                </div>
+                                <div
+                                    class="flex h-12 w-12 items-center justify-center rounded-full bg-blue-100 dark:bg-blue-800"
+                                >
+                                    <mat-icon
+                                        class="text-blue-600 icon-size-6 dark:text-blue-200"
+                                        [svgIcon]="'heroicons_solid:map-pin'"
+                                    ></mat-icon>
+                                </div>
                             </div>
                         </div>
-                        <div class="flex h-12 w-12 items-center justify-center rounded-full bg-blue-100 dark:bg-blue-800">
-                            <mat-icon
-                                class="text-blue-600 dark:text-blue-200 icon-size-6"
-                                [svgIcon]="'heroicons_solid:map-pin'"
-                            ></mat-icon>
+
+                        <!-- Académiciens (users with role 'user') -->
+                        <div
+                            class="bg-default cursor-pointer rounded-2xl p-6 shadow transition-shadow hover:shadow-lg"
+                            (click)="navigateToUsers()"
+                        >
+                            <div class="flex items-center justify-between">
+                                <div>
+                                    <div
+                                        class="text-secondary text-sm font-medium"
+                                    >
+                                        {{
+                                            'DASHBOARD.STATS.REGULAR_USERS'
+                                                | transloco
+                                        }}
+                                    </div>
+                                    <div class="mt-2 text-4xl font-bold">
+                                        {{ stats.users.students }}
+                                    </div>
+                                </div>
+                                <div
+                                    class="flex h-12 w-12 items-center justify-center rounded-full bg-teal-100 dark:bg-teal-800"
+                                >
+                                    <mat-icon
+                                        class="text-teal-600 icon-size-6 dark:text-teal-200"
+                                        [svgIcon]="'heroicons_solid:user'"
+                                    ></mat-icon>
+                                </div>
+                            </div>
                         </div>
                     </div>
                 </div>
 
-                <!-- Total Users Card -->
-                <div 
-                    class="bg-card rounded-lg shadow p-6 cursor-pointer hover:shadow-lg transition-shadow"
-                    (click)="navigateToUsers()"
+                <!-- Panel 2: Sessions & Tournaments -->
+                <div
+                    class="bg-card flex flex-col overflow-hidden rounded-2xl shadow"
                 >
-                    <div class="flex items-center justify-between">
-                        <div>
-                            <div class="text-secondary text-sm font-medium">
-                                {{ 'DASHBOARD.STATS.TOTAL_USERS' | transloco }}
-                            </div>
-                            <div class="mt-2 text-3xl font-bold">
-                                {{ stats.users.total }}
-                            </div>
-                        </div>
-                        <div class="flex h-12 w-12 items-center justify-center rounded-full bg-green-100 dark:bg-green-800">
-                            <mat-icon
-                                class="text-green-600 dark:text-green-200 icon-size-6"
-                                [svgIcon]="'heroicons_solid:user-group'"
-                            ></mat-icon>
+                    <div
+                        class="flex items-center justify-between border-b px-6 py-4"
+                    >
+                        <div
+                            class="truncate text-lg font-medium leading-6 tracking-tight"
+                        >
+                            {{
+                                'DASHBOARD.SECTIONS.ACTIVITIES'
+                                    | transloco: { defaultValue: 'Activities' }
+                            }}
                         </div>
                     </div>
-                </div>
 
-                <!-- Admin Users Card -->
-                <div 
-                    class="bg-card rounded-lg shadow p-6 cursor-pointer hover:shadow-lg transition-shadow"
-                    (click)="navigateToUsers()"
-                >
-                    <div class="flex items-center justify-between">
-                        <div>
-                            <div class="text-secondary text-sm font-medium">
-                                {{ 'DASHBOARD.STATS.ADMINS' | transloco }}
-                            </div>
-                            <div class="mt-2 text-3xl font-bold">
-                                {{ stats.users.admins }}
+                    <div *ngIf="stats" class="grid gap-6 p-6 sm:grid-cols-2">
+                        <!-- Active/Upcoming Sessions -->
+                        <div
+                            class="bg-default cursor-pointer rounded-2xl p-6 shadow transition-shadow hover:shadow-lg"
+                            (click)="navigateToSessions()"
+                        >
+                            <div class="flex items-center justify-between">
+                                <div>
+                                    <div
+                                        class="text-secondary text-sm font-medium"
+                                    >
+                                        {{
+                                            'DASHBOARD.STATS.ACTIVE_SESSIONS'
+                                                | transloco
+                                        }}
+                                    </div>
+                                    <div class="mt-2 text-4xl font-bold">
+                                        {{ stats.sessions.upcoming }}
+                                    </div>
+                                </div>
+                                <div
+                                    class="flex h-12 w-12 items-center justify-center rounded-full bg-orange-100 dark:bg-orange-800"
+                                >
+                                    <mat-icon
+                                        class="text-orange-600 icon-size-6 dark:text-orange-200"
+                                        [svgIcon]="'heroicons_solid:calendar'"
+                                    ></mat-icon>
+                                </div>
                             </div>
                         </div>
-                        <div class="flex h-12 w-12 items-center justify-center rounded-full bg-purple-100 dark:bg-purple-800">
-                            <mat-icon
-                                class="text-purple-600 dark:text-purple-200 icon-size-6"
-                                [svgIcon]="'heroicons_solid:shield-check'"
-                            ></mat-icon>
-                        </div>
-                    </div>
-                </div>
 
-                <!-- Regular Users Card -->
-                <div 
-                    class="bg-card rounded-lg shadow p-6 cursor-pointer hover:shadow-lg transition-shadow"
-                    (click)="navigateToUsers()"
-                >
-                    <div class="flex items-center justify-between">
-                        <div>
-                            <div class="text-secondary text-sm font-medium">
-                                {{ 'DASHBOARD.STATS.REGULAR_USERS' | transloco }}
+                        <!-- Upcoming Tournaments -->
+                        <div
+                            class="bg-default rounded-2xl p-6 opacity-90 shadow transition-shadow hover:shadow-lg"
+                        >
+                            <div class="flex items-center justify-between">
+                                <div>
+                                    <div
+                                        class="text-secondary text-sm font-medium"
+                                    >
+                                        {{
+                                            'DASHBOARD.STATS.UPCOMING_TOURNAMENTS'
+                                                | transloco
+                                        }}
+                                    </div>
+                                    <div class="mt-2 text-4xl font-bold">
+                                        {{ stats.tournaments.upcoming }}
+                                    </div>
+                                </div>
+                                <div
+                                    class="flex h-12 w-12 items-center justify-center rounded-full bg-yellow-100 dark:bg-yellow-800"
+                                >
+                                    <mat-icon
+                                        class="text-yellow-600 icon-size-6 dark:text-yellow-200"
+                                        [svgIcon]="'heroicons_solid:trophy'"
+                                    ></mat-icon>
+                                </div>
                             </div>
-                            <div class="mt-2 text-3xl font-bold">
-                                {{ stats.users.regularUsers }}
-                            </div>
-                        </div>
-                        <div class="flex h-12 w-12 items-center justify-center rounded-full bg-teal-100 dark:bg-teal-800">
-                            <mat-icon
-                                class="text-teal-600 dark:text-teal-200 icon-size-6"
-                                [svgIcon]="'heroicons_solid:user'"
-                            ></mat-icon>
                         </div>
                     </div>
                 </div>
-
-                <!-- Active Sessions Card -->
-                <div 
-                    class="bg-card rounded-lg shadow p-6 cursor-pointer hover:shadow-lg transition-shadow"
-                    (click)="navigateToSessions()"
-                >
-                    <div class="flex items-center justify-between">
-                        <div>
-                            <div class="text-secondary text-sm font-medium">
-                                {{ 'DASHBOARD.STATS.ACTIVE_SESSIONS' | transloco }}
-                            </div>
-                            <div class="mt-2 text-3xl font-bold">
-                                {{ stats.sessions.active }}
-                            </div>
-                        </div>
-                        <div class="flex h-12 w-12 items-center justify-center rounded-full bg-orange-100 dark:bg-orange-800">
-                            <mat-icon
-                                class="text-orange-600 dark:text-orange-200 icon-size-6"
-                                [svgIcon]="'heroicons_solid:calendar'"
-                            ></mat-icon>
-                        </div>
-                    </div>
-                </div>
-
-                <!-- Upcoming Tournaments Card -->
-                <div class="bg-card rounded-lg shadow p-6 opacity-60">
-                    <div class="flex items-center justify-between">
-                        <div>
-                            <div class="text-secondary text-sm font-medium">
-                                {{ 'DASHBOARD.STATS.UPCOMING_TOURNAMENTS' | transloco }}
-                            </div>
-                            <div class="mt-2 text-3xl font-bold">
-                                {{ stats.tournaments.upcoming }}
-                            </div>
-                            <div class="mt-2 rounded bg-gray-100 px-2 py-1 text-xs text-gray-600 dark:bg-gray-800 dark:text-gray-400 inline-block">
-                                {{ 'DASHBOARD.STATS.COMING_SOON' | transloco }}
-                            </div>
-                        </div>
-                        <div class="flex h-12 w-12 items-center justify-center rounded-full bg-yellow-100 dark:bg-yellow-800">
-                            <mat-icon
-                                class="text-yellow-600 dark:text-yellow-200 icon-size-6"
-                                [svgIcon]="'heroicons_solid:trophy'"
-                            ></mat-icon>
-                        </div>
-                    </div>
-                </div>
+                <!-- /Panel 2 -->
             </div>
         </div>
     </div>

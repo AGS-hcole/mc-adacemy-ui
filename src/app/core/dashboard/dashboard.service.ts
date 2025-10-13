@@ -1,14 +1,26 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { environment } from 'environments/environment';
-import { Observable, forkJoin, map } from 'rxjs';
+import { BehaviorSubject, Observable, forkJoin, map, tap } from 'rxjs';
 import { DashboardStats } from './dashboard.types';
 
 @Injectable({ providedIn: 'root' })
 export class DashboardService {
     private apiUrl = environment.apiUrl;
+    private _stats: BehaviorSubject<any | null> = new BehaviorSubject(null);
 
     constructor(private _httpClient: HttpClient) {}
+
+    // -----------------------------------------------------------------------------------------------------
+    // @ Accessors
+    // -----------------------------------------------------------------------------------------------------
+
+    /**
+     * Getter for stats
+     */
+    get stats$(): Observable<any> {
+        return this._stats.asObservable();
+    }
 
     /**
      * Get dashboard statistics
@@ -21,13 +33,11 @@ export class DashboardService {
             sessions: this._httpClient.get<any[]>(`${this.apiUrl}/sessions`),
         }).pipe(
             map(({ sites, users, sessions }) => {
-                // Count admins and regular users
                 const admins = users.filter((u) => u.role === 'admin').length;
-                const regularUsers = users.filter((u) => u.role === 'user').length;
+                const students = users.filter((u) => u.role === 'user').length;
 
-                // Count active sessions (published and not cancelled, future dates)
                 const now = new Date();
-                const activeSessions = sessions.filter((s) => {
+                const upcoming = sessions.filter((s) => {
                     const sessionDate = new Date(s.date);
                     return (
                         s.isPublished === true &&
@@ -36,24 +46,16 @@ export class DashboardService {
                     );
                 }).length;
 
-                return {
-                    sites: {
-                        total: sites.length,
-                    },
-                    users: {
-                        total: users.length,
-                        admins,
-                        regularUsers,
-                    },
-                    sessions: {
-                        active: activeSessions,
-                    },
-                    tournaments: {
-                        // Tournaments feature is not yet implemented (disabled in navigation)
-                        upcoming: 0,
-                    },
+                const stats: DashboardStats = {
+                    sites: { total: sites.length },
+                    users: { total: users.length, admins, students },
+                    sessions: { total: sessions.length, upcoming },
+                    tournaments: { total: 0, upcoming: 0 },
                 };
-            })
+
+                return stats;
+            }),
+            tap((stats) => this._stats.next(stats))
         );
     }
 }

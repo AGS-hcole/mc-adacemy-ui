@@ -5,12 +5,14 @@ export interface DashboardStats {
     users: {
         total: number;
         admins: number;
-        regularUsers: number;
+        students: number;
     };
     sessions: {
-        active: number;
+        total: number;
+        upcoming: number;
     };
     tournaments: {
+        total: number;
         upcoming: number;
     };
 }

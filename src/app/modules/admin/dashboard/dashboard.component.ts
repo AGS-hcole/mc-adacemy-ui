@@ -40,7 +40,6 @@ import { Subject, takeUntil } from 'rxjs';
 export class DashboardComponent implements OnInit, OnDestroy {
     private _unsubscribeAll: Subject<any> = new Subject<any>();
     stats: DashboardStats | null = null;
-    loading: boolean = true;
 
     /**
      * Constructor
@@ -52,7 +51,15 @@ export class DashboardComponent implements OnInit, OnDestroy {
     ) {}
 
     ngOnInit(): void {
-        this.loadDashboardStats();
+        // Get the stats
+        this._dashboardService.stats$
+            .pipe(takeUntil(this._unsubscribeAll))
+            .subscribe((stats: DashboardStats) => {
+                this.stats = stats;
+
+                // Mark for check
+                this._changeDetectorRef.markForCheck();
+            });
     }
 
     ngOnDestroy(): void {
@@ -64,28 +71,6 @@ export class DashboardComponent implements OnInit, OnDestroy {
     // -----------------------------------------------------------------------------------------------------
     // @ Public methods
     // -----------------------------------------------------------------------------------------------------
-
-    /**
-     * Load dashboard statistics
-     */
-    loadDashboardStats(): void {
-        this.loading = true;
-        this._dashboardService
-            .getDashboardStats()
-            .pipe(takeUntil(this._unsubscribeAll))
-            .subscribe({
-                next: (stats) => {
-                    this.stats = stats;
-                    this.loading = false;
-                    this._changeDetectorRef.markForCheck();
-                },
-                error: (error) => {
-                    console.error('Error loading dashboard stats:', error);
-                    this.loading = false;
-                    this._changeDetectorRef.markForCheck();
-                },
-            });
-    }
 
     /**
      * Navigate to sites management
