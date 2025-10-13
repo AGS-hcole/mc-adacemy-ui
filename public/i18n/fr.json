@@ -488,6 +488,8 @@
         "CANCEL": "Annuler",
         "SAVE": "Enregistrer les modifications",
         "ABOUT": "À propos",
+        "UPDATE_SUCCESS": "Profil mis à jour avec succès",
+        "UPDATE_ERROR": "Erreur lors de la mise à jour du profil. Veuillez réessayer.",
         "STATS": {
             "TITLE": "Statistiques",
             "SESSIONS": "Sessions",

@@ -270,7 +270,11 @@ export class OnboardingShellComponent implements OnInit, OnDestroy {
                     this.snackBar.open(
                         this.getTranslation('ONBOARDING.ERROR'),
                         '',
-                        { duration: 5000, panelClass: ['error-snackbar'] }
+                        {
+                            duration: 5000,
+                            verticalPosition: 'top',
+                            panelClass: ['error-snackbar'],
+                        }
                     );
                     this.isSubmitting = false;
                     return of(null);
@@ -286,7 +290,11 @@ export class OnboardingShellComponent implements OnInit, OnDestroy {
                     this.snackBar.open(
                         this.getTranslation('ONBOARDING.SUCCESS'),
                         '',
-                        { duration: 3000, panelClass: ['success-snackbar'] }
+                        {
+                            duration: 3000,
+                            verticalPosition: 'top',
+                            panelClass: ['success-snackbar'],
+                        }
                     );
 
                     // Redirect to dashboard
