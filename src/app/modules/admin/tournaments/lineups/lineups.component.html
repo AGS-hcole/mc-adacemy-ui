@@ -1,0 +1,100 @@
+<div class="flex min-w-0 flex-auto flex-col">
+    <!-- Header -->
+    <div
+        class="flex flex-col gap-4 bg-card p-6 dark:bg-transparent sm:flex-row sm:items-center sm:justify-between md:px-8">
+        <div>
+            <div class="text-4xl font-extrabold leading-none tracking-tight">
+                {{ 'TOURNAMENTS.VIEW.LINEUPS' | transloco }}
+            </div>
+            <div class="mt-2 text-lg text-secondary">
+                {{ 'TOURNAMENTS.VIEW.LINEUPS_DESCRIPTION' | transloco }}
+            </div>
+        </div>
+        <div class="flex shrink-0 items-center gap-2">
+            <button
+                mat-flat-button
+                [color]="'primary'"
+                [disabled]="!tournament?.participants || tournament?.participants.length < 2"
+                (click)="generateTeams()">
+                {{
+                    'TOURNAMENTS.FORMS.GENERATE_TEAMS' | transloco
+                }}
+            </button>
+        </div>
+    </div>
+
+    <!-- Content -->
+    <div class="flex-auto overflow-y-auto p-6 md:px-8">
+        <div class="rounded-lg bg-card p-6 shadow">
+            <h2 class="mb-4 text-2xl font-semibold">
+                {{ 'TOURNAMENTS.FORMS.TEAMS' | transloco }}
+            </h2>
+
+            <div
+                *ngIf="!tournament?.participants || tournament?.participants.length === 0"
+                class="rounded-lg border-2 border-dashed border-gray-300 bg-gray-50 p-8 text-center dark:border-gray-700 dark:bg-gray-800">
+                <mat-icon class="mb-2 text-gray-400 icon-size-12">group_add</mat-icon>
+                <p class="mb-2 text-lg font-medium text-gray-600 dark:text-gray-400">
+                    {{ 'TOURNAMENTS.FORMS.NO_PARTICIPANTS_YET' | transloco }}
+                </p>
+                <p class="text-sm text-gray-500 dark:text-gray-500">
+                    {{ 'TOURNAMENTS.FORMS.ADD_PARTICIPANTS_FIRST' | transloco }}
+                </p>
+            </div>
+
+            <div
+                cdkDropList
+                [cdkDropListData]="teams"
+                (cdkDropListDropped)="dropTeam($event)"
+                class="space-y-3"
+                *ngIf="tournament?.participants && tournament?.participants.length > 0">
+                <div
+                    *ngFor="let team of teams; let i = index; trackBy: trackByFn"
+                    cdkDrag
+                    class="flex items-center gap-4 rounded-lg border bg-white p-4 shadow-sm transition-shadow hover:shadow-md dark:border-gray-700 dark:bg-gray-800">
+                    <mat-icon class="cursor-move text-gray-400"
+                        >drag_indicator</mat-icon
+                    >
+                    <div class="flex-1">
+                        <div class="mb-2 flex items-center gap-2">
+                            <span class="font-semibold text-lg">
+                                {{ 'TOURNAMENTS.FORMS.TEAM' | transloco }} {{ i + 1 }}
+                            </span>
+                            <span
+                                *ngIf="team.placement"
+                                class="inline-flex items-center rounded-full bg-yellow-100 px-3 py-1 text-xs font-medium text-yellow-800">
+                                {{ 'TOURNAMENTS.FORMS.PLACEMENT' | transloco }}:
+                                {{ team.placement }}{{ team.placement === 1 ? 'st' : team.placement === 2 ? 'nd' : team.placement === 3 ? 'rd' : 'th' }}
+                            </span>
+                        </div>
+                        <div class="flex flex-col gap-2 sm:flex-row sm:gap-6">
+                            <div
+                                *ngFor="let member of team.members"
+                                class="flex items-center gap-2">
+                                <mat-icon class="text-gray-500 icon-size-5">person</mat-icon>
+                                <div>
+                                    <div class="font-medium">
+                                        {{ member.user?.firstname }}
+                                        {{ member.user?.lastname }}
+                                    </div>
+                                    <div
+                                        *ngIf="member.currentRanking"
+                                        class="text-xs text-secondary">
+                                        {{ 'TOURNAMENTS.FORMS.RANKING' | transloco }}: {{ member.currentRanking }}
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div
+                    class="mt-4 text-center text-sm text-secondary"
+                    *ngIf="teams.length === 0">
+                    <p class="mb-2">{{ 'TOURNAMENTS.FORMS.NO_TEAMS' | transloco }}</p>
+                    <p class="text-xs">{{ 'TOURNAMENTS.FORMS.CLICK_GENERATE_TEAMS' | transloco }}</p>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

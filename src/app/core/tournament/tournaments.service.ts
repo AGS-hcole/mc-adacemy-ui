@@ -1,7 +1,7 @@
 import { HttpClient, HttpParams } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { environment } from 'environments/environment';
-import { BehaviorSubject, Observable, map, tap } from 'rxjs';
+import { BehaviorSubject, Observable, tap } from 'rxjs';
 import {
     CreateTournamentRequest,
     ParticipationStatus,
@@ -13,7 +13,7 @@ import {
     TournamentFilters,
     TournamentRsvpRequest,
     UpdateTournamentRequest,
-    UserLookupResult,
+    UserLookupDto,
 } from './tournament.types';
 
 @Injectable({ providedIn: 'root' })
@@ -119,7 +119,10 @@ export class TournamentsService {
     /**
      * Update tournament
      */
-    update(id: string, payload: UpdateTournamentRequest): Observable<Tournament> {
+    update(
+        id: string,
+        payload: UpdateTournamentRequest
+    ): Observable<Tournament> {
         return this._httpClient
             .put<Tournament>(`${this.apiUrl}/tournaments/${id}`, payload)
             .pipe(
@@ -127,9 +130,7 @@ export class TournamentsService {
                     // Update in the list
                     const tournaments = this._tournaments.getValue();
                     if (tournaments) {
-                        const index = tournaments.findIndex(
-                            (t) => t.id === id
-                        );
+                        const index = tournaments.findIndex((t) => t.id === id);
                         if (index !== -1) {
                             tournaments[index] = tournament;
                             this._tournaments.next([...tournaments]);
@@ -169,9 +170,7 @@ export class TournamentsService {
                     // Update in the list
                     const tournaments = this._tournaments.getValue();
                     if (tournaments) {
-                        const index = tournaments.findIndex(
-                            (t) => t.id === id
-                        );
+                        const index = tournaments.findIndex((t) => t.id === id);
                         if (index !== -1) {
                             tournaments[index] = tournament;
                             this._tournaments.next([...tournaments]);
@@ -193,9 +192,7 @@ export class TournamentsService {
                     // Update in the list
                     const tournaments = this._tournaments.getValue();
                     if (tournaments) {
-                        const index = tournaments.findIndex(
-                            (t) => t.id === id
-                        );
+                        const index = tournaments.findIndex((t) => t.id === id);
                         if (index !== -1) {
                             tournaments[index] = tournament;
                             this._tournaments.next([...tournaments]);
@@ -209,10 +206,7 @@ export class TournamentsService {
     /**
      * Replace participants
      */
-    replaceParticipants(
-        id: string,
-        userIds: string[]
-    ): Observable<Tournament> {
+    replaceParticipants(id: string, userIds: string[]): Observable<Tournament> {
         const payload: ReplaceParticipantsRequest = { userIds };
         return this._httpClient
             .put<Tournament>(
@@ -294,7 +288,7 @@ export class TournamentsService {
         params = params.set('scope', scope);
 
         return this._httpClient.get<Tournament[]>(
-            `${this.apiUrl}/v1/my/tournaments`,
+            `${this.apiUrl}/my/tournaments`,
             { params }
         );
     }
@@ -337,13 +331,22 @@ export class TournamentsService {
     /**
      * Lookup users for participant selection
      */
-    lookupUsers(roles?: string): Observable<UserLookupResult[]> {
-        let params = new HttpParams();
-        if (roles !== undefined && roles !== null) {
-            params = params.set('roles', roles);
+    lookupUsers(
+        role: string = 'user',
+        search: string = '',
+        page: number = 1,
+        pageSize: number = 20
+    ): Observable<UserLookupDto> {
+        let params = new HttpParams()
+            .set('role', role)
+            .set('page', page.toString())
+            .set('pageSize', pageSize.toString());
+
+        if (search) {
+            params = params.set('search', search);
         }
 
-        return this._httpClient.get<UserLookupResult[]>(
+        return this._httpClient.get<UserLookupDto>(
             `${this.apiUrl}/users/lookup`,
             { params }
         );

@@ -17,6 +17,8 @@ import {
     TournamentStatus,
     TournamentType,
 } from 'app/core/tournament/tournament.types';
+import { UserService } from 'app/core/user/user.service';
+import { User } from 'app/core/user/user.types';
 import { LocalizedDatePipe } from 'app/shared/pipes/localized-date.pipe';
 import { Subject, takeUntil } from 'rxjs';
 
@@ -40,6 +42,7 @@ export class UserTournamentListComponent implements OnInit, OnDestroy {
     tournaments: Tournament[] = [];
     upcomingTournaments: Tournament[] = [];
     pastTournaments: Tournament[] = [];
+    currentUser: User | null = null;
 
     TournamentType = TournamentType;
     TournamentStatus = TournamentStatus;
@@ -50,6 +53,7 @@ export class UserTournamentListComponent implements OnInit, OnDestroy {
      * Constructor
      */
     constructor(
+        private userService: UserService,
         private _activatedRoute: ActivatedRoute,
         private _changeDetectorRef: ChangeDetectorRef,
         private _router: Router
@@ -69,6 +73,14 @@ export class UserTournamentListComponent implements OnInit, OnDestroy {
             .subscribe(({ tournaments }) => {
                 this.tournaments = tournaments || [];
                 this._filterTournaments();
+                this._changeDetectorRef.markForCheck();
+            });
+
+        // Get the current user
+        this.userService.user$
+            .pipe(takeUntil(this._unsubscribeAll))
+            .subscribe((user) => {
+                this.currentUser = user;
                 this._changeDetectorRef.markForCheck();
             });
     }
@@ -128,7 +140,7 @@ export class UserTournamentListComponent implements OnInit, OnDestroy {
      */
     getRsvpBadgeClass(tournament: Tournament): string {
         const myParticipant = tournament.participants?.find(
-            (p) => p.userId === 'current-user-id' // TODO: Get from auth service
+            (p) => p.userId === this.currentUser?.id
         );
 
         if (!myParticipant) return 'bg-gray-100 text-gray-800';
@@ -150,7 +162,7 @@ export class UserTournamentListComponent implements OnInit, OnDestroy {
      */
     getMyTeam(tournament: Tournament): any {
         const myParticipant = tournament.participants?.find(
-            (p) => p.userId === 'current-user-id' // TODO: Get from auth service
+            (p) => p.userId === this.currentUser?.id
         );
 
         if (!myParticipant) return null;
@@ -175,6 +187,7 @@ export class UserTournamentListComponent implements OnInit, OnDestroy {
      * Track by function for ngFor loops
      */
     trackByFn(index: number, item: any): any {
+        console.log(item.id || index);
         return item.id || index;
     }
 }

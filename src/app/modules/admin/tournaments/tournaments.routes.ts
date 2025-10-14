@@ -8,8 +8,11 @@ import {
 import { TournamentsService } from 'app/core/tournament/tournaments.service';
 import { handleResolverError } from 'app/shared/helpers/router-error-handler';
 import { catchError } from 'rxjs';
-import { TournamentEditComponent } from './edit/edit.component';
+import { TournamentInfoComponent } from './info/info.component';
+import { TournamentLineupsComponent } from './lineups/lineups.component';
 import { TournamentListComponent } from './list/list.component';
+import { TournamentParticipantsComponent } from './participants/participants.component';
+import { TournamentViewComponent } from './view/view.component';
 
 /**
  * Tournaments resolver
@@ -51,16 +54,35 @@ export default [
     },
     {
         path: 'new',
-        component: TournamentEditComponent,
+        component: TournamentInfoComponent,
         resolve: {
             tournament: () => inject(TournamentsService).resetTournament(),
         },
     },
     {
         path: ':id',
-        component: TournamentEditComponent,
+        component: TournamentViewComponent,
         resolve: {
             tournament: tournamentResolver,
         },
+        children: [
+            {
+                path: '',
+                redirectTo: 'info',
+                pathMatch: 'full',
+            },
+            {
+                path: 'info',
+                component: TournamentInfoComponent,
+            },
+            {
+                path: 'participants',
+                component: TournamentParticipantsComponent,
+            },
+            {
+                path: 'lineups',
+                component: TournamentLineupsComponent,
+            },
+        ],
     },
 ] as Routes;

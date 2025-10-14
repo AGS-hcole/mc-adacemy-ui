@@ -527,11 +527,30 @@
       "GENERATE_TEAMS": "Generate Homogeneous Pairs",
       "NO_TEAMS": "No teams generated yet",
       "SAVE": "Save",
-      "CANCEL": "Cancel"
+      "CANCEL": "Cancel",
+      "RANKING": "Ranking",
+      "NO_USERS_FOUND": "No users found",
+      "TEAM": "Team",
+      "PLACEMENT": "Placement",
+      "NO_PARTICIPANTS_YET": "No participants yet",
+      "ADD_PARTICIPANTS_FIRST": "Add participants first to generate teams",
+      "CLICK_GENERATE_TEAMS": "Click the button above to generate balanced team pairings"
     },
     "FEEDBACK": {
       "PLACEHOLDER": "Share your feedback about this tournament...",
       "SUBMIT": "Submit Feedback"
+    },
+    "VIEW": {
+      "TITLE": "Tournament Details",
+      "BREADCRUMB": {
+        "BACK": "Back to Tournaments"
+      },
+      "INFO": "Tournament Information",
+      "INFO_DESCRIPTION": "General configuration and details",
+      "PARTICIPANTS": "Participants Management",
+      "PARTICIPANTS_DESCRIPTION": "Add, remove, and manage tournament participants",
+      "LINEUPS": "Team Lineups",
+      "LINEUPS_DESCRIPTION": "View and manage team compositions and pairings"
     }
   }
 }

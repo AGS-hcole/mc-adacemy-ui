@@ -612,11 +612,30 @@
       "GENERATE_TEAMS": "Générer des paires homogènes",
       "NO_TEAMS": "Aucune équipe générée",
       "SAVE": "Enregistrer",
-      "CANCEL": "Annuler"
+      "CANCEL": "Annuler",
+      "RANKING": "Classement",
+      "NO_USERS_FOUND": "Aucun utilisateur trouvé",
+      "TEAM": "Équipe",
+      "PLACEMENT": "Placement",
+      "NO_PARTICIPANTS_YET": "Aucun participant pour le moment",
+      "ADD_PARTICIPANTS_FIRST": "Ajoutez d'abord des participants pour générer des équipes",
+      "CLICK_GENERATE_TEAMS": "Cliquez sur le bouton ci-dessus pour générer des paires équilibrées"
     },
     "FEEDBACK": {
       "PLACEHOLDER": "Partagez vos commentaires sur ce tournoi...",
       "SUBMIT": "Soumettre le commentaire"
+    },
+    "VIEW": {
+      "TITLE": "Détails du tournoi",
+      "BREADCRUMB": {
+        "BACK": "Retour aux tournois"
+      },
+      "INFO": "Informations du tournoi",
+      "INFO_DESCRIPTION": "Configuration générale et détails",
+      "PARTICIPANTS": "Gestion des participants",
+      "PARTICIPANTS_DESCRIPTION": "Ajouter, supprimer et gérer les participants du tournoi",
+      "LINEUPS": "Compositions d'équipes",
+      "LINEUPS_DESCRIPTION": "Voir et gérer les compositions et les paires d'équipes"
     }
   }
 }

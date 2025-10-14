@@ -6,7 +6,7 @@ import { FuseNavigationItem } from '@fuse/components/navigation';
  */
 export const commonNavigation: FuseNavigationItem[] = [
     {
-        id: 'admin',
+        id: 'common',
         title: 'NAVIGATION.TITLE',
         type: 'group',
         children: [

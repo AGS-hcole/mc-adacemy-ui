@@ -131,7 +131,7 @@ export class ReportsFiltersComponent implements OnInit, OnDestroy {
     private loadUsers(): void {
         this.loadingUsers = true;
         this._api
-            .lookupUsers('academician', '', 1, 100)
+            .lookupUsers('', '', 1, 100)
             .pipe(takeUntil(this._unsubscribeAll))
             .subscribe({
                 next: (response) => {
