@@ -426,61 +426,55 @@
     "ERROR": "Une erreur s'est produite. Veuillez réessayer."
   },
   "REPORTS": {
-    "TITLE": "Reporting",
-    "DESCRIPTION": "Vue d'ensemble de l'activité de formation sur une période choisie",
-    "FILTERS": {
-      "PERIOD": "Période",
-      "USER": "Académicien",
-      "ALL_USERS": "Tous les académiciens",
-      "CONTRACT_SCOPE": "Type de contrat",
-      "DATE_FROM": "Date de début",
-      "DATE_TO": "Date de fin",
-      "PRESET": {
-        "LAST_7": "7 derniers jours",
-        "LAST_30": "30 derniers jours",
-        "THIS_MONTH": "Ce mois-ci",
-        "PREV_MONTH": "Mois précédent",
-        "CUSTOM": "Période personnalisée"
+    "TITLE": "Rapports",
+    "DESCRIPTION": "Analytique et statistiques des sessions de formation",
+    "CHART": {
+      "CONTRACT_SHARE": "Sessions sous contrat vs hors contrat",
+      "SESSIONS_OVER_TIME": "Sessions dans le temps"
+    },
+    "ERROR": {
+      "TITLE": "Échec du chargement des données de rapport"
+    },
+    "ACTIONS": {
+      "RETRY": "Réessayer",
+      "EXPORT_CSV": "Exporter CSV",
+      "EXPORT_JSON": "Exporter JSON"
+    },
+    "EMPTY": {
+      "NO_DATA": "Aucune donnée disponible pour la période sélectionnée"
+    },
+    "RATINGS": {
+      "TITLE": "Notes",
+      "KPI": {
+        "AVERAGE": "Note moyenne",
+        "TOTAL": "Total des notes",
+        "RATED_SESSIONS": "Sessions notées",
+        "UNRATED_SESSIONS": "Sessions non notées"
       },
-      "CONTRACT": {
-        "ALL": "Tous",
-        "UNDER": "Sous contrat",
-        "OFF": "Hors contrat"
+      "DISTRIBUTION": {
+        "TITLE": "Répartition des notes (1-10)"
+      },
+      "PER_USER": {
+        "TITLE": "Notes par utilisateur",
+        "NAME": "Nom",
+        "AVERAGE": "Moyenne",
+        "COUNT": "Nombre"
+      },
+      "TOP_USERS": "Meilleurs utilisateurs",
+      "BOTTOM_USERS": "Utilisateurs moins bien notés",
+      "PIE": {
+        "CONTRACT_VS_NONCONTRACT": "Notes: Sous contrat vs Hors contrat"
+      },
+      "EMPTY": "Aucune note pour cette période",
+      "USER_STATS": {
+        "TITLE": "Statistiques de notes utilisateur"
       }
     },
     "KPI": {
-      "TOTAL": "Sessions",
+      "TOTAL": "Total des sessions",
       "UNDER": "Sous contrat",
       "OFF": "Hors contrat",
-      "UNIQUE": "Académiciens actifs"
-    },
-    "CHART": {
-      "SESSIONS_OVER_TIME": "Sessions dans le temps",
-      "CONTRACT_SHARE": "Répartition contrat"
-    },
-    "TABLE": {
-      "TITLE": "Détails des sessions",
-      "DATE": "Date",
-      "SESSION_TITLE": "Intitulé",
-      "COACH": "Coach",
-      "CONTRACT": "Contrat",
-      "ATTENDEES": "Participants",
-      "STATUS": "Statut"
-    },
-    "ACTIONS": {
-      "APPLY": "Appliquer",
-      "RESET": "Réinitialiser",
-      "EXPORT_CSV": "Exporter CSV",
-      "EXPORT_JSON": "Exporter JSON",
-      "VIEW_SESSION": "Voir la session",
-      "RETRY": "Réessayer"
-    },
-    "EMPTY": {
-      "NO_DATA": "Aucune donnée disponible",
-      "NO_SESSIONS": "Aucune session trouvée pour cette période"
-    },
-    "ERROR": {
-      "TITLE": "Erreur de chargement"
+      "UNIQUE": "Utilisateurs uniques"
     }
   },
   "PROFILE": {

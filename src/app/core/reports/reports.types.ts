@@ -69,3 +69,33 @@ export interface UsersLookupDto {
     page: number;
     pageSize: number;
 }
+
+export interface UserRatingStats {
+    userId: string;
+    userName: string;
+    userAvatar?: string;
+    average: number;
+    count: number;
+}
+
+export interface RatingsSummaryDto {
+    period: {
+        from: string;
+        to: string;
+        timezone: string;
+    };
+    global: {
+        average: number;
+        count: number;
+        ratedSessions: number;
+        unratedSessions: number;
+        distribution: number[]; // Array of 11 elements (0-10), count per score
+    };
+    byContract: {
+        withContract: number;
+        withoutContract: number;
+    };
+    perUser: UserRatingStats[];
+    topUsers: UserRatingStats[];
+    bottomUsers: UserRatingStats[];
+}

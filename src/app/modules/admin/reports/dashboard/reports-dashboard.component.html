@@ -71,6 +71,14 @@
             </div>
         </div>
 
+        <!-- Ratings Section -->
+        <reports-ratings-section
+            [ratingsSummary]="ratingsSummary"
+            [loading]="loading"
+            [filteredUserId]="filters?.userId"
+        >
+        </reports-ratings-section>
+
         <!-- Export Actions -->
         <div class="-mt-6 flex items-center justify-end gap-2 pb-8">
             <button

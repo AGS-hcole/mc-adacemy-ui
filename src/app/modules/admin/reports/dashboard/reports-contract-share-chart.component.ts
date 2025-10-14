@@ -50,23 +50,45 @@ export class ReportsContractShareChartComponent implements OnChanges {
             ],
             chart: {
                 type: 'donut',
-                height: 350,
+                height: 280,
                 fontFamily: 'inherit',
             },
-            labels: ['Sous contrat', 'Hors contrat'],
+            labels: ['Contract', 'Non-Contract'],
             colors: ['#10b981', '#f59e0b'],
             legend: {
-                position: 'bottom',
+                position: 'right',
+                fontSize: '12px',
+                offsetY: 0,
+                height: 280,
+                formatter: function(seriesName, opts) {
+                    const value = opts.w.globals.series[opts.seriesIndex];
+                    const total = opts.w.globals.series.reduce((a: number, b: number) => a + b, 0);
+                    const percentage = ((value / total) * 100).toFixed(1);
+                    return `${percentage}%`;
+                }
             },
             responsive: [
                 {
-                    breakpoint: 480,
+                    breakpoint: 1024,
                     options: {
                         chart: {
-                            width: 300,
+                            height: 240,
                         },
                         legend: {
                             position: 'bottom',
+                            fontSize: '11px',
+                        },
+                    },
+                },
+                {
+                    breakpoint: 640,
+                    options: {
+                        chart: {
+                            height: 200,
+                        },
+                        legend: {
+                            position: 'bottom',
+                            fontSize: '10px',
                         },
                     },
                 },

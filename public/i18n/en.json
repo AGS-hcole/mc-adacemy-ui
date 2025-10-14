@@ -578,5 +578,57 @@
       "LINEUPS": "Team Lineups",
       "LINEUPS_DESCRIPTION": "View and manage team compositions and pairings"
     }
+  },
+  "REPORTS": {
+    "TITLE": "Reports",
+    "DESCRIPTION": "Training sessions analytics and statistics",
+    "CHART": {
+      "CONTRACT_SHARE": "Contract vs Non-Contract Sessions",
+      "SESSIONS_OVER_TIME": "Sessions Over Time"
+    },
+    "ERROR": {
+      "TITLE": "Failed to load reports data"
+    },
+    "ACTIONS": {
+      "RETRY": "Retry",
+      "EXPORT_CSV": "Export CSV",
+      "EXPORT_JSON": "Export JSON"
+    },
+    "EMPTY": {
+      "NO_DATA": "No data available for the selected period"
+    },
+    "RATINGS": {
+      "TITLE": "Ratings",
+      "KPI": {
+        "AVERAGE": "Average Rating",
+        "TOTAL": "Total Ratings",
+        "RATED_SESSIONS": "Rated Sessions",
+        "UNRATED_SESSIONS": "Unrated Sessions"
+      },
+      "DISTRIBUTION": {
+        "TITLE": "Rating Distribution (1-10)"
+      },
+      "PER_USER": {
+        "TITLE": "Ratings by User",
+        "NAME": "Name",
+        "AVERAGE": "Average",
+        "COUNT": "Count"
+      },
+      "TOP_USERS": "Top Rated Users",
+      "BOTTOM_USERS": "Lowest Rated Users",
+      "PIE": {
+        "CONTRACT_VS_NONCONTRACT": "Ratings: Contract vs Non-Contract"
+      },
+      "EMPTY": "No ratings in this period",
+      "USER_STATS": {
+        "TITLE": "User Rating Statistics"
+      }
+    },
+    "KPI": {
+      "TOTAL": "Total Sessions",
+      "UNDER": "Under Contract",
+      "OFF": "Off Contract",
+      "UNIQUE": "Unique Users"
+    }
   }
 }

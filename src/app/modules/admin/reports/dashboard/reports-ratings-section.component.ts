@@ -1,0 +1,182 @@
+import { CommonModule, DecimalPipe } from '@angular/common';
+import { ChangeDetectionStrategy, Component, Input } from '@angular/core';
+import { MatIconModule } from '@angular/material/icon';
+import { TranslocoModule } from '@jsverse/transloco';
+import { NgApexchartsModule } from 'ng-apexcharts';
+import { RatingsSummaryDto } from 'app/core/reports/reports.types';
+import {
+    ApexAxisChartSeries,
+    ApexChart,
+    ApexDataLabels,
+    ApexGrid,
+    ApexLegend,
+    ApexPlotOptions,
+    ApexXAxis,
+    ApexYAxis,
+} from 'ng-apexcharts';
+
+export type DistributionChartOptions = {
+    series: ApexAxisChartSeries;
+    chart: ApexChart;
+    dataLabels: ApexDataLabels;
+    plotOptions: ApexPlotOptions;
+    xaxis: ApexXAxis;
+    yaxis: ApexYAxis;
+    grid: ApexGrid;
+    legend: ApexLegend;
+};
+
+export type PieChartOptions = {
+    series: number[];
+    chart: ApexChart;
+    labels: string[];
+    legend: ApexLegend;
+    dataLabels: ApexDataLabels;
+};
+
+@Component({
+    selector: 'reports-ratings-section',
+    templateUrl: './reports-ratings-section.component.html',
+    standalone: true,
+    changeDetection: ChangeDetectionStrategy.OnPush,
+    imports: [CommonModule, MatIconModule, TranslocoModule, NgApexchartsModule, DecimalPipe],
+})
+export class ReportsRatingsSectionComponent {
+    @Input() set ratingsSummary(value: RatingsSummaryDto | null) {
+        this._ratingsSummary = value;
+        if (value) {
+            this.updateCharts(value);
+        }
+    }
+    get ratingsSummary(): RatingsSummaryDto | null {
+        return this._ratingsSummary;
+    }
+
+    @Input() loading = false;
+    @Input() filteredUserId: string | undefined = undefined;
+
+    private _ratingsSummary: RatingsSummaryDto | null = null;
+
+    distributionChartOptions: Partial<DistributionChartOptions> | null = null;
+    pieChartOptions: Partial<PieChartOptions> | null = null;
+
+    sortBy: 'average' | 'count' = 'average';
+    sortAsc = false;
+
+    /**
+     * Get sorted user stats
+     */
+    get sortedUserStats() {
+        if (!this.ratingsSummary || !this.ratingsSummary.perUser) {
+            return [];
+        }
+
+        const users = [...this.ratingsSummary.perUser];
+        users.sort((a, b) => {
+            const aVal = this.sortBy === 'average' ? a.average : a.count;
+            const bVal = this.sortBy === 'average' ? b.average : b.count;
+            return this.sortAsc ? aVal - bVal : bVal - aVal;
+        });
+
+        return users;
+    }
+
+    /**
+     * Get filtered user stats when userId filter is set
+     */
+    get filteredUserStats() {
+        if (!this.filteredUserId || !this.ratingsSummary) {
+            return null;
+        }
+        return this.ratingsSummary.perUser.find(u => u.userId === this.filteredUserId);
+    }
+
+    /**
+     * Toggle sort
+     */
+    toggleSort(field: 'average' | 'count'): void {
+        if (this.sortBy === field) {
+            this.sortAsc = !this.sortAsc;
+        } else {
+            this.sortBy = field;
+            this.sortAsc = false;
+        }
+    }
+
+    /**
+     * Update charts with new data
+     */
+    private updateCharts(data: RatingsSummaryDto): void {
+        // Distribution chart
+        const distribution = data.global.distribution || [];
+        this.distributionChartOptions = {
+            series: [
+                {
+                    name: 'Count',
+                    data: distribution.slice(1), // Skip 0, show 1-10
+                },
+            ],
+            chart: {
+                type: 'bar',
+                height: 300,
+                toolbar: {
+                    show: false,
+                },
+            },
+            plotOptions: {
+                bar: {
+                    horizontal: true,
+                    borderRadius: 4,
+                    dataLabels: {
+                        position: 'top',
+                    },
+                },
+            },
+            dataLabels: {
+                enabled: true,
+                offsetX: 30,
+            },
+            xaxis: {
+                categories: ['1', '2', '3', '4', '5', '6', '7', '8', '9', '10'],
+                title: {
+                    text: 'Number of Ratings',
+                },
+            },
+            yaxis: {
+                title: {
+                    text: 'Rating',
+                },
+            },
+            grid: {
+                xaxis: {
+                    lines: {
+                        show: true,
+                    },
+                },
+            },
+            legend: {
+                show: false,
+            },
+        };
+
+        // Pie chart for contract vs non-contract
+        this.pieChartOptions = {
+            series: [data.byContract.withContract, data.byContract.withoutContract],
+            chart: {
+                type: 'pie',
+                height: 160,
+            },
+            labels: ['Contract', 'Non-Contract'],
+            legend: {
+                position: 'right',
+                fontSize: '12px',
+            },
+            dataLabels: {
+                enabled: true,
+                formatter: (val: number) => {
+                    return val.toFixed(1) + '%';
+                },
+            },
+        };
+    }
+}

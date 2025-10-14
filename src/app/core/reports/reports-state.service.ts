@@ -6,6 +6,7 @@ import { ReportsApiService } from './reports-api.service';
 import {
     ContractScope,
     PeriodPreset,
+    RatingsSummaryDto,
     ReportsFilters,
     SessionsListDto,
     SessionsSummaryDto,
@@ -21,6 +22,7 @@ export class ReportsStateService {
     private _summary$ = new BehaviorSubject<SessionsSummaryDto | null>(null);
     private _timeseries$ = new BehaviorSubject<SessionsTimeseriesDto | null>(null);
     private _sessionsList$ = new BehaviorSubject<SessionsListDto | null>(null);
+    private _ratingsSummary$ = new BehaviorSubject<RatingsSummaryDto | null>(null);
     private _loading$ = new BehaviorSubject<boolean>(false);
     private _error$ = new BehaviorSubject<string | null>(null);
     private _cancelRequests$ = new Subject<void>();
@@ -50,6 +52,10 @@ export class ReportsStateService {
 
     get sessionsList$(): Observable<SessionsListDto | null> {
         return this._sessionsList$.asObservable();
+    }
+
+    get ratingsSummary$(): Observable<RatingsSummaryDto | null> {
+        return this._ratingsSummary$.asObservable();
     }
 
     get loading$(): Observable<boolean> {
@@ -112,13 +118,15 @@ export class ReportsStateService {
                 filters.userId,
                 filters.contractScope
             ),
+            this._api.getRatingsSummary(filters.from, filters.to, filters.userId, filters.contractScope),
         ])
             .pipe(takeUntil(this._cancelRequests$))
             .subscribe({
-                next: ([summary, timeseries, sessionsList]) => {
+                next: ([summary, timeseries, sessionsList, ratingsSummary]) => {
                     this._summary$.next(summary);
                     this._timeseries$.next(timeseries);
                     this._sessionsList$.next(sessionsList);
+                    this._ratingsSummary$.next(ratingsSummary);
                     this._loading$.next(false);
                 },
                 error: (error) => {

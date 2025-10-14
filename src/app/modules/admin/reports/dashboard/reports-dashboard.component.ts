@@ -10,6 +10,7 @@ import { ReportsExportService } from 'app/core/reports/reports-export.service';
 import { ReportsStateService } from 'app/core/reports/reports-state.service';
 import {
     ReportsFilters,
+    RatingsSummaryDto,
     SessionListItem,
     SessionsListDto,
     SessionsSummaryDto,
@@ -18,6 +19,7 @@ import {
 import { ReportsContractShareChartComponent } from './reports-contract-share-chart.component';
 import { ReportsFiltersComponent } from './reports-filters.component';
 import { ReportsKpiCardsComponent } from './reports-kpi-cards.component';
+import { ReportsRatingsSectionComponent } from './reports-ratings-section.component';
 import { ReportsTableComponent } from './reports-table.component';
 import { ReportsTimeseriesChartComponent } from './reports-timeseries-chart.component';
 
@@ -34,6 +36,7 @@ import { ReportsTimeseriesChartComponent } from './reports-timeseries-chart.comp
         ReportsKpiCardsComponent,
         ReportsTimeseriesChartComponent,
         ReportsContractShareChartComponent,
+        ReportsRatingsSectionComponent,
         ReportsTableComponent,
     ],
 })
@@ -42,6 +45,7 @@ export class ReportsDashboardComponent implements OnInit, OnDestroy {
     summary: SessionsSummaryDto | null = null;
     timeseries: SessionsTimeseriesDto | null = null;
     sessionsList: SessionsListDto | null = null;
+    ratingsSummary: RatingsSummaryDto | null = null;
     loading = false;
     error: string | null = null;
 
@@ -85,6 +89,12 @@ export class ReportsDashboardComponent implements OnInit, OnDestroy {
             .pipe(takeUntil(this._unsubscribeAll))
             .subscribe((sessionsList) => {
                 this.sessionsList = sessionsList;
+            });
+
+        this._state.ratingsSummary$
+            .pipe(takeUntil(this._unsubscribeAll))
+            .subscribe((ratingsSummary) => {
+                this.ratingsSummary = ratingsSummary;
             });
 
         this._state.loading$
