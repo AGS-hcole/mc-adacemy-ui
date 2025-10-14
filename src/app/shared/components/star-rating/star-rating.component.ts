@@ -1,4 +1,4 @@
-import { NgClass, NgFor, NgIf } from '@angular/common';
+import { NgFor } from '@angular/common';
 import {
     ChangeDetectionStrategy,
     Component,
@@ -18,14 +18,7 @@ import { TranslocoModule, TranslocoService } from '@jsverse/transloco';
     encapsulation: ViewEncapsulation.None,
     changeDetection: ChangeDetectionStrategy.OnPush,
     standalone: true,
-    imports: [
-        NgFor,
-        NgIf,
-        NgClass,
-        MatIconModule,
-        MatTooltipModule,
-        TranslocoModule,
-    ],
+    imports: [NgFor, MatIconModule, MatTooltipModule, TranslocoModule],
 })
 export class StarRatingComponent {
     @Input() value: number = 0; // Current rating (0-10)

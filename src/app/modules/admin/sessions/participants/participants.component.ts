@@ -29,6 +29,10 @@ import {
 import { SessionsService } from 'app/core/session/sessions.service';
 import { User } from 'app/core/user/user.types';
 import { UsersService } from 'app/modules/admin/users/users.service';
+import {
+    RatingCommentDialogComponent,
+    RatingCommentDialogData,
+} from 'app/shared/components/rating-comment-dialog/rating-comment-dialog.component';
 import { StarRatingComponent } from 'app/shared/components/star-rating/star-rating.component';
 import {
     Observable,
@@ -386,5 +390,73 @@ export class SessionParticipantsComponent implements OnInit, OnDestroy {
         if (max === 0) return 0;
         const opacity = value / max;
         return Math.max(0.1, opacity);
+    }
+
+    /**
+     * Open comment dialog for a participant
+     */
+    openCommentDialog(attendance: SessionAttendee): void {
+        const participantName = `${attendance.user?.firstname} ${attendance.user?.lastname}`;
+        const currentRating = this.ratingsMap.get(attendance.userId);
+
+        const dialogRef = this._dialog.open<
+            RatingCommentDialogComponent,
+            RatingCommentDialogData,
+            string
+        >(RatingCommentDialogComponent, {
+            width: '600px',
+            data: {
+                participantName,
+                comment: currentRating?.comment || '',
+            },
+        });
+
+        dialogRef.afterClosed().subscribe((comment) => {
+            if (comment !== undefined) {
+                // Save comment with current score
+                const score = currentRating?.score || 0;
+                this.saveRatingWithComment(attendance.userId, score, comment);
+            }
+        });
+    }
+
+    /**
+     * Save rating with comment
+     */
+    private saveRatingWithComment(
+        userId: string,
+        score: number,
+        comment: string
+    ): void {
+        if (!this.session?.id) {
+            return;
+        }
+
+        this.pendingRatings.add(userId);
+        this._changeDetectorRef.markForCheck();
+
+        this._ratingsService
+            .upsert(this.session.id, userId, { score, comment })
+            .pipe(takeUntil(this._unsubscribeAll))
+            .subscribe({
+                next: (rating) => {
+                    this.ratingsMap.set(userId, rating);
+                    this.pendingRatings.delete(userId);
+                    this.loadRatings();
+                },
+                error: (error) => {
+                    console.error('Failed to save rating:', error);
+                    this.pendingRatings.delete(userId);
+                    this._changeDetectorRef.markForCheck();
+                },
+            });
+    }
+
+    /**
+     * Check if participant has a comment
+     */
+    hasComment(userId: string): boolean {
+        const rating = this.ratingsMap.get(userId);
+        return !!(rating?.comment && rating.comment.trim().length > 0);
     }
 }

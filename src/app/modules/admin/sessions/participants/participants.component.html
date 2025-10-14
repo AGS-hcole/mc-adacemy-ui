@@ -184,10 +184,34 @@
                                     onRatingChange(attendance.user?.id, $event)
                                 "
                             ></star-rating>
-                            <mat-spinner
-                                *ngIf="isRatingPending(attendance.user?.id)"
-                                [diameter]="20"
-                            ></mat-spinner>
+                            <div class="flex items-center gap-1">
+                                <button
+                                    mat-icon-button
+                                    [matTooltip]="
+                                        'SESSIONS.ADMIN.RATINGS.COMMENT.EDIT'
+                                            | transloco
+                                    "
+                                    (click)="openCommentDialog(attendance)"
+                                    [color]="
+                                        hasComment(attendance.user?.id)
+                                            ? 'primary'
+                                            : ''
+                                    "
+                                >
+                                    <mat-icon
+                                        class="icon-size-5"
+                                        [svgIcon]="
+                                            hasComment(attendance.user?.id)
+                                                ? 'heroicons_solid:chat-bubble-left-right'
+                                                : 'heroicons_outline:chat-bubble-left-right'
+                                        "
+                                    ></mat-icon>
+                                </button>
+                                <mat-spinner
+                                    *ngIf="isRatingPending(attendance.user?.id)"
+                                    [diameter]="20"
+                                ></mat-spinner>
+                            </div>
                         </div>
 
                         <!-- Admin registered badge -->
