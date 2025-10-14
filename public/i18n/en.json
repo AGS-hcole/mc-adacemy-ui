@@ -306,6 +306,32 @@
         "CANCEL": "Cancel",
         "SAVE": "Save",
         "CREATE": "Create"
+      },
+      "RATINGS": {
+        "TITLE": "Ratings",
+        "AVERAGE": "Average",
+        "COUNT": "{{count}} rating",
+        "COUNT_plural": "{{count}} ratings",
+        "DISTRIBUTION": "Distribution",
+        "SET_RATING": "Set rating to {{value}} / {{max}}",
+        "RATING_LABEL": "Rating {{value}} out of {{max}}",
+        "COMMENT": {
+          "EDIT": "Edit comment",
+          "PLACEHOLDER": "Add a comment about this participant's performance...",
+          "TITLE": "Rating Comment",
+          "MAX_LENGTH": "Maximum 2000 characters"
+        },
+        "SAVE": "Save",
+        "CANCEL": "Cancel",
+        "RESET": "Reset rating",
+        "RESET_CONFIRM": "Are you sure you want to reset this rating?",
+        "SAVED": "Rating saved successfully",
+        "ERROR": "Failed to save rating",
+        "NO_RATINGS": "No ratings yet",
+        "PARTICIPANT": "Participant",
+        "FORMULA": "Formula",
+        "RATING": "Rating",
+        "ACTIONS": "Actions"
       }
     },
     "USER": {

@@ -162,3 +162,41 @@ export const DEFAULT_SESSION_TIMES: Record<
     [SessionSlot.AM]: { start: '09:00', end: '12:00' },
     [SessionSlot.PM]: { start: '14:00', end: '17:00' },
 };
+
+/**
+ * Rating model for session participants
+ */
+export interface Rating {
+    id: UUID;
+    sessionId: UUID;
+    userId: UUID;
+    score: number; // 0-10
+    comment?: string | null;
+    createdAt: Date | string;
+    updatedAt?: Date | string | null;
+}
+
+/**
+ * Rating statistics for a session
+ */
+export interface RatingStats {
+    average: number;
+    count: number;
+    distribution: number[]; // Array of 11 elements (0-10), count per score
+}
+
+/**
+ * Upsert rating request
+ */
+export interface UpsertRatingRequest {
+    score: number; // 0-10
+    comment?: string | null;
+}
+
+/**
+ * Get ratings for session response
+ */
+export interface SessionRatingsResponse {
+    ratings: Rating[];
+    stats: RatingStats;
+}

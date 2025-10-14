@@ -1,0 +1,41 @@
+<div
+    class="star-rating"
+    [class.readonly]="readonly"
+    role="slider"
+    [attr.aria-label]="getAriaLabel()"
+    [attr.aria-valuemin]="0"
+    [attr.aria-valuemax]="max"
+    [attr.aria-valuenow]="value"
+    [attr.tabindex]="readonly ? -1 : 0"
+    (keydown)="onKeyDown($event)"
+    (mouseleave)="onStarsMouseLeave()"
+>
+    <div class="stars-container flex items-center gap-1">
+        <button
+            *ngFor="let star of stars; let i = index"
+            type="button"
+            class="star-button focus:outline-none focus:ring-2 focus:ring-amber-500 focus:ring-offset-2 rounded transition-all duration-150"
+            [class.cursor-pointer]="!readonly"
+            [class.cursor-default]="readonly"
+            [disabled]="readonly"
+            [matTooltip]="readonly ? '' : getTooltip(i)"
+            (click)="onStarClick(i)"
+            (mouseenter)="onStarMouseEnter(i)"
+            [attr.aria-label]="'Star ' + (i + 1)"
+        >
+            <mat-icon
+                class="star-icon text-2xl transition-colors duration-150"
+                [class.text-amber-500]="isStarFilled(i)"
+                [class.text-gray-300]="!isStarFilled(i)"
+                [class.dark:text-gray-600]="!isStarFilled(i)"
+                [class.hover:text-amber-400]="!readonly && !isStarFilled(i)"
+                [svgIcon]="
+                    isStarFilled(i)
+                        ? 'heroicons_solid:star'
+                        : 'heroicons_outline:star'
+                "
+            >
+            </mat-icon>
+        </button>
+    </div>
+</div>
