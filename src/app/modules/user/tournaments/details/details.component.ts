@@ -21,8 +21,10 @@ import {
     TournamentType,
 } from 'app/core/tournament/tournament.types';
 import { TournamentsService } from 'app/core/tournament/tournaments.service';
+import { UserService } from 'app/core/user/user.service';
+import { User } from 'app/core/user/user.types';
 import { LocalizedDatePipe } from 'app/shared/pipes/localized-date.pipe';
-import { Subject, takeUntil } from 'rxjs';
+import { combineLatest, Subject, takeUntil } from 'rxjs';
 
 @Component({
     selector: 'user-tournament-details',
@@ -45,6 +47,7 @@ import { Subject, takeUntil } from 'rxjs';
 export class UserTournamentDetailsComponent implements OnInit, OnDestroy {
     tournament: Tournament | null = null;
     feedbackControl = new FormControl('');
+    currentUser: User | null = null;
 
     TournamentType = TournamentType;
     TournamentStatus = TournamentStatus;
@@ -56,6 +59,7 @@ export class UserTournamentDetailsComponent implements OnInit, OnDestroy {
      * Constructor
      */
     constructor(
+        private userService: UserService,
         private _activatedRoute: ActivatedRoute,
         private _changeDetectorRef: ChangeDetectorRef,
         private _router: Router,
@@ -70,24 +74,20 @@ export class UserTournamentDetailsComponent implements OnInit, OnDestroy {
      * On init
      */
     ngOnInit(): void {
-        // Get tournament from resolver
-        this._activatedRoute.data
+        combineLatest([
+            this._activatedRoute.data,
+            this._tournamentsService.tournament$,
+            this.userService.user$,
+        ])
             .pipe(takeUntil(this._unsubscribeAll))
-            .subscribe(({ tournament }) => {
-                this.tournament = tournament;
+            .subscribe(([routeData, tournament, user]) => {
+                // Prefer tournament from service if available, else from resolver
+                this.tournament = tournament || routeData.tournament;
+                this.currentUser = user;
                 this._loadFeedback();
-                this._changeDetectorRef.markForCheck();
-            });
 
-        // Subscribe to tournament updates
-        this._tournamentsService.tournament$
-            .pipe(takeUntil(this._unsubscribeAll))
-            .subscribe((tournament) => {
-                if (tournament) {
-                    this.tournament = tournament;
-                    this._loadFeedback();
-                    this._changeDetectorRef.markForCheck();
-                }
+                // Mark for check
+                this._changeDetectorRef.markForCheck();
             });
     }
 

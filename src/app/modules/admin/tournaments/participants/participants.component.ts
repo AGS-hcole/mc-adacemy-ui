@@ -15,7 +15,7 @@ import { MatInputModule } from '@angular/material/input';
 import { TranslocoModule } from '@jsverse/transloco';
 import {
     Tournament,
-    UserLookupResult,
+    UserLookupItem,
 } from 'app/core/tournament/tournament.types';
 import { TournamentsService } from 'app/core/tournament/tournaments.service';
 import { Subject, takeUntil } from 'rxjs';
@@ -39,8 +39,8 @@ import { Subject, takeUntil } from 'rxjs';
 })
 export class TournamentParticipantsComponent implements OnInit, OnDestroy {
     tournament: Tournament | null = null;
-    availableUsers: UserLookupResult[] = [];
-    filteredUsers: UserLookupResult[] = [];
+    availableUsers: UserLookupItem[] = [];
+    filteredUsers: UserLookupItem[] = [];
     selectedParticipantIds: string[] = [];
     userSearchTerm = '';
 
@@ -68,7 +68,8 @@ export class TournamentParticipantsComponent implements OnInit, OnDestroy {
             .subscribe((tournament) => {
                 if (tournament) {
                     this.tournament = tournament;
-                    this.selectedParticipantIds = tournament.participants?.map(p => p.userId) || [];
+                    this.selectedParticipantIds =
+                        tournament.participants?.map((p) => p.userId) || [];
                 }
                 this._changeDetectorRef.markForCheck();
             });
@@ -94,10 +95,10 @@ export class TournamentParticipantsComponent implements OnInit, OnDestroy {
      */
     private _loadUsers(): void {
         this._tournamentsService
-            .lookupUsers('')
+            .lookupUsers('', '', 1, 100)
             .pipe(takeUntil(this._unsubscribeAll))
             .subscribe((users) => {
-                this.availableUsers = users;
+                this.availableUsers = users.items ?? [];
                 this._applyFilter();
                 this._changeDetectorRef.markForCheck();
             });
@@ -135,7 +136,7 @@ export class TournamentParticipantsComponent implements OnInit, OnDestroy {
     /**
      * Get selected participants
      */
-    get selectedParticipants(): UserLookupResult[] {
+    get selectedParticipants(): UserLookupItem[] {
         return this.availableUsers.filter((user) =>
             this.selectedParticipantIds.includes(user.id)
         );
@@ -161,7 +162,10 @@ export class TournamentParticipantsComponent implements OnInit, OnDestroy {
         if (!this.tournament) return;
 
         this._tournamentsService
-            .replaceParticipants(this.tournament.id, this.selectedParticipantIds)
+            .replaceParticipants(
+                this.tournament.id,
+                this.selectedParticipantIds
+            )
             .pipe(takeUntil(this._unsubscribeAll))
             .subscribe((tournament) => {
                 this.tournament = tournament;

@@ -208,11 +208,18 @@ export interface TournamentFeedbackRequest {
 /**
  * User lookup result
  */
-export interface UserLookupResult {
+export interface UserLookupItem {
     id: UUID;
     firstname: string;
     lastname: string;
     email: string;
     role?: string;
     currentRanking?: number | null;
+}
+
+export interface UserLookupDto {
+    items: UserLookupItem[];
+    total: number;
+    page: number;
+    pageSize: number;
 }
