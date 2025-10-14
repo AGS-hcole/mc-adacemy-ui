@@ -16,9 +16,15 @@ describe('RatingsService', () => {
         id: '1',
         sessionId: 'session-1',
         userId: 'user-1',
+        raterId: 'admin-1',
         score: 8,
         comment: 'Great performance',
         createdAt: '2025-01-01T00:00:00Z',
+        rater: {
+            id: 'admin-1',
+            firstname: 'John',
+            lastname: 'Doe',
+        },
     };
 
     const mockRatingsResponse: SessionRatingsResponse = {
@@ -59,7 +65,7 @@ describe('RatingsService', () => {
             });
 
             const req = httpMock.expectOne(
-                `${apiUrl}/sessions/${sessionId}/ratings/${userId}`
+                `${apiUrl}/ratings/sessions/${sessionId}/users/${userId}`
             );
             expect(req.request.method).toBe('PUT');
             expect(req.request.body).toEqual(dto);
@@ -79,7 +85,7 @@ describe('RatingsService', () => {
             });
 
             const req = httpMock.expectOne(
-                `${apiUrl}/sessions/${sessionId}/ratings/${userId}`
+                `${apiUrl}/ratings/sessions/${sessionId}/users/${userId}`
             );
             req.flush('Error', { status: 500, statusText: 'Server Error' });
         });
@@ -98,7 +104,7 @@ describe('RatingsService', () => {
                 });
 
             const req = httpMock.expectOne(
-                `${apiUrl}/sessions/${sessionId}/ratings`
+                `${apiUrl}/ratings/sessions/${sessionId}`
             );
             expect(req.request.method).toBe('GET');
             req.flush(mockRatingsResponse);
@@ -115,7 +121,7 @@ describe('RatingsService', () => {
             });
 
             const req = httpMock.expectOne(
-                `${apiUrl}/sessions/${sessionId}/ratings/${userId}`
+                `${apiUrl}/ratings/sessions/${sessionId}/users/${userId}`
             );
             expect(req.request.method).toBe('DELETE');
             req.flush(null);
@@ -131,7 +137,7 @@ describe('RatingsService', () => {
                 expect(ratings).toEqual(mockRatings);
             });
 
-            const req = httpMock.expectOne(`${apiUrl}/users/${userId}/ratings`);
+            const req = httpMock.expectOne(`${apiUrl}/ratings/users/${userId}`);
             expect(req.request.method).toBe('GET');
             req.flush(mockRatings);
         });
@@ -147,7 +153,7 @@ describe('RatingsService', () => {
             });
 
             const req = httpMock.expectOne(
-                `${apiUrl}/users/${userId}/ratings?from=${encodeURIComponent(from)}&to=${encodeURIComponent(to)}`
+                `${apiUrl}/ratings/users/${userId}?from=${encodeURIComponent(from)}&to=${encodeURIComponent(to)}`
             );
             expect(req.request.method).toBe('GET');
             req.flush(mockRatings);

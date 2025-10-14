@@ -31,7 +31,7 @@ export class RatingsService {
     ): Observable<Rating> {
         return this._httpClient
             .put<Rating>(
-                `${this.apiUrl}/sessions/${sessionId}/ratings/${userId}`,
+                `${this.apiUrl}/ratings/sessions/${sessionId}/users/${userId}`,
                 dto
             )
             .pipe(catchError(this._handleError));
@@ -43,7 +43,7 @@ export class RatingsService {
     getForSession(sessionId: string): Observable<SessionRatingsResponse> {
         return this._httpClient
             .get<SessionRatingsResponse>(
-                `${this.apiUrl}/sessions/${sessionId}/ratings`
+                `${this.apiUrl}/ratings/sessions/${sessionId}`
             )
             .pipe(catchError(this._handleError));
     }
@@ -54,7 +54,7 @@ export class RatingsService {
     delete(sessionId: string, userId: string): Observable<void> {
         return this._httpClient
             .delete<void>(
-                `${this.apiUrl}/sessions/${sessionId}/ratings/${userId}`
+                `${this.apiUrl}/ratings/sessions/${sessionId}/users/${userId}`
             )
             .pipe(catchError(this._handleError));
     }
@@ -67,7 +67,7 @@ export class RatingsService {
         from?: string,
         to?: string
     ): Observable<Rating[]> {
-        let url = `${this.apiUrl}/users/${userId}/ratings`;
+        let url = `${this.apiUrl}/ratings/users/${userId}`;
         const params: string[] = [];
 
         if (from) {

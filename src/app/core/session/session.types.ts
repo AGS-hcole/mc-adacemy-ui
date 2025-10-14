@@ -170,10 +170,16 @@ export interface Rating {
     id: UUID;
     sessionId: UUID;
     userId: UUID;
+    raterId: UUID;
     score: number; // 0-10
     comment?: string | null;
     createdAt: Date | string;
     updatedAt?: Date | string | null;
+    rater?: {
+        id: UUID;
+        firstname: string;
+        lastname: string;
+    };
 }
 
 /**

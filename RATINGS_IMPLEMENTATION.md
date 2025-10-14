@@ -94,10 +94,16 @@ interface Rating {
     id: string;
     sessionId: string;
     userId: string;
+    raterId: string;
     score: number; // 0-10
     comment?: string | null;
     createdAt: Date | string;
     updatedAt?: Date | string | null;
+    rater?: {
+        id: string;
+        firstname: string;
+        lastname: string;
+    };
 }
 
 interface RatingStats {
@@ -230,10 +236,10 @@ npm test -- --browsers=ChromeHeadless --watch=false
 The service expects the following backend endpoints:
 
 ```
-PUT    /api/sessions/:sessionId/ratings/:userId
-GET    /api/sessions/:sessionId/ratings
-DELETE /api/sessions/:sessionId/ratings/:userId
-GET    /api/users/:userId/ratings?from=&to=
+PUT    /api/ratings/sessions/:sessionId/users/:userId
+GET    /api/ratings/sessions/:sessionId
+DELETE /api/ratings/sessions/:sessionId/users/:userId
+GET    /api/ratings/users/:userId?from=&to=
 ```
 
 **Request/Response:**

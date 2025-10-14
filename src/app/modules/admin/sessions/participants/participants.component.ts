@@ -280,6 +280,7 @@ export class SessionParticipantsComponent implements OnInit, OnDestroy {
                 id: '',
                 sessionId: this.session.id,
                 userId,
+                raterId: '', // Will be set by backend
                 score,
                 createdAt: new Date().toISOString(),
             });
