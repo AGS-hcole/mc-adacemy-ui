@@ -1,4 +1,4 @@
-import { AsyncPipe, NgForOf, NgIf } from '@angular/common';
+import { AsyncPipe, DecimalPipe, NgForOf, NgIf } from '@angular/common';
 import {
     ChangeDetectionStrategy,
     ChangeDetectorRef,
@@ -56,6 +56,7 @@ import {
         MatButtonModule,
         MatFormFieldModule,
         MatIconModule,
+        DecimalPipe,
         MatSelectModule,
         MatOptionModule,
         MatTooltipModule,
@@ -120,8 +121,7 @@ export class SessionParticipantsComponent implements OnInit, OnDestroy {
                 debounceTime(300),
                 distinctUntilChanged(
                     (prev, curr) =>
-                        prev.userId === curr.userId &&
-                        prev.score === curr.score
+                        prev.userId === curr.userId && prev.score === curr.score
                 ),
                 takeUntil(this._unsubscribeAll)
             )
@@ -240,6 +240,7 @@ export class SessionParticipantsComponent implements OnInit, OnDestroy {
             .pipe(takeUntil(this._unsubscribeAll))
             .subscribe({
                 next: (response) => {
+                    console.log(response);
                     this.ratingsResponse = response;
                     this.ratingsMap.clear();
                     response.ratings.forEach((rating) => {
@@ -369,10 +370,18 @@ export class SessionParticipantsComponent implements OnInit, OnDestroy {
      * Get distribution bar widths
      */
     getDistributionSegments(): number[] {
-        if (!this.ratingsResponse?.stats) {
-            return Array(11).fill(0);
+        const d: any = this.ratingsResponse?.stats?.distribution;
+
+        if (Array.isArray(d)) {
+            const arr = d.slice(0, 11);
+            while (arr.length < 11) arr.push(0);
+            return arr.map((n) => Number(n ?? 0));
         }
-        return this.ratingsResponse.stats.distribution;
+
+        const obj = (d ?? {}) as Record<string | number, number>;
+        return Array.from({ length: 11 }, (_, i) =>
+            Number(obj[i] ?? obj[String(i)] ?? 0)
+        );
     }
 
     /**
