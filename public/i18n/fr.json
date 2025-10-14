@@ -277,6 +277,32 @@
         "ADMIN_REGISTERED": "Inscrit par admin",
         "REMOVE": "Retirer",
         "CLOSE": "Fermer"
+      },
+      "RATINGS": {
+        "TITLE": "Évaluations",
+        "AVERAGE": "Moyenne",
+        "COUNT": "{{count}} évaluation",
+        "COUNT_plural": "{{count}} évaluations",
+        "DISTRIBUTION": "Distribution",
+        "SET_RATING": "Définir la note à {{value}} / {{max}}",
+        "RATING_LABEL": "Note {{value}} sur {{max}}",
+        "COMMENT": {
+          "EDIT": "Modifier le commentaire",
+          "PLACEHOLDER": "Ajouter un commentaire sur la performance de ce participant...",
+          "TITLE": "Commentaire d'évaluation",
+          "MAX_LENGTH": "Maximum 2000 caractères"
+        },
+        "SAVE": "Enregistrer",
+        "CANCEL": "Annuler",
+        "RESET": "Réinitialiser la note",
+        "RESET_CONFIRM": "Êtes-vous sûr de vouloir réinitialiser cette note ?",
+        "SAVED": "Note enregistrée avec succès",
+        "ERROR": "Échec de l'enregistrement de la note",
+        "NO_RATINGS": "Aucune évaluation pour le moment",
+        "PARTICIPANT": "Participant",
+        "FORMULA": "Formule",
+        "RATING": "Note",
+        "ACTIONS": "Actions"
       }
     },
     "USER": {

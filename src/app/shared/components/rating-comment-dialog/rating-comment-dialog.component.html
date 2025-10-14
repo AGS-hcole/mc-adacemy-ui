@@ -1,0 +1,37 @@
+<h2 mat-dialog-title>
+    {{ 'SESSIONS.ADMIN.RATINGS.COMMENT.TITLE' | transloco }}
+</h2>
+
+<mat-dialog-content class="mat-typography">
+    <p class="text-secondary mb-4">
+        {{ data.participantName }}
+    </p>
+
+    <mat-form-field class="w-full">
+        <mat-label>{{
+            'SESSIONS.ADMIN.RATINGS.COMMENT.EDIT' | transloco
+        }}</mat-label>
+        <textarea
+            matInput
+            [(ngModel)]="comment"
+            [placeholder]="
+                'SESSIONS.ADMIN.RATINGS.COMMENT.PLACEHOLDER' | transloco
+            "
+            [maxlength]="maxLength"
+            rows="6"
+        ></textarea>
+        <mat-hint align="end">
+            {{ getRemainingChars() }} /
+            {{ 'SESSIONS.ADMIN.RATINGS.COMMENT.MAX_LENGTH' | transloco }}
+        </mat-hint>
+    </mat-form-field>
+</mat-dialog-content>
+
+<mat-dialog-actions align="end">
+    <button mat-button (click)="cancel()">
+        {{ 'SESSIONS.ADMIN.RATINGS.CANCEL' | transloco }}
+    </button>
+    <button mat-flat-button color="primary" (click)="save()">
+        {{ 'SESSIONS.ADMIN.RATINGS.SAVE' | transloco }}
+    </button>
+</mat-dialog-actions>

@@ -1,0 +1,33 @@
+.star-rating {
+    display: inline-flex;
+    align-items: center;
+
+    &.readonly {
+        pointer-events: none;
+    }
+
+    .stars-container {
+        display: flex;
+        gap: 0.25rem;
+    }
+
+    .star-button {
+        padding: 0;
+        border: none;
+        background: none;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+
+        &:not([disabled]) {
+            &:hover .star-icon {
+                transform: scale(1.1);
+            }
+        }
+    }
+
+    .star-icon {
+        width: 1.5rem;
+        height: 1.5rem;
+    }
+}
