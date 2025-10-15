@@ -6,8 +6,9 @@ import { MatPaginatorModule, PageEvent } from '@angular/material/paginator';
 import { MatTableModule } from '@angular/material/table';
 import { MatTooltipModule } from '@angular/material/tooltip';
 import { TranslocoModule } from '@jsverse/transloco';
+import { ReportsExportService } from 'app/core/reports/reports-export.service';
+import { SessionsListDto } from 'app/core/reports/reports.types';
 import { DateTime } from 'luxon';
-import { SessionListItem, SessionsListDto } from 'app/core/reports/reports.types';
 
 @Component({
     selector: 'reports-table',
@@ -38,6 +39,11 @@ export class ReportsTableComponent {
         'status',
         'actions',
     ];
+
+    /**
+     * Constructor
+     */
+    constructor(private _export: ReportsExportService) {}
 
     /**
      * Format date for display
@@ -99,5 +105,23 @@ export class ReportsTableComponent {
      */
     onViewSession(sessionId: string): void {
         this.viewSession.emit(sessionId);
+    }
+
+    /**
+     * Export CSV
+     */
+    exportCsv(): void {
+        if (this.sessionsList && this.sessionsList.items.length > 0) {
+            this._export.exportCsv(this.sessionsList.items);
+        }
+    }
+
+    /**
+     * Export JSON
+     */
+    exportJson(): void {
+        if (this.sessionsList && this.sessionsList.items.length > 0) {
+            this._export.exportJson(this.sessionsList.items);
+        }
     }
 }

@@ -1,72 +1,116 @@
-<div class="grid grid-cols-1 gap-6 md:grid-cols-2 lg:grid-cols-4 mb-8">
+<div class="grid grid-cols-1 gap-6 md:grid-cols-2 lg:grid-cols-4">
     <!-- Total Sessions -->
-    <div class="bg-card rounded-lg shadow p-6">
+    <div class="bg-card rounded-lg p-6 shadow">
         <div class="flex items-center justify-between">
             <div>
                 <div class="text-secondary text-sm font-medium">
                     {{ 'REPORTS.KPI.TOTAL' | transloco }}
                 </div>
-                <div class="mt-2 text-3xl font-bold" *ngIf="!loading && summary">
+                <div
+                    class="mt-2 text-3xl font-bold"
+                    *ngIf="!loading && summary"
+                >
                     {{ summary.totals.sessions }}
                 </div>
-                <div class="mt-2 h-9 bg-gray-200 rounded animate-pulse" *ngIf="loading"></div>
+                <div
+                    class="mt-2 h-9 animate-pulse rounded bg-gray-200"
+                    *ngIf="loading"
+                ></div>
             </div>
-            <div class="flex h-12 w-12 items-center justify-center rounded-full bg-primary-100">
-                <mat-icon class="text-primary icon-size-6" svgIcon="heroicons_solid:calendar"></mat-icon>
+            <div
+                class="flex h-12 w-12 items-center justify-center rounded-full bg-primary-100"
+            >
+                <mat-icon
+                    class="text-primary icon-size-6"
+                    svgIcon="heroicons_solid:calendar"
+                ></mat-icon>
             </div>
         </div>
     </div>
 
     <!-- Under Contract Sessions -->
-    <div class="bg-card rounded-lg shadow p-6">
+    <div class="bg-card rounded-lg p-6 shadow">
         <div class="flex items-center justify-between">
             <div>
                 <div class="text-secondary text-sm font-medium">
                     {{ 'REPORTS.KPI.UNDER' | transloco }}
                 </div>
-                <div class="mt-2 text-3xl font-bold" *ngIf="!loading && summary">
+                <div
+                    class="mt-2 text-3xl font-bold"
+                    *ngIf="!loading && summary"
+                >
                     {{ summary.totals.underContract }}
                 </div>
-                <div class="mt-2 h-9 bg-gray-200 rounded animate-pulse" *ngIf="loading"></div>
+                <div
+                    class="mt-2 h-9 animate-pulse rounded bg-gray-200"
+                    *ngIf="loading"
+                ></div>
             </div>
-            <div class="flex h-12 w-12 items-center justify-center rounded-full bg-green-100">
-                <mat-icon class="text-green-600 icon-size-6" svgIcon="heroicons_solid:check-circle"></mat-icon>
+            <div
+                class="flex h-12 w-12 items-center justify-center rounded-full bg-green-100"
+            >
+                <mat-icon
+                    class="text-green-600 icon-size-6"
+                    svgIcon="heroicons_solid:check-circle"
+                ></mat-icon>
             </div>
         </div>
     </div>
 
     <!-- Off Contract Sessions -->
-    <div class="bg-card rounded-lg shadow p-6">
+    <div class="bg-card rounded-lg p-6 shadow">
         <div class="flex items-center justify-between">
             <div>
                 <div class="text-secondary text-sm font-medium">
                     {{ 'REPORTS.KPI.OFF' | transloco }}
                 </div>
-                <div class="mt-2 text-3xl font-bold" *ngIf="!loading && summary">
+                <div
+                    class="mt-2 text-3xl font-bold"
+                    *ngIf="!loading && summary"
+                >
                     {{ summary.totals.offContract }}
                 </div>
-                <div class="mt-2 h-9 bg-gray-200 rounded animate-pulse" *ngIf="loading"></div>
+                <div
+                    class="mt-2 h-9 animate-pulse rounded bg-gray-200"
+                    *ngIf="loading"
+                ></div>
             </div>
-            <div class="flex h-12 w-12 items-center justify-center rounded-full bg-amber-100">
-                <mat-icon class="text-amber-600 icon-size-6" svgIcon="heroicons_solid:x-circle"></mat-icon>
+            <div
+                class="flex h-12 w-12 items-center justify-center rounded-full bg-amber-100"
+            >
+                <mat-icon
+                    class="text-amber-600 icon-size-6"
+                    svgIcon="heroicons_solid:x-circle"
+                ></mat-icon>
             </div>
         </div>
     </div>
 
     <!-- Unique Users -->
-    <div class="bg-card rounded-lg shadow p-6">
+    <div class="bg-card rounded-lg p-6 shadow">
         <div class="flex items-center justify-between">
             <div>
                 <div class="text-secondary text-sm font-medium">
                     {{ 'REPORTS.KPI.UNIQUE' | transloco }}
                 </div>
-                <div class="mt-2 text-3xl font-bold" *ngIf="!loading && summary">
+                <div
+                    class="mt-2 text-3xl font-bold"
+                    *ngIf="!loading && summary"
+                >
                     {{ summary.totals.uniqueUsers }}
                 </div>
-                <div class="mt-2 h-9 bg-gray-200 rounded animate-pulse" *ngIf="loading"></div>
+                <div
+                    class="mt-2 h-9 animate-pulse rounded bg-gray-200"
+                    *ngIf="loading"
+                ></div>
             </div>
-            <div class="flex h-12 w-12 items-center justify-center rounded-full bg-blue-100">
-                <mat-icon class="text-blue-600 icon-size-6" svgIcon="heroicons_solid:users"></mat-icon>
+            <div
+                class="flex h-12 w-12 items-center justify-center rounded-full bg-blue-100"
+            >
+                <mat-icon
+                    class="text-blue-600 icon-size-6"
+                    svgIcon="heroicons_solid:users"
+                ></mat-icon>
             </div>
         </div>
     </div>

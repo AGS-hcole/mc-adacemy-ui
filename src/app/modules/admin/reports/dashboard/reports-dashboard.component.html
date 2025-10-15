@@ -47,8 +47,8 @@
         </div>
 
         <!-- Sessions Section -->
-        <div class="space-y-6">
-            <h2 class="mb-2 text-2xl font-bold">
+        <div class="flex flex-col space-y-6">
+            <h2 class="text-2xl font-bold">
                 {{ 'REPORTS.SESSIONS.TITLE' | transloco }}
             </h2>
 
@@ -75,40 +75,6 @@
                     >
                     </reports-contract-share-chart>
                 </div>
-            </div>
-
-            <!-- Export Actions -->
-            <div class="flex items-center justify-end gap-2">
-                <button
-                    mat-stroked-button
-                    (click)="exportCsv()"
-                    [disabled]="
-                        !sessionsList || sessionsList.items.length === 0
-                    "
-                >
-                    <mat-icon
-                        class="icon-size-5"
-                        svgIcon="heroicons_solid:document-arrow-down"
-                    ></mat-icon>
-                    <span class="ml-2">{{
-                        'REPORTS.ACTIONS.EXPORT_CSV' | transloco
-                    }}</span>
-                </button>
-                <button
-                    mat-stroked-button
-                    (click)="exportJson()"
-                    [disabled]="
-                        !sessionsList || sessionsList.items.length === 0
-                    "
-                >
-                    <mat-icon
-                        class="icon-size-5"
-                        svgIcon="heroicons_solid:code-bracket"
-                    ></mat-icon>
-                    <span class="ml-2">{{
-                        'REPORTS.ACTIONS.EXPORT_JSON' | transloco
-                    }}</span>
-                </button>
             </div>
 
             <!-- Table -->

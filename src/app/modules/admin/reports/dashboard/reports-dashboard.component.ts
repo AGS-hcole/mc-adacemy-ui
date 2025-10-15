@@ -5,17 +5,16 @@ import { MatIconModule } from '@angular/material/icon';
 import { PageEvent } from '@angular/material/paginator';
 import { ActivatedRoute, Router } from '@angular/router';
 import { TranslocoModule } from '@jsverse/transloco';
-import { Subject, takeUntil } from 'rxjs';
 import { ReportsExportService } from 'app/core/reports/reports-export.service';
 import { ReportsStateService } from 'app/core/reports/reports-state.service';
 import {
-    ReportsFilters,
     RatingsSummaryDto,
-    SessionListItem,
+    ReportsFilters,
     SessionsListDto,
     SessionsSummaryDto,
     SessionsTimeseriesDto,
 } from 'app/core/reports/reports.types';
+import { Subject, takeUntil } from 'rxjs';
 import { ReportsContractShareChartComponent } from './reports-contract-share-chart.component';
 import { ReportsFiltersComponent } from './reports-filters.component';
 import { ReportsKpiCardsComponent } from './reports-kpi-cards.component';
@@ -153,24 +152,6 @@ export class ReportsDashboardComponent implements OnInit, OnDestroy {
      */
     onViewSession(sessionId: string): void {
         this._router.navigate(['/admin/sessions', sessionId]);
-    }
-
-    /**
-     * Export CSV
-     */
-    exportCsv(): void {
-        if (this.sessionsList && this.sessionsList.items.length > 0) {
-            this._export.exportCsv(this.sessionsList.items);
-        }
-    }
-
-    /**
-     * Export JSON
-     */
-    exportJson(): void {
-        if (this.sessionsList && this.sessionsList.items.length > 0) {
-            this._export.exportJson(this.sessionsList.items);
-        }
     }
 
     /**

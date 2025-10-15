@@ -4,6 +4,38 @@
             <h3 class="text-lg font-semibold">
                 {{ 'REPORTS.TABLE.TITLE' | transloco }}
             </h3>
+
+            <!-- Export Buttons -->
+            <div class="flex items-center gap-2">
+                <button
+                    mat-icon-button
+                    (click)="exportCsv()"
+                    [disabled]="
+                        !sessionsList || sessionsList.items.length === 0
+                    "
+                    [matTooltip]="'REPORTS.ACTIONS.EXPORT_CSV' | transloco"
+                    class="text-gray-400 hover:text-gray-600"
+                >
+                    <mat-icon
+                        class="icon-size-5"
+                        svgIcon="heroicons_solid:document-arrow-down"
+                    ></mat-icon>
+                </button>
+                <button
+                    mat-icon-button
+                    (click)="exportJson()"
+                    [disabled]="
+                        !sessionsList || sessionsList.items.length === 0
+                    "
+                    [matTooltip]="'REPORTS.ACTIONS.EXPORT_JSON' | transloco"
+                    class="text-gray-400 hover:text-gray-600"
+                >
+                    <mat-icon
+                        class="icon-size-5"
+                        svgIcon="heroicons_solid:code-bracket"
+                    ></mat-icon>
+                </button>
+            </div>
         </div>
 
         <!-- Loading skeleton -->

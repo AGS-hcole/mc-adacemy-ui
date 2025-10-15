@@ -9,7 +9,10 @@
             <button
                 mat-icon-button
                 (click)="exportCsv()"
-                [disabled]="!ratingsSummary?.perUser || ratingsSummary.perUser.length === 0"
+                [disabled]="
+                    !ratingsSummary?.perUser ||
+                    ratingsSummary.perUser.length === 0
+                "
                 [matTooltip]="'REPORTS.ACTIONS.EXPORT_CSV' | transloco"
                 class="text-gray-400 hover:text-gray-600"
             >
@@ -21,7 +24,10 @@
             <button
                 mat-icon-button
                 (click)="exportJson()"
-                [disabled]="!ratingsSummary?.perUser || ratingsSummary.perUser.length === 0"
+                [disabled]="
+                    !ratingsSummary?.perUser ||
+                    ratingsSummary.perUser.length === 0
+                "
                 [matTooltip]="'REPORTS.ACTIONS.EXPORT_JSON' | transloco"
                 class="text-gray-400 hover:text-gray-600"
             >
@@ -452,9 +458,7 @@
                                         class="cursor-pointer px-2 py-3 text-left font-semibold hover:bg-gray-50"
                                         (click)="toggleSort('average')"
                                     >
-                                        <div
-                                            class="flex items-center gap-2"
-                                        >
+                                        <div class="flex items-center gap-2">
                                             {{
                                                 'REPORTS.RATINGS.PER_USER.AVERAGE'
                                                     | transloco
@@ -474,9 +478,7 @@
                                         class="cursor-pointer px-2 py-3 text-left font-semibold hover:bg-gray-50"
                                         (click)="toggleSort('count')"
                                     >
-                                        <div
-                                            class="flex items-center gap-2"
-                                        >
+                                        <div class="flex items-center gap-2">
                                             {{
                                                 'REPORTS.RATINGS.PER_USER.COUNT'
                                                     | transloco
@@ -522,7 +524,11 @@
                                                 svgIcon="heroicons_solid:star"
                                             ></mat-icon>
                                             <span class="font-semibold">
-                                                {{ user.average | number: '1.1-1' }} / 10
+                                                {{
+                                                    user.average
+                                                        | number: '1.1-1'
+                                                }}
+                                                / 10
                                             </span>
                                         </div>
                                     </td>
