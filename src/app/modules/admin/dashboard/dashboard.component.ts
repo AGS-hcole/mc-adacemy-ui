@@ -94,6 +94,13 @@ export class DashboardComponent implements OnInit, OnDestroy {
     }
 
     /**
+     * Navigate to tournaments management
+     */
+    navigateToTournaments(): void {
+        this._router.navigate(['/admin/tournaments']);
+    }
+
+    /**
      * Track by function for ngFor loops
      *
      * @param index
