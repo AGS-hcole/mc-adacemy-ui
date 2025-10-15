@@ -4,6 +4,33 @@
         <h2 class="-mb-4 text-2xl font-bold">
             {{ 'REPORTS.RATINGS.TITLE' | transloco }}
         </h2>
+        <!-- Export Buttons -->
+        <div class="flex items-center gap-2">
+            <button
+                mat-icon-button
+                (click)="exportCsv()"
+                [disabled]="!ratingsSummary?.perUser || ratingsSummary.perUser.length === 0"
+                [matTooltip]="'REPORTS.ACTIONS.EXPORT_CSV' | transloco"
+                class="text-gray-400 hover:text-gray-600"
+            >
+                <mat-icon
+                    class="icon-size-5"
+                    svgIcon="heroicons_solid:document-arrow-down"
+                ></mat-icon>
+            </button>
+            <button
+                mat-icon-button
+                (click)="exportJson()"
+                [disabled]="!ratingsSummary?.perUser || ratingsSummary.perUser.length === 0"
+                [matTooltip]="'REPORTS.ACTIONS.EXPORT_JSON' | transloco"
+                class="text-gray-400 hover:text-gray-600"
+            >
+                <mat-icon
+                    class="icon-size-5"
+                    svgIcon="heroicons_solid:code-bracket"
+                ></mat-icon>
+            </button>
+        </div>
     </div>
 
     <!-- Loading State -->

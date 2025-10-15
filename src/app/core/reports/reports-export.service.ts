@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { DateTime } from 'luxon';
-import { SessionListItem } from './reports.types';
+import { PerUserRatingDto, SessionListItem } from './reports.types';
 
 @Injectable({ providedIn: 'root' })
 export class ReportsExportService {
@@ -30,6 +30,33 @@ export class ReportsExportService {
      * Export data as JSON
      */
     exportJson(items: SessionListItem[], filename: string = 'sessions-export'): void {
+        const jsonContent = JSON.stringify(items, null, 2);
+        this.downloadFile(jsonContent, `${filename}.json`, 'application/json;charset=utf-8;');
+    }
+
+    /**
+     * Export ratings data as CSV
+     */
+    exportRatingsCsv(items: PerUserRatingDto[], filename: string = 'ratings-export'): void {
+        const headers = ['Student Name', 'Average Rating', 'Number of Ratings'];
+        const rows = items.map((item) => [
+            this.escapeCsv(`${item.user.firstName} ${item.user.lastName}`),
+            item.average.toFixed(1),
+            item.count.toString(),
+        ]);
+
+        const csvContent = [
+            headers.join(','),
+            ...rows.map((row) => row.join(',')),
+        ].join('\n');
+
+        this.downloadFile(csvContent, `${filename}.csv`, 'text/csv;charset=utf-8;');
+    }
+
+    /**
+     * Export ratings data as JSON
+     */
+    exportRatingsJson(items: PerUserRatingDto[], filename: string = 'ratings-export'): void {
         const jsonContent = JSON.stringify(items, null, 2);
         this.downloadFile(jsonContent, `${filename}.json`, 'application/json;charset=utf-8;');
     }

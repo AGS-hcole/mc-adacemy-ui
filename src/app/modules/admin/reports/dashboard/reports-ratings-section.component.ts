@@ -1,7 +1,10 @@
 import { CommonModule, DecimalPipe } from '@angular/common';
 import { ChangeDetectionStrategy, Component, Input } from '@angular/core';
+import { MatButtonModule } from '@angular/material/button';
 import { MatIconModule } from '@angular/material/icon';
+import { MatTooltipModule } from '@angular/material/tooltip';
 import { TranslocoModule } from '@jsverse/transloco';
+import { ReportsExportService } from 'app/core/reports/reports-export.service';
 import { RatingsSummaryDto } from 'app/core/reports/reports.types';
 import {
     ApexAxisChartSeries,
@@ -42,6 +45,8 @@ export type PieChartOptions = {
     imports: [
         CommonModule,
         MatIconModule,
+        MatButtonModule,
+        MatTooltipModule,
         DecimalPipe,
         TranslocoModule,
         NgApexchartsModule,
@@ -68,6 +73,11 @@ export class ReportsRatingsSectionComponent {
 
     sortBy: 'average' | 'count' = 'average';
     sortAsc = false;
+
+    /**
+     * Constructor
+     */
+    constructor(private _exportService: ReportsExportService) {}
 
     /**
      * Get sorted user stats
@@ -226,5 +236,23 @@ export class ReportsRatingsSectionComponent {
             if (i === 0) return 0; // Skip 0 rating
             return Number(obj[String(i)] ?? 0);
         });
+    }
+
+    /**
+     * Export ratings as CSV
+     */
+    exportCsv(): void {
+        if (this.ratingsSummary?.perUser && this.ratingsSummary.perUser.length > 0) {
+            this._exportService.exportRatingsCsv(this.ratingsSummary.perUser, 'ratings-export');
+        }
+    }
+
+    /**
+     * Export ratings as JSON
+     */
+    exportJson(): void {
+        if (this.ratingsSummary?.perUser && this.ratingsSummary.perUser.length > 0) {
+            this._exportService.exportRatingsJson(this.ratingsSummary.perUser, 'ratings-export');
+        }
     }
 }
