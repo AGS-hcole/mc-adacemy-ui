@@ -19,8 +19,6 @@ export class RoleRedirectGuard implements CanActivate {
                     return this.router.parseUrl('/sign-in');
                 }
 
-                console.log(user.role);
-
                 return this.router.parseUrl(`${user.role}/dashboard`);
             }),
             catchError(() => of(this.router.parseUrl('/sign-in')))

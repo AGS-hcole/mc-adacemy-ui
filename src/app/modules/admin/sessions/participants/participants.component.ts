@@ -240,7 +240,6 @@ export class SessionParticipantsComponent implements OnInit, OnDestroy {
             .pipe(takeUntil(this._unsubscribeAll))
             .subscribe({
                 next: (response) => {
-                    console.log(response);
                     this.ratingsResponse = response;
                     this.ratingsMap.clear();
                     response.ratings.forEach((rating) => {

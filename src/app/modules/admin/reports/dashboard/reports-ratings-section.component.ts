@@ -83,8 +83,6 @@ export class ReportsRatingsSectionComponent {
      * Get sorted user stats
      */
     get sortedUserStats() {
-        console.log('sortedUserStats', this.ratingsSummary);
-        console.log('filteredUserId', this.filteredUserId);
         if (!this.ratingsSummary?.perUser) {
             return [];
         }
@@ -103,8 +101,6 @@ export class ReportsRatingsSectionComponent {
      * Get filtered user stats when userId filter is set
      */
     get filteredUserStats() {
-        console.log('filteredUserStats', this.ratingsSummary);
-        console.log('filteredUserId', this.filteredUserId);
         if (!this.filteredUserId || !this.ratingsSummary?.perUser) {
             return null;
         }
@@ -242,8 +238,14 @@ export class ReportsRatingsSectionComponent {
      * Export ratings as CSV
      */
     exportCsv(): void {
-        if (this.ratingsSummary?.perUser && this.ratingsSummary.perUser.length > 0) {
-            this._exportService.exportRatingsCsv(this.ratingsSummary.perUser, 'ratings-export');
+        if (
+            this.ratingsSummary?.perUser &&
+            this.ratingsSummary.perUser.length > 0
+        ) {
+            this._exportService.exportRatingsCsv(
+                this.ratingsSummary.perUser,
+                'ratings-export'
+            );
         }
     }
 
@@ -251,8 +253,14 @@ export class ReportsRatingsSectionComponent {
      * Export ratings as JSON
      */
     exportJson(): void {
-        if (this.ratingsSummary?.perUser && this.ratingsSummary.perUser.length > 0) {
-            this._exportService.exportRatingsJson(this.ratingsSummary.perUser, 'ratings-export');
+        if (
+            this.ratingsSummary?.perUser &&
+            this.ratingsSummary.perUser.length > 0
+        ) {
+            this._exportService.exportRatingsJson(
+                this.ratingsSummary.perUser,
+                'ratings-export'
+            );
         }
     }
 }
