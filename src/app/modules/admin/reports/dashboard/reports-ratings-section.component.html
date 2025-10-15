@@ -414,7 +414,9 @@
                             <div
                                 class="flex h-12 w-12 flex-shrink-0 items-center justify-center rounded-full bg-primary-100"
                             >
-                                <span class="text-lg font-semibold text-primary">
+                                <span
+                                    class="text-lg font-semibold text-primary"
+                                >
                                     {{ getUserInitials(user) }}
                                 </span>
                             </div>
@@ -431,9 +433,7 @@
                                             }}
                                         </p>
                                         <p class="text-lg font-bold">
-                                            {{
-                                                user.average | number: '1.1-1'
-                                            }}
+                                            {{ user.average | number: '1.1-1' }}
                                             / 10
                                         </p>
                                     </div>

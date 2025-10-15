@@ -154,6 +154,8 @@ export class ReportsApiService {
 
         const params = new HttpParams({ fromObject: paramsObj });
 
+        console.log(params);
+
         return this._httpClient.get<RatingsSummaryDto>(
             `${this.apiUrl}/reports/ratings/summary`,
             { params }
