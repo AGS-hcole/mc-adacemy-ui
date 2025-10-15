@@ -90,692 +90,340 @@
         </mat-form-field>
     </div>
 
-    <!-- Sessions list -->
-    <div class="flex flex-auto sm:overflow-hidden">
-        <div class="flex flex-auto flex-col sm:overflow-y-auto">
-            <ng-container *ngIf="sessions as sessions">
-                <!-- Sessions table -->
-                <ng-container *ngIf="sessions.length > 0; else noSessions">
-                    <!-- Desktop table (lg and up) -->
-                    <div class="hidden lg:grid">
-                        <!-- Header -->
-                        <div
-                            class="text-secondary sticky top-0 z-10 grid gap-4 bg-gray-50 px-6 py-4 text-md font-semibold shadow md:px-8 dark:bg-gray-900"
-                            style="
-                                grid-template-columns: 48px auto 100px 120px 120px 120px 100px 200px;
-                            "
+    <!-- Sessions table -->
+    <div class="relative flex-1 overflow-y-auto">
+        <mat-table
+            [dataSource]="dsSessions"
+            matSort
+            class="mt-sessions w-full shadow"
+        >
+            <!-- Select Checkbox -->
+            <ng-container matColumnDef="checkboxSelected">
+                <mat-header-cell
+                    *matHeaderCellDef
+                    class="hidden w-20 flex-col-fixed lg:flex"
+                >
+                    <mat-checkbox
+                        (change)="$event ? selectAll() : null"
+                        [checked]="
+                            selection.hasValue() && isAllSelected()
+                        "
+                        [indeterminate]="
+                            selection.hasValue() && !isAllSelected()
+                        "
+                    ></mat-checkbox>
+                </mat-header-cell>
+                <mat-cell
+                    *matCellDef="let row"
+                    class="hidden w-20 flex-col-fixed lg:flex"
+                >
+                    <mat-checkbox
+                        (click)="$event.stopPropagation()"
+                        (change)="
+                            $event ? selection.toggle(row) : null
+                        "
+                        [checked]="selection.isSelected(row)"
+                    ></mat-checkbox>
+                </mat-cell>
+            </ng-container>
+
+            <!-- Date -->
+            <ng-container matColumnDef="date">
+                <mat-header-cell
+                    *matHeaderCellDef
+                    mat-sort-header
+                    class="flex-col-fixed"
+                >
+                    {{ 'SESSIONS.ADMIN.TABLE.SESSION' | transloco }}
+                </mat-header-cell>
+                <mat-cell
+                    *matCellDef="let el"
+                    class="flex-col-fixed"
+                >
+                    <div class="flex flex-col">
+                        <span class="font-medium">{{
+                            el.date | localizedDate: 'fullDate'
+                        }}</span>
+                        <span
+                            class="text-secondary text-sm"
+                            *ngIf="el.notes"
+                            >{{ el.notes }}</span
                         >
-                            <div></div>
-                            <div>
-                                {{ 'SESSIONS.ADMIN.TABLE.SESSION' | transloco }}
-                            </div>
-                            <div>
-                                {{ 'SESSIONS.ADMIN.TABLE.SLOT' | transloco }}
-                            </div>
-                            <div>
-                                {{ 'SESSIONS.ADMIN.TABLE.TIME' | transloco }}
-                            </div>
-                            <div>
-                                {{ 'SESSIONS.ADMIN.TABLE.SITE' | transloco }}
-                            </div>
-                            <div>
-                                {{
-                                    'SESSIONS.ADMIN.TABLE.PARTICIPANTS'
-                                        | transloco
-                                }}
-                            </div>
-                            <div>
-                                {{ 'SESSIONS.ADMIN.TABLE.STATUS' | transloco }}
-                            </div>
-                            <div class="text-right">
-                                {{ 'SESSIONS.ADMIN.TABLE.ACTIONS' | transloco }}
-                            </div>
-                        </div>
-
-                        <!-- Rows -->
-                        <ng-container
-                            *ngFor="let session of sessions; trackBy: trackByFn"
-                        >
-                            <div
-                                class="grid cursor-pointer items-center gap-4 border-b px-6 py-3 hover:bg-gray-50 md:px-8 dark:hover:bg-gray-900"
-                                style="
-                                    grid-template-columns: 48px auto 100px 120px 120px 120px 100px 200px;
-                                "
-                                (click)="editSession(session.id)"
-                            >
-                                <!-- Icon -->
-                                <div>
-                                    <mat-icon
-                                        class="icon-size-5"
-                                        [svgIcon]="'heroicons_outline:calendar'"
-                                    >
-                                    </mat-icon>
-                                </div>
-
-                                <!-- Date -->
-                                <div class="flex flex-col">
-                                    <span class="font-medium">{{
-                                        session.date | localizedDate: 'fullDate'
-                                    }}</span>
-                                    <span
-                                        class="text-secondary text-sm"
-                                        *ngIf="session.notes"
-                                        >{{ session.notes }}</span
-                                    >
-                                </div>
-
-                                <!-- Slot -->
-                                <div>
-                                    <span
-                                        class="inline-flex items-center rounded-full px-2.5 py-0.5 text-xs font-bold uppercase tracking-wide"
-                                        [ngClass]="{
-                                            'bg-blue-200 text-blue-800 dark:bg-blue-600 dark:text-blue-50':
-                                                session.slot === SessionSlot.AM,
-                                            'bg-amber-200 text-amber-800 dark:bg-amber-600 dark:text-amber-50':
-                                                session.slot === SessionSlot.PM,
-                                        }"
-                                    >
-                                        {{
-                                            'SESSIONS.SLOT.' + session.slot
-                                                | transloco
-                                        }}
-                                    </span>
-                                </div>
-
-                                <!-- Time -->
-                                <div class="text-sm">
-                                    {{ getDisplayTime(session) }}
-                                </div>
-
-                                <!-- Site -->
-                                <div class="text-sm">
-                                    {{ session.site?.name || session.siteId }}
-                                </div>
-
-                                <!-- Participants -->
-                                <div class="flex items-center gap-1 text-sm">
-                                    <mat-icon
-                                        class="icon-size-4"
-                                        [svgIcon]="
-                                            'heroicons_outline:user-group'
-                                        "
-                                    >
-                                    </mat-icon>
-                                    <span>
-                                        {{ getParticipantsCount(session) }}
-                                    </span>
-                                </div>
-
-                                <!-- Status -->
-                                <div>
-                                    <span
-                                        class="inline-flex items-center rounded-full px-2.5 py-0.5 text-xs font-bold uppercase tracking-wide"
-                                        [ngClass]="{
-                                            'bg-green-200 text-green-800 dark:bg-green-600 dark:text-green-50':
-                                                session.isPublished &&
-                                                !session.isCanceled,
-                                            'bg-gray-200 text-gray-800 dark:bg-gray-600 dark:text-gray-50':
-                                                !session.isPublished &&
-                                                !session.isCanceled,
-                                            'bg-red-200 text-red-800 dark:bg-red-600 dark:text-red-50':
-                                                session.isCanceled,
-                                        }"
-                                    >
-                                        <ng-container
-                                            *ngIf="session.isCanceled"
-                                        >
-                                            {{
-                                                'SESSIONS.STATUS.CANCELED'
-                                                    | transloco
-                                            }}
-                                        </ng-container>
-                                        <ng-container
-                                            *ngIf="!session.isCanceled"
-                                        >
-                                            {{
-                                                session.isPublished
-                                                    ? ('SESSIONS.STATUS.PUBLISHED'
-                                                      | transloco)
-                                                    : ('SESSIONS.STATUS.DRAFT'
-                                                      | transloco)
-                                            }}
-                                        </ng-container>
-                                    </span>
-                                </div>
-
-                                <!-- Actions -->
-                                <div
-                                    class="flex items-center justify-end gap-2"
-                                    (click)="$event.stopPropagation()"
-                                >
-                                    <button
-                                        mat-icon-button
-                                        [matTooltip]="
-                                            'SESSIONS.ADMIN.ACTIONS.EDIT'
-                                                | transloco
-                                        "
-                                        (click)="editSession(session.id)"
-                                    >
-                                        <mat-icon
-                                            class="icon-size-5"
-                                            [svgIcon]="
-                                                'heroicons_outline:pencil'
-                                            "
-                                        >
-                                        </mat-icon>
-                                    </button>
-
-                                    <button
-                                        mat-icon-button
-                                        *ngIf="!session.isCanceled"
-                                        [matTooltip]="
-                                            session.isPublished
-                                                ? ('SESSIONS.ADMIN.ACTIONS.UNPUBLISH'
-                                                  | transloco)
-                                                : ('SESSIONS.ADMIN.ACTIONS.PUBLISH'
-                                                  | transloco)
-                                        "
-                                        (click)="togglePublished(session)"
-                                    >
-                                        <mat-icon
-                                            class="icon-size-5"
-                                            [svgIcon]="
-                                                session.isPublished
-                                                    ? 'heroicons_outline:eye-slash'
-                                                    : 'heroicons_outline:eye'
-                                            "
-                                        >
-                                        </mat-icon>
-                                    </button>
-
-                                    <button
-                                        mat-icon-button
-                                        *ngIf="!session.isCanceled"
-                                        [matTooltip]="
-                                            'SESSIONS.ADMIN.ACTIONS.CANCEL'
-                                                | transloco
-                                        "
-                                        (click)="cancelSession(session)"
-                                    >
-                                        <mat-icon
-                                            class="icon-size-5"
-                                            [svgIcon]="
-                                                'heroicons_outline:x-circle'
-                                            "
-                                        >
-                                        </mat-icon>
-                                    </button>
-
-                                    <button
-                                        mat-icon-button
-                                        [matTooltip]="
-                                            'SESSIONS.ADMIN.ACTIONS.DELETE'
-                                                | transloco
-                                        "
-                                        (click)="deleteSession(session)"
-                                    >
-                                        <mat-icon
-                                            class="icon-size-5"
-                                            [svgIcon]="
-                                                'heroicons_outline:trash'
-                                            "
-                                        >
-                                        </mat-icon>
-                                    </button>
-                                </div>
-                            </div>
-                        </ng-container>
                     </div>
+                </mat-cell>
+            </ng-container>
 
-                    <!-- Tablet table (sm to lg) -->
-                    <div class="hidden sm:grid lg:hidden">
-                        <!-- Header -->
-                        <div
-                            class="text-secondary sticky top-0 z-10 grid gap-4 bg-gray-50 px-6 py-4 text-md font-semibold shadow dark:bg-gray-900"
-                            style="
-                                grid-template-columns: 48px auto 100px 120px 150px;
-                            "
-                        >
-                            <div></div>
-                            <div>
-                                {{ 'SESSIONS.ADMIN.TABLE.SESSION' | transloco }}
-                            </div>
-                            <div>
-                                {{ 'SESSIONS.ADMIN.TABLE.SLOT' | transloco }}
-                            </div>
-                            <div>
-                                {{ 'SESSIONS.ADMIN.TABLE.SITE' | transloco }}
-                            </div>
-                            <div class="text-right">
-                                {{ 'SESSIONS.ADMIN.TABLE.ACTIONS' | transloco }}
-                            </div>
-                        </div>
-
-                        <!-- Rows -->
-                        <ng-container
-                            *ngFor="let session of sessions; trackBy: trackByFn"
-                        >
-                            <div
-                                class="grid cursor-pointer items-center gap-4 border-b px-6 py-3 hover:bg-gray-50 dark:hover:bg-gray-900"
-                                style="
-                                    grid-template-columns: 48px auto 100px 120px 150px;
-                                "
-                                (click)="editSession(session.id)"
-                            >
-                                <!-- Icon -->
-                                <div>
-                                    <mat-icon
-                                        class="icon-size-5"
-                                        [svgIcon]="'heroicons_outline:calendar'"
-                                    >
-                                    </mat-icon>
-                                </div>
-
-                                <!-- Date and details -->
-                                <div class="flex flex-col">
-                                    <span class="font-medium">{{
-                                        session.date | localizedDate: 'shortDate'
-                                    }}</span>
-                                    <span class="text-secondary text-xs">
-                                        {{ getDisplayTime(session) }}
-                                        <ng-container
-                                            *ngIf="session.site?.name"
-                                        >
-                                            • {{ session.site.name }}
-                                        </ng-container>
-                                    </span>
-                                </div>
-
-                                <!-- Slot -->
-                                <div>
-                                    <span
-                                        class="inline-flex items-center rounded-full px-2.5 py-0.5 text-xs font-bold uppercase tracking-wide"
-                                        [ngClass]="{
-                                            'bg-blue-200 text-blue-800 dark:bg-blue-600 dark:text-blue-50':
-                                                session.slot === SessionSlot.AM,
-                                            'bg-amber-200 text-amber-800 dark:bg-amber-600 dark:text-amber-50':
-                                                session.slot === SessionSlot.PM,
-                                        }"
-                                    >
-                                        {{
-                                            'SESSIONS.SLOT.' + session.slot
-                                                | transloco
-                                        }}
-                                    </span>
-                                </div>
-
-                                <!-- Status -->
-                                <div>
-                                    <span
-                                        class="inline-flex items-center rounded-full px-2.5 py-0.5 text-xs font-bold uppercase tracking-wide"
-                                        [ngClass]="{
-                                            'bg-green-200 text-green-800 dark:bg-green-600 dark:text-green-50':
-                                                session.isPublished &&
-                                                !session.isCanceled,
-                                            'bg-gray-200 text-gray-800 dark:bg-gray-600 dark:text-gray-50':
-                                                !session.isPublished &&
-                                                !session.isCanceled,
-                                            'bg-red-200 text-red-800 dark:bg-red-600 dark:text-red-50':
-                                                session.isCanceled,
-                                        }"
-                                    >
-                                        <ng-container
-                                            *ngIf="session.isCanceled"
-                                        >
-                                            {{
-                                                'SESSIONS.STATUS.CANCELED'
-                                                    | transloco
-                                            }}
-                                        </ng-container>
-                                        <ng-container
-                                            *ngIf="!session.isCanceled"
-                                        >
-                                            {{
-                                                session.isPublished
-                                                    ? ('SESSIONS.STATUS.PUBLISHED'
-                                                      | transloco)
-                                                    : ('SESSIONS.STATUS.DRAFT'
-                                                      | transloco)
-                                            }}
-                                        </ng-container>
-                                    </span>
-                                </div>
-
-                                <!-- Actions -->
-                                <div
-                                    class="flex items-center justify-end gap-2"
-                                    (click)="$event.stopPropagation()"
-                                >
-                                    <button
-                                        mat-icon-button
-                                        [matTooltip]="
-                                            'SESSIONS.ADMIN.ACTIONS.EDIT'
-                                                | transloco
-                                        "
-                                        (click)="editSession(session.id)"
-                                    >
-                                        <mat-icon
-                                            class="icon-size-5"
-                                            [svgIcon]="
-                                                'heroicons_outline:pencil'
-                                            "
-                                        >
-                                        </mat-icon>
-                                    </button>
-
-                                    <button
-                                        mat-icon-button
-                                        *ngIf="!session.isCanceled"
-                                        [matTooltip]="
-                                            session.isPublished
-                                                ? ('SESSIONS.ADMIN.ACTIONS.UNPUBLISH'
-                                                  | transloco)
-                                                : ('SESSIONS.ADMIN.ACTIONS.PUBLISH'
-                                                  | transloco)
-                                        "
-                                        (click)="togglePublished(session)"
-                                    >
-                                        <mat-icon
-                                            class="icon-size-5"
-                                            [svgIcon]="
-                                                session.isPublished
-                                                    ? 'heroicons_outline:eye-slash'
-                                                    : 'heroicons_outline:eye'
-                                            "
-                                        >
-                                        </mat-icon>
-                                    </button>
-
-                                    <button
-                                        mat-icon-button
-                                        [matTooltip]="
-                                            'SESSIONS.ADMIN.ACTIONS.DELETE'
-                                                | transloco
-                                        "
-                                        (click)="deleteSession(session)"
-                                    >
-                                        <mat-icon
-                                            class="icon-size-5"
-                                            [svgIcon]="
-                                                'heroicons_outline:trash'
-                                            "
-                                        >
-                                        </mat-icon>
-                                    </button>
-                                </div>
-                            </div>
-                        </ng-container>
-                    </div>
-
-                    <!-- Mobile cards (xs) -->
-                    <div class="sm:hidden">
-                        <ng-container
-                            *ngFor="let session of sessions; trackBy: trackByFn"
-                        >
-                            <div
-                                class="bg-card border-b p-4 hover:bg-gray-50 dark:hover:bg-gray-900"
-                                (click)="editSession(session.id)"
-                            >
-                                <!-- Header with icon and date -->
-                                <div
-                                    class="mb-3 flex items-start justify-between"
-                                >
-                                    <div class="flex items-start gap-3">
-                                        <mat-icon
-                                            class="mt-1 icon-size-5"
-                                            [svgIcon]="
-                                                'heroicons_outline:calendar'
-                                            "
-                                        >
-                                        </mat-icon>
-                                        <div class="flex flex-col">
-                                            <span class="font-medium">{{
-                                                session.date | localizedDate: 'fullDate'
-                                            }}</span>
-                                            <span
-                                                class="text-secondary text-sm"
-                                            >
-                                                {{ getDisplayTime(session) }}
-                                            </span>
-                                        </div>
-                                    </div>
-                                </div>
-
-                                <!-- Session details -->
-                                <div class="mb-3 flex flex-col gap-2">
-                                    <!-- Slot -->
-                                    <div class="flex items-center gap-2">
-                                        <span
-                                            class="text-secondary text-sm font-medium"
-                                        >
-                                            {{
-                                                'SESSIONS.ADMIN.TABLE.SLOT'
-                                                    | transloco
-                                            }}:
-                                        </span>
-                                        <span
-                                            class="inline-flex items-center rounded-full px-2.5 py-0.5 text-xs font-bold uppercase tracking-wide"
-                                            [ngClass]="{
-                                                'bg-blue-200 text-blue-800 dark:bg-blue-600 dark:text-blue-50':
-                                                    session.slot ===
-                                                    SessionSlot.AM,
-                                                'bg-amber-200 text-amber-800 dark:bg-amber-600 dark:text-amber-50':
-                                                    session.slot ===
-                                                    SessionSlot.PM,
-                                            }"
-                                        >
-                                            {{
-                                                'SESSIONS.SLOT.' + session.slot
-                                                    | transloco
-                                            }}
-                                        </span>
-                                    </div>
-
-                                    <!-- Site -->
-                                    <div class="flex items-center gap-2">
-                                        <span
-                                            class="text-secondary text-sm font-medium"
-                                        >
-                                            {{
-                                                'SESSIONS.ADMIN.TABLE.SITE'
-                                                    | transloco
-                                            }}:
-                                        </span>
-                                        <span class="text-sm">
-                                            {{
-                                                session.site?.name ||
-                                                    session.siteId
-                                            }}
-                                        </span>
-                                    </div>
-
-                                    <!-- Participants -->
-                                    <div class="flex items-center gap-2">
-                                        <span
-                                            class="text-secondary text-sm font-medium"
-                                        >
-                                            {{
-                                                'SESSIONS.ADMIN.TABLE.PARTICIPANTS'
-                                                    | transloco
-                                            }}:
-                                        </span>
-                                        <div
-                                            class="flex items-center gap-1 text-sm"
-                                        >
-                                            <mat-icon
-                                                class="icon-size-4"
-                                                [svgIcon]="
-                                                    'heroicons_outline:user-group'
-                                                "
-                                            >
-                                            </mat-icon>
-                                            <span>
-                                                {{
-                                                    getParticipantsCount(
-                                                        session
-                                                    )
-                                                }}
-                                            </span>
-                                        </div>
-                                    </div>
-
-                                    <!-- Status -->
-                                    <div class="flex items-center gap-2">
-                                        <span
-                                            class="text-secondary text-sm font-medium"
-                                        >
-                                            {{
-                                                'SESSIONS.ADMIN.TABLE.STATUS'
-                                                    | transloco
-                                            }}:
-                                        </span>
-                                        <span
-                                            class="inline-flex items-center rounded-full px-2.5 py-0.5 text-xs font-bold uppercase tracking-wide"
-                                            [ngClass]="{
-                                                'bg-green-200 text-green-800 dark:bg-green-600 dark:text-green-50':
-                                                    session.isPublished &&
-                                                    !session.isCanceled,
-                                                'bg-gray-200 text-gray-800 dark:bg-gray-600 dark:text-gray-50':
-                                                    !session.isPublished &&
-                                                    !session.isCanceled,
-                                                'bg-red-200 text-red-800 dark:bg-red-600 dark:text-red-50':
-                                                    session.isCanceled,
-                                            }"
-                                        >
-                                            <ng-container
-                                                *ngIf="session.isCanceled"
-                                            >
-                                                {{
-                                                    'SESSIONS.STATUS.CANCELED'
-                                                        | transloco
-                                                }}
-                                            </ng-container>
-                                            <ng-container
-                                                *ngIf="!session.isCanceled"
-                                            >
-                                                {{
-                                                    session.isPublished
-                                                        ? ('SESSIONS.STATUS.PUBLISHED'
-                                                          | transloco)
-                                                        : ('SESSIONS.STATUS.DRAFT'
-                                                          | transloco)
-                                                }}
-                                            </ng-container>
-                                        </span>
-                                    </div>
-
-                                    <!-- Notes -->
-                                    <div
-                                        *ngIf="session.notes"
-                                        class="text-secondary text-sm italic"
-                                    >
-                                        {{ session.notes }}
-                                    </div>
-                                </div>
-
-                                <!-- Actions -->
-                                <div
-                                    class="flex items-center justify-end gap-2 border-t pt-3"
-                                    (click)="$event.stopPropagation()"
-                                >
-                                    <button
-                                        mat-icon-button
-                                        [matTooltip]="
-                                            'SESSIONS.ADMIN.ACTIONS.EDIT'
-                                                | transloco
-                                        "
-                                        (click)="editSession(session.id)"
-                                    >
-                                        <mat-icon
-                                            class="icon-size-5"
-                                            [svgIcon]="
-                                                'heroicons_outline:pencil'
-                                            "
-                                        >
-                                        </mat-icon>
-                                    </button>
-
-                                    <button
-                                        mat-icon-button
-                                        *ngIf="!session.isCanceled"
-                                        [matTooltip]="
-                                            session.isPublished
-                                                ? ('SESSIONS.ADMIN.ACTIONS.UNPUBLISH'
-                                                  | transloco)
-                                                : ('SESSIONS.ADMIN.ACTIONS.PUBLISH'
-                                                  | transloco)
-                                        "
-                                        (click)="togglePublished(session)"
-                                    >
-                                        <mat-icon
-                                            class="icon-size-5"
-                                            [svgIcon]="
-                                                session.isPublished
-                                                    ? 'heroicons_outline:eye-slash'
-                                                    : 'heroicons_outline:eye'
-                                            "
-                                        >
-                                        </mat-icon>
-                                    </button>
-
-                                    <button
-                                        mat-icon-button
-                                        *ngIf="!session.isCanceled"
-                                        [matTooltip]="
-                                            'SESSIONS.ADMIN.ACTIONS.CANCEL'
-                                                | transloco
-                                        "
-                                        (click)="cancelSession(session)"
-                                    >
-                                        <mat-icon
-                                            class="icon-size-5"
-                                            [svgIcon]="
-                                                'heroicons_outline:x-circle'
-                                            "
-                                        >
-                                        </mat-icon>
-                                    </button>
-
-                                    <button
-                                        mat-icon-button
-                                        [matTooltip]="
-                                            'SESSIONS.ADMIN.ACTIONS.DELETE'
-                                                | transloco
-                                        "
-                                        (click)="deleteSession(session)"
-                                    >
-                                        <mat-icon
-                                            class="icon-size-5"
-                                            [svgIcon]="
-                                                'heroicons_outline:trash'
-                                            "
-                                        >
-                                        </mat-icon>
-                                    </button>
-                                </div>
-                            </div>
-                        </ng-container>
-                    </div>
-                </ng-container>
-
-                <!-- No sessions -->
-                <ng-template #noSessions>
-                    <div
-                        class="flex flex-auto flex-col items-center justify-center bg-gray-100 dark:bg-transparent"
+            <!-- Slot -->
+            <ng-container matColumnDef="slot">
+                <mat-header-cell
+                    *matHeaderCellDef
+                    mat-sort-header
+                    class="w-30 flex-col-fixed"
+                >
+                    {{ 'SESSIONS.ADMIN.TABLE.SLOT' | transloco }}
+                </mat-header-cell>
+                <mat-cell
+                    *matCellDef="let el"
+                    class="w-30 flex-col-fixed"
+                >
+                    <span
+                        class="inline-flex items-center rounded-full px-2.5 py-0.5 text-xs font-bold uppercase tracking-wide"
+                        [ngClass]="{
+                            'bg-blue-200 text-blue-800 dark:bg-blue-600 dark:text-blue-50':
+                                el.slot === SessionSlot.AM,
+                            'bg-amber-200 text-amber-800 dark:bg-amber-600 dark:text-amber-50':
+                                el.slot === SessionSlot.PM,
+                        }"
                     >
+                        {{
+                            'SESSIONS.SLOT.' + el.slot
+                                | transloco
+                        }}
+                    </span>
+                </mat-cell>
+            </ng-container>
+
+            <!-- Time -->
+            <ng-container matColumnDef="time">
+                <mat-header-cell
+                    *matHeaderCellDef
+                    class="w-30 flex-col-fixed"
+                >
+                    {{ 'SESSIONS.ADMIN.TABLE.TIME' | transloco }}
+                </mat-header-cell>
+                <mat-cell
+                    *matCellDef="let el"
+                    class="w-30 flex-col-fixed"
+                >
+                    {{ getDisplayTime(el) }}
+                </mat-cell>
+            </ng-container>
+
+            <!-- Site -->
+            <ng-container matColumnDef="site">
+                <mat-header-cell
+                    *matHeaderCellDef
+                    mat-sort-header
+                    class="w-30 flex-col-fixed"
+                >
+                    {{ 'SESSIONS.ADMIN.TABLE.SITE' | transloco }}
+                </mat-header-cell>
+                <mat-cell
+                    *matCellDef="let el"
+                    class="w-30 flex-col-fixed"
+                >
+                    {{ el.site?.name || el.siteId }}
+                </mat-cell>
+            </ng-container>
+
+            <!-- Participants -->
+            <ng-container matColumnDef="participants">
+                <mat-header-cell
+                    *matHeaderCellDef
+                    class="w-30 flex-col-fixed"
+                >
+                    {{
+                        'SESSIONS.ADMIN.TABLE.PARTICIPANTS'
+                            | transloco
+                    }}
+                </mat-header-cell>
+                <mat-cell
+                    *matCellDef="let el"
+                    class="w-30 flex-col-fixed"
+                >
+                    <div class="flex items-center gap-1 text-sm">
                         <mat-icon
-                            class="icon-size-24"
-                            [svgIcon]="'heroicons_outline:calendar'"
+                            class="icon-size-4"
+                            [svgIcon]="
+                                'heroicons_outline:user-group'
+                            "
                         >
                         </mat-icon>
-                        <div
-                            class="text-secondary mt-4 text-2xl font-semibold tracking-tight"
-                        >
-                            {{ 'SESSIONS.ADMIN.NO_SESSIONS' | transloco }}
-                        </div>
+                        <span>
+                            {{ getParticipantsCount(el) }}
+                        </span>
                     </div>
-                </ng-template>
+                </mat-cell>
             </ng-container>
-        </div>
+
+            <!-- Status -->
+            <ng-container matColumnDef="status">
+                <mat-header-cell
+                    *matHeaderCellDef
+                    mat-sort-header
+                    class="w-30 flex-col-fixed"
+                >
+                    {{ 'SESSIONS.ADMIN.TABLE.STATUS' | transloco }}
+                </mat-header-cell>
+                <mat-cell
+                    *matCellDef="let el"
+                    class="w-30 flex-col-fixed"
+                >
+                    <span
+                        class="inline-flex items-center rounded-full px-2.5 py-0.5 text-xs font-bold uppercase tracking-wide"
+                        [ngClass]="{
+                            'bg-green-200 text-green-800 dark:bg-green-600 dark:text-green-50':
+                                el.isPublished &&
+                                !el.isCanceled,
+                            'bg-gray-200 text-gray-800 dark:bg-gray-600 dark:text-gray-50':
+                                !el.isPublished &&
+                                !el.isCanceled,
+                            'bg-red-200 text-red-800 dark:bg-red-600 dark:text-red-50':
+                                el.isCanceled,
+                        }"
+                    >
+                        <ng-container
+                            *ngIf="el.isCanceled"
+                        >
+                            {{
+                                'SESSIONS.STATUS.CANCELED'
+                                    | transloco
+                            }}
+                        </ng-container>
+                        <ng-container
+                            *ngIf="!el.isCanceled"
+                        >
+                            {{
+                                el.isPublished
+                                    ? ('SESSIONS.STATUS.PUBLISHED'
+                                      | transloco)
+                                    : ('SESSIONS.STATUS.DRAFT'
+                                      | transloco)
+                            }}
+                        </ng-container>
+                    </span>
+                </mat-cell>
+            </ng-container>
+
+            <!-- Actions -->
+            <ng-container matColumnDef="actions">
+                <mat-header-cell
+                    *matHeaderCellDef
+                    class="w-48 flex-col-fixed text-right"
+                >
+                    {{ 'SESSIONS.ADMIN.TABLE.ACTIONS' | transloco }}
+                </mat-header-cell>
+                <mat-cell
+                    *matCellDef="let el"
+                    class="w-48 flex-col-fixed"
+                >
+                    <div
+                        class="flex items-center justify-end gap-2"
+                        (click)="$event.stopPropagation()"
+                    >
+                        <button
+                            mat-icon-button
+                            [matTooltip]="
+                                'SESSIONS.ADMIN.ACTIONS.EDIT'
+                                    | transloco
+                            "
+                            (click)="editSession(el.id)"
+                        >
+                            <mat-icon
+                                class="icon-size-5"
+                                [svgIcon]="
+                                    'heroicons_outline:pencil'
+                                "
+                            >
+                            </mat-icon>
+                        </button>
+
+                        <button
+                            mat-icon-button
+                            *ngIf="!el.isCanceled"
+                            [matTooltip]="
+                                el.isPublished
+                                    ? ('SESSIONS.ADMIN.ACTIONS.UNPUBLISH'
+                                      | transloco)
+                                    : ('SESSIONS.ADMIN.ACTIONS.PUBLISH'
+                                      | transloco)
+                            "
+                            (click)="togglePublished(el)"
+                        >
+                            <mat-icon
+                                class="icon-size-5"
+                                [svgIcon]="
+                                    el.isPublished
+                                        ? 'heroicons_outline:eye-slash'
+                                        : 'heroicons_outline:eye'
+                                "
+                            >
+                            </mat-icon>
+                        </button>
+
+                        <button
+                            mat-icon-button
+                            *ngIf="!el.isCanceled"
+                            [matTooltip]="
+                                'SESSIONS.ADMIN.ACTIONS.CANCEL'
+                                    | transloco
+                            "
+                            (click)="cancelSession(el)"
+                        >
+                            <mat-icon
+                                class="icon-size-5"
+                                [svgIcon]="
+                                    'heroicons_outline:x-circle'
+                                "
+                            >
+                            </mat-icon>
+                        </button>
+
+                        <button
+                            mat-icon-button
+                            [matTooltip]="
+                                'SESSIONS.ADMIN.ACTIONS.DELETE'
+                                    | transloco
+                            "
+                            (click)="deleteSession(el)"
+                        >
+                            <mat-icon
+                                class="icon-size-5"
+                                [svgIcon]="
+                                    'heroicons_outline:trash'
+                                "
+                            >
+                            </mat-icon>
+                        </button>
+                    </div>
+                </mat-cell>
+            </ng-container>
+
+            <!-- Header Row -->
+            <mat-header-row
+                *matHeaderRowDef="columnsToDisplay"
+                class="text-secondary sticky top-0 z-10 bg-gray-50 text-md font-semibold shadow dark:bg-black dark:bg-opacity-5"
+            ></mat-header-row>
+
+            <!-- Rows -->
+            <mat-row
+                *matRowDef="let row; columns: columnsToDisplay"
+                (click)="editSession(row.id)"
+                [ngClass]="{
+                    'bg-primary-50': selection.isSelected(row),
+                }"
+                class="cursor-pointer truncate transition duration-200 sm:h-14"
+            ></mat-row>
+        </mat-table>
+
+        <ng-container *ngIf="dsSessions.filteredData.length === 0">
+            <div class="py-4 text-center">
+                {{ 'SESSIONS.ADMIN.NO_SESSIONS' | transloco }}
+                <button
+                    mat-button
+                    class="ml-2"
+                    *ngIf="hasActiveFilters()"
+                    (click)="clearFilters()"
+                >
+                    <mat-icon
+                        [svgIcon]="'heroicons_outline:x-circle'"
+                    ></mat-icon>
+                    <span class="ml-2">{{
+                        'SESSIONS.ADMIN.FILTERS.CLEAR_FILTERS'
+                            | transloco
+                    }}</span>
+                </button>
+            </div>
+        </ng-container>
     </div>
 </div>

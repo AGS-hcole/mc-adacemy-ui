@@ -1,10 +1,11 @@
-import { NgClass, NgFor, NgIf } from '@angular/common';
+import { NgClass, NgIf } from '@angular/common';
 import {
     ChangeDetectionStrategy,
     ChangeDetectorRef,
     Component,
     OnDestroy,
     OnInit,
+    ViewChild,
     ViewEncapsulation,
 } from '@angular/core';
 import {
@@ -13,15 +14,19 @@ import {
     ReactiveFormsModule,
 } from '@angular/forms';
 import { MatButtonModule } from '@angular/material/button';
+import { MatCheckboxModule } from '@angular/material/checkbox';
 import { MatOptionModule } from '@angular/material/core';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatIconModule } from '@angular/material/icon';
 import { MatInputModule } from '@angular/material/input';
 import { MatSelectModule } from '@angular/material/select';
+import { MatSort, MatSortModule } from '@angular/material/sort';
+import { MatTableDataSource, MatTableModule } from '@angular/material/table';
 import { MatTooltipModule } from '@angular/material/tooltip';
 import { ActivatedRoute, Router } from '@angular/router';
 import { FuseConfirmationService } from '@fuse/services/confirmation';
 import { TranslocoModule } from '@jsverse/transloco';
+import { SelectionModel } from '@angular/cdk/collections';
 import {
     Tournament,
     TournamentFilters,
@@ -40,23 +45,27 @@ import { Subject, debounceTime, takeUntil } from 'rxjs';
     imports: [
         LocalizedDatePipe,
         NgClass,
-        NgFor,
         NgIf,
         FormsModule,
         ReactiveFormsModule,
         MatButtonModule,
+        MatCheckboxModule,
         MatFormFieldModule,
         MatIconModule,
         MatInputModule,
         MatSelectModule,
         MatOptionModule,
+        MatSortModule,
+        MatTableModule,
         MatTooltipModule,
         TranslocoModule,
     ],
 })
 export class TournamentListComponent implements OnInit, OnDestroy {
-    tournaments: Tournament[] = [];
-    filteredTournaments: Tournament[] = [];
+    @ViewChild(MatSort) sort: MatSort;
+
+    dsTournaments: MatTableDataSource<Tournament> = new MatTableDataSource<Tournament>();
+    selection = new SelectionModel<Tournament>(true, []);
 
     searchControl = new FormControl('');
     statusControl = new FormControl<TournamentStatus | null>(null);
@@ -64,6 +73,16 @@ export class TournamentListComponent implements OnInit, OnDestroy {
 
     TournamentStatus = TournamentStatus;
     TournamentType = TournamentType;
+
+    columnsToDisplay: string[] = [
+        'checkboxSelected',
+        'title',
+        'type',
+        'dates',
+        'location',
+        'status',
+        'actions',
+    ];
 
     private _unsubscribeAll: Subject<void> = new Subject<void>();
 
@@ -90,8 +109,10 @@ export class TournamentListComponent implements OnInit, OnDestroy {
         this._activatedRoute.data
             .pipe(takeUntil(this._unsubscribeAll))
             .subscribe(({ tournaments }) => {
-                this.tournaments = tournaments || [];
-                this.filteredTournaments = [...this.tournaments];
+                this.dsTournaments.data = tournaments || [];
+                if (this.sort) {
+                    this.dsTournaments.sort = this.sort;
+                }
                 this._changeDetectorRef.markForCheck();
             });
 
@@ -100,7 +121,7 @@ export class TournamentListComponent implements OnInit, OnDestroy {
             .pipe(takeUntil(this._unsubscribeAll))
             .subscribe((tournaments) => {
                 if (tournaments) {
-                    this.tournaments = tournaments;
+                    this.dsTournaments.data = tournaments;
                     this.applyFilters();
                 }
             });
@@ -146,7 +167,7 @@ export class TournamentListComponent implements OnInit, OnDestroy {
         const status = this.statusControl.value;
         const type = this.typeControl.value;
 
-        this.filteredTournaments = this.tournaments.filter((tournament) => {
+        this.dsTournaments.data = this.dsTournaments.data.filter((tournament) => {
             const matchesSearch =
                 !search ||
                 tournament.title.toLowerCase().includes(search) ||
@@ -230,5 +251,45 @@ export class TournamentListComponent implements OnInit, OnDestroy {
      */
     trackByFn(index: number, item: any): any {
         return item.id || index;
+    }
+
+    /**
+     * Whether the number of selected elements matches the total number of rows
+     */
+    isAllSelected(): boolean {
+        const numSelected = this.selection.selected.length;
+        const numRows = this.dsTournaments.data.length;
+        return numSelected === numRows;
+    }
+
+    /**
+     * Selects all rows if they are not all selected; otherwise clear selection
+     */
+    selectAll(): void {
+        if (this.isAllSelected()) {
+            this.selection.clear();
+        } else {
+            this.dsTournaments.data.forEach((row) => this.selection.select(row));
+        }
+    }
+
+    /**
+     * Check if there are active filters
+     */
+    hasActiveFilters(): boolean {
+        return (
+            (this.searchControl.value && this.searchControl.value.length > 0) ||
+            this.statusControl.value !== null ||
+            this.typeControl.value !== null
+        );
+    }
+
+    /**
+     * Clear all filters
+     */
+    clearFilters(): void {
+        this.searchControl.setValue('');
+        this.statusControl.setValue(null);
+        this.typeControl.setValue(null);
     }
 }

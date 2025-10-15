@@ -267,7 +267,8 @@
         "SLOT": "Slot",
         "ALL_SLOTS": "All slots",
         "STATUS": "Status",
-        "ALL_STATUS": "All statuses"
+        "ALL_STATUS": "All statuses",
+        "CLEAR_FILTERS": "Clear filters"
       },
       "TABLE": {
         "SESSION": "Session",
@@ -484,7 +485,8 @@
         "STATUS": "Status",
         "ALL_STATUS": "All statuses",
         "TYPE": "Type",
-        "ALL_TYPES": "All types"
+        "ALL_TYPES": "All types",
+        "CLEAR_FILTERS": "Clear filters"
       },
       "TABLE": {
         "TITLE": "Title",

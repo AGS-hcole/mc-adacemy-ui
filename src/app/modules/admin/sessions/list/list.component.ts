@@ -1,10 +1,11 @@
-import { NgClass, NgForOf, NgIf } from '@angular/common';
+import { NgClass, NgIf } from '@angular/common';
 import {
     ChangeDetectionStrategy,
     ChangeDetectorRef,
     Component,
     OnDestroy,
     OnInit,
+    ViewChild,
     ViewEncapsulation,
 } from '@angular/core';
 import {
@@ -13,16 +14,20 @@ import {
     UntypedFormControl,
 } from '@angular/forms';
 import { MatButtonModule } from '@angular/material/button';
+import { MatCheckboxModule } from '@angular/material/checkbox';
 import { MatOptionModule } from '@angular/material/core';
 import { MatDialog } from '@angular/material/dialog';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatIconModule } from '@angular/material/icon';
 import { MatInputModule } from '@angular/material/input';
 import { MatSelectModule } from '@angular/material/select';
+import { MatSort, MatSortModule } from '@angular/material/sort';
+import { MatTableDataSource, MatTableModule } from '@angular/material/table';
 import { MatTooltipModule } from '@angular/material/tooltip';
 import { ActivatedRoute, Router } from '@angular/router';
 import { FuseConfirmationService } from '@fuse/services/confirmation';
 import { TranslocoModule } from '@jsverse/transloco';
+import { SelectionModel } from '@angular/cdk/collections';
 import {
     Session,
     SessionFilters,
@@ -44,19 +49,24 @@ import { Subject, combineLatest, debounceTime, takeUntil } from 'rxjs';
         FormsModule,
         ReactiveFormsModule,
         MatButtonModule,
+        MatCheckboxModule,
         NgIf,
-        NgForOf,
         MatFormFieldModule,
         MatIconModule,
         MatInputModule,
         MatSelectModule,
         MatOptionModule,
+        MatSortModule,
+        MatTableModule,
         MatTooltipModule,
         TranslocoModule,
     ],
 })
 export class AdminSessionsListComponent implements OnInit, OnDestroy {
-    sessions: Session[] = [];
+    @ViewChild(MatSort) sort: MatSort;
+
+    dsSessions: MatTableDataSource<Session> = new MatTableDataSource<Session>();
+    selection = new SelectionModel<Session>(true, []);
     sites: Site[];
 
     searchInputControl: UntypedFormControl = new UntypedFormControl();
@@ -65,6 +75,17 @@ export class AdminSessionsListComponent implements OnInit, OnDestroy {
     selectedPublished: boolean | null = null;
 
     SessionSlot = SessionSlot;
+    
+    columnsToDisplay: string[] = [
+        'checkboxSelected',
+        'date',
+        'slot',
+        'time',
+        'site',
+        'participants',
+        'status',
+        'actions',
+    ];
 
     private _unsubscribeAll: Subject<any> = new Subject<any>();
 
@@ -95,7 +116,10 @@ export class AdminSessionsListComponent implements OnInit, OnDestroy {
             .pipe(takeUntil(this._unsubscribeAll))
             .subscribe(([sites, sessions]) => {
                 this.sites = sites;
-                this.sessions = sessions;
+                this.dsSessions.data = sessions;
+                if (this.sort) {
+                    this.dsSessions.sort = this.sort;
+                }
                 this._changeDetectorRef.markForCheck();
             });
 
@@ -260,5 +284,46 @@ export class AdminSessionsListComponent implements OnInit, OnDestroy {
      */
     trackByFn(index: number, item: any): any {
         return item.id || index;
+    }
+
+    /**
+     * Whether the number of selected elements matches the total number of rows
+     */
+    isAllSelected(): boolean {
+        const numSelected = this.selection.selected.length;
+        const numRows = this.dsSessions.data.length;
+        return numSelected === numRows;
+    }
+
+    /**
+     * Selects all rows if they are not all selected; otherwise clear selection
+     */
+    selectAll(): void {
+        if (this.isAllSelected()) {
+            this.selection.clear();
+        } else {
+            this.dsSessions.data.forEach((row) => this.selection.select(row));
+        }
+    }
+
+    /**
+     * Check if there are active filters
+     */
+    hasActiveFilters(): boolean {
+        return (
+            this.selectedSite !== null ||
+            this.selectedSlot !== null ||
+            this.selectedPublished !== null
+        );
+    }
+
+    /**
+     * Clear all filters
+     */
+    clearFilters(): void {
+        this.selectedSite = null;
+        this.selectedSlot = null;
+        this.selectedPublished = null;
+        this.loadSessions();
     }
 }
