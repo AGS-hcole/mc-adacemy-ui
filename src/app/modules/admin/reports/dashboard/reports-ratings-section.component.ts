@@ -2,7 +2,6 @@ import { CommonModule, DecimalPipe } from '@angular/common';
 import { ChangeDetectionStrategy, Component, Input } from '@angular/core';
 import { MatIconModule } from '@angular/material/icon';
 import { TranslocoModule } from '@jsverse/transloco';
-import { NgApexchartsModule } from 'ng-apexcharts';
 import { RatingsSummaryDto } from 'app/core/reports/reports.types';
 import {
     ApexAxisChartSeries,
@@ -13,6 +12,7 @@ import {
     ApexPlotOptions,
     ApexXAxis,
     ApexYAxis,
+    NgApexchartsModule,
 } from 'ng-apexcharts';
 
 export type DistributionChartOptions = {
@@ -39,7 +39,13 @@ export type PieChartOptions = {
     templateUrl: './reports-ratings-section.component.html',
     standalone: true,
     changeDetection: ChangeDetectionStrategy.OnPush,
-    imports: [CommonModule, MatIconModule, TranslocoModule, NgApexchartsModule, DecimalPipe],
+    imports: [
+        CommonModule,
+        MatIconModule,
+        TranslocoModule,
+        NgApexchartsModule,
+        DecimalPipe,
+    ],
 })
 export class ReportsRatingsSectionComponent {
     @Input() set ratingsSummary(value: RatingsSummaryDto | null) {
@@ -88,7 +94,9 @@ export class ReportsRatingsSectionComponent {
         if (!this.filteredUserId || !this.ratingsSummary) {
             return null;
         }
-        return this.ratingsSummary.perUser.find(u => u.userId === this.filteredUserId);
+        return this.ratingsSummary.perUser?.find(
+            (u) => u.userId === this.filteredUserId
+        );
     }
 
     /**
@@ -108,7 +116,9 @@ export class ReportsRatingsSectionComponent {
      */
     private updateCharts(data: RatingsSummaryDto): void {
         // Distribution chart
-        const distribution = data.global.distribution || [];
+        const distribution = this.getDistributionSegments(
+            data?.global?.distribution
+        );
         this.distributionChartOptions = {
             series: [
                 {
@@ -161,7 +171,10 @@ export class ReportsRatingsSectionComponent {
 
         // Pie chart for contract vs non-contract
         this.pieChartOptions = {
-            series: [data.byContract.withContract, data.byContract.withoutContract],
+            series: [
+                data.byContract?.withContract,
+                data.byContract?.withoutContract,
+            ],
             chart: {
                 type: 'pie',
                 height: 160,
@@ -178,5 +191,19 @@ export class ReportsRatingsSectionComponent {
                 },
             },
         };
+    }
+
+    private getDistributionSegments(d: unknown): number[] {
+        if (Array.isArray(d)) {
+            const arr = (d as unknown[])
+                .slice(0, 11)
+                .map((n) => Number(n ?? 0));
+            while (arr.length < 11) arr.push(0);
+            return arr;
+        }
+        const obj = (d ?? {}) as Record<string | number, unknown>;
+        return Array.from({ length: 11 }, (_, i) =>
+            Number(obj[i] ?? obj[String(i)] ?? 0)
+        );
     }
 }
