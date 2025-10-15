@@ -105,6 +105,24 @@ export class TournamentListComponent implements OnInit, OnDestroy {
      * On init
      */
     ngOnInit(): void {
+        // Setup filter predicate
+        this.dsTournaments.filterPredicate = (data: Tournament, filter: string) => {
+            const filterObj = JSON.parse(filter);
+            const search = filterObj.search?.toLowerCase() || '';
+            const status = filterObj.status;
+            const type = filterObj.type;
+
+            const matchesSearch =
+                !search ||
+                data.title.toLowerCase().includes(search) ||
+                data.city.toLowerCase().includes(search);
+
+            const matchesStatus = !status || data.status === status;
+            const matchesType = !type || data.type === type;
+
+            return matchesSearch && matchesStatus && matchesType;
+        };
+
         // Get tournaments from resolver
         this._activatedRoute.data
             .pipe(takeUntil(this._unsubscribeAll))
@@ -163,20 +181,14 @@ export class TournamentListComponent implements OnInit, OnDestroy {
      * Apply filters to tournaments list
      */
     applyFilters(): void {
-        const search = this.searchControl.value?.toLowerCase() || '';
+        const search = this.searchControl.value || '';
         const status = this.statusControl.value;
         const type = this.typeControl.value;
 
-        this.dsTournaments.data = this.dsTournaments.data.filter((tournament) => {
-            const matchesSearch =
-                !search ||
-                tournament.title.toLowerCase().includes(search) ||
-                tournament.city.toLowerCase().includes(search);
-
-            const matchesStatus = !status || tournament.status === status;
-            const matchesType = !type || tournament.type === type;
-
-            return matchesSearch && matchesStatus && matchesType;
+        this.dsTournaments.filter = JSON.stringify({
+            search,
+            status,
+            type,
         });
 
         this._changeDetectorRef.markForCheck();
