@@ -438,7 +438,10 @@
     "ACTIONS": {
       "RETRY": "Réessayer",
       "EXPORT_CSV": "Exporter CSV",
-      "EXPORT_JSON": "Exporter JSON"
+      "EXPORT_JSON": "Exporter JSON",
+      "APPLY": "Appliquer",
+      "RESET": "Réinitialiser",
+      "VIEW_SESSION": "Voir la session"
     },
     "EMPTY": {
       "NO_DATA": "Aucune donnée disponible pour la période sélectionnée"
@@ -481,6 +484,33 @@
     },
     "SESSIONS": {
       "TITLE": "Sessions"
+    },
+    "FILTERS": {
+      "PERIOD": "Période",
+      "USER": "Élève",
+      "ALL_USERS": "Tous les élèves",
+      "CONTRACT_SCOPE": "Type de contrat",
+      "PRESET": {
+        "LAST_7": "7 derniers jours",
+        "LAST_30": "30 derniers jours",
+        "THIS_MONTH": "Ce mois-ci",
+        "PREV_MONTH": "Mois précédent",
+        "CUSTOM": "Période personnalisée"
+      },
+      "CONTRACT": {
+        "ALL": "Toutes les sessions",
+        "UNDER": "Sous contrat",
+        "OFF": "Hors contrat"
+      }
+    },
+    "TABLE": {
+      "TITLE": "Liste des sessions",
+      "DATE": "Date",
+      "SESSION_TITLE": "Session",
+      "COACH": "Coach",
+      "CONTRACT": "Contrat",
+      "ATTENDEES": "Participants",
+      "STATUS": "Statut"
     }
   },
   "PROFILE": {
