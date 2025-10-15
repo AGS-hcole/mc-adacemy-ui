@@ -48,16 +48,18 @@
 
         <!-- Sessions Section -->
         <div class="space-y-6">
-            <h2 class="text-2xl font-bold">{{ 'REPORTS.SESSIONS.TITLE' | transloco }}</h2>
-            
+            <h2 class="mb-2 text-2xl font-bold">
+                {{ 'REPORTS.SESSIONS.TITLE' | transloco }}
+            </h2>
+
             <!-- KPI Cards -->
             <reports-kpi-cards [summary]="summary" [loading]="loading">
             </reports-kpi-cards>
 
             <!-- Charts -->
-            <div class="grid grid-cols-1 gap-8 lg:grid-cols-2">
+            <div class="grid grid-cols-1 gap-6 sm:grid-cols-8 lg:grid-cols-12">
                 <!-- Timeseries Chart -->
-                <div class="lg:col-span-2">
+                <div class="col-span-1 sm:col-span-6 lg:col-span-9">
                     <reports-timeseries-chart
                         [timeseries]="timeseries"
                         [loading]="loading"
@@ -66,7 +68,7 @@
                 </div>
 
                 <!-- Contract Share Chart -->
-                <div class="lg:col-span-2">
+                <div class="col-span-1 h-full sm:col-span-2 lg:col-span-3">
                     <reports-contract-share-chart
                         [summary]="summary"
                         [loading]="loading"
@@ -80,7 +82,9 @@
                 <button
                     mat-stroked-button
                     (click)="exportCsv()"
-                    [disabled]="!sessionsList || sessionsList.items.length === 0"
+                    [disabled]="
+                        !sessionsList || sessionsList.items.length === 0
+                    "
                 >
                     <mat-icon
                         class="icon-size-5"
@@ -93,7 +97,9 @@
                 <button
                     mat-stroked-button
                     (click)="exportJson()"
-                    [disabled]="!sessionsList || sessionsList.items.length === 0"
+                    [disabled]="
+                        !sessionsList || sessionsList.items.length === 0
+                    "
                 >
                     <mat-icon
                         class="icon-size-5"

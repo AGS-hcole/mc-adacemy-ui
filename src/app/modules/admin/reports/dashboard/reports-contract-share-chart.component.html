@@ -1,11 +1,22 @@
-<div class="bg-card rounded-lg shadow p-6 mb-8">
+<div class="bg-card mb-8 h-full rounded-lg p-6 shadow">
     <div class="mb-4">
-        <h3 class="text-lg font-semibold">{{ 'REPORTS.CHART.CONTRACT_SHARE' | transloco }}</h3>
+        <h3 class="text-lg font-semibold">
+            {{ 'REPORTS.CHART.CONTRACT_SHARE' | transloco }}
+        </h3>
     </div>
-    
-    <div *ngIf="loading" class="h-[350px] bg-gray-200 rounded animate-pulse"></div>
-    
-    <div *ngIf="!loading && summary && (summary.totals.underContract > 0 || summary.totals.offContract > 0)">
+
+    <div
+        *ngIf="loading"
+        class="h-[350px] animate-pulse rounded bg-gray-200"
+    ></div>
+
+    <div
+        *ngIf="
+            !loading &&
+            summary &&
+            (summary.totals.underContract > 0 || summary.totals.offContract > 0)
+        "
+    >
         <apx-chart
             #chart
             [series]="chartOptions.series!"
@@ -13,14 +24,25 @@
             [labels]="chartOptions.labels!"
             [legend]="chartOptions.legend!"
             [responsive]="chartOptions.responsive!"
-            [colors]="chartOptions.colors!">
+            [colors]="chartOptions.colors!"
+        >
         </apx-chart>
     </div>
-    
-    <div *ngIf="!loading && (!summary || (summary.totals.underContract === 0 && summary.totals.offContract === 0))" 
-         class="flex items-center justify-center h-[350px] text-secondary">
+
+    <div
+        *ngIf="
+            !loading &&
+            (!summary ||
+                (summary.totals.underContract === 0 &&
+                    summary.totals.offContract === 0))
+        "
+        class="text-secondary flex h-[350px] items-center justify-center"
+    >
         <div class="text-center">
-            <mat-icon class="icon-size-12 mb-4" svgIcon="heroicons_outline:chart-pie"></mat-icon>
+            <mat-icon
+                class="mb-4 icon-size-12"
+                svgIcon="heroicons_outline:chart-pie"
+            ></mat-icon>
             <p>{{ 'REPORTS.EMPTY.NO_DATA' | transloco }}</p>
         </div>
     </div>

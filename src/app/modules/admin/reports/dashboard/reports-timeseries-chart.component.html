@@ -1,10 +1,15 @@
-<div class="bg-card rounded-lg shadow p-6 mb-8">
+<div class="bg-card mb-8 h-full rounded-lg p-6 shadow">
     <div class="mb-4">
-        <h3 class="text-lg font-semibold">{{ 'REPORTS.CHART.SESSIONS_OVER_TIME' | transloco }}</h3>
+        <h3 class="text-lg font-semibold">
+            {{ 'REPORTS.CHART.SESSIONS_OVER_TIME' | transloco }}
+        </h3>
     </div>
-    
-    <div *ngIf="loading" class="h-[350px] bg-gray-200 rounded animate-pulse"></div>
-    
+
+    <div
+        *ngIf="loading"
+        class="h-[350px] animate-pulse rounded bg-gray-200"
+    ></div>
+
     <div *ngIf="!loading && timeseries">
         <apx-chart
             #chart
@@ -16,13 +21,20 @@
             [grid]="chartOptions.grid!"
             [stroke]="chartOptions.stroke!"
             [tooltip]="chartOptions.tooltip!"
-            [legend]="chartOptions.legend!">
+            [legend]="chartOptions.legend!"
+        >
         </apx-chart>
     </div>
-    
-    <div *ngIf="!loading && !timeseries" class="flex items-center justify-center h-[350px] text-secondary">
+
+    <div
+        *ngIf="!loading && !timeseries"
+        class="text-secondary flex h-[350px] items-center justify-center"
+    >
         <div class="text-center">
-            <mat-icon class="icon-size-12 mb-4" svgIcon="heroicons_outline:chart-bar"></mat-icon>
+            <mat-icon
+                class="mb-4 icon-size-12"
+                svgIcon="heroicons_outline:chart-bar"
+            ></mat-icon>
             <p>{{ 'REPORTS.EMPTY.NO_DATA' | transloco }}</p>
         </div>
     </div>

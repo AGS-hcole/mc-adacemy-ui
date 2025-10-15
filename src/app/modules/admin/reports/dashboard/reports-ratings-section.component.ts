@@ -1,4 +1,4 @@
-import { CommonModule } from '@angular/common';
+import { CommonModule, DecimalPipe } from '@angular/common';
 import { ChangeDetectionStrategy, Component, Input } from '@angular/core';
 import { MatIconModule } from '@angular/material/icon';
 import { TranslocoModule } from '@jsverse/transloco';
@@ -42,6 +42,7 @@ export type PieChartOptions = {
     imports: [
         CommonModule,
         MatIconModule,
+        DecimalPipe,
         TranslocoModule,
         NgApexchartsModule,
     ],
@@ -101,14 +102,18 @@ export class ReportsRatingsSectionComponent {
     /**
      * Get user full name from PerUserRatingDto
      */
-    getUserName(user: { user: { firstName: string; lastName: string } }): string {
+    getUserName(user: {
+        user: { firstName: string; lastName: string };
+    }): string {
         return `${user.user.firstName} ${user.user.lastName}`;
     }
 
     /**
      * Get user initials from PerUserRatingDto
      */
-    getUserInitials(user: { user: { firstName: string; lastName: string } }): string {
+    getUserInitials(user: {
+        user: { firstName: string; lastName: string };
+    }): string {
         return `${user.user.firstName.charAt(0)}${user.user.lastName.charAt(0)}`.toUpperCase();
     }
 
@@ -210,7 +215,7 @@ export class ReportsRatingsSectionComponent {
         if (!d) {
             return Array(11).fill(0);
         }
-        
+
         // Handle Record<'1'|'2'|...|'10', number> format
         const obj = d as Record<string, number>;
         return Array.from({ length: 11 }, (_, i) => {
