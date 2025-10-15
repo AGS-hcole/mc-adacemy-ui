@@ -1,170 +1,123 @@
 <div class="space-y-6">
     <!-- Section Header -->
     <div class="flex items-center justify-between">
-        <h2 class="text-2xl font-bold">
-            {{ 'REPORTS.RATINGS.TITLE' | transloco }}
-        </h2>
+        <h2 class="text-2xl font-bold">{{ 'REPORTS.RATINGS.TITLE' | transloco }}</h2>
     </div>
 
     <!-- Loading State -->
     <div *ngIf="loading && !ratingsSummary" class="space-y-6">
         <div class="grid grid-cols-1 gap-6 sm:grid-cols-2 lg:grid-cols-12">
-            <div
-                class="bg-card rounded-lg p-6 shadow sm:col-span-1 lg:col-span-3"
-            >
-                <div class="h-20 animate-pulse rounded bg-gray-200"></div>
+            <div class="bg-card rounded-lg shadow p-6 lg:col-span-3 sm:col-span-1">
+                <div class="h-20 bg-gray-200 rounded animate-pulse"></div>
             </div>
-            <div
-                class="bg-card rounded-lg p-6 shadow sm:col-span-1 lg:col-span-3"
-            >
-                <div class="h-20 animate-pulse rounded bg-gray-200"></div>
+            <div class="bg-card rounded-lg shadow p-6 lg:col-span-3 sm:col-span-1">
+                <div class="h-20 bg-gray-200 rounded animate-pulse"></div>
             </div>
-            <div
-                class="bg-card rounded-lg p-6 shadow sm:col-span-1 lg:col-span-3"
-            >
-                <div class="h-20 animate-pulse rounded bg-gray-200"></div>
+            <div class="bg-card rounded-lg shadow p-6 lg:col-span-3 sm:col-span-1">
+                <div class="h-20 bg-gray-200 rounded animate-pulse"></div>
             </div>
-            <div
-                class="bg-card rounded-lg p-6 shadow sm:col-span-1 lg:col-span-3"
-            >
-                <div class="h-20 animate-pulse rounded bg-gray-200"></div>
+            <div class="bg-card rounded-lg shadow p-6 lg:col-span-3 sm:col-span-1">
+                <div class="h-20 bg-gray-200 rounded animate-pulse"></div>
             </div>
         </div>
     </div>
 
     <!-- Empty State -->
-    <div
-        *ngIf="!loading && ratingsSummary && ratingsSummary.global.count === 0"
-        class="bg-card rounded-lg p-8 text-center shadow"
-    >
-        <mat-icon
-            class="text-secondary mb-4 icon-size-16"
-            svgIcon="heroicons_outline:star"
-        ></mat-icon>
-        <p class="text-secondary text-lg">
-            {{ 'REPORTS.RATINGS.EMPTY' | transloco }}
-        </p>
+    <div *ngIf="!loading && ratingsSummary && ratingsSummary.global.count === 0" 
+         class="bg-card rounded-lg shadow p-8 text-center">
+        <mat-icon class="text-secondary icon-size-16 mb-4" svgIcon="heroicons_outline:star"></mat-icon>
+        <p class="text-lg text-secondary">{{ 'REPORTS.RATINGS.EMPTY' | transloco }}</p>
     </div>
 
     <!-- Content -->
     <div *ngIf="!loading && ratingsSummary && ratingsSummary.global.count > 0">
         <!-- Main Grid Container -->
         <div class="grid grid-cols-1 gap-6 sm:grid-cols-2 lg:grid-cols-12">
+            
             <!-- KPI Cards -->
             <!-- Average Rating -->
-            <div
-                class="bg-card rounded-lg p-6 shadow sm:col-span-1 lg:col-span-3"
-            >
+            <div class="bg-card rounded-lg shadow p-6 lg:col-span-3 sm:col-span-1">
                 <div class="flex items-center justify-between">
                     <div class="flex-1">
-                        <div class="text-secondary mb-2 text-sm font-medium">
+                        <div class="text-secondary text-sm font-medium mb-2">
                             {{ 'REPORTS.RATINGS.KPI.AVERAGE' | transloco }}
                         </div>
-                        <div class="text-3xl font-bold">
-                            {{ ratingsSummary.global.average | number: '1.1-1'
-                            }}<span class="text-secondary text-xl"> / 10</span>
+                        <div *ngIf="ratingsSummary.global.average !== null" class="text-3xl font-bold">
+                            {{ ratingsSummary.global.average | number: '1.1-1' }}<span class="text-xl text-secondary"> / 10</span>
+                        </div>
+                        <div *ngIf="ratingsSummary.global.average === null" class="flex items-center gap-2">
+                            <mat-icon
+                                class="text-secondary icon-size-5"
+                                svgIcon="heroicons_outline:exclamation-circle"
+                            ></mat-icon>
+                            <span class="text-secondary text-sm">
+                                {{ 'REPORTS.RATINGS.NO_DATA' | transloco }}
+                            </span>
                         </div>
                     </div>
-                    <div
-                        class="flex h-12 w-12 items-center justify-center rounded-full bg-yellow-100"
-                    >
-                        <mat-icon
-                            class="text-yellow-600 icon-size-6"
-                            svgIcon="heroicons_solid:star"
-                        ></mat-icon>
+                    <div class="flex h-12 w-12 items-center justify-center rounded-full bg-yellow-100">
+                        <mat-icon class="text-yellow-600 icon-size-6" svgIcon="heroicons_solid:star"></mat-icon>
                     </div>
                 </div>
             </div>
 
             <!-- Total Ratings -->
-            <div
-                class="bg-card rounded-lg p-6 shadow sm:col-span-1 lg:col-span-3"
-            >
+            <div class="bg-card rounded-lg shadow p-6 lg:col-span-3 sm:col-span-1">
                 <div class="flex items-center justify-between">
                     <div class="flex-1">
-                        <div class="text-secondary mb-2 text-sm font-medium">
+                        <div class="text-secondary text-sm font-medium mb-2">
                             {{ 'REPORTS.RATINGS.KPI.TOTAL' | transloco }}
                         </div>
                         <div class="text-3xl font-bold">
                             {{ ratingsSummary.global.count }}
                         </div>
                     </div>
-                    <div
-                        class="flex h-12 w-12 items-center justify-center rounded-full bg-blue-100"
-                    >
-                        <mat-icon
-                            class="text-blue-600 icon-size-6"
-                            svgIcon="heroicons_solid:chart-bar"
-                        ></mat-icon>
+                    <div class="flex h-12 w-12 items-center justify-center rounded-full bg-blue-100">
+                        <mat-icon class="text-blue-600 icon-size-6" svgIcon="heroicons_solid:chart-bar"></mat-icon>
                     </div>
                 </div>
             </div>
 
             <!-- Rated Sessions -->
-            <div
-                class="bg-card rounded-lg p-6 shadow sm:col-span-1 lg:col-span-3"
-            >
+            <div class="bg-card rounded-lg shadow p-6 lg:col-span-3 sm:col-span-1">
                 <div class="flex items-center justify-between">
                     <div class="flex-1">
-                        <div class="text-secondary mb-2 text-sm font-medium">
-                            {{
-                                'REPORTS.RATINGS.KPI.RATED_SESSIONS' | transloco
-                            }}
+                        <div class="text-secondary text-sm font-medium mb-2">
+                            {{ 'REPORTS.RATINGS.KPI.RATED_SESSIONS' | transloco }}
                         </div>
                         <div class="text-3xl font-bold">
                             {{ ratingsSummary.global.ratedSessions }}
                         </div>
                     </div>
-                    <div
-                        class="flex h-12 w-12 items-center justify-center rounded-full bg-green-100"
-                    >
-                        <mat-icon
-                            class="text-green-600 icon-size-6"
-                            svgIcon="heroicons_solid:check-circle"
-                        ></mat-icon>
+                    <div class="flex h-12 w-12 items-center justify-center rounded-full bg-green-100">
+                        <mat-icon class="text-green-600 icon-size-6" svgIcon="heroicons_solid:check-circle"></mat-icon>
                     </div>
                 </div>
             </div>
 
             <!-- Unrated Sessions -->
-            <div
-                class="bg-card rounded-lg p-6 shadow sm:col-span-1 lg:col-span-3"
-            >
+            <div class="bg-card rounded-lg shadow p-6 lg:col-span-3 sm:col-span-1">
                 <div class="flex items-center justify-between">
                     <div class="flex-1">
-                        <div class="text-secondary mb-2 text-sm font-medium">
-                            {{
-                                'REPORTS.RATINGS.KPI.UNRATED_SESSIONS'
-                                    | transloco
-                            }}
+                        <div class="text-secondary text-sm font-medium mb-2">
+                            {{ 'REPORTS.RATINGS.KPI.UNRATED_SESSIONS' | transloco }}
                         </div>
                         <div class="text-3xl font-bold">
                             {{ ratingsSummary.global.unratedSessions }}
                         </div>
                     </div>
-                    <div
-                        class="flex h-12 w-12 items-center justify-center rounded-full bg-gray-100"
-                    >
-                        <mat-icon
-                            class="text-gray-600 icon-size-6"
-                            svgIcon="heroicons_solid:minus-circle"
-                        ></mat-icon>
+                    <div class="flex h-12 w-12 items-center justify-center rounded-full bg-gray-100">
+                        <mat-icon class="text-gray-600 icon-size-6" svgIcon="heroicons_solid:minus-circle"></mat-icon>
                     </div>
                 </div>
             </div>
 
             <!-- Distribution Chart -->
-            <div
-                class="bg-card rounded-lg p-6 shadow sm:col-span-2 lg:col-span-6"
-            >
-                <h3 class="mb-4 text-lg font-semibold">
-                    {{ 'REPORTS.RATINGS.DISTRIBUTION.TITLE' | transloco }}
-                </h3>
-                <div
-                    role="img"
-                    [attr.aria-label]="
-                        'REPORTS.RATINGS.DISTRIBUTION.TITLE' | transloco
-                    "
+            <div class="bg-card rounded-lg shadow p-6 lg:col-span-6 sm:col-span-2">
+                <h3 class="text-lg font-semibold mb-4">{{ 'REPORTS.RATINGS.DISTRIBUTION.TITLE' | transloco }}</h3>
+                <div 
+                    role="img" 
+                    [attr.aria-label]="'REPORTS.RATINGS.DISTRIBUTION.TITLE' | transloco"
                     class="min-h-[200px]"
                 >
                     <apx-chart
@@ -180,28 +133,22 @@
                     ></apx-chart>
                     <!-- Screen reader text -->
                     <span class="sr-only">
-                        Distribution of ratings from 1 to 10. Average:
-                        {{ ratingsSummary.global.average | number: '1.1-1' }}
+                        Distribution of ratings from 1 to 10.
+                        <ng-container *ngIf="ratingsSummary.global.average !== null">
+                            Average: {{ ratingsSummary.global.average | number: '1.1-1' }}
+                        </ng-container>
                     </span>
                 </div>
             </div>
 
             <!-- Contract vs Non-Contract Pie Chart -->
-            <div
-                class="bg-card min-h-[160px] rounded-lg p-6 shadow sm:col-span-2 lg:col-span-3"
-            >
-                <h3 class="mb-4 text-lg text-sm font-semibold sm:text-base">
-                    {{
-                        'REPORTS.RATINGS.PIE.CONTRACT_VS_NONCONTRACT'
-                            | transloco
-                    }}
+            <div class="bg-card rounded-lg shadow p-6 lg:col-span-3 sm:col-span-2 min-h-[160px]">
+                <h3 class="text-lg font-semibold mb-4 text-sm sm:text-base">
+                    {{ 'REPORTS.RATINGS.PIE.CONTRACT_VS_NONCONTRACT' | transloco }}
                 </h3>
-                <div
+                <div 
                     role="img"
-                    [attr.aria-label]="
-                        'REPORTS.RATINGS.PIE.CONTRACT_VS_NONCONTRACT'
-                            | transloco
-                    "
+                    [attr.aria-label]="'REPORTS.RATINGS.PIE.CONTRACT_VS_NONCONTRACT' | transloco"
                     class="h-32 md:h-40"
                 >
                     <apx-chart
@@ -214,119 +161,62 @@
                     ></apx-chart>
                     <!-- Screen reader text -->
                     <span class="sr-only">
-                        Contract ratings:
-                        {{ ratingsSummary.byContract?.withContract }},
-                        Non-contract ratings:
-                        {{ ratingsSummary.byContract?.withoutContract }}
+                        Contract ratings: {{ ratingsSummary.contractSplit.contractCount }}, 
+                        Non-contract ratings: {{ ratingsSummary.contractSplit.nonContractCount }}
                     </span>
                 </div>
             </div>
 
             <!-- Top Users Mini List -->
-            <div
-                class="bg-card rounded-lg p-6 shadow sm:col-span-2 lg:col-span-3"
-            >
-                <h3 class="mb-4 text-lg font-semibold">
-                    {{ 'REPORTS.RATINGS.TOP_USERS' | transloco }}
-                </h3>
-                <div class="space-y-3">
-                    <div
-                        *ngFor="let user of ratingsSummary.topUsers"
-                        class="flex items-center justify-between"
-                    >
-                        <div class="flex min-w-0 flex-1 items-center gap-3">
-                            <div
-                                class="flex h-8 w-8 flex-shrink-0 items-center justify-center rounded-full bg-primary-100"
-                            >
-                                <span
-                                    class="text-xs font-semibold text-primary"
-                                >
-                                    {{ user.userName.charAt(0).toUpperCase() }}
+            <div class="bg-card rounded-lg shadow p-6 lg:col-span-3 sm:col-span-2">
+                <h3 class="text-lg font-semibold mb-4">{{ 'REPORTS.RATINGS.TOP_USERS' | transloco }}</h3>
+                <div class="space-y-3" *ngIf="ratingsSummary.topUsers && ratingsSummary.topUsers.length > 0">
+                    <div *ngFor="let user of ratingsSummary.topUsers" class="flex items-center justify-between">
+                        <div class="flex items-center gap-3 flex-1 min-w-0">
+                            <div class="flex-shrink-0 h-8 w-8 rounded-full bg-primary-100 flex items-center justify-center">
+                                <span class="text-xs font-semibold text-primary">
+                                    U
                                 </span>
                             </div>
-                            <div class="min-w-0 flex-1">
-                                <p class="truncate text-sm font-medium">
-                                    {{ user.userName }}
-                                </p>
-                                <p class="text-secondary text-xs">
-                                    {{ user.count }} ratings
-                                </p>
+                            <div class="flex-1 min-w-0">
+                                <p class="text-sm font-medium truncate">{{ 'REPORTS.RATINGS.USER' | transloco }} {{ user.userId }}</p>
+                                <p class="text-xs text-secondary">{{ user.count }} {{ 'REPORTS.RATINGS.RATINGS_COUNT' | transloco }}</p>
                             </div>
                         </div>
-                        <div class="flex flex-shrink-0 items-center gap-2">
+                        <div class="flex items-center gap-2 flex-shrink-0">
                             <div class="text-right">
-                                <div class="text-sm font-bold">
-                                    {{ user.average | number: '1.1-1' }}
-                                </div>
+                                <div class="text-sm font-bold">{{ user.average | number: '1.1-1' }}</div>
                             </div>
-                            <mat-icon
-                                class="text-yellow-500 icon-size-4"
-                                svgIcon="heroicons_solid:star"
-                            ></mat-icon>
+                            <mat-icon class="text-yellow-500 icon-size-4" svgIcon="heroicons_solid:star"></mat-icon>
                         </div>
                     </div>
                 </div>
-                <div
-                    *ngIf="ratingsSummary.topUsers?.length === 0"
-                    class="text-secondary py-4 text-center text-sm"
-                >
-                    {{ 'REPORTS.RATINGS.EMPTY' | transloco }}
+                <div *ngIf="!ratingsSummary.topUsers || ratingsSummary.topUsers.length === 0" class="text-sm text-secondary text-center py-4">
+                    {{ 'REPORTS.RATINGS.NO_DATA' | transloco }}
                 </div>
             </div>
 
             <!-- Per-User Table or User Card -->
-            <div
-                class="bg-card rounded-lg p-6 shadow sm:col-span-2 lg:col-span-6"
-            >
+            <div class="bg-card rounded-lg shadow p-6 lg:col-span-6 sm:col-span-2">
                 <!-- User-specific card when userId filter is set -->
                 <div *ngIf="filteredUserId && filteredUserStats">
-                    <h3 class="mb-4 text-lg font-semibold">
-                        {{ 'REPORTS.RATINGS.USER_STATS.TITLE' | transloco }}
-                    </h3>
-                    <div
-                        class="flex items-center gap-4 rounded-lg bg-gray-50 p-4"
-                    >
-                        <div
-                            class="flex h-16 w-16 flex-shrink-0 items-center justify-center rounded-full bg-primary-100"
-                        >
+                    <h3 class="text-lg font-semibold mb-4">{{ 'REPORTS.RATINGS.USER_STATS.TITLE' | transloco }}</h3>
+                    <div class="flex items-center gap-4 p-4 bg-gray-50 rounded-lg">
+                        <div class="flex-shrink-0 h-16 w-16 rounded-full bg-primary-100 flex items-center justify-center">
                             <span class="text-2xl font-semibold text-primary">
-                                {{
-                                    filteredUserStats.userName
-                                        .charAt(0)
-                                        .toUpperCase()
-                                }}
+                                {{ getUserInitials(filteredUserStats) }}
                             </span>
                         </div>
                         <div class="flex-1">
-                            <p class="text-lg font-semibold">
-                                {{ filteredUserStats.userName }}
-                            </p>
-                            <div class="mt-2 flex items-center gap-4">
+                            <p class="text-lg font-semibold">{{ getUserName(filteredUserStats) }}</p>
+                            <div class="flex items-center gap-4 mt-2">
                                 <div>
-                                    <p class="text-secondary text-xs">
-                                        {{
-                                            'REPORTS.RATINGS.PER_USER.AVERAGE'
-                                                | transloco
-                                        }}
-                                    </p>
-                                    <p class="text-xl font-bold">
-                                        {{
-                                            filteredUserStats.average
-                                                | number: '1.1-1'
-                                        }}
-                                        / 10
-                                    </p>
+                                    <p class="text-xs text-secondary">{{ 'REPORTS.RATINGS.PER_USER.AVERAGE' | transloco }}</p>
+                                    <p class="text-xl font-bold">{{ filteredUserStats.average | number: '1.1-1' }} / 10</p>
                                 </div>
                                 <div>
-                                    <p class="text-secondary text-xs">
-                                        {{
-                                            'REPORTS.RATINGS.PER_USER.COUNT'
-                                                | transloco
-                                        }}
-                                    </p>
-                                    <p class="text-xl font-bold">
-                                        {{ filteredUserStats.count }}
-                                    </p>
+                                    <p class="text-xs text-secondary">{{ 'REPORTS.RATINGS.PER_USER.COUNT' | transloco }}</p>
+                                    <p class="text-xl font-bold">{{ filteredUserStats.count }}</p>
                                 </div>
                             </div>
                         </div>
@@ -335,160 +225,95 @@
 
                 <!-- Full table when no userId filter -->
                 <div *ngIf="!filteredUserId">
-                    <h3 class="mb-4 text-lg font-semibold">
-                        {{ 'REPORTS.RATINGS.PER_USER.TITLE' | transloco }}
-                    </h3>
-                    <div class="overflow-x-auto">
+                    <h3 class="text-lg font-semibold mb-4">{{ 'REPORTS.RATINGS.PER_USER.TITLE' | transloco }}</h3>
+                    <div class="overflow-x-auto" *ngIf="ratingsSummary.perUser && ratingsSummary.perUser.length > 0">
                         <table class="w-full text-sm">
                             <thead class="border-b">
                                 <tr>
-                                    <th
-                                        class="cursor-pointer px-2 py-3 text-left font-semibold hover:bg-gray-50"
-                                        (click)="toggleSort('average')"
-                                    >
+                                    <th class="text-left py-3 px-2 font-semibold cursor-pointer hover:bg-gray-50" 
+                                        (click)="toggleSort('average')">
                                         <div class="flex items-center gap-2">
-                                            {{
-                                                'REPORTS.RATINGS.PER_USER.NAME'
-                                                    | transloco
-                                            }}
+                                            {{ 'REPORTS.RATINGS.PER_USER.NAME' | transloco }}
                                         </div>
                                     </th>
-                                    <th
-                                        class="cursor-pointer px-2 py-3 text-center font-semibold hover:bg-gray-50"
-                                        (click)="toggleSort('average')"
-                                    >
-                                        <div
-                                            class="flex items-center justify-center gap-2"
-                                        >
-                                            {{
-                                                'REPORTS.RATINGS.PER_USER.AVERAGE'
-                                                    | transloco
-                                            }}
-                                            <mat-icon
+                                    <th class="text-center py-3 px-2 font-semibold cursor-pointer hover:bg-gray-50"
+                                        (click)="toggleSort('average')">
+                                        <div class="flex items-center justify-center gap-2">
+                                            {{ 'REPORTS.RATINGS.PER_USER.AVERAGE' | transloco }}
+                                            <mat-icon 
                                                 *ngIf="sortBy === 'average'"
                                                 class="icon-size-4"
-                                                [svgIcon]="
-                                                    sortAsc
-                                                        ? 'heroicons_solid:chevron-up'
-                                                        : 'heroicons_solid:chevron-down'
-                                                "
+                                                [svgIcon]="sortAsc ? 'heroicons_solid:chevron-up' : 'heroicons_solid:chevron-down'"
                                             ></mat-icon>
                                         </div>
                                     </th>
-                                    <th
-                                        class="cursor-pointer px-2 py-3 text-center font-semibold hover:bg-gray-50"
-                                        (click)="toggleSort('count')"
-                                    >
-                                        <div
-                                            class="flex items-center justify-center gap-2"
-                                        >
-                                            {{
-                                                'REPORTS.RATINGS.PER_USER.COUNT'
-                                                    | transloco
-                                            }}
-                                            <mat-icon
+                                    <th class="text-center py-3 px-2 font-semibold cursor-pointer hover:bg-gray-50"
+                                        (click)="toggleSort('count')">
+                                        <div class="flex items-center justify-center gap-2">
+                                            {{ 'REPORTS.RATINGS.PER_USER.COUNT' | transloco }}
+                                            <mat-icon 
                                                 *ngIf="sortBy === 'count'"
                                                 class="icon-size-4"
-                                                [svgIcon]="
-                                                    sortAsc
-                                                        ? 'heroicons_solid:chevron-up'
-                                                        : 'heroicons_solid:chevron-down'
-                                                "
+                                                [svgIcon]="sortAsc ? 'heroicons_solid:chevron-up' : 'heroicons_solid:chevron-down'"
                                             ></mat-icon>
                                         </div>
                                     </th>
                                 </tr>
                             </thead>
                             <tbody>
-                                <tr
-                                    *ngFor="let user of sortedUserStats"
-                                    class="border-b hover:bg-gray-50"
-                                >
-                                    <td class="px-2 py-3">
+                                <tr *ngFor="let user of sortedUserStats" class="border-b hover:bg-gray-50">
+                                    <td class="py-3 px-2">
                                         <div class="flex items-center gap-3">
-                                            <div
-                                                class="flex h-8 w-8 flex-shrink-0 items-center justify-center rounded-full bg-primary-100"
-                                            >
-                                                <span
-                                                    class="text-xs font-semibold text-primary"
-                                                >
-                                                    {{
-                                                        user.userName
-                                                            .charAt(0)
-                                                            .toUpperCase()
-                                                    }}
+                                            <div class="flex-shrink-0 h-8 w-8 rounded-full bg-primary-100 flex items-center justify-center">
+                                                <span class="text-xs font-semibold text-primary">
+                                                    {{ getUserInitials(user) }}
                                                 </span>
                                             </div>
-                                            <span class="font-medium">{{
-                                                user.userName
-                                            }}</span>
+                                            <span class="font-medium">{{ getUserName(user) }}</span>
                                         </div>
                                     </td>
-                                    <td
-                                        class="px-2 py-3 text-center font-semibold"
-                                    >
-                                        {{ user.average | number: '1.1-1' }} /
-                                        10
+                                    <td class="py-3 px-2 text-center font-semibold">
+                                        {{ user.average | number: '1.1-1' }} / 10
                                     </td>
-                                    <td class="px-2 py-3 text-center">
+                                    <td class="py-3 px-2 text-center">
                                         {{ user.count }}
                                     </td>
                                 </tr>
                             </tbody>
                         </table>
                     </div>
+                    <div *ngIf="!ratingsSummary.perUser || ratingsSummary.perUser.length === 0" class="text-sm text-secondary text-center py-4">
+                        {{ 'REPORTS.RATINGS.NO_DATA' | transloco }}
+                    </div>
                 </div>
             </div>
 
             <!-- Bottom Users Mini List (hidden on xs) -->
-            <div
-                class="bg-card hidden rounded-lg p-6 shadow sm:col-span-2 sm:block lg:col-span-3"
-            >
-                <h3 class="mb-4 text-lg font-semibold">
-                    {{ 'REPORTS.RATINGS.BOTTOM_USERS' | transloco }}
-                </h3>
-                <div class="space-y-3">
-                    <div
-                        *ngFor="let user of ratingsSummary.bottomUsers"
-                        class="flex items-center justify-between"
-                    >
-                        <div class="flex min-w-0 flex-1 items-center gap-3">
-                            <div
-                                class="flex h-8 w-8 flex-shrink-0 items-center justify-center rounded-full bg-gray-100"
-                            >
-                                <span
-                                    class="text-xs font-semibold text-gray-600"
-                                >
-                                    {{ user.userName.charAt(0).toUpperCase() }}
+            <div class="bg-card rounded-lg shadow p-6 lg:col-span-3 sm:col-span-2 hidden sm:block">
+                <h3 class="text-lg font-semibold mb-4">{{ 'REPORTS.RATINGS.BOTTOM_USERS' | transloco }}</h3>
+                <div class="space-y-3" *ngIf="ratingsSummary.bottomUsers && ratingsSummary.bottomUsers.length > 0">
+                    <div *ngFor="let user of ratingsSummary.bottomUsers" class="flex items-center justify-between">
+                        <div class="flex items-center gap-3 flex-1 min-w-0">
+                            <div class="flex-shrink-0 h-8 w-8 rounded-full bg-gray-100 flex items-center justify-center">
+                                <span class="text-xs font-semibold text-gray-600">
+                                    U
                                 </span>
                             </div>
-                            <div class="min-w-0 flex-1">
-                                <p class="truncate text-sm font-medium">
-                                    {{ user.userName }}
-                                </p>
-                                <p class="text-secondary text-xs">
-                                    {{ user.count }} ratings
-                                </p>
+                            <div class="flex-1 min-w-0">
+                                <p class="text-sm font-medium truncate">{{ 'REPORTS.RATINGS.USER' | transloco }} {{ user.userId }}</p>
+                                <p class="text-xs text-secondary">{{ user.count }} {{ 'REPORTS.RATINGS.RATINGS_COUNT' | transloco }}</p>
                             </div>
                         </div>
-                        <div class="flex flex-shrink-0 items-center gap-2">
+                        <div class="flex items-center gap-2 flex-shrink-0">
                             <div class="text-right">
-                                <div class="text-sm font-bold">
-                                    {{ user.average | number: '1.1-1' }}
-                                </div>
+                                <div class="text-sm font-bold">{{ user.average | number: '1.1-1' }}</div>
                             </div>
-                            <mat-icon
-                                class="text-gray-400 icon-size-4"
-                                svgIcon="heroicons_solid:star"
-                            ></mat-icon>
+                            <mat-icon class="text-gray-400 icon-size-4" svgIcon="heroicons_solid:star"></mat-icon>
                         </div>
                     </div>
                 </div>
-                <div
-                    *ngIf="ratingsSummary.bottomUsers?.length === 0"
-                    class="text-secondary py-4 text-center text-sm"
-                >
-                    {{ 'REPORTS.RATINGS.EMPTY' | transloco }}
+                <div *ngIf="!ratingsSummary.bottomUsers || ratingsSummary.bottomUsers.length === 0" class="text-sm text-secondary text-center py-4">
+                    {{ 'REPORTS.RATINGS.NO_DATA' | transloco }}
                 </div>
             </div>
         </div>

@@ -16,29 +16,49 @@ describe('ReportsApiService - Ratings Summary', () => {
         period: {
             from: '2025-01-01',
             to: '2025-01-31',
-            timezone: 'Europe/Paris',
+        },
+        scope: {
+            userId: undefined,
+            contractScope: 'all',
         },
         global: {
             average: 7.4,
             count: 50,
             ratedSessions: 20,
             unratedSessions: 5,
-            distribution: [0, 2, 1, 3, 5, 8, 10, 12, 5, 3, 1],
+            distribution: {
+                '1': 2,
+                '2': 1,
+                '3': 3,
+                '4': 5,
+                '5': 8,
+                '6': 10,
+                '7': 12,
+                '8': 5,
+                '9': 3,
+                '10': 1,
+            },
         },
-        byContract: {
-            withContract: 35,
-            withoutContract: 15,
+        contractSplit: {
+            contractCount: 35,
+            nonContractCount: 15,
         },
         perUser: [
             {
-                userId: 'user-1',
-                userName: 'John Doe',
+                user: {
+                    id: 'user-1',
+                    firstName: 'John',
+                    lastName: 'Doe',
+                },
                 average: 8.5,
                 count: 10,
             },
             {
-                userId: 'user-2',
-                userName: 'Jane Smith',
+                user: {
+                    id: 'user-2',
+                    firstName: 'Jane',
+                    lastName: 'Smith',
+                },
                 average: 7.2,
                 count: 8,
             },
@@ -46,7 +66,6 @@ describe('ReportsApiService - Ratings Summary', () => {
         topUsers: [
             {
                 userId: 'user-1',
-                userName: 'John Doe',
                 average: 8.5,
                 count: 10,
             },
@@ -54,7 +73,6 @@ describe('ReportsApiService - Ratings Summary', () => {
         bottomUsers: [
             {
                 userId: 'user-2',
-                userName: 'Jane Smith',
                 average: 7.2,
                 count: 8,
             },

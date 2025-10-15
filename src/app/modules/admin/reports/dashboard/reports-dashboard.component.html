@@ -46,29 +46,73 @@
             </div>
         </div>
 
-        <!-- KPI Cards -->
-        <reports-kpi-cards [summary]="summary" [loading]="loading">
-        </reports-kpi-cards>
+        <!-- Sessions Section -->
+        <div class="space-y-6">
+            <h2 class="text-2xl font-bold">{{ 'REPORTS.SESSIONS.TITLE' | transloco }}</h2>
+            
+            <!-- KPI Cards -->
+            <reports-kpi-cards [summary]="summary" [loading]="loading">
+            </reports-kpi-cards>
 
-        <!-- Charts -->
-        <div class="grid grid-cols-1 gap-8 lg:grid-cols-2">
-            <!-- Timeseries Chart -->
-            <div class="lg:col-span-2">
-                <reports-timeseries-chart
-                    [timeseries]="timeseries"
-                    [loading]="loading"
-                >
-                </reports-timeseries-chart>
+            <!-- Charts -->
+            <div class="grid grid-cols-1 gap-8 lg:grid-cols-2">
+                <!-- Timeseries Chart -->
+                <div class="lg:col-span-2">
+                    <reports-timeseries-chart
+                        [timeseries]="timeseries"
+                        [loading]="loading"
+                    >
+                    </reports-timeseries-chart>
+                </div>
+
+                <!-- Contract Share Chart -->
+                <div class="lg:col-span-2">
+                    <reports-contract-share-chart
+                        [summary]="summary"
+                        [loading]="loading"
+                    >
+                    </reports-contract-share-chart>
+                </div>
             </div>
 
-            <!-- Contract Share Chart -->
-            <div class="lg:col-span-2">
-                <reports-contract-share-chart
-                    [summary]="summary"
-                    [loading]="loading"
+            <!-- Export Actions -->
+            <div class="flex items-center justify-end gap-2">
+                <button
+                    mat-stroked-button
+                    (click)="exportCsv()"
+                    [disabled]="!sessionsList || sessionsList.items.length === 0"
                 >
-                </reports-contract-share-chart>
+                    <mat-icon
+                        class="icon-size-5"
+                        svgIcon="heroicons_solid:document-arrow-down"
+                    ></mat-icon>
+                    <span class="ml-2">{{
+                        'REPORTS.ACTIONS.EXPORT_CSV' | transloco
+                    }}</span>
+                </button>
+                <button
+                    mat-stroked-button
+                    (click)="exportJson()"
+                    [disabled]="!sessionsList || sessionsList.items.length === 0"
+                >
+                    <mat-icon
+                        class="icon-size-5"
+                        svgIcon="heroicons_solid:code-bracket"
+                    ></mat-icon>
+                    <span class="ml-2">{{
+                        'REPORTS.ACTIONS.EXPORT_JSON' | transloco
+                    }}</span>
+                </button>
             </div>
+
+            <!-- Table -->
+            <reports-table
+                [sessionsList]="sessionsList"
+                [loading]="loading"
+                (pageChange)="onPageChange($event)"
+                (viewSession)="onViewSession($event)"
+            >
+            </reports-table>
         </div>
 
         <!-- Ratings Section -->
@@ -78,44 +122,5 @@
             [filteredUserId]="filters?.userId"
         >
         </reports-ratings-section>
-
-        <!-- Export Actions -->
-        <div class="-mt-6 flex items-center justify-end gap-2 pb-8">
-            <button
-                mat-stroked-button
-                (click)="exportCsv()"
-                [disabled]="!sessionsList || sessionsList.items.length === 0"
-            >
-                <mat-icon
-                    class="icon-size-5"
-                    svgIcon="heroicons_solid:document-arrow-down"
-                ></mat-icon>
-                <span class="ml-2">{{
-                    'REPORTS.ACTIONS.EXPORT_CSV' | transloco
-                }}</span>
-            </button>
-            <button
-                mat-stroked-button
-                (click)="exportJson()"
-                [disabled]="!sessionsList || sessionsList.items.length === 0"
-            >
-                <mat-icon
-                    class="icon-size-5"
-                    svgIcon="heroicons_solid:code-bracket"
-                ></mat-icon>
-                <span class="ml-2">{{
-                    'REPORTS.ACTIONS.EXPORT_JSON' | transloco
-                }}</span>
-            </button>
-        </div>
-
-        <!-- Table -->
-        <reports-table
-            [sessionsList]="sessionsList"
-            [loading]="loading"
-            (pageChange)="onPageChange($event)"
-            (viewSession)="onViewSession($event)"
-        >
-        </reports-table>
     </div>
 </div>

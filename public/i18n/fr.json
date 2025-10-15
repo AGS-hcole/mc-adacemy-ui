@@ -455,19 +455,22 @@
         "TITLE": "Répartition des notes (1-10)"
       },
       "PER_USER": {
-        "TITLE": "Notes par utilisateur",
+        "TITLE": "Notes par élève",
         "NAME": "Nom",
         "AVERAGE": "Moyenne",
         "COUNT": "Nombre"
       },
-      "TOP_USERS": "Meilleurs utilisateurs",
-      "BOTTOM_USERS": "Utilisateurs moins bien notés",
+      "TOP_USERS": "Meilleurs élèves",
+      "BOTTOM_USERS": "Élèves en difficulté",
       "PIE": {
         "CONTRACT_VS_NONCONTRACT": "Notes: Sous contrat vs Hors contrat"
       },
       "EMPTY": "Aucune note pour cette période",
+      "NO_DATA": "Aucune information disponible",
+      "USER": "Élève",
+      "RATINGS_COUNT": "notes",
       "USER_STATS": {
-        "TITLE": "Statistiques de notes utilisateur"
+        "TITLE": "Statistiques de notes de l'élève"
       }
     },
     "KPI": {
@@ -475,6 +478,9 @@
       "UNDER": "Sous contrat",
       "OFF": "Hors contrat",
       "UNIQUE": "Utilisateurs uniques"
+    },
+    "SESSIONS": {
+      "TITLE": "Sessions"
     }
   },
   "PROFILE": {

@@ -1,4 +1,4 @@
-import { CommonModule, DecimalPipe } from '@angular/common';
+import { CommonModule } from '@angular/common';
 import { ChangeDetectionStrategy, Component, Input } from '@angular/core';
 import { MatIconModule } from '@angular/material/icon';
 import { TranslocoModule } from '@jsverse/transloco';
@@ -44,7 +44,6 @@ export type PieChartOptions = {
         MatIconModule,
         TranslocoModule,
         NgApexchartsModule,
-        DecimalPipe,
     ],
 })
 export class ReportsRatingsSectionComponent {
@@ -73,7 +72,7 @@ export class ReportsRatingsSectionComponent {
      * Get sorted user stats
      */
     get sortedUserStats() {
-        if (!this.ratingsSummary || !this.ratingsSummary.perUser) {
+        if (!this.ratingsSummary?.perUser) {
             return [];
         }
 
@@ -91,12 +90,26 @@ export class ReportsRatingsSectionComponent {
      * Get filtered user stats when userId filter is set
      */
     get filteredUserStats() {
-        if (!this.filteredUserId || !this.ratingsSummary) {
+        if (!this.filteredUserId || !this.ratingsSummary?.perUser) {
             return null;
         }
-        return this.ratingsSummary.perUser?.find(
-            (u) => u.userId === this.filteredUserId
+        return this.ratingsSummary.perUser.find(
+            (u) => u.user.id === this.filteredUserId
         );
+    }
+
+    /**
+     * Get user full name from PerUserRatingDto
+     */
+    getUserName(user: { user: { firstName: string; lastName: string } }): string {
+        return `${user.user.firstName} ${user.user.lastName}`;
+    }
+
+    /**
+     * Get user initials from PerUserRatingDto
+     */
+    getUserInitials(user: { user: { firstName: string; lastName: string } }): string {
+        return `${user.user.firstName.charAt(0)}${user.user.lastName.charAt(0)}`.toUpperCase();
     }
 
     /**
@@ -172,8 +185,8 @@ export class ReportsRatingsSectionComponent {
         // Pie chart for contract vs non-contract
         this.pieChartOptions = {
             series: [
-                data.byContract?.withContract,
-                data.byContract?.withoutContract,
+                data.contractSplit?.contractCount || 0,
+                data.contractSplit?.nonContractCount || 0,
             ],
             chart: {
                 type: 'pie',
@@ -194,16 +207,15 @@ export class ReportsRatingsSectionComponent {
     }
 
     private getDistributionSegments(d: unknown): number[] {
-        if (Array.isArray(d)) {
-            const arr = (d as unknown[])
-                .slice(0, 11)
-                .map((n) => Number(n ?? 0));
-            while (arr.length < 11) arr.push(0);
-            return arr;
+        if (!d) {
+            return Array(11).fill(0);
         }
-        const obj = (d ?? {}) as Record<string | number, unknown>;
-        return Array.from({ length: 11 }, (_, i) =>
-            Number(obj[i] ?? obj[String(i)] ?? 0)
-        );
+        
+        // Handle Record<'1'|'2'|...|'10', number> format
+        const obj = d as Record<string, number>;
+        return Array.from({ length: 11 }, (_, i) => {
+            if (i === 0) return 0; // Skip 0 rating
+            return Number(obj[String(i)] ?? 0);
+        });
     }
 }

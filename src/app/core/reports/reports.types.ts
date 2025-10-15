@@ -70,32 +70,59 @@ export interface UsersLookupDto {
     pageSize: number;
 }
 
-export interface UserRatingStats {
-    userId: string;
-    userName: string;
-    userAvatar?: string;
+export type RatingDistribution = Record<
+    '1' | '2' | '3' | '4' | '5' | '6' | '7' | '8' | '9' | '10',
+    number
+>;
+
+export interface UserBriefDto {
+    id: string;
+    firstName: string;
+    lastName: string;
+    avatarUrl?: string;
+}
+
+export interface GlobalRatingsDto {
+    average: number | null;
+    count: number;
+    distribution: RatingDistribution;
+    ratedSessions: number;
+    unratedSessions: number;
+}
+
+export interface PerUserRatingDto {
+    user: UserBriefDto;
     average: number;
     count: number;
 }
 
+export interface TopBottomUserDto {
+    userId: string;
+    average: number;
+    count: number;
+}
+
+export interface ContractSplitDto {
+    contractCount: number;
+    nonContractCount: number;
+}
+
+export interface RatingsScopeDto {
+    userId?: string;
+    contractScope?: 'all' | 'contract' | 'noContract';
+}
+
+export interface RatingsPeriodDto {
+    from: string;
+    to: string;
+}
+
 export interface RatingsSummaryDto {
-    period: {
-        from: string;
-        to: string;
-        timezone: string;
-    };
-    global: {
-        average: number;
-        count: number;
-        ratedSessions: number;
-        unratedSessions: number;
-        distribution: number[]; // Array of 11 elements (0-10), count per score
-    };
-    byContract: {
-        withContract: number;
-        withoutContract: number;
-    };
-    perUser: UserRatingStats[];
-    topUsers: UserRatingStats[];
-    bottomUsers: UserRatingStats[];
+    period: RatingsPeriodDto;
+    scope: RatingsScopeDto;
+    global: GlobalRatingsDto;
+    perUser?: PerUserRatingDto[];
+    topUsers?: TopBottomUserDto[];
+    bottomUsers?: TopBottomUserDto[];
+    contractSplit: ContractSplitDto;
 }

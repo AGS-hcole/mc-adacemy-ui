@@ -609,19 +609,22 @@
         "TITLE": "Rating Distribution (1-10)"
       },
       "PER_USER": {
-        "TITLE": "Ratings by User",
+        "TITLE": "Ratings by Student",
         "NAME": "Name",
         "AVERAGE": "Average",
         "COUNT": "Count"
       },
-      "TOP_USERS": "Top Rated Users",
-      "BOTTOM_USERS": "Lowest Rated Users",
+      "TOP_USERS": "Top Students",
+      "BOTTOM_USERS": "Students Needing Support",
       "PIE": {
         "CONTRACT_VS_NONCONTRACT": "Ratings: Contract vs Non-Contract"
       },
       "EMPTY": "No ratings in this period",
+      "NO_DATA": "No information available",
+      "USER": "Student",
+      "RATINGS_COUNT": "ratings",
       "USER_STATS": {
-        "TITLE": "User Rating Statistics"
+        "TITLE": "Student Rating Statistics"
       }
     },
     "KPI": {
@@ -629,6 +632,9 @@
       "UNDER": "Under Contract",
       "OFF": "Off Contract",
       "UNIQUE": "Unique Users"
+    },
+    "SESSIONS": {
+      "TITLE": "Sessions"
     }
   }
 }
