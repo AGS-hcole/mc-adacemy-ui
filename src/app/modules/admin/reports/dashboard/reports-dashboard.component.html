@@ -46,68 +46,53 @@
             </div>
         </div>
 
-        <!-- KPI Cards -->
-        <reports-kpi-cards [summary]="summary" [loading]="loading">
-        </reports-kpi-cards>
+        <!-- Sessions Section -->
+        <div class="flex flex-col space-y-6">
+            <h2 class="text-2xl font-bold">
+                {{ 'REPORTS.SESSIONS.TITLE' | transloco }}
+            </h2>
 
-        <!-- Charts -->
-        <div class="grid grid-cols-1 gap-8 lg:grid-cols-2">
-            <!-- Timeseries Chart -->
-            <div class="lg:col-span-2">
-                <reports-timeseries-chart
-                    [timeseries]="timeseries"
-                    [loading]="loading"
-                >
-                </reports-timeseries-chart>
+            <!-- KPI Cards -->
+            <reports-kpi-cards [summary]="summary" [loading]="loading">
+            </reports-kpi-cards>
+
+            <!-- Charts -->
+            <div class="grid grid-cols-1 gap-6 sm:grid-cols-8 lg:grid-cols-12">
+                <!-- Timeseries Chart -->
+                <div class="col-span-1 sm:col-span-6 lg:col-span-9">
+                    <reports-timeseries-chart
+                        [timeseries]="timeseries"
+                        [loading]="loading"
+                    >
+                    </reports-timeseries-chart>
+                </div>
+
+                <!-- Contract Share Chart -->
+                <div class="col-span-1 h-full sm:col-span-2 lg:col-span-3">
+                    <reports-contract-share-chart
+                        [summary]="summary"
+                        [loading]="loading"
+                    >
+                    </reports-contract-share-chart>
+                </div>
             </div>
 
-            <!-- Contract Share Chart -->
-            <div class="lg:col-span-2">
-                <reports-contract-share-chart
-                    [summary]="summary"
-                    [loading]="loading"
-                >
-                </reports-contract-share-chart>
-            </div>
+            <!-- Table -->
+            <reports-table
+                [sessionsList]="sessionsList"
+                [loading]="loading"
+                (pageChange)="onPageChange($event)"
+                (viewSession)="onViewSession($event)"
+            >
+            </reports-table>
         </div>
 
-        <!-- Export Actions -->
-        <div class="-mt-6 flex items-center justify-end gap-2 pb-8">
-            <button
-                mat-stroked-button
-                (click)="exportCsv()"
-                [disabled]="!sessionsList || sessionsList.items.length === 0"
-            >
-                <mat-icon
-                    class="icon-size-5"
-                    svgIcon="heroicons_solid:document-arrow-down"
-                ></mat-icon>
-                <span class="ml-2">{{
-                    'REPORTS.ACTIONS.EXPORT_CSV' | transloco
-                }}</span>
-            </button>
-            <button
-                mat-stroked-button
-                (click)="exportJson()"
-                [disabled]="!sessionsList || sessionsList.items.length === 0"
-            >
-                <mat-icon
-                    class="icon-size-5"
-                    svgIcon="heroicons_solid:code-bracket"
-                ></mat-icon>
-                <span class="ml-2">{{
-                    'REPORTS.ACTIONS.EXPORT_JSON' | transloco
-                }}</span>
-            </button>
-        </div>
-
-        <!-- Table -->
-        <reports-table
-            [sessionsList]="sessionsList"
+        <!-- Ratings Section -->
+        <reports-ratings-section
+            [ratingsSummary]="ratingsSummary"
             [loading]="loading"
-            (pageChange)="onPageChange($event)"
-            (viewSession)="onViewSession($event)"
+            [filteredUserId]="filters?.userId"
         >
-        </reports-table>
+        </reports-ratings-section>
     </div>
 </div>

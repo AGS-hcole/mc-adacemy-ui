@@ -578,5 +578,93 @@
       "LINEUPS": "Team Lineups",
       "LINEUPS_DESCRIPTION": "View and manage team compositions and pairings"
     }
+  },
+  "REPORTS": {
+    "TITLE": "Reports",
+    "DESCRIPTION": "Training sessions analytics and statistics",
+    "CHART": {
+      "CONTRACT_SHARE": "Contract vs Non-Contract Sessions",
+      "SESSIONS_OVER_TIME": "Sessions Over Time"
+    },
+    "ERROR": {
+      "TITLE": "Failed to load reports data"
+    },
+    "ACTIONS": {
+      "RETRY": "Retry",
+      "EXPORT_CSV": "Export CSV",
+      "EXPORT_JSON": "Export JSON",
+      "APPLY": "Apply",
+      "RESET": "Reset",
+      "VIEW_SESSION": "View Session"
+    },
+    "EMPTY": {
+      "NO_DATA": "No data available for the selected period"
+    },
+    "RATINGS": {
+      "TITLE": "Ratings",
+      "KPI": {
+        "AVERAGE": "Average Rating",
+        "TOTAL": "Total Ratings",
+        "RATED_SESSIONS": "Rated Sessions",
+        "UNRATED_SESSIONS": "Unrated Sessions"
+      },
+      "DISTRIBUTION": {
+        "TITLE": "Rating Distribution (1-10)"
+      },
+      "PER_USER": {
+        "TITLE": "Ratings by Student",
+        "NAME": "Name",
+        "AVERAGE": "Average",
+        "COUNT": "Count"
+      },
+      "TOP_USERS": "Top Students",
+      "BOTTOM_USERS": "Students Needing Support",
+      "PIE": {
+        "CONTRACT_VS_NONCONTRACT": "Ratings: Contract vs Non-Contract"
+      },
+      "EMPTY": "No ratings in this period",
+      "NO_DATA": "No information available",
+      "USER": "Student",
+      "RATINGS_COUNT": "ratings",
+      "USER_STATS": {
+        "TITLE": "Student Rating Statistics"
+      }
+    },
+    "KPI": {
+      "TOTAL": "Total Sessions",
+      "UNDER": "Under Contract",
+      "OFF": "Off Contract",
+      "UNIQUE": "Unique Users"
+    },
+    "SESSIONS": {
+      "TITLE": "Sessions"
+    },
+    "FILTERS": {
+      "PERIOD": "Period",
+      "USER": "Student",
+      "ALL_USERS": "All Students",
+      "CONTRACT_SCOPE": "Contract Scope",
+      "PRESET": {
+        "LAST_7": "Last 7 days",
+        "LAST_30": "Last 30 days",
+        "THIS_MONTH": "This month",
+        "PREV_MONTH": "Previous month",
+        "CUSTOM": "Custom range"
+      },
+      "CONTRACT": {
+        "ALL": "All sessions",
+        "UNDER": "Under contract",
+        "OFF": "Off contract"
+      }
+    },
+    "TABLE": {
+      "TITLE": "Sessions List",
+      "DATE": "Date",
+      "SESSION_TITLE": "Session",
+      "COACH": "Coach",
+      "CONTRACT": "Contract",
+      "ATTENDEES": "Attendees",
+      "STATUS": "Status"
+    }
   }
 }

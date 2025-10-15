@@ -5,19 +5,20 @@ import { MatIconModule } from '@angular/material/icon';
 import { PageEvent } from '@angular/material/paginator';
 import { ActivatedRoute, Router } from '@angular/router';
 import { TranslocoModule } from '@jsverse/transloco';
-import { Subject, takeUntil } from 'rxjs';
 import { ReportsExportService } from 'app/core/reports/reports-export.service';
 import { ReportsStateService } from 'app/core/reports/reports-state.service';
 import {
+    RatingsSummaryDto,
     ReportsFilters,
-    SessionListItem,
     SessionsListDto,
     SessionsSummaryDto,
     SessionsTimeseriesDto,
 } from 'app/core/reports/reports.types';
+import { Subject, takeUntil } from 'rxjs';
 import { ReportsContractShareChartComponent } from './reports-contract-share-chart.component';
 import { ReportsFiltersComponent } from './reports-filters.component';
 import { ReportsKpiCardsComponent } from './reports-kpi-cards.component';
+import { ReportsRatingsSectionComponent } from './reports-ratings-section.component';
 import { ReportsTableComponent } from './reports-table.component';
 import { ReportsTimeseriesChartComponent } from './reports-timeseries-chart.component';
 
@@ -34,6 +35,7 @@ import { ReportsTimeseriesChartComponent } from './reports-timeseries-chart.comp
         ReportsKpiCardsComponent,
         ReportsTimeseriesChartComponent,
         ReportsContractShareChartComponent,
+        ReportsRatingsSectionComponent,
         ReportsTableComponent,
     ],
 })
@@ -42,6 +44,7 @@ export class ReportsDashboardComponent implements OnInit, OnDestroy {
     summary: SessionsSummaryDto | null = null;
     timeseries: SessionsTimeseriesDto | null = null;
     sessionsList: SessionsListDto | null = null;
+    ratingsSummary: RatingsSummaryDto | null = null;
     loading = false;
     error: string | null = null;
 
@@ -85,6 +88,12 @@ export class ReportsDashboardComponent implements OnInit, OnDestroy {
             .pipe(takeUntil(this._unsubscribeAll))
             .subscribe((sessionsList) => {
                 this.sessionsList = sessionsList;
+            });
+
+        this._state.ratingsSummary$
+            .pipe(takeUntil(this._unsubscribeAll))
+            .subscribe((ratingsSummary) => {
+                this.ratingsSummary = ratingsSummary;
             });
 
         this._state.loading$
@@ -143,24 +152,6 @@ export class ReportsDashboardComponent implements OnInit, OnDestroy {
      */
     onViewSession(sessionId: string): void {
         this._router.navigate(['/admin/sessions', sessionId]);
-    }
-
-    /**
-     * Export CSV
-     */
-    exportCsv(): void {
-        if (this.sessionsList && this.sessionsList.items.length > 0) {
-            this._export.exportCsv(this.sessionsList.items);
-        }
-    }
-
-    /**
-     * Export JSON
-     */
-    exportJson(): void {
-        if (this.sessionsList && this.sessionsList.items.length > 0) {
-            this._export.exportJson(this.sessionsList.items);
-        }
     }
 
     /**

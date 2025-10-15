@@ -3,6 +3,7 @@ import { Injectable } from '@angular/core';
 import { environment } from 'environments/environment';
 import { Observable } from 'rxjs';
 import {
+    RatingsSummaryDto,
     SessionsListDto,
     SessionsSummaryDto,
     SessionsTimeseriesDto,
@@ -125,6 +126,38 @@ export class ReportsApiService {
 
         return this._httpClient.get<UsersLookupDto>(
             `${this.apiUrl}/users/lookup`,
+            { params }
+        );
+    }
+
+    /**
+     * Get ratings summary
+     */
+    getRatingsSummary(
+        from: string,
+        to: string,
+        userId?: string,
+        contractScope?: string
+    ): Observable<RatingsSummaryDto> {
+        const paramsObj: Record<string, string> = {
+            from,
+            to,
+        };
+
+        if (userId) {
+            paramsObj['userId'] = userId;
+        }
+
+        if (contractScope && contractScope !== 'all') {
+            paramsObj['contractScope'] = contractScope;
+        }
+
+        const params = new HttpParams({ fromObject: paramsObj });
+
+        console.log(params);
+
+        return this._httpClient.get<RatingsSummaryDto>(
+            `${this.apiUrl}/reports/ratings/summary`,
             { params }
         );
     }
