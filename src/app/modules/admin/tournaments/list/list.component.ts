@@ -107,20 +107,25 @@ export class TournamentListComponent implements OnInit, OnDestroy {
     ngOnInit(): void {
         // Setup filter predicate
         this.dsTournaments.filterPredicate = (data: Tournament, filter: string) => {
-            const filterObj = JSON.parse(filter);
-            const search = filterObj.search?.toLowerCase() || '';
-            const status = filterObj.status;
-            const type = filterObj.type;
+            try {
+                const filterObj = JSON.parse(filter);
+                const search = filterObj.search?.toLowerCase() || '';
+                const status = filterObj.status;
+                const type = filterObj.type;
 
-            const matchesSearch =
-                !search ||
-                data.title.toLowerCase().includes(search) ||
-                data.city.toLowerCase().includes(search);
+                const matchesSearch =
+                    !search ||
+                    data.title?.toLowerCase().includes(search) ||
+                    data.city?.toLowerCase().includes(search);
 
-            const matchesStatus = !status || data.status === status;
-            const matchesType = !type || data.type === type;
+                const matchesStatus = !status || data.status === status;
+                const matchesType = !type || data.type === type;
 
-            return matchesSearch && matchesStatus && matchesType;
+                return matchesSearch && matchesStatus && matchesType;
+            } catch (e) {
+                // If filter parsing fails, show all data
+                return true;
+            }
         };
 
         // Get tournaments from resolver
