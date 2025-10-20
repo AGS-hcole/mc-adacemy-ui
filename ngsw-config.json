@@ -5,6 +5,7 @@
         {
             "name": "app",
             "installMode": "prefetch",
+            "updateMode": "prefetch",
             "resources": {
                 "files": [
                     "/favicon-16x16.png",
