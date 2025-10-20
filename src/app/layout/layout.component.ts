@@ -1,12 +1,11 @@
-
+import { DOCUMENT } from '@angular/common';
 import {
-  Component,
-  Inject,
-  OnDestroy,
-  OnInit,
-  Renderer2,
-  ViewEncapsulation,
-  DOCUMENT
+    Component,
+    Inject,
+    OnDestroy,
+    OnInit,
+    Renderer2,
+    ViewEncapsulation,
 } from '@angular/core';
 import { ActivatedRoute, NavigationEnd, Router } from '@angular/router';
 import { FuseConfig, FuseConfigService } from '@fuse/services/config';
