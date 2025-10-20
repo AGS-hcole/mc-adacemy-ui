@@ -1,13 +1,14 @@
-import { AsyncPipe, DOCUMENT, I18nPluralPipe, NgClass } from '@angular/common';
+import { AsyncPipe, I18nPluralPipe, NgClass } from '@angular/common';
 import {
-    ChangeDetectionStrategy,
-    ChangeDetectorRef,
-    Component,
-    Inject,
-    OnDestroy,
-    OnInit,
-    ViewChild,
-    ViewEncapsulation,
+  ChangeDetectionStrategy,
+  ChangeDetectorRef,
+  Component,
+  Inject,
+  OnDestroy,
+  OnInit,
+  ViewChild,
+  ViewEncapsulation,
+  DOCUMENT
 } from '@angular/core';
 import {
     FormsModule,
