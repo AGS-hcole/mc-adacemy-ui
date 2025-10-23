@@ -105,7 +105,7 @@ export class AuthSignInComponent implements OnInit {
                 const redirectURL =
                     this._activatedRoute.snapshot.queryParamMap.get(
                         'redirectURL'
-                    ) || '/home/' + response.user.groupId + '/dashboard';
+                    ) || '/';
 
                 // Navigate to the redirect url
                 this._router.navigateByUrl(redirectURL);
