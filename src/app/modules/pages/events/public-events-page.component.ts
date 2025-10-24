@@ -28,7 +28,6 @@ import {
         MatButtonModule,
         MatProgressSpinnerModule,
         TranslocoModule,
-        DatePipe,
     ],
 })
 export class PublicEventsPageComponent implements OnInit {
