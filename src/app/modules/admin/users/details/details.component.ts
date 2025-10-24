@@ -34,6 +34,7 @@ import { MatTooltipModule } from '@angular/material/tooltip';
 import { ActivatedRoute, Router, RouterLink } from '@angular/router';
 import { FuseConfirmationService } from '@fuse/services/confirmation';
 import { TranslocoModule } from '@jsverse/transloco';
+import { UserService } from 'app/core/user/user.service';
 import { FormulaType, Role, User } from 'app/core/user/user.types';
 import { LocalizedDatePipe } from 'app/shared/pipes/localized-date.pipe';
 import { Subject, takeUntil } from 'rxjs';
@@ -72,6 +73,7 @@ export class UsersDetailsComponent implements OnInit, OnDestroy {
 
     editMode: boolean = false;
     user: User;
+    currentUser: User;
     userForm: UntypedFormGroup;
     users: User[];
     roles: Role[] = Object.values(Role);
@@ -91,6 +93,7 @@ export class UsersDetailsComponent implements OnInit, OnDestroy {
         private _changeDetectorRef: ChangeDetectorRef,
         private _usersListComponent: UsersListComponent,
         private _usersService: UsersService,
+        private _userService: UserService,
         private _formBuilder: UntypedFormBuilder,
         private _fuseConfirmationService: FuseConfirmationService,
         private _renderer2: Renderer2,
@@ -169,6 +172,13 @@ export class UsersDetailsComponent implements OnInit, OnDestroy {
 
                 // Mark for check
                 this._changeDetectorRef.markForCheck();
+            });
+
+        // Get the current user
+        this._userService.user$
+            .pipe(takeUntil(this._unsubscribeAll))
+            .subscribe((currentUser: User) => {
+                this.currentUser = currentUser;
             });
     }
 

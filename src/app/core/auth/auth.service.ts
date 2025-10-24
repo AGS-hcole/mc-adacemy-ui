@@ -57,13 +57,15 @@ export class AuthService {
         return this._httpClient.get(`${this.apiUrl}/auth/me`).pipe(
             switchMap((response: any) => {
                 // Update mustOnboard flag
-                this._mustOnboard = response.mustOnboard ?? (response.user?.privacyConsentAt == null);
-                
+                this._mustOnboard =
+                    response.mustOnboard ??
+                    response.user?.privacyConsentAt == null;
+
                 // Update user
                 if (response.user) {
                     this._userService.user = response.user;
                 }
-                
+
                 return of(response);
             })
         );
@@ -86,11 +88,11 @@ export class AuthService {
      *
      * @param password
      */
-    resetPassword(password: string): Observable<any> {
-        return this._httpClient.post(
-            `${this.apiUrl}/auth/reset-password`,
-            password
-        );
+    resetPassword(token: string, password: string): Observable<any> {
+        return this._httpClient.post(`${this.apiUrl}/auth/reset-password`, {
+            token: token,
+            password: password,
+        });
     }
 
     /**
@@ -122,7 +124,9 @@ export class AuthService {
                     this._userService.user = response.user;
 
                     // Set mustOnboard flag
-                    this._mustOnboard = response.mustOnboard ?? (response.user?.privacyConsentAt == null);
+                    this._mustOnboard =
+                        response.mustOnboard ??
+                        response.user?.privacyConsentAt == null;
 
                     // Return a new observable with the response
                     return of(response);
@@ -167,7 +171,9 @@ export class AuthService {
                     this._userService.user = response.user;
 
                     // Set mustOnboard flag
-                    this._mustOnboard = response.mustOnboard ?? (response.user?.privacyConsentAt == null);
+                    this._mustOnboard =
+                        response.mustOnboard ??
+                        response.user?.privacyConsentAt == null;
 
                     // Return true
                     return of(true);

@@ -12,7 +12,7 @@ import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatIconModule } from '@angular/material/icon';
 import { MatInputModule } from '@angular/material/input';
 import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
-import { RouterLink } from '@angular/router';
+import { ActivatedRoute, Router, RouterLink } from '@angular/router';
 import { fuseAnimations } from '@fuse/animations';
 import { FuseAlertComponent, FuseAlertType } from '@fuse/components/alert';
 import { FuseValidators } from '@fuse/validators';
@@ -49,13 +49,16 @@ export class AuthResetPasswordComponent implements OnInit {
     };
     resetPasswordForm: UntypedFormGroup;
     showAlert: boolean = false;
+    token: string;
 
     /**
      * Constructor
      */
     constructor(
         private _authService: AuthService,
-        private _formBuilder: UntypedFormBuilder
+        private _formBuilder: UntypedFormBuilder,
+        private _activatedRoute: ActivatedRoute,
+        private _router: Router
     ) {}
 
     // -----------------------------------------------------------------------------------------------------
@@ -79,6 +82,14 @@ export class AuthResetPasswordComponent implements OnInit {
                 ),
             }
         );
+
+        // Get the token from the route
+        this._activatedRoute.queryParams.subscribe((params) => {
+            if (params.token) {
+                // Set the token
+                this.token = params.token;
+            }
+        });
     }
 
     // -----------------------------------------------------------------------------------------------------
@@ -102,34 +113,31 @@ export class AuthResetPasswordComponent implements OnInit {
 
         // Send the request to the server
         this._authService
-            .resetPassword(this.resetPasswordForm.get('password').value)
+            .resetPassword(
+                this.token,
+                this.resetPasswordForm.get('password').value
+            )
             .pipe(
                 finalize(() => {
-                    // Re-enable the form
-                    this.resetPasswordForm.enable();
-
-                    // Reset the form
-                    this.resetPasswordNgForm.resetForm();
-
-                    // Show the alert
-                    this.showAlert = true;
+                    // Naviguate to sign in
+                    this._router.navigate(['sign-in']);
                 })
             )
-            .subscribe(
-                (response) => {
+            .subscribe({
+                next: (response) => {
                     // Set the alert
                     this.alert = {
                         type: 'success',
-                        message: 'Your password has been reset.',
+                        message: 'Votre mot de passe a été réinitialisé.',
                     };
                 },
-                (response) => {
+                error: (response) => {
                     // Set the alert
                     this.alert = {
                         type: 'error',
-                        message: 'Something went wrong, please try again.',
+                        message: 'Une erreur est survenue, veuillez réessayer.',
                     };
-                }
-            );
+                },
+            });
     }
 }

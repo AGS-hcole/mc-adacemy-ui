@@ -673,7 +673,7 @@
                         class="-mx-6 mt-10 flex items-center border-t bg-gray-50 py-4 pl-1 pr-4 sm:-mx-12 sm:pl-7 sm:pr-12 dark:bg-transparent"
                     >
                         <!-- Delete -->
-                        @if (user) {
+                        @if (user && user.id !== currentUser.id) {
                             <button
                                 mat-button
                                 [color]="'warn'"
