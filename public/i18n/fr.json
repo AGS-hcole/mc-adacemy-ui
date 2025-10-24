@@ -675,7 +675,9 @@
                 "DELETE": "Supprimer",
                 "PUBLISH": "Publier",
                 "ARCHIVE": "Archiver"
-            }
+            },
+            "PUBLISH_ERROR_PARTICIPANTS": "Impossible de publier : il faut au moins 2 participants",
+            "PUBLISH_ERROR_TEAMS": "Impossible de publier : aucune équipe générée"
         },
         "USER": {
             "TITLE": "Mes tournois",

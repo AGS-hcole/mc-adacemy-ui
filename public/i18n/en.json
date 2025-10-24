@@ -565,7 +565,9 @@
         "DELETE": "Delete",
         "PUBLISH": "Publish",
         "ARCHIVE": "Archive"
-      }
+      },
+      "PUBLISH_ERROR_PARTICIPANTS": "Cannot publish: need at least 2 participants",
+      "PUBLISH_ERROR_TEAMS": "Cannot publish: no teams generated"
     },
     "USER": {
       "TITLE": "My Tournaments",

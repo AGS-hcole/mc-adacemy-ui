@@ -22,7 +22,7 @@ import { MatIconModule } from '@angular/material/icon';
 import { MatInputModule } from '@angular/material/input';
 import { MatSelectModule } from '@angular/material/select';
 import { ActivatedRoute, Router } from '@angular/router';
-import { TranslocoModule } from '@jsverse/transloco';
+import { TranslocoModule, TranslocoService } from '@jsverse/transloco';
 import {
     CreateTournamentRequest,
     Tournament,
@@ -72,7 +72,8 @@ export class TournamentInfoComponent implements OnInit, OnDestroy {
         private _changeDetectorRef: ChangeDetectorRef,
         private _formBuilder: FormBuilder,
         private _router: Router,
-        private _tournamentsService: TournamentsService
+        private _tournamentsService: TournamentsService,
+        private _translocoService: TranslocoService
     ) {}
 
     // -----------------------------------------------------------------------------------------------------
@@ -222,12 +223,12 @@ export class TournamentInfoComponent implements OnInit, OnDestroy {
 
         // Validate before publish
         if (!this.tournament.participants || this.tournament.participants.length < 2) {
-            alert('Cannot publish: need at least 2 participants');
+            alert(this._translocoService.translate('TOURNAMENTS.ADMIN.PUBLISH_ERROR_PARTICIPANTS'));
             return;
         }
 
         if (!this.tournament.teams || this.tournament.teams.length === 0) {
-            alert('Cannot publish: no teams generated');
+            alert(this._translocoService.translate('TOURNAMENTS.ADMIN.PUBLISH_ERROR_TEAMS'));
             return;
         }
 
