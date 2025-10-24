@@ -17,7 +17,7 @@ import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 import { MatSlideToggleModule } from '@angular/material/slide-toggle';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { ActivatedRoute } from '@angular/router';
-import { TranslocoModule } from '@jsverse/transloco';
+import { TranslocoModule, TranslocoService } from '@jsverse/transloco';
 import { UserService } from 'app/core/user/user.service';
 import { User } from 'app/core/user/user.types';
 import { AvatarService } from 'app/modules/onboarding/services/avatar.service';
@@ -68,6 +68,7 @@ export class ProfileComponent implements OnInit {
     private avatarService = inject(AvatarService);
     private _activatedRoute = inject(ActivatedRoute);
     private snackBar = inject(MatSnackBar);
+    private _translocoService = inject(TranslocoService);
 
     readonly maxBirthDate = new Date();
     readonly minBirthDate = new Date('1900-01-01');
@@ -300,7 +301,9 @@ export class ProfileComponent implements OnInit {
                 next: () => {
                     // Show success message
                     this.snackBar.open(
-                        this.getTranslation('PROFILE.UPDATE_SUCCESS'),
+                        this._translocoService.translate(
+                            'PROFILE.UPDATE_SUCCESS'
+                        ),
                         '',
                         {
                             duration: 3000,
@@ -316,7 +319,9 @@ export class ProfileComponent implements OnInit {
                     console.error('Error updating profile:', error);
                     // Show error message
                     this.snackBar.open(
-                        this.getTranslation('PROFILE.UPDATE_ERROR'),
+                        this._translocoService.translate(
+                            'PROFILE.UPDATE_ERROR'
+                        ),
                         '',
                         {
                             duration: 3000,
@@ -327,10 +332,5 @@ export class ProfileComponent implements OnInit {
                     this.isSaving = false;
                 },
             });
-    }
-
-    private getTranslation(key: string): string {
-        // Simple fallback for translation (Transloco handles this better in template)
-        return key.split('.').pop() || key;
     }
 }
