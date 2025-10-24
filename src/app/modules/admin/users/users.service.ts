@@ -102,17 +102,15 @@ export class UsersService {
         return this.users$.pipe(
             take(1),
             switchMap((users) =>
-                this._httpClient
-                    .post<User>(`${this.apiUrl}/users`, JSON.stringify(user))
-                    .pipe(
-                        map((newUser) => {
-                            // Update the users with the new user
-                            this._users.next([newUser, ...users]);
+                this._httpClient.post<User>(`${this.apiUrl}/users`, user).pipe(
+                    map((newUser) => {
+                        // Update the users with the new user
+                        this._users.next([newUser, ...users]);
 
-                            // Return the new user
-                            return newUser;
-                        })
-                    )
+                        // Return the new user
+                        return newUser;
+                    })
+                )
             )
         );
     }
@@ -128,10 +126,7 @@ export class UsersService {
             take(1),
             switchMap((users) =>
                 this._httpClient
-                    .patch<User>(
-                        `${this.apiUrl}/users/${id}`,
-                        JSON.stringify(user)
-                    )
+                    .patch<User>(`${this.apiUrl}/users/${id}`, user)
                     .pipe(
                         map((updatedUser) => {
                             // Find the index of the updated user
@@ -228,10 +223,7 @@ export class UsersService {
             take(1),
             switchMap((users) =>
                 this._httpClient
-                    .put<User>(
-                        `${this.apiUrl}/users/${user.id}`,
-                        JSON.stringify(user)
-                    )
+                    .put<User>(`${this.apiUrl}/users/${user.id}`, user)
                     .pipe(
                         map((updatedUser) => {
                             // Find the index of the updated user
