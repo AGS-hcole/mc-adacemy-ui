@@ -10,6 +10,7 @@ import { MatButtonModule } from '@angular/material/button';
 import { MatIconModule } from '@angular/material/icon';
 import { MatTooltipModule } from '@angular/material/tooltip';
 import { Router } from '@angular/router';
+import { TranslocoPipe } from '@jsverse/transloco';
 import { FuseDrawerComponent } from '@fuse/components/drawer';
 import {
     FuseConfig,
@@ -47,6 +48,7 @@ import { Subject, takeUntil } from 'rxjs';
         MatButtonModule,
         NgClass,
         MatTooltipModule,
+        TranslocoPipe,
     ],
 })
 export class SettingsComponent implements OnInit, OnDestroy {

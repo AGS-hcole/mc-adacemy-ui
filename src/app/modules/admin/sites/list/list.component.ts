@@ -19,7 +19,7 @@ import { MatInputModule } from '@angular/material/input';
 import { MatTooltipModule } from '@angular/material/tooltip';
 import { ActivatedRoute, Router } from '@angular/router';
 import { FuseConfirmationService } from '@fuse/services/confirmation';
-import { TranslocoModule } from '@jsverse/transloco';
+import { TranslocoModule, TranslocoService } from '@jsverse/transloco';
 import { Site } from 'app/core/session/session.types';
 import { SitesService } from 'app/core/sites/sites.service';
 import { Observable, Subject, debounceTime, takeUntil } from 'rxjs';
@@ -59,7 +59,8 @@ export class AdminSitesListComponent implements OnInit, OnDestroy {
         private _changeDetectorRef: ChangeDetectorRef,
         private _router: Router,
         private _sitesService: SitesService,
-        private _fuseConfirmationService: FuseConfirmationService
+        private _fuseConfirmationService: FuseConfirmationService,
+        private _translocoService: TranslocoService
     ) {}
 
     // -----------------------------------------------------------------------------------------------------
@@ -132,11 +133,16 @@ export class AdminSitesListComponent implements OnInit, OnDestroy {
      */
     deleteSite(site: Site): void {
         const confirmation = this._fuseConfirmationService.open({
-            title: 'Delete site',
-            message: `Are you sure you want to delete "${site.name}"? This action cannot be undone.`,
+            title: this._translocoService.translate('DIALOGS.DELETE_SITE.TITLE'),
+            message: this._translocoService.translate(
+                'DIALOGS.DELETE_SITE.MESSAGE',
+                { name: site.name }
+            ),
             actions: {
                 confirm: {
-                    label: 'Delete',
+                    label: this._translocoService.translate(
+                        'DIALOGS.DELETE_SITE.CONFIRM'
+                    ),
                 },
             },
         });

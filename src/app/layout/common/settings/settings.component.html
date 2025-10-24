@@ -43,7 +43,9 @@
 
             <div class="flex flex-col p-6">
                 <!-- Theme -->
-                <div class="text-secondary text-md font-semibold">THEME</div>
+                <div class="text-secondary text-md font-semibold">
+                    {{ 'SETTINGS.THEME' | transloco }}
+                </div>
                 <div class="mt-6 grid grid-cols-2 gap-3 sm:grid-cols-3">
                     @for (theme of config.themes; track theme) {
                         <div
@@ -70,7 +72,9 @@
                 <hr class="my-8" />
 
                 <!-- Scheme -->
-                <div class="text-secondary text-md font-semibold">SCHEME</div>
+                <div class="text-secondary text-md font-semibold">
+                    {{ 'SETTINGS.SCHEME' | transloco }}
+                </div>
                 <div class="mt-6 grid grid-cols-3 justify-items-start gap-3">
                     <!-- Auto -->
                     <div
@@ -91,7 +95,7 @@
                             class="ml-2 flex items-center font-medium leading-5"
                             [class.text-secondary]="config.scheme !== 'auto'"
                         >
-                            Auto
+                            {{ 'SETTINGS.SCHEME_AUTO' | transloco }}
                         </div>
                     </div>
                     <!-- Dark -->
@@ -112,7 +116,7 @@
                             class="ml-2 flex items-center font-medium leading-5"
                             [class.text-secondary]="config.scheme !== 'dark'"
                         >
-                            Dark
+                            {{ 'SETTINGS.SCHEME_DARK' | transloco }}
                         </div>
                     </div>
                     <!-- Light -->
@@ -133,7 +137,7 @@
                             class="ml-2 flex items-center font-medium leading-5"
                             [class.text-secondary]="config.scheme !== 'light'"
                         >
-                            Light
+                            {{ 'SETTINGS.SCHEME_LIGHT' | transloco }}
                         </div>
                     </div>
                 </div>
@@ -141,7 +145,9 @@
                 <hr class="my-8" />
 
                 <!-- Layout -->
-                <div class="text-secondary text-md font-semibold">LAYOUT</div>
+                <div class="text-secondary text-md font-semibold">
+                    {{ 'SETTINGS.LAYOUT' | transloco }}
+                </div>
                 <div class="mt-6 grid grid-cols-3 gap-3">
                     <!-- Empty -->
                     <div

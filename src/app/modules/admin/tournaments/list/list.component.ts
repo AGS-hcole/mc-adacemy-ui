@@ -21,7 +21,7 @@ import { MatSelectModule } from '@angular/material/select';
 import { MatTooltipModule } from '@angular/material/tooltip';
 import { ActivatedRoute, Router } from '@angular/router';
 import { FuseConfirmationService } from '@fuse/services/confirmation';
-import { TranslocoModule } from '@jsverse/transloco';
+import { TranslocoModule, TranslocoService } from '@jsverse/transloco';
 import {
     Tournament,
     TournamentFilters,
@@ -75,7 +75,8 @@ export class TournamentListComponent implements OnInit, OnDestroy {
         private _changeDetectorRef: ChangeDetectorRef,
         private _router: Router,
         private _tournamentsService: TournamentsService,
-        private _fuseConfirmationService: FuseConfirmationService
+        private _fuseConfirmationService: FuseConfirmationService,
+        private _translocoService: TranslocoService
     ) {}
 
     // -----------------------------------------------------------------------------------------------------
@@ -180,11 +181,18 @@ export class TournamentListComponent implements OnInit, OnDestroy {
      */
     deleteTournament(tournament: Tournament): void {
         const confirmation = this._fuseConfirmationService.open({
-            title: 'Delete tournament',
-            message: `Are you sure you want to delete "${tournament.title}"?`,
+            title: this._translocoService.translate(
+                'DIALOGS.DELETE_TOURNAMENT.TITLE'
+            ),
+            message: this._translocoService.translate(
+                'DIALOGS.DELETE_TOURNAMENT.MESSAGE',
+                { title: tournament.title }
+            ),
             actions: {
                 confirm: {
-                    label: 'Delete',
+                    label: this._translocoService.translate(
+                        'DIALOGS.DELETE_TOURNAMENT.CONFIRM'
+                    ),
                 },
             },
         });

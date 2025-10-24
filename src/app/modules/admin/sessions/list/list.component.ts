@@ -22,7 +22,7 @@ import { MatSelectModule } from '@angular/material/select';
 import { MatTooltipModule } from '@angular/material/tooltip';
 import { ActivatedRoute, Router } from '@angular/router';
 import { FuseConfirmationService } from '@fuse/services/confirmation';
-import { TranslocoModule } from '@jsverse/transloco';
+import { TranslocoModule, TranslocoService } from '@jsverse/transloco';
 import {
     Session,
     SessionFilters,
@@ -77,7 +77,8 @@ export class AdminSessionsListComponent implements OnInit, OnDestroy {
         private _router: Router,
         private _sessionsService: SessionsService,
         private _matDialog: MatDialog,
-        private _fuseConfirmationService: FuseConfirmationService
+        private _fuseConfirmationService: FuseConfirmationService,
+        private _translocoService: TranslocoService
     ) {}
 
     // -----------------------------------------------------------------------------------------------------
@@ -169,11 +170,17 @@ export class AdminSessionsListComponent implements OnInit, OnDestroy {
      */
     deleteSession(session: Session): void {
         const confirmation = this._fuseConfirmationService.open({
-            title: 'Delete session',
-            message: 'Are you sure you want to delete this session?',
+            title: this._translocoService.translate(
+                'DIALOGS.DELETE_SESSION.TITLE'
+            ),
+            message: this._translocoService.translate(
+                'DIALOGS.DELETE_SESSION.MESSAGE'
+            ),
             actions: {
                 confirm: {
-                    label: 'Delete',
+                    label: this._translocoService.translate(
+                        'DIALOGS.DELETE_SESSION.CONFIRM'
+                    ),
                 },
             },
         });
@@ -207,11 +214,17 @@ export class AdminSessionsListComponent implements OnInit, OnDestroy {
      */
     cancelSession(session: Session): void {
         const confirmation = this._fuseConfirmationService.open({
-            title: 'Cancel session',
-            message: 'Are you sure you want to cancel this session?',
+            title: this._translocoService.translate(
+                'DIALOGS.CANCEL_SESSION.TITLE'
+            ),
+            message: this._translocoService.translate(
+                'DIALOGS.CANCEL_SESSION.MESSAGE'
+            ),
             actions: {
                 confirm: {
-                    label: 'Cancel Session',
+                    label: this._translocoService.translate(
+                        'DIALOGS.CANCEL_SESSION.CONFIRM'
+                    ),
                 },
             },
         });

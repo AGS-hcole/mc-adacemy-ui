@@ -33,7 +33,7 @@ import { MatSlideToggleModule } from '@angular/material/slide-toggle';
 import { MatTooltipModule } from '@angular/material/tooltip';
 import { ActivatedRoute, Router, RouterLink } from '@angular/router';
 import { FuseConfirmationService } from '@fuse/services/confirmation';
-import { TranslocoModule } from '@jsverse/transloco';
+import { TranslocoModule, TranslocoService } from '@jsverse/transloco';
 import { UserService } from 'app/core/user/user.service';
 import { FormulaType, Role, User } from 'app/core/user/user.types';
 import { LocalizedDatePipe } from 'app/shared/pipes/localized-date.pipe';
@@ -99,7 +99,8 @@ export class UsersDetailsComponent implements OnInit, OnDestroy {
         private _renderer2: Renderer2,
         private _router: Router,
         private _overlay: Overlay,
-        private _viewContainerRef: ViewContainerRef
+        private _viewContainerRef: ViewContainerRef,
+        private _translocoService: TranslocoService
     ) {}
 
     // -----------------------------------------------------------------------------------------------------
@@ -284,12 +285,15 @@ export class UsersDetailsComponent implements OnInit, OnDestroy {
     deleteUser(): void {
         // Open the confirmation dialog
         const confirmation = this._fuseConfirmationService.open({
-            title: 'Delete user',
-            message:
-                'Are you sure you want to delete this user? This action cannot be undone!',
+            title: this._translocoService.translate('DIALOGS.DELETE_USER.TITLE'),
+            message: this._translocoService.translate(
+                'DIALOGS.DELETE_USER.MESSAGE'
+            ),
             actions: {
                 confirm: {
-                    label: 'Delete',
+                    label: this._translocoService.translate(
+                        'DIALOGS.DELETE_USER.CONFIRM'
+                    ),
                 },
             },
         });

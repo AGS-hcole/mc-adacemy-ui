@@ -11,6 +11,72 @@
             "COMING_SOON": "Çok Yakında"
         }
     },
+    "ERROR": {
+        "404": {
+            "TITLE": "Oops... 404!",
+            "MESSAGE": "İstediğiniz sayfa bulunamadı.",
+            "BACK": "Kontrol Paneline Dön"
+        },
+        "500": {
+            "TITLE": "Bir şeyler yanlış gitti!",
+            "MESSAGE": "Sunucu Hatası 500. Ekibimiz bilgilendirildi, anlayışınız için teşekkür ederiz.",
+            "BACK": "Kontrol Paneline Dön"
+        }
+    },
+    "SETTINGS": {
+        "THEME": "Tema",
+        "SCHEME": "Şema",
+        "SCHEME_AUTO": "Otomatik",
+        "SCHEME_DARK": "Koyu",
+        "SCHEME_LIGHT": "Açık",
+        "LAYOUT": "Düzen"
+    },
+    "DIALOGS": {
+        "DELETE_SESSION": {
+            "TITLE": "Oturumu sil",
+            "MESSAGE": "Bu oturumu silmek istediğinizden emin misiniz?",
+            "CONFIRM": "Sil"
+        },
+        "CANCEL_SESSION": {
+            "TITLE": "Oturumu iptal et",
+            "MESSAGE": "Bu oturumu iptal etmek istediğinizden emin misiniz?",
+            "CONFIRM": "Oturumu İptal Et"
+        },
+        "REMOVE_PARTICIPANT": {
+            "TITLE": "Katılımcıyı kaldır",
+            "MESSAGE": "Bu katılımcıyı kaldırmak istediğinizden emin misiniz?",
+            "CONFIRM": "Kaldır"
+        },
+        "RESET_RATING": {
+            "TITLE": "Değerlendirmeyi sıfırla",
+            "MESSAGE": "Bu değerlendirmeyi sıfırlamak istediğinizden emin misiniz?",
+            "CONFIRM": "Sıfırla"
+        },
+        "DELETE_SITE": {
+            "TITLE": "Siteyi sil",
+            "MESSAGE": "\"{{name}}\" silmek istediğinizden emin misiniz? Bu işlem geri alınamaz.",
+            "CONFIRM": "Sil"
+        },
+        "DELETE_TOURNAMENT": {
+            "TITLE": "Turnuvayı sil",
+            "MESSAGE": "\"{{title}}\" silmek istediğinizden emin misiniz?",
+            "CONFIRM": "Sil"
+        },
+        "DELETE_USER": {
+            "TITLE": "Kullanıcıyı sil",
+            "MESSAGE": "Bu kullanıcıyı silmek istediğinizden emin misiniz? Bu işlem geri alınamaz!",
+            "CONFIRM": "Sil"
+        }
+    },
+    "AUTH": {
+        "SIGNIN": {
+            "ERROR_MESSAGE": "Yanlış e-posta veya şifre"
+        },
+        "RESET_PASSWORD": {
+            "SUCCESS_MESSAGE": "Şifreniz sıfırlandı.",
+            "ERROR_MESSAGE": "Bir hata oluştu, lütfen tekrar deneyin."
+        }
+    },
     "welcome-back": "Hoşgeldin",
     "Project": "Proje",
     "Analytics": "Analitik",

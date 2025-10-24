@@ -18,7 +18,7 @@ import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 import { MatSelectModule } from '@angular/material/select';
 import { MatTooltipModule } from '@angular/material/tooltip';
 import { FuseConfirmationService } from '@fuse/services/confirmation';
-import { TranslocoModule } from '@jsverse/transloco';
+import { TranslocoModule, TranslocoService } from '@jsverse/transloco';
 import { RatingsService } from 'app/core/session/ratings.service';
 import {
     Rating,
@@ -86,7 +86,8 @@ export class SessionParticipantsComponent implements OnInit, OnDestroy {
         private _ratingsService: RatingsService,
         private _changeDetectorRef: ChangeDetectorRef,
         private _fuseConfirmationService: FuseConfirmationService,
-        private _dialog: MatDialog
+        private _dialog: MatDialog,
+        private _translocoService: TranslocoService
     ) {}
 
     // -----------------------------------------------------------------------------------------------------
@@ -168,11 +169,17 @@ export class SessionParticipantsComponent implements OnInit, OnDestroy {
      */
     removeParticipant(attendanceId: string): void {
         const confirmation = this._fuseConfirmationService.open({
-            title: 'Retirer le participant',
-            message: 'Êtes-vous sûr de vouloir retirer ce participant ?',
+            title: this._translocoService.translate(
+                'DIALOGS.REMOVE_PARTICIPANT.TITLE'
+            ),
+            message: this._translocoService.translate(
+                'DIALOGS.REMOVE_PARTICIPANT.MESSAGE'
+            ),
             actions: {
                 confirm: {
-                    label: 'Retirer',
+                    label: this._translocoService.translate(
+                        'DIALOGS.REMOVE_PARTICIPANT.CONFIRM'
+                    ),
                 },
             },
         });
@@ -327,11 +334,17 @@ export class SessionParticipantsComponent implements OnInit, OnDestroy {
      */
     resetRating(userId: string): void {
         const confirmation = this._fuseConfirmationService.open({
-            title: 'Reset rating',
-            message: 'Are you sure you want to reset this rating?',
+            title: this._translocoService.translate(
+                'DIALOGS.RESET_RATING.TITLE'
+            ),
+            message: this._translocoService.translate(
+                'DIALOGS.RESET_RATING.MESSAGE'
+            ),
             actions: {
                 confirm: {
-                    label: 'Reset',
+                    label: this._translocoService.translate(
+                        'DIALOGS.RESET_RATING.CONFIRM'
+                    ),
                 },
             },
         });
