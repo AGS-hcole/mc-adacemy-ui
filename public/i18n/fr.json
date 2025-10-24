@@ -13,6 +13,63 @@
             "SIGN_OUT": "Se déconnecter"
         }
     },
+    "ERROR": {
+        "404": {
+            "TITLE": "Oups... 404 !",
+            "MESSAGE": "La page que vous avez demandée n'a pas pu être trouvée.",
+            "BACK": "Retour au tableau de bord"
+        },
+        "500": {
+            "TITLE": "Une erreur s'est produite !",
+            "MESSAGE": "Erreur serveur 500. Notre équipe a été notifiée, merci de votre compréhension.",
+            "BACK": "Retour au tableau de bord"
+        }
+    },
+    "SETTINGS": {
+        "THEME": "Thème",
+        "SCHEME": "Schéma",
+        "SCHEME_AUTO": "Auto",
+        "SCHEME_DARK": "Sombre",
+        "SCHEME_LIGHT": "Clair",
+        "LAYOUT": "Disposition"
+    },
+    "DIALOGS": {
+        "DELETE_SESSION": {
+            "TITLE": "Supprimer la session",
+            "MESSAGE": "Êtes-vous sûr de vouloir supprimer cette session ?",
+            "CONFIRM": "Supprimer"
+        },
+        "CANCEL_SESSION": {
+            "TITLE": "Annuler la session",
+            "MESSAGE": "Êtes-vous sûr de vouloir annuler cette session ?",
+            "CONFIRM": "Annuler la session"
+        },
+        "REMOVE_PARTICIPANT": {
+            "TITLE": "Retirer le participant",
+            "MESSAGE": "Êtes-vous sûr de vouloir retirer ce participant ?",
+            "CONFIRM": "Retirer"
+        },
+        "RESET_RATING": {
+            "TITLE": "Réinitialiser la note",
+            "MESSAGE": "Êtes-vous sûr de vouloir réinitialiser cette note ?",
+            "CONFIRM": "Réinitialiser"
+        },
+        "DELETE_SITE": {
+            "TITLE": "Supprimer le site",
+            "MESSAGE": "Êtes-vous sûr de vouloir supprimer \"{{name}}\" ? Cette action ne peut pas être annulée.",
+            "CONFIRM": "Supprimer"
+        },
+        "DELETE_TOURNAMENT": {
+            "TITLE": "Supprimer le tournoi",
+            "MESSAGE": "Êtes-vous sûr de vouloir supprimer \"{{title}}\" ?",
+            "CONFIRM": "Supprimer"
+        },
+        "DELETE_USER": {
+            "TITLE": "Supprimer l'utilisateur",
+            "MESSAGE": "Êtes-vous sûr de vouloir supprimer cet utilisateur ? Cette action ne peut pas être annulée !",
+            "CONFIRM": "Supprimer"
+        }
+    },
     "AUTH": {
         "SUBTITLE": "My Center Academy, l’école où les passionnés de padel deviennent les champions de demain. Entraînements, suivi personnalisé et esprit d’équipe pour révéler tout votre potentiel.",
         "DESCRIPTION": "Découvrez les talents de demain, formés à My Center Academy.",
@@ -44,7 +101,9 @@
             "PASSWORD_MUST_MATCH": "Les mots de passe doivent correspondre",
             "SUBMIT": "Réinitialiser le mot de passe",
             "RETURNTO": "Retour à",
-            "SIGN_IN": "se connecter"
+            "SIGN_IN": "se connecter",
+            "SUCCESS_MESSAGE": "Votre mot de passe a été réinitialisé.",
+            "ERROR_MESSAGE": "Une erreur est survenue, veuillez réessayer."
         },
         "FORGOT_PASSWORD": {
             "TITLE": "Mot de passe oublié",
@@ -616,7 +675,9 @@
                 "DELETE": "Supprimer",
                 "PUBLISH": "Publier",
                 "ARCHIVE": "Archiver"
-            }
+            },
+            "PUBLISH_ERROR_PARTICIPANTS": "Impossible de publier : il faut au moins 2 participants",
+            "PUBLISH_ERROR_TEAMS": "Impossible de publier : aucune équipe générée"
         },
         "USER": {
             "TITLE": "Mes tournois",

@@ -16,7 +16,7 @@ import { ActivatedRoute, Router, RouterLink } from '@angular/router';
 import { fuseAnimations } from '@fuse/animations';
 import { FuseAlertComponent, FuseAlertType } from '@fuse/components/alert';
 import { FuseValidators } from '@fuse/validators';
-import { TranslocoModule } from '@jsverse/transloco';
+import { TranslocoModule, TranslocoService } from '@jsverse/transloco';
 import { AuthService } from 'app/core/auth/auth.service';
 import { LogoComponent } from 'app/shared/components/logo/logo.component';
 import { finalize } from 'rxjs';
@@ -58,7 +58,8 @@ export class AuthResetPasswordComponent implements OnInit {
         private _authService: AuthService,
         private _formBuilder: UntypedFormBuilder,
         private _activatedRoute: ActivatedRoute,
-        private _router: Router
+        private _router: Router,
+        private _translocoService: TranslocoService
     ) {}
 
     // -----------------------------------------------------------------------------------------------------
@@ -128,14 +129,18 @@ export class AuthResetPasswordComponent implements OnInit {
                     // Set the alert
                     this.alert = {
                         type: 'success',
-                        message: 'Votre mot de passe a été réinitialisé.',
+                        message: this._translocoService.translate(
+                            'AUTH.RESET_PASSWORD.SUCCESS_MESSAGE'
+                        ),
                     };
                 },
                 error: (response) => {
                     // Set the alert
                     this.alert = {
                         type: 'error',
-                        message: 'Une erreur est survenue, veuillez réessayer.',
+                        message: this._translocoService.translate(
+                            'AUTH.RESET_PASSWORD.ERROR_MESSAGE'
+                        ),
                     };
                 },
             });

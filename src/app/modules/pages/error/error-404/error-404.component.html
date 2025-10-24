@@ -57,18 +57,18 @@
         <div
             class="mt-12 text-center text-4xl font-extrabold leading-tight tracking-tight sm:mt-24 md:text-7xl md:leading-none"
         >
-            Ooops... 404!
+            {{ 'ERROR.404.TITLE' | transloco }}
         </div>
         <div
             class="text-secondary mt-2 text-center text-lg font-medium tracking-tight md:text-xl"
         >
-            The page you requested could not be found.
+            {{ 'ERROR.404.MESSAGE' | transloco }}
         </div>
         <a
             class="mt-12 font-medium text-primary-500 underline"
             [routerLink]="['/']"
         >
-            Back to Dashboard
+            {{ 'ERROR.404.BACK' | transloco }}
         </a>
     </div>
 </div>

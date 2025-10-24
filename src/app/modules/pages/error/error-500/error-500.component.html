@@ -66,19 +66,18 @@
         <div
             class="mt-12 text-center text-4xl font-extrabold leading-tight tracking-tight sm:mt-24 md:text-7xl md:leading-none"
         >
-            Something went wrong!
+            {{ 'ERROR.500.TITLE' | transloco }}
         </div>
         <div
             class="text-secondary mt-2 text-center text-lg font-medium tracking-tight md:text-xl"
         >
-            Server Error 500. Our staff has been notified, thank you for your
-            understanding.
+            {{ 'ERROR.500.MESSAGE' | transloco }}
         </div>
         <a
             class="mt-12 font-medium text-primary-500 underline"
             [routerLink]="['/']"
         >
-            Back to Dashboard
+            {{ 'ERROR.500.BACK' | transloco }}
         </a>
     </div>
 </div>

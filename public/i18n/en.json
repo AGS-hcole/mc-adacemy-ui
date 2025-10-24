@@ -11,6 +11,72 @@
       "COMING_SOON": "Coming Soon"
     }
   },
+  "ERROR": {
+    "404": {
+      "TITLE": "Ooops... 404!",
+      "MESSAGE": "The page you requested could not be found.",
+      "BACK": "Back to Dashboard"
+    },
+    "500": {
+      "TITLE": "Something went wrong!",
+      "MESSAGE": "Server Error 500. Our staff has been notified, thank you for your understanding.",
+      "BACK": "Back to Dashboard"
+    }
+  },
+  "SETTINGS": {
+    "THEME": "Theme",
+    "SCHEME": "Scheme",
+    "SCHEME_AUTO": "Auto",
+    "SCHEME_DARK": "Dark",
+    "SCHEME_LIGHT": "Light",
+    "LAYOUT": "Layout"
+  },
+  "DIALOGS": {
+    "DELETE_SESSION": {
+      "TITLE": "Delete session",
+      "MESSAGE": "Are you sure you want to delete this session?",
+      "CONFIRM": "Delete"
+    },
+    "CANCEL_SESSION": {
+      "TITLE": "Cancel session",
+      "MESSAGE": "Are you sure you want to cancel this session?",
+      "CONFIRM": "Cancel Session"
+    },
+    "REMOVE_PARTICIPANT": {
+      "TITLE": "Remove participant",
+      "MESSAGE": "Are you sure you want to remove this participant?",
+      "CONFIRM": "Remove"
+    },
+    "RESET_RATING": {
+      "TITLE": "Reset rating",
+      "MESSAGE": "Are you sure you want to reset this rating?",
+      "CONFIRM": "Reset"
+    },
+    "DELETE_SITE": {
+      "TITLE": "Delete site",
+      "MESSAGE": "Are you sure you want to delete \"{{name}}\"? This action cannot be undone.",
+      "CONFIRM": "Delete"
+    },
+    "DELETE_TOURNAMENT": {
+      "TITLE": "Delete tournament",
+      "MESSAGE": "Are you sure you want to delete \"{{title}}\"?",
+      "CONFIRM": "Delete"
+    },
+    "DELETE_USER": {
+      "TITLE": "Delete user",
+      "MESSAGE": "Are you sure you want to delete this user? This action cannot be undone!",
+      "CONFIRM": "Delete"
+    }
+  },
+  "AUTH": {
+    "SIGNIN": {
+      "ERROR_MESSAGE": "Wrong email or password"
+    },
+    "RESET_PASSWORD": {
+      "SUCCESS_MESSAGE": "Your password has been reset.",
+      "ERROR_MESSAGE": "An error occurred, please try again."
+    }
+  },
   "HOME": {
     "NAVIGATION": {
       "TITLE": "Home",
@@ -499,7 +565,9 @@
         "DELETE": "Delete",
         "PUBLISH": "Publish",
         "ARCHIVE": "Archive"
-      }
+      },
+      "PUBLISH_ERROR_PARTICIPANTS": "Cannot publish: need at least 2 participants",
+      "PUBLISH_ERROR_TEAMS": "Cannot publish: no teams generated"
     },
     "USER": {
       "TITLE": "My Tournaments",
