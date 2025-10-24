@@ -74,12 +74,10 @@ export class ProfileComponent implements OnInit {
 
     ngOnInit(): void {
         // Get user from resolver
-        this._activatedRoute.data.subscribe(({ user }) => {
-            if (user) {
-                this.user = user;
-                this.initializeForm(user);
-                this.loadUserImages();
-            }
+        this.userService.user$.subscribe((user) => {
+            this.user = user;
+            this.initializeForm(user);
+            this.loadUserImages();
         });
 
         // Initialize placeholder feed
