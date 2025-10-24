@@ -1,0 +1,187 @@
+<div class="flex min-h-screen flex-col">
+    <!-- Header -->
+    <div class="flex items-center justify-between border-b p-6">
+        <div>
+            <h2 class="text-3xl font-semibold leading-8 tracking-tight">
+                {{
+                    (isEditMode
+                        ? 'EVENTS.ADMIN.EDIT'
+                        : 'EVENTS.ADMIN.CREATE'
+                    ) | transloco
+                }}
+            </h2>
+        </div>
+        <div class="flex gap-2">
+            <button
+                mat-stroked-button
+                (click)="openPreview()"
+            >
+                <mat-icon>heroicons_outline:eye</mat-icon>
+                <span class="ml-2">Preview</span>
+            </button>
+            <button
+                mat-stroked-button
+                (click)="generateQr()"
+            >
+                <mat-icon>heroicons_outline:qr-code</mat-icon>
+                <span class="ml-2">{{ 'EVENTS.ADMIN.QR' | transloco }}</span>
+            </button>
+        </div>
+    </div>
+
+    <!-- Form -->
+    <div class="flex-auto p-6">
+        <div class="mx-auto max-w-3xl">
+            <form
+                [formGroup]="eventForm"
+                class="flex flex-col gap-6"
+            >
+                <!-- Name -->
+                <mat-form-field class="w-full">
+                    <mat-label>{{
+                        'EVENTS.ADMIN.NAME' | transloco
+                    }}</mat-label>
+                    <input
+                        matInput
+                        formControlName="name"
+                        required
+                    />
+                    @if (eventForm.get('name')?.hasError('required')) {
+                        <mat-error>Name is required</mat-error>
+                    }
+                </mat-form-field>
+
+                <!-- Slug -->
+                <mat-form-field class="w-full">
+                    <mat-label>{{
+                        'EVENTS.ADMIN.SLUG' | transloco
+                    }}</mat-label>
+                    <input
+                        matInput
+                        formControlName="slug"
+                    />
+                    <mat-hint
+                        >Unique identifier for URL (leave empty for
+                        auto-generation)</mat-hint
+                    >
+                </mat-form-field>
+
+                <!-- Description -->
+                <mat-form-field class="w-full">
+                    <mat-label>{{
+                        'EVENTS.ADMIN.DESCRIPTION' | transloco
+                    }}</mat-label>
+                    <textarea
+                        matInput
+                        formControlName="description"
+                        rows="5"
+                    ></textarea>
+                </mat-form-field>
+
+                <!-- Time Range -->
+                <div class="grid grid-cols-1 gap-6 md:grid-cols-2">
+                    <mat-form-field class="w-full">
+                        <mat-label>{{
+                            'EVENTS.ADMIN.START' | transloco
+                        }}</mat-label>
+                        <input
+                            matInput
+                            type="datetime-local"
+                            formControlName="startTime"
+                        />
+                    </mat-form-field>
+
+                    <mat-form-field class="w-full">
+                        <mat-label>{{
+                            'EVENTS.ADMIN.END' | transloco
+                        }}</mat-label>
+                        <input
+                            matInput
+                            type="datetime-local"
+                            formControlName="endTime"
+                        />
+                        @if (
+                            eventForm.get('endTime')?.hasError('invalidEndTime')
+                        ) {
+                            <mat-error
+                                >End time must be after start time</mat-error
+                            >
+                        }
+                    </mat-form-field>
+                </div>
+
+                <!-- Background Image URL -->
+                <mat-form-field class="w-full">
+                    <mat-label>{{
+                        'EVENTS.ADMIN.BACKGROUND_IMAGE_URL' | transloco
+                    }}</mat-label>
+                    <input
+                        matInput
+                        formControlName="backgroundImageUrl"
+                        type="url"
+                    />
+                </mat-form-field>
+
+                <!-- External Registration URL -->
+                <mat-form-field class="w-full">
+                    <mat-label>{{
+                        'EVENTS.ADMIN.EXTERNAL_REGISTRATION_URL' | transloco
+                    }}</mat-label>
+                    <input
+                        matInput
+                        formControlName="externalRegistrationUrl"
+                        type="url"
+                    />
+                </mat-form-field>
+
+                <!-- Order Index -->
+                <mat-form-field class="w-full">
+                    <mat-label>{{
+                        'EVENTS.ADMIN.ORDER_INDEX' | transloco
+                    }}</mat-label>
+                    <input
+                        matInput
+                        formControlName="orderIndex"
+                        type="number"
+                        required
+                    />
+                    <mat-hint
+                        >Lower numbers appear first (e.g., 0, 1, 2...)</mat-hint
+                    >
+                </mat-form-field>
+
+                <!-- Published Toggle -->
+                <div class="flex items-center">
+                    <mat-slide-toggle formControlName="isPublished">
+                        {{ 'EVENTS.ADMIN.PUBLISHED' | transloco }}
+                    </mat-slide-toggle>
+                    <mat-icon
+                        class="ml-2 text-gray-400"
+                        matTooltip="Only published events are visible to the public"
+                        >heroicons_outline:information-circle</mat-icon
+                    >
+                </div>
+
+                <!-- Actions -->
+                <div class="flex justify-end gap-2 border-t pt-6">
+                    <button
+                        mat-stroked-button
+                        type="button"
+                        (click)="cancel()"
+                    >
+                        {{ 'EVENTS.ADMIN.CANCEL' | transloco }}
+                    </button>
+                    <button
+                        mat-flat-button
+                        color="primary"
+                        type="button"
+                        [disabled]="eventForm.invalid"
+                        (click)="save()"
+                    >
+                        {{ 'EVENTS.ADMIN.SAVE' | transloco }}
+                    </button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>

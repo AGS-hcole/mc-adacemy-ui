@@ -68,6 +68,11 @@
             "TITLE": "Supprimer l'utilisateur",
             "MESSAGE": "Êtes-vous sûr de vouloir supprimer cet utilisateur ? Cette action ne peut pas être annulée !",
             "CONFIRM": "Supprimer"
+        },
+        "DELETE_EVENT": {
+            "TITLE": "Supprimer l'événement",
+            "MESSAGE": "Êtes-vous sûr de vouloir supprimer \"{{name}}\" ? Cette action ne peut pas être annulée.",
+            "CONFIRM": "Supprimer"
         }
     },
     "AUTH": {
@@ -795,7 +800,13 @@
             "QR_DIALOG": {
                 "TITLE": "Code QR",
                 "DOWNLOAD": "Télécharger"
-            }
+            },
+            "DELETE_SUCCESS": "Événement supprimé avec succès",
+            "DELETE_ERROR": "Erreur lors de la suppression de l'événement",
+            "URL_COPIED": "URL copiée dans le presse-papiers",
+            "CREATE_SUCCESS": "Événement créé avec succès",
+            "UPDATE_SUCCESS": "Événement mis à jour avec succès",
+            "SAVE_ERROR": "Erreur lors de l'enregistrement de l'événement"
         }
     }
 }

@@ -66,6 +66,11 @@
       "TITLE": "Delete user",
       "MESSAGE": "Are you sure you want to delete this user? This action cannot be undone!",
       "CONFIRM": "Delete"
+    },
+    "DELETE_EVENT": {
+      "TITLE": "Delete event",
+      "MESSAGE": "Are you sure you want to delete \"{{name}}\"? This action cannot be undone.",
+      "CONFIRM": "Delete"
     }
   },
   "AUTH": {
@@ -771,7 +776,13 @@
       "QR_DIALOG": {
         "TITLE": "QR Code",
         "DOWNLOAD": "Download"
-      }
+      },
+      "DELETE_SUCCESS": "Event deleted successfully",
+      "DELETE_ERROR": "Error deleting event",
+      "URL_COPIED": "URL copied to clipboard",
+      "CREATE_SUCCESS": "Event created successfully",
+      "UPDATE_SUCCESS": "Event updated successfully",
+      "SAVE_ERROR": "Error saving event"
     }
   }
 }

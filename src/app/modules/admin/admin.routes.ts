@@ -62,4 +62,8 @@ export default [
         path: 'reports',
         loadChildren: () => import('app/modules/admin/reports/reports.routes'),
     },
+    {
+        path: 'events',
+        loadChildren: () => import('app/modules/admin/events/events.routes'),
+    },
 ] as Routes;
