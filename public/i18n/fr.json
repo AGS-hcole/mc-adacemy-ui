@@ -605,6 +605,8 @@
         "CANCEL": "Annuler",
         "SAVE": "Enregistrer les modifications",
         "ABOUT": "À propos",
+        "UPDATE_SUCCESS": "Profil mis à jour avec succès",
+        "UPDATE_ERROR": "Échec de la mise à jour du profil, veuillez réessayer",
         "STATS": {
             "TITLE": "Statistiques",
             "SESSIONS": "Sessions",
