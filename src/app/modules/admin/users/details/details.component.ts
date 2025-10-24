@@ -229,16 +229,6 @@ export class UsersDetailsComponent implements OnInit, OnDestroy {
             fftLicenseNumber: user.fftLicenseNumber || null,
             role: user.role,
             formula: user.formula || null,
-            privacyConsentAt: user.privacyConsent
-                ? new Date().toISOString()
-                : null,
-            photoConsentAt: user.photoConsent ? new Date().toISOString() : null,
-            marketingConsentAt: user.marketingConsent
-                ? new Date().toISOString()
-                : null,
-            notifyEmail: user.notifyEmail,
-            notifySMS: user.notifySMS,
-            notifyWhatsApp: user.notifyWhatsApp,
         };
 
         // Update the user on the server
@@ -264,21 +254,15 @@ export class UsersDetailsComponent implements OnInit, OnDestroy {
             fftLicenseNumber: user.fftLicenseNumber || null,
             role: user.role,
             formula: user.formula || null,
-            password: null, // Password will be handled separately by the backend
-            privacyConsentAt: user.privacyConsent
-                ? new Date().toISOString()
-                : null,
-            photoConsentAt: user.photoConsent ? new Date().toISOString() : null,
-            marketingConsentAt: user.marketingConsent
-                ? new Date().toISOString()
-                : null,
-            notifyEmail: user.notifyEmail,
-            notifySMS: user.notifySMS,
-            notifyWhatsApp: user.notifyWhatsApp,
         };
 
         // Create the user on the server
-        this._usersService.createUser(userRequest).subscribe(() => {
+        this._usersService.createUser(userRequest).subscribe((createdUser) => {
+            // Navigate to the newly created user's details
+            this._router.navigate(['../', createdUser.id], {
+                relativeTo: this._activatedRoute,
+            });
+
             // Toggle the edit mode off
             this.toggleEditMode(false);
         });
