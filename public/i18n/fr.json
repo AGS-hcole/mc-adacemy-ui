@@ -145,6 +145,9 @@
             },
             "TOURNAMENTS": {
                 "TITLE": "Tournois"
+            },
+            "EVENTS": {
+                "TITLE": "Événements"
             }
         },
         "USER": {
@@ -757,6 +760,42 @@
             "PARTICIPANTS_DESCRIPTION": "Ajouter, supprimer et gérer les participants du tournoi",
             "LINEUPS": "Compositions d'équipes",
             "LINEUPS_DESCRIPTION": "Voir et gérer les compositions et les paires d'équipes"
+        }
+    },
+    "EVENTS": {
+        "TITLE": "Événements",
+        "EMPTY": "Aucun événement pour le moment.",
+        "REGISTER": "S'inscrire",
+        "HAPPENING_NOW": "En cours",
+        "LOAD_MORE": "Charger plus",
+        "ADMIN": {
+            "TITLE": "Événements",
+            "CREATE": "Créer un événement",
+            "EDIT": "Modifier l'événement",
+            "DELETE": "Supprimer",
+            "SAVE": "Enregistrer",
+            "CANCEL": "Annuler",
+            "SEARCH": "Rechercher…",
+            "PUBLISHED": "Publié",
+            "ACTIVE": "Actif",
+            "ORDER": "Ordre",
+            "START": "Heure de début",
+            "END": "Heure de fin",
+            "UPDATED_AT": "Mis à jour",
+            "COPY_PUBLIC_URL": "Copier l'URL publique",
+            "OPEN_PUBLIC": "Ouvrir la page publique",
+            "QR": "Générer le QR",
+            "NAME": "Nom",
+            "DESCRIPTION": "Description",
+            "SLUG": "Slug",
+            "BACKGROUND_IMAGE_URL": "URL de l'image de fond",
+            "EXTERNAL_REGISTRATION_URL": "URL d'inscription externe",
+            "ORDER_INDEX": "Index d'ordre",
+            "NO_EVENTS": "Aucun événement trouvé",
+            "QR_DIALOG": {
+                "TITLE": "Code QR",
+                "DOWNLOAD": "Télécharger"
+            }
         }
     }
 }

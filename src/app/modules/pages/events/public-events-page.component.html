@@ -1,0 +1,127 @@
+<div class="flex min-h-screen flex-col">
+    <!-- Header -->
+    <div class="bg-primary py-12 text-white">
+        <div class="container mx-auto px-6">
+            <h1 class="text-4xl font-bold">{{ 'EVENTS.TITLE' | transloco }}</h1>
+        </div>
+    </div>
+
+    <!-- Content -->
+    <div class="container mx-auto flex-grow px-6 py-12">
+        <!-- Events Grid -->
+        @if (events().length > 0) {
+            <div
+                class="grid grid-cols-1 gap-6 sm:grid-cols-2 lg:grid-cols-3"
+            >
+                @for (event of events(); track trackByFn($index, event)) {
+                    <div
+                        class="group overflow-hidden rounded-lg bg-white shadow-md transition-shadow hover:shadow-xl dark:bg-gray-800"
+                    >
+                        <!-- Image -->
+                        <div class="relative aspect-video overflow-hidden">
+                            @if (event.backgroundImageUrl) {
+                                <div
+                                    class="h-full w-full bg-cover bg-center transition-transform duration-300 group-hover:scale-105"
+                                    [style.background-image]="
+                                        'url(' +
+                                        event.backgroundImageUrl +
+                                        ')'
+                                    "
+                                    [attr.aria-label]="event.name"
+                                ></div>
+                            } @else {
+                                <div
+                                    class="flex h-full w-full items-center justify-center bg-gradient-to-br from-blue-400 to-purple-500"
+                                >
+                                    <span
+                                        class="text-2xl font-bold text-white"
+                                        >{{ event.name.charAt(0) }}</span
+                                    >
+                                </div>
+                            }
+
+                            <!-- Happening Now Badge -->
+                            @if (isHappeningNow(event)) {
+                                <div
+                                    class="absolute right-2 top-2 rounded-full bg-green-500 px-3 py-1 text-xs font-semibold text-white"
+                                >
+                                    {{ 'EVENTS.HAPPENING_NOW' | transloco }}
+                                </div>
+                            }
+                        </div>
+
+                        <!-- Content -->
+                        <div class="p-6">
+                            <!-- Title -->
+                            <h3
+                                class="mb-2 text-xl font-bold text-gray-900 dark:text-white"
+                            >
+                                {{ event.name }}
+                            </h3>
+
+                            <!-- Description -->
+                            @if (event.description) {
+                                <p
+                                    class="mb-4 line-clamp-3 text-sm text-gray-600 dark:text-gray-300"
+                                >
+                                    {{ event.description }}
+                                </p>
+                            }
+
+                            <!-- Time Range -->
+                            @if (formatTimeRange(event); as timeRange) {
+                                <p
+                                    class="mb-4 text-sm text-gray-500 dark:text-gray-400"
+                                >
+                                    {{ timeRange }}
+                                </p>
+                            }
+
+                            <!-- Register Button -->
+                            <button
+                                mat-raised-button
+                                color="primary"
+                                class="w-full"
+                                [disabled]="!event.externalRegistrationUrl"
+                                (click)="
+                                    openRegistration(
+                                        event.externalRegistrationUrl
+                                    )
+                                "
+                            >
+                                {{ 'EVENTS.REGISTER' | transloco }}
+                            </button>
+                        </div>
+                    </div>
+                }
+            </div>
+
+            <!-- Load More Button -->
+            @if (hasMore()) {
+                <div class="mt-12 text-center">
+                    <button
+                        mat-raised-button
+                        color="primary"
+                        [disabled]="loading()"
+                        (click)="loadMore()"
+                    >
+                        @if (loading()) {
+                            <mat-spinner
+                                diameter="20"
+                                class="mr-2 inline-block"
+                            ></mat-spinner>
+                        }
+                        {{ 'EVENTS.LOAD_MORE' | transloco }}
+                    </button>
+                </div>
+            }
+        } @else {
+            <!-- Empty State -->
+            <div class="py-24 text-center">
+                <p class="text-lg text-gray-500 dark:text-gray-400">
+                    {{ 'EVENTS.EMPTY' | transloco }}
+                </p>
+            </div>
+        }
+    </div>
+</div>

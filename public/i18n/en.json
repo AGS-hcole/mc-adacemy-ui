@@ -296,6 +296,9 @@
       },
       "REPORTS": {
         "TITLE": "Reports"
+      },
+      "EVENTS": {
+        "TITLE": "Events"
       }
     },
     "USER": {
@@ -733,6 +736,42 @@
       "CONTRACT": "Contract",
       "ATTENDEES": "Attendees",
       "STATUS": "Status"
+    }
+  },
+  "EVENTS": {
+    "TITLE": "Events",
+    "EMPTY": "No events at the moment.",
+    "REGISTER": "Register",
+    "HAPPENING_NOW": "Happening now",
+    "LOAD_MORE": "Load more",
+    "ADMIN": {
+      "TITLE": "Events",
+      "CREATE": "Create Event",
+      "EDIT": "Edit Event",
+      "DELETE": "Delete",
+      "SAVE": "Save",
+      "CANCEL": "Cancel",
+      "SEARCH": "Search…",
+      "PUBLISHED": "Published",
+      "ACTIVE": "Active",
+      "ORDER": "Order",
+      "START": "Start time",
+      "END": "End time",
+      "UPDATED_AT": "Updated",
+      "COPY_PUBLIC_URL": "Copy public URL",
+      "OPEN_PUBLIC": "Open public page",
+      "QR": "Generate QR",
+      "NAME": "Name",
+      "DESCRIPTION": "Description",
+      "SLUG": "Slug",
+      "BACKGROUND_IMAGE_URL": "Background Image URL",
+      "EXTERNAL_REGISTRATION_URL": "External Registration URL",
+      "ORDER_INDEX": "Order Index",
+      "NO_EVENTS": "No events found",
+      "QR_DIALOG": {
+        "TITLE": "QR Code",
+        "DOWNLOAD": "Download"
+      }
     }
   }
 }

@@ -103,6 +103,13 @@ export const appRoutes: Route[] = [
                 loadChildren: () => import('app/modules/user/user.routes'),
             },
 
+            // Public Events (accessible to authenticated users)
+            {
+                path: 'events',
+                loadChildren: () =>
+                    import('app/modules/pages/events/events.routes'),
+            },
+
             // 404 & Catch all
             {
                 path: '404-not-found',
