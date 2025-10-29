@@ -619,6 +619,8 @@
       "SELECTED": "selected",
       "TEAMS": "Teams",
       "GENERATE_TEAMS": "Generate Homogeneous Pairs",
+      "REBALANCE_TEAMS": "Rebalance Teams",
+      "CLEAR_TEAMS": "Clear Teams",
       "NO_TEAMS": "No teams generated yet",
       "SAVE": "Save",
       "CANCEL": "Cancel",
@@ -628,7 +630,16 @@
       "PLACEMENT": "Placement",
       "NO_PARTICIPANTS_YET": "No participants yet",
       "ADD_PARTICIPANTS_FIRST": "Add participants first to generate teams",
-      "CLICK_GENERATE_TEAMS": "Click the button above to generate balanced team pairings"
+      "CLICK_GENERATE_TEAMS": "Click the button above to generate balanced team pairings",
+      "BENCH": "Bench",
+      "LOCKED": "Locked",
+      "TEAM_STRENGTH": "Strength",
+      "AVG_STRENGTH": "Avg",
+      "MOVE_TO_TEAM": "Move to Team",
+      "MOVE_TO_BENCH": "Move to Bench",
+      "SWAP_WITH": "Swap with",
+      "EMPTY_TEAM": "Empty team - drag members here",
+      "EMPTY_BENCH": "No participants on bench"
     },
     "FEEDBACK": {
       "PLACEHOLDER": "Share your feedback about this tournament...",

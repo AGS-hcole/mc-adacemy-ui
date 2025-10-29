@@ -26,8 +26,7 @@
                     }}</mat-label>
                     <input
                         matInput
-                        [(ngModel)]="userSearchTerm"
-                        (ngModelChange)="onSearchChange()" />
+                        [formControl]="searchForm.get('search')" />
                     <mat-icon matPrefix>search</mat-icon>
                 </mat-form-field>
             </div>
