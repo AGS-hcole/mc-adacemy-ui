@@ -74,12 +74,10 @@ export class TournamentEditComponent implements OnInit, OnDestroy {
     tournamentForm: FormGroup;
     isNew = false;
 
-    // Participants
     availableUsers: UserLookupResult[] = [];
     selectedParticipantIds: string[] = [];
     userSearchTerm = '';
 
-    // Teams
     teams: Team[] = [];
     unassignedParticipants: any[] = [];
 

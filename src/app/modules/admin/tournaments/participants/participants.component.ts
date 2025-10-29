@@ -56,7 +56,7 @@ export class TournamentParticipantsComponent implements OnInit, OnDestroy {
     ) {
         // Initialize form
         this.searchForm = this._fb.group({
-            search: [''],
+            search: ['']
         });
     }
 
