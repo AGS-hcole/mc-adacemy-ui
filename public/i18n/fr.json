@@ -731,6 +731,8 @@
             "SELECTED": "sélectionné(s)",
             "TEAMS": "Équipes",
             "GENERATE_TEAMS": "Générer des paires homogènes",
+            "REBALANCE_TEAMS": "Rééquilibrer les équipes",
+            "CLEAR_TEAMS": "Effacer les équipes",
             "NO_TEAMS": "Aucune équipe générée",
             "SAVE": "Enregistrer",
             "CANCEL": "Annuler",
@@ -740,7 +742,16 @@
             "PLACEMENT": "Placement",
             "NO_PARTICIPANTS_YET": "Aucun participant pour le moment",
             "ADD_PARTICIPANTS_FIRST": "Ajoutez d'abord des participants pour générer des équipes",
-            "CLICK_GENERATE_TEAMS": "Cliquez sur le bouton ci-dessus pour générer des paires équilibrées"
+            "CLICK_GENERATE_TEAMS": "Cliquez sur le bouton ci-dessus pour générer des paires équilibrées",
+            "BENCH": "Remplaçants",
+            "LOCKED": "Verrouillé",
+            "TEAM_STRENGTH": "Force",
+            "AVG_STRENGTH": "Moy",
+            "MOVE_TO_TEAM": "Déplacer vers l'équipe",
+            "MOVE_TO_BENCH": "Déplacer vers les remplaçants",
+            "SWAP_WITH": "Échanger avec",
+            "EMPTY_TEAM": "Équipe vide - glissez les membres ici",
+            "EMPTY_BENCH": "Aucun participant sur le banc"
         },
         "FEEDBACK": {
             "PLACEHOLDER": "Partagez vos commentaires sur ce tournoi...",

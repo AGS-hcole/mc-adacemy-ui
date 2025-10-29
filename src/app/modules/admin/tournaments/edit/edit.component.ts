@@ -1,4 +1,9 @@
-import { CdkDrag, CdkDragDrop, CdkDropList, moveItemInArray, transferArrayItem } from '@angular/cdk/drag-drop';
+import {
+    CdkDrag,
+    CdkDragDrop,
+    CdkDropList,
+    moveItemInArray,
+} from '@angular/cdk/drag-drop';
 import { NgClass, NgFor, NgIf } from '@angular/common';
 import {
     ChangeDetectionStrategy,
@@ -68,12 +73,12 @@ export class TournamentEditComponent implements OnInit, OnDestroy {
     tournament: Tournament | null = null;
     tournamentForm: FormGroup;
     isNew = false;
-    
+
     // Participants
     availableUsers: UserLookupResult[] = [];
     selectedParticipantIds: string[] = [];
     userSearchTerm = '';
-    
+
     // Teams
     teams: Team[] = [];
     unassignedParticipants: any[] = [];
@@ -111,7 +116,8 @@ export class TournamentEditComponent implements OnInit, OnDestroy {
                 if (tournament) {
                     this.tournament = tournament;
                     this.isNew = false;
-                    this.selectedParticipantIds = tournament.participants?.map(p => p.userId) || [];
+                    this.selectedParticipantIds =
+                        tournament.participants?.map((p) => p.userId) || [];
                     this.teams = tournament.teams || [];
                 } else {
                     this.isNew = true;
@@ -166,14 +172,8 @@ export class TournamentEditComponent implements OnInit, OnDestroy {
                 this.tournament?.postalCode || '',
                 [Validators.required],
             ],
-            city: [
-                this.tournament?.city || '',
-                [Validators.required],
-            ],
-            country: [
-                this.tournament?.country || '',
-                [Validators.required],
-            ],
+            city: [this.tournament?.city || '', [Validators.required]],
+            country: [this.tournament?.country || '', [Validators.required]],
             latitude: [this.tournament?.latitude || null],
             longitude: [this.tournament?.longitude || null],
             startsAt: [
@@ -246,7 +246,10 @@ export class TournamentEditComponent implements OnInit, OnDestroy {
         if (!this.tournament) return;
 
         this._tournamentsService
-            .replaceParticipants(this.tournament.id, this.selectedParticipantIds)
+            .replaceParticipants(
+                this.tournament.id,
+                this.selectedParticipantIds
+            )
             .pipe(takeUntil(this._unsubscribeAll))
             .subscribe((tournament) => {
                 this.tournament = tournament;
@@ -275,11 +278,15 @@ export class TournamentEditComponent implements OnInit, OnDestroy {
      */
     dropTeam(event: CdkDragDrop<Team[]>): void {
         if (event.previousContainer === event.container) {
-            moveItemInArray(this.teams, event.previousIndex, event.currentIndex);
-            
+            moveItemInArray(
+                this.teams,
+                event.previousIndex,
+                event.currentIndex
+            );
+
             // Reorder teams on backend
             if (this.tournament) {
-                const teamOrder = this.teams.map(t => t.id);
+                const teamOrder = this.teams.map((t) => t.id);
                 this._tournamentsService
                     .reorderTeams(this.tournament.id, teamOrder)
                     .pipe(takeUntil(this._unsubscribeAll))
@@ -359,13 +366,24 @@ export class TournamentEditComponent implements OnInit, OnDestroy {
         if (!this.tournament) return;
 
         // Validate before publish
-        if (!this.tournament.participants || this.tournament.participants.length < 2) {
-            alert(this._translocoService.translate('TOURNAMENTS.ADMIN.PUBLISH_ERROR_PARTICIPANTS'));
+        if (
+            !this.tournament.participants ||
+            this.tournament.participants.length < 2
+        ) {
+            alert(
+                this._translocoService.translate(
+                    'TOURNAMENTS.ADMIN.PUBLISH_ERROR_PARTICIPANTS'
+                )
+            );
             return;
         }
 
         if (!this.tournament.teams || this.tournament.teams.length === 0) {
-            alert(this._translocoService.translate('TOURNAMENTS.ADMIN.PUBLISH_ERROR_TEAMS'));
+            alert(
+                this._translocoService.translate(
+                    'TOURNAMENTS.ADMIN.PUBLISH_ERROR_TEAMS'
+                )
+            );
             return;
         }
 

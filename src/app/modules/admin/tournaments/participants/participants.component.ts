@@ -7,7 +7,7 @@ import {
     OnInit,
     ViewEncapsulation,
 } from '@angular/core';
-import { ReactiveFormsModule, FormBuilder, FormGroup } from '@angular/forms';
+import { FormBuilder, FormGroup, ReactiveFormsModule } from '@angular/forms';
 import { MatButtonModule } from '@angular/material/button';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatIconModule } from '@angular/material/icon';
@@ -18,7 +18,7 @@ import {
     UserLookupItem,
 } from 'app/core/tournament/tournament.types';
 import { TournamentsService } from 'app/core/tournament/tournaments.service';
-import { Subject, takeUntil, debounceTime, distinctUntilChanged } from 'rxjs';
+import { debounceTime, distinctUntilChanged, Subject, takeUntil } from 'rxjs';
 
 @Component({
     selector: 'tournament-participants',
@@ -56,7 +56,7 @@ export class TournamentParticipantsComponent implements OnInit, OnDestroy {
     ) {
         // Initialize form
         this.searchForm = this._fb.group({
-            search: ['']
+            search: [''],
         });
     }
 
@@ -81,8 +81,9 @@ export class TournamentParticipantsComponent implements OnInit, OnDestroy {
             });
 
         // Subscribe to search form changes
-        this.searchForm.get('search')?.valueChanges
-            .pipe(
+        this.searchForm
+            .get('search')
+            ?.valueChanges.pipe(
                 debounceTime(300),
                 distinctUntilChanged(),
                 takeUntil(this._unsubscribeAll)

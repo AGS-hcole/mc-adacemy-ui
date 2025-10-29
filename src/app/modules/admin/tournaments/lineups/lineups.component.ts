@@ -3,7 +3,6 @@ import {
     CdkDragDrop,
     CdkDropList,
     moveItemInArray,
-    transferArrayItem,
 } from '@angular/cdk/drag-drop';
 import { NgClass, NgFor, NgIf } from '@angular/common';
 import {
@@ -302,9 +301,13 @@ export class TournamentLineupsComponent implements OnInit, OnDestroy {
                     this._changeDetectorRef.markForCheck();
                 },
                 error: () => {
-                    this._snackBar.open('Failed to update lock status', 'Close', {
-                        duration: 3000,
-                    });
+                    this._snackBar.open(
+                        'Failed to update lock status',
+                        'Close',
+                        {
+                            duration: 3000,
+                        }
+                    );
                 },
             });
     }
@@ -314,7 +317,11 @@ export class TournamentLineupsComponent implements OnInit, OnDestroy {
      */
     dropTeamCard(event: CdkDragDrop<TeamWithMembersDto[]>): void {
         if (event.previousContainer === event.container) {
-            moveItemInArray(this.teams, event.previousIndex, event.currentIndex);
+            moveItemInArray(
+                this.teams,
+                event.previousIndex,
+                event.currentIndex
+            );
 
             // Update order on backend
             if (this.tournament) {
@@ -336,9 +343,13 @@ export class TournamentLineupsComponent implements OnInit, OnDestroy {
                             this._changeDetectorRef.markForCheck();
                         },
                         error: () => {
-                            this._snackBar.open('Failed to reorder teams', 'Close', {
-                                duration: 3000,
-                            });
+                            this._snackBar.open(
+                                'Failed to reorder teams',
+                                'Close',
+                                {
+                                    duration: 3000,
+                                }
+                            );
                         },
                     });
             }
@@ -366,7 +377,9 @@ export class TournamentLineupsComponent implements OnInit, OnDestroy {
         // Get source and target info
         const sourceId = event.previousContainer.id;
         const targetId = event.container.id;
-        const participant = event.previousContainer.data[event.previousIndex] as TeamMemberDto | BenchParticipantDto;
+        const participant = event.previousContainer.data[
+            event.previousIndex
+        ] as TeamMemberDto | BenchParticipantDto;
 
         // Determine target team
         const targetTeam =
@@ -384,9 +397,13 @@ export class TournamentLineupsComponent implements OnInit, OnDestroy {
 
         // Check if target team is full
         if (targetTeam && targetTeam.members.length >= this.teamSize) {
-            this._snackBar.open('Team is full. Swap not yet implemented.', 'Close', {
-                duration: 3000,
-            });
+            this._snackBar.open(
+                'Team is full. Swap not yet implemented.',
+                'Close',
+                {
+                    duration: 3000,
+                }
+            );
             return;
         }
 
@@ -399,7 +416,7 @@ export class TournamentLineupsComponent implements OnInit, OnDestroy {
             // BenchParticipantDto
             participantId = participant.participantId;
         }
-        
+
         if (!this.tournament) return;
 
         this.loading = true;

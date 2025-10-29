@@ -3,7 +3,6 @@ import { Injectable } from '@angular/core';
 import { environment } from 'environments/environment';
 import { BehaviorSubject, Observable, tap } from 'rxjs';
 import {
-    BenchParticipantDto,
     CreateTournamentRequest,
     GenerateTeamsDto,
     MoveParticipantDto,
@@ -14,7 +13,6 @@ import {
     SetTeamPlacementRequest,
     SwapParticipantsDto,
     TeamsResponseDto,
-    TeamWithMembersDto,
     Tournament,
     TournamentFeedbackRequest,
     TournamentFilters,
@@ -370,11 +368,7 @@ export class TournamentsService {
     /**
      * Set team lock status
      */
-    setTeamLock(
-        id: string,
-        teamId: string,
-        locked: boolean
-    ): Observable<void> {
+    setTeamLock(id: string, teamId: string, locked: boolean): Observable<void> {
         return this._httpClient.put<void>(
             `${this.apiUrl}/tournaments/${id}/teams/${teamId}/lock`,
             { locked }
@@ -384,10 +378,7 @@ export class TournamentsService {
     /**
      * Clear teams
      */
-    clearTeams(
-        id: string,
-        preserveLocked: boolean = true
-    ): Observable<void> {
+    clearTeams(id: string, preserveLocked: boolean = true): Observable<void> {
         let params = new HttpParams();
         if (preserveLocked) {
             params = params.set('preserveLocked', 'true');
