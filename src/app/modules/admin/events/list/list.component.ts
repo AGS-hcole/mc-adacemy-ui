@@ -1,4 +1,4 @@
-import { CommonModule, DatePipe } from '@angular/common';
+import { CommonModule, DatePipe, NgClass } from '@angular/common';
 import {
     ChangeDetectionStrategy,
     ChangeDetectorRef,
@@ -13,13 +13,11 @@ import {
     UntypedFormControl,
 } from '@angular/forms';
 import { MatButtonModule } from '@angular/material/button';
-import { MatChipsModule } from '@angular/material/chips';
 import { MatDialog } from '@angular/material/dialog';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatIconModule } from '@angular/material/icon';
 import { MatInputModule } from '@angular/material/input';
 import { MatSnackBar } from '@angular/material/snack-bar';
-import { MatTableModule } from '@angular/material/table';
 import { MatTooltipModule } from '@angular/material/tooltip';
 import { ActivatedRoute, Router } from '@angular/router';
 import { FuseConfirmationService } from '@fuse/services/confirmation';
@@ -39,14 +37,13 @@ import { Subject, debounceTime, takeUntil } from 'rxjs';
     changeDetection: ChangeDetectionStrategy.OnPush,
     imports: [
         CommonModule,
+        NgClass,
         FormsModule,
         ReactiveFormsModule,
         MatButtonModule,
         MatFormFieldModule,
         MatIconModule,
         MatInputModule,
-        MatTableModule,
-        MatChipsModule,
         MatTooltipModule,
         TranslocoModule,
         DatePipe,
@@ -54,16 +51,6 @@ import { Subject, debounceTime, takeUntil } from 'rxjs';
 })
 export class AdminEventsListComponent implements OnInit, OnDestroy {
     events: PublicEvent[] = [];
-    displayedColumns: string[] = [
-        'name',
-        'startTime',
-        'endTime',
-        'orderIndex',
-        'updatedAt',
-        'isActive',
-        'isPublished',
-        'actions',
-    ];
 
     searchInputControl: UntypedFormControl = new UntypedFormControl();
     private _unsubscribeAll: Subject<any> = new Subject<any>();

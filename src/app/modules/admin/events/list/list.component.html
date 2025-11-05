@@ -1,13 +1,16 @@
-<div class="flex min-h-screen w-full flex-col">
+<div
+    class="absolute inset-0 flex min-w-0 flex-col overflow-y-auto sm:overflow-hidden"
+>
     <!-- Header -->
-    <div class="flex items-center justify-between border-b p-6">
-        <div class="flex-auto">
-            <h2 class="text-3xl font-semibold leading-8 tracking-tight">
-                {{ 'EVENTS.ADMIN.TITLE' | transloco }}
-            </h2>
+    <div
+        class="bg-card relative flex flex-0 flex-col border-b px-6 py-8 sm:flex-row sm:items-center sm:justify-between md:px-8 dark:bg-transparent"
+    >
+        <!-- Title -->
+        <div class="text-4xl font-extrabold tracking-tight">
+            {{ 'EVENTS.ADMIN.TITLE' | transloco }}
         </div>
-        <div class="flex items-center gap-2">
-            <!-- Search -->
+        <!-- Actions -->
+        <div class="mt-6 flex shrink-0 items-center gap-2 sm:ml-4 sm:mt-0">
             <mat-form-field class="w-64">
                 <mat-icon
                     matPrefix
@@ -21,7 +24,6 @@
                     [autocomplete]="'off'"
                 />
             </mat-form-field>
-            <!-- Actions -->
             <button
                 mat-icon-button
                 [matTooltip]="'EVENTS.ADMIN.OPEN_PUBLIC' | transloco"
@@ -38,11 +40,12 @@
             >
                 <mat-icon [svgIcon]="'heroicons_outline:link'"></mat-icon>
             </button>
-            <button mat-flat-button color="primary" (click)="createEvent()">
-                <mat-icon
-                    class="icon-size-5"
-                    [svgIcon]="'heroicons_solid:plus'"
-                ></mat-icon>
+            <button
+                mat-flat-button
+                [color]="'primary'"
+                (click)="createEvent()"
+            >
+                <mat-icon [svgIcon]="'heroicons_outline:plus'"></mat-icon>
                 <span class="ml-2">{{
                     'EVENTS.ADMIN.CREATE' | transloco
                 }}</span>
@@ -50,166 +53,541 @@
         </div>
     </div>
 
-    <!-- Content -->
-    <div class="flex-auto p-6">
-        @if (events.length > 0) {
-            <!-- Table -->
-            <div class="overflow-x-auto">
-                <table
-                    mat-table
-                    [dataSource]="events"
-                    [trackBy]="trackByFn"
-                    class="w-full"
-                >
-                    <!-- Name Column -->
-                    <ng-container matColumnDef="name">
-                        <th mat-header-cell *matHeaderCellDef>
-                            {{ 'EVENTS.ADMIN.NAME' | transloco }}
-                        </th>
-                        <td mat-cell *matCellDef="let event">
-                            <span class="font-medium">{{ event.name }}</span>
-                        </td>
-                    </ng-container>
+    <!-- Events list -->
+    <div class="flex flex-auto border-t sm:overflow-hidden">
+        <div class="flex flex-auto flex-col sm:overflow-y-auto">
+            <ng-container *ngIf="events as events">
+                <!-- Events grid -->
+                <ng-container *ngIf="events.length > 0; else noEvents">
+                    <!-- Desktop grid (lg and up) -->
+                    <div class="hidden lg:grid">
+                        <!-- Header -->
+                        <div
+                            class="text-secondary sticky top-0 z-10 grid gap-4 bg-gray-50 px-6 py-4 text-md font-semibold shadow md:px-8 dark:bg-gray-900"
+                            style="
+                                grid-template-columns: 48px auto 100px 100px 120px 120px 80px 150px;
+                            "
+                        >
+                            <div></div>
+                            <div>
+                                {{ 'EVENTS.ADMIN.NAME' | transloco }}
+                            </div>
+                            <div>
+                                {{ 'EVENTS.ADMIN.PUBLISHED' | transloco }}
+                            </div>
+                            <div>
+                                {{ 'EVENTS.ADMIN.ACTIVE' | transloco }}
+                            </div>
+                            <div>
+                                {{ 'EVENTS.ADMIN.START' | transloco }}
+                            </div>
+                            <div>
+                                {{ 'EVENTS.ADMIN.END' | transloco }}
+                            </div>
+                            <div>
+                                {{ 'EVENTS.ADMIN.ORDER' | transloco }}
+                            </div>
+                            <div class="text-right">Actions</div>
+                        </div>
 
-                    <!-- Published Column -->
-                    <ng-container matColumnDef="isPublished">
-                        <th mat-header-cell *matHeaderCellDef>
-                            {{ 'EVENTS.ADMIN.PUBLISHED' | transloco }}
-                        </th>
-                        <td mat-cell *matCellDef="let event">
-                            @if (event.isPublished) {
-                                <mat-chip class="bg-green-100 text-green-800">{{
-                                    'EVENTS.ADMIN.PUBLISHED' | transloco
-                                }}</mat-chip>
-                            } @else {
-                                <mat-chip class="bg-gray-100 text-gray-800">
-                                    Draft
-                                </mat-chip>
-                            }
-                        </td>
-                    </ng-container>
-
-                    <!-- Active Column -->
-                    <ng-container matColumnDef="isActive">
-                        <th mat-header-cell *matHeaderCellDef>
-                            {{ 'EVENTS.ADMIN.ACTIVE' | transloco }}
-                        </th>
-                        <td mat-cell *matCellDef="let event">
-                            @if (event.isActive) {
-                                <mat-chip class="bg-blue-100 text-blue-800">{{
-                                    'EVENTS.ADMIN.ACTIVE' | transloco
-                                }}</mat-chip>
-                            } @else {
-                                <mat-chip class="bg-gray-100 text-gray-800">
-                                    Inactive
-                                </mat-chip>
-                            }
-                        </td>
-                    </ng-container>
-
-                    <!-- Start Time Column -->
-                    <ng-container matColumnDef="startTime">
-                        <th mat-header-cell *matHeaderCellDef>
-                            {{ 'EVENTS.ADMIN.START' | transloco }}
-                        </th>
-                        <td mat-cell *matCellDef="let event">
-                            @if (event.startTime) {
-                                {{ event.startTime | date: 'dd/MM/yyyy HH:mm' }}
-                            } @else {
-                                <span class="text-gray-400">-</span>
-                            }
-                        </td>
-                    </ng-container>
-
-                    <!-- End Time Column -->
-                    <ng-container matColumnDef="endTime">
-                        <th mat-header-cell *matHeaderCellDef>
-                            {{ 'EVENTS.ADMIN.END' | transloco }}
-                        </th>
-                        <td mat-cell *matCellDef="let event">
-                            @if (event.endTime) {
-                                {{ event.endTime | date: 'dd/MM/yyyy HH:mm' }}
-                            } @else {
-                                <span class="text-gray-400">-</span>
-                            }
-                        </td>
-                    </ng-container>
-
-                    <!-- Order Index Column -->
-                    <ng-container matColumnDef="orderIndex">
-                        <th mat-header-cell *matHeaderCellDef>
-                            {{ 'EVENTS.ADMIN.ORDER' | transloco }}
-                        </th>
-                        <td mat-cell *matCellDef="let event">
-                            {{ event.orderIndex }}
-                        </td>
-                    </ng-container>
-
-                    <!-- Updated At Column -->
-                    <ng-container matColumnDef="updatedAt">
-                        <th mat-header-cell *matHeaderCellDef>
-                            {{ 'EVENTS.ADMIN.UPDATED_AT' | transloco }}
-                        </th>
-                        <td mat-cell *matCellDef="let event">
-                            {{ event.updatedAt | date: 'dd/MM/yyyy HH:mm' }}
-                        </td>
-                    </ng-container>
-
-                    <!-- Actions Column -->
-                    <ng-container matColumnDef="actions">
-                        <th mat-header-cell *matHeaderCellDef>Actions</th>
-                        <td mat-cell *matCellDef="let event">
-                            <button
-                                mat-icon-button
-                                [matTooltip]="'EVENTS.ADMIN.EDIT' | transloco"
+                        <!-- Rows -->
+                        <ng-container
+                            *ngFor="let event of events; trackBy: trackByFn"
+                        >
+                            <div
+                                class="grid cursor-pointer items-center gap-4 border-b px-6 py-3 hover:bg-gray-50 md:px-8 dark:hover:bg-gray-900"
+                                style="
+                                    grid-template-columns: 48px auto 100px 100px 120px 120px 80px 150px;
+                                "
                                 (click)="editEvent(event)"
                             >
-                                <mat-icon
-                                    [svgIcon]="'heroicons_outline:pencil'"
-                                ></mat-icon>
-                            </button>
-                            <button
-                                mat-icon-button
-                                [matTooltip]="'EVENTS.ADMIN.DELETE' | transloco"
-                                (click)="deleteEvent(event)"
-                            >
-                                <mat-icon
-                                    [svgIcon]="'heroicons_outline:trash'"
-                                ></mat-icon>
-                            </button>
-                        </td>
-                    </ng-container>
+                                <!-- Icon -->
+                                <div>
+                                    <mat-icon
+                                        class="icon-size-5"
+                                        [svgIcon]="
+                                            'heroicons_outline:calendar-days'
+                                        "
+                                    >
+                                    </mat-icon>
+                                </div>
 
-                    <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
-                    <tr
-                        mat-row
-                        *matRowDef="let row; columns: displayedColumns"
-                        class="hover:bg-gray-100"
-                    ></tr>
-                </table>
-            </div>
-        } @else {
-            <!-- Empty State -->
-            <div class="py-24 text-center">
-                <mat-icon
-                    class="text-gray-400 icon-size-24"
-                    [svgIcon]="'heroicons_outline:calendar-days'"
-                ></mat-icon>
-                <p class="mt-4 text-lg text-gray-500">
-                    {{ 'EVENTS.ADMIN.NO_EVENTS' | transloco }}
-                </p>
-                <button
-                    mat-flat-button
-                    color="primary"
-                    class="mt-6"
-                    (click)="createEvent()"
-                >
-                    <mat-icon [svgIcon]="'heroicons_solid:plus'"></mat-icon>
-                    <span class="ml-2">{{
-                        'EVENTS.ADMIN.CREATE' | transloco
-                    }}</span>
-                </button>
-            </div>
-        }
+                                <!-- Name -->
+                                <div class="flex flex-col">
+                                    <span class="font-medium">{{
+                                        event.name
+                                    }}</span>
+                                    <span
+                                        class="text-secondary text-sm"
+                                        *ngIf="event.description"
+                                        >{{
+                                            event.description | slice: 0:50
+                                        }}{{
+                                            event.description.length > 50
+                                                ? '...'
+                                                : ''
+                                        }}</span
+                                    >
+                                </div>
+
+                                <!-- Published -->
+                                <div>
+                                    <span
+                                        class="inline-flex items-center rounded-full px-2.5 py-0.5 text-xs font-bold uppercase tracking-wide"
+                                        [ngClass]="{
+                                            'bg-green-200 text-green-800 dark:bg-green-600 dark:text-green-50':
+                                                event.isPublished,
+                                            'bg-gray-200 text-gray-800 dark:bg-gray-600 dark:text-gray-50':
+                                                !event.isPublished
+                                        }"
+                                    >
+                                        {{
+                                            event.isPublished
+                                                ? ('EVENTS.ADMIN.PUBLISHED'
+                                                  | transloco)
+                                                : 'Draft'
+                                        }}
+                                    </span>
+                                </div>
+
+                                <!-- Active -->
+                                <div>
+                                    <span
+                                        class="inline-flex items-center rounded-full px-2.5 py-0.5 text-xs font-bold uppercase tracking-wide"
+                                        [ngClass]="{
+                                            'bg-blue-200 text-blue-800 dark:bg-blue-600 dark:text-blue-50':
+                                                event.isActive,
+                                            'bg-gray-200 text-gray-800 dark:bg-gray-600 dark:text-gray-50':
+                                                !event.isActive
+                                        }"
+                                    >
+                                        {{
+                                            event.isActive
+                                                ? ('EVENTS.ADMIN.ACTIVE'
+                                                  | transloco)
+                                                : 'Inactive'
+                                        }}
+                                    </span>
+                                </div>
+
+                                <!-- Start Time -->
+                                <div class="text-sm">
+                                    {{
+                                        event.startTime
+                                            ? (event.startTime
+                                              | date: 'dd/MM/yy HH:mm')
+                                            : '-'
+                                    }}
+                                </div>
+
+                                <!-- End Time -->
+                                <div class="text-sm">
+                                    {{
+                                        event.endTime
+                                            ? (event.endTime
+                                              | date: 'dd/MM/yy HH:mm')
+                                            : '-'
+                                    }}
+                                </div>
+
+                                <!-- Order -->
+                                <div class="text-sm">
+                                    {{ event.orderIndex }}
+                                </div>
+
+                                <!-- Actions -->
+                                <div
+                                    class="flex items-center justify-end gap-2"
+                                    (click)="$event.stopPropagation()"
+                                >
+                                    <button
+                                        mat-icon-button
+                                        [matTooltip]="
+                                            'EVENTS.ADMIN.EDIT' | transloco
+                                        "
+                                        (click)="editEvent(event)"
+                                    >
+                                        <mat-icon
+                                            class="icon-size-5"
+                                            [svgIcon]="
+                                                'heroicons_outline:pencil'
+                                            "
+                                        >
+                                        </mat-icon>
+                                    </button>
+
+                                    <button
+                                        mat-icon-button
+                                        [matTooltip]="
+                                            'EVENTS.ADMIN.DELETE' | transloco
+                                        "
+                                        (click)="deleteEvent(event)"
+                                    >
+                                        <mat-icon
+                                            class="icon-size-5"
+                                            [svgIcon]="'heroicons_outline:trash'"
+                                        >
+                                        </mat-icon>
+                                    </button>
+                                </div>
+                            </div>
+                        </ng-container>
+                    </div>
+
+                    <!-- Tablet grid (sm to lg) -->
+                    <div class="hidden sm:grid lg:hidden">
+                        <!-- Header -->
+                        <div
+                            class="text-secondary sticky top-0 z-10 grid gap-4 bg-gray-50 px-6 py-4 text-md font-semibold shadow dark:bg-gray-900"
+                            style="
+                                grid-template-columns: 48px auto 100px 100px 150px;
+                            "
+                        >
+                            <div></div>
+                            <div>
+                                {{ 'EVENTS.ADMIN.NAME' | transloco }}
+                            </div>
+                            <div>
+                                {{ 'EVENTS.ADMIN.PUBLISHED' | transloco }}
+                            </div>
+                            <div>
+                                {{ 'EVENTS.ADMIN.ACTIVE' | transloco }}
+                            </div>
+                            <div class="text-right">Actions</div>
+                        </div>
+
+                        <!-- Rows -->
+                        <ng-container
+                            *ngFor="let event of events; trackBy: trackByFn"
+                        >
+                            <div
+                                class="grid cursor-pointer items-center gap-4 border-b px-6 py-3 hover:bg-gray-50 dark:hover:bg-gray-900"
+                                style="
+                                    grid-template-columns: 48px auto 100px 100px 150px;
+                                "
+                                (click)="editEvent(event)"
+                            >
+                                <!-- Icon -->
+                                <div>
+                                    <mat-icon
+                                        class="icon-size-5"
+                                        [svgIcon]="
+                                            'heroicons_outline:calendar-days'
+                                        "
+                                    >
+                                    </mat-icon>
+                                </div>
+
+                                <!-- Name and details -->
+                                <div class="flex flex-col">
+                                    <span class="font-medium">{{
+                                        event.name
+                                    }}</span>
+                                    <span class="text-secondary text-xs">
+                                        Order: {{ event.orderIndex }}
+                                        <ng-container *ngIf="event.startTime">
+                                            •
+                                            {{
+                                                event.startTime
+                                                    | date: 'dd/MM/yy'
+                                            }}
+                                        </ng-container>
+                                    </span>
+                                </div>
+
+                                <!-- Published -->
+                                <div>
+                                    <span
+                                        class="inline-flex items-center rounded-full px-2.5 py-0.5 text-xs font-bold uppercase tracking-wide"
+                                        [ngClass]="{
+                                            'bg-green-200 text-green-800 dark:bg-green-600 dark:text-green-50':
+                                                event.isPublished,
+                                            'bg-gray-200 text-gray-800 dark:bg-gray-600 dark:text-gray-50':
+                                                !event.isPublished
+                                        }"
+                                    >
+                                        {{
+                                            event.isPublished
+                                                ? ('EVENTS.ADMIN.PUBLISHED'
+                                                  | transloco)
+                                                : 'Draft'
+                                        }}
+                                    </span>
+                                </div>
+
+                                <!-- Active -->
+                                <div>
+                                    <span
+                                        class="inline-flex items-center rounded-full px-2.5 py-0.5 text-xs font-bold uppercase tracking-wide"
+                                        [ngClass]="{
+                                            'bg-blue-200 text-blue-800 dark:bg-blue-600 dark:text-blue-50':
+                                                event.isActive,
+                                            'bg-gray-200 text-gray-800 dark:bg-gray-600 dark:text-gray-50':
+                                                !event.isActive
+                                        }"
+                                    >
+                                        {{
+                                            event.isActive
+                                                ? ('EVENTS.ADMIN.ACTIVE'
+                                                  | transloco)
+                                                : 'Inactive'
+                                        }}
+                                    </span>
+                                </div>
+
+                                <!-- Actions -->
+                                <div
+                                    class="flex items-center justify-end gap-2"
+                                    (click)="$event.stopPropagation()"
+                                >
+                                    <button
+                                        mat-icon-button
+                                        [matTooltip]="
+                                            'EVENTS.ADMIN.EDIT' | transloco
+                                        "
+                                        (click)="editEvent(event)"
+                                    >
+                                        <mat-icon
+                                            class="icon-size-5"
+                                            [svgIcon]="
+                                                'heroicons_outline:pencil'
+                                            "
+                                        >
+                                        </mat-icon>
+                                    </button>
+
+                                    <button
+                                        mat-icon-button
+                                        [matTooltip]="
+                                            'EVENTS.ADMIN.DELETE' | transloco
+                                        "
+                                        (click)="deleteEvent(event)"
+                                    >
+                                        <mat-icon
+                                            class="icon-size-5"
+                                            [svgIcon]="'heroicons_outline:trash'"
+                                        >
+                                        </mat-icon>
+                                    </button>
+                                </div>
+                            </div>
+                        </ng-container>
+                    </div>
+
+                    <!-- Mobile cards (xs) -->
+                    <div class="sm:hidden">
+                        <ng-container
+                            *ngFor="let event of events; trackBy: trackByFn"
+                        >
+                            <div
+                                class="bg-card border-b p-4 hover:bg-gray-50 dark:hover:bg-gray-900"
+                                (click)="editEvent(event)"
+                            >
+                                <!-- Header with icon and name -->
+                                <div
+                                    class="mb-3 flex items-start justify-between"
+                                >
+                                    <div class="flex items-start gap-3">
+                                        <mat-icon
+                                            class="mt-1 icon-size-5"
+                                            [svgIcon]="
+                                                'heroicons_outline:calendar-days'
+                                            "
+                                        >
+                                        </mat-icon>
+                                        <div class="flex flex-col">
+                                            <span class="font-medium">{{
+                                                event.name
+                                            }}</span>
+                                            <span
+                                                class="text-secondary text-sm"
+                                                *ngIf="event.description"
+                                            >
+                                                {{
+                                                    event.description
+                                                        | slice: 0:80
+                                                }}{{
+                                                    event.description.length >
+                                                    80
+                                                        ? '...'
+                                                        : ''
+                                                }}
+                                            </span>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <!-- Event details -->
+                                <div class="mb-3 flex flex-col gap-2">
+                                    <!-- Start Time -->
+                                    <div
+                                        class="flex items-center gap-2"
+                                        *ngIf="event.startTime"
+                                    >
+                                        <span
+                                            class="text-secondary text-sm font-medium"
+                                        >
+                                            {{
+                                                'EVENTS.ADMIN.START' | transloco
+                                            }}:
+                                        </span>
+                                        <span class="text-sm">
+                                            {{
+                                                event.startTime
+                                                    | date: 'dd/MM/yyyy HH:mm'
+                                            }}
+                                        </span>
+                                    </div>
+
+                                    <!-- End Time -->
+                                    <div
+                                        class="flex items-center gap-2"
+                                        *ngIf="event.endTime"
+                                    >
+                                        <span
+                                            class="text-secondary text-sm font-medium"
+                                        >
+                                            {{
+                                                'EVENTS.ADMIN.END' | transloco
+                                            }}:
+                                        </span>
+                                        <span class="text-sm">
+                                            {{
+                                                event.endTime
+                                                    | date: 'dd/MM/yyyy HH:mm'
+                                            }}
+                                        </span>
+                                    </div>
+
+                                    <!-- Order -->
+                                    <div class="flex items-center gap-2">
+                                        <span
+                                            class="text-secondary text-sm font-medium"
+                                        >
+                                            {{
+                                                'EVENTS.ADMIN.ORDER' | transloco
+                                            }}:
+                                        </span>
+                                        <span class="text-sm">
+                                            {{ event.orderIndex }}
+                                        </span>
+                                    </div>
+
+                                    <!-- Published -->
+                                    <div class="flex items-center gap-2">
+                                        <span
+                                            class="text-secondary text-sm font-medium"
+                                        >
+                                            {{
+                                                'EVENTS.ADMIN.PUBLISHED'
+                                                    | transloco
+                                            }}:
+                                        </span>
+                                        <span
+                                            class="inline-flex items-center rounded-full px-2.5 py-0.5 text-xs font-bold uppercase tracking-wide"
+                                            [ngClass]="{
+                                                'bg-green-200 text-green-800 dark:bg-green-600 dark:text-green-50':
+                                                    event.isPublished,
+                                                'bg-gray-200 text-gray-800 dark:bg-gray-600 dark:text-gray-50':
+                                                    !event.isPublished
+                                            }"
+                                        >
+                                            {{
+                                                event.isPublished
+                                                    ? ('EVENTS.ADMIN.PUBLISHED'
+                                                      | transloco)
+                                                    : 'Draft'
+                                            }}
+                                        </span>
+                                    </div>
+
+                                    <!-- Active -->
+                                    <div class="flex items-center gap-2">
+                                        <span
+                                            class="text-secondary text-sm font-medium"
+                                        >
+                                            {{
+                                                'EVENTS.ADMIN.ACTIVE'
+                                                    | transloco
+                                            }}:
+                                        </span>
+                                        <span
+                                            class="inline-flex items-center rounded-full px-2.5 py-0.5 text-xs font-bold uppercase tracking-wide"
+                                            [ngClass]="{
+                                                'bg-blue-200 text-blue-800 dark:bg-blue-600 dark:text-blue-50':
+                                                    event.isActive,
+                                                'bg-gray-200 text-gray-800 dark:bg-gray-600 dark:text-gray-50':
+                                                    !event.isActive
+                                            }"
+                                        >
+                                            {{
+                                                event.isActive
+                                                    ? ('EVENTS.ADMIN.ACTIVE'
+                                                      | transloco)
+                                                    : 'Inactive'
+                                            }}
+                                        </span>
+                                    </div>
+                                </div>
+
+                                <!-- Actions -->
+                                <div
+                                    class="flex items-center justify-end gap-2 border-t pt-3"
+                                    (click)="$event.stopPropagation()"
+                                >
+                                    <button
+                                        mat-icon-button
+                                        [matTooltip]="
+                                            'EVENTS.ADMIN.EDIT' | transloco
+                                        "
+                                        (click)="editEvent(event)"
+                                    >
+                                        <mat-icon
+                                            class="icon-size-5"
+                                            [svgIcon]="
+                                                'heroicons_outline:pencil'
+                                            "
+                                        >
+                                        </mat-icon>
+                                    </button>
+
+                                    <button
+                                        mat-icon-button
+                                        [matTooltip]="
+                                            'EVENTS.ADMIN.DELETE' | transloco
+                                        "
+                                        (click)="deleteEvent(event)"
+                                    >
+                                        <mat-icon
+                                            class="icon-size-5"
+                                            [svgIcon]="'heroicons_outline:trash'"
+                                        >
+                                        </mat-icon>
+                                    </button>
+                                </div>
+                            </div>
+                        </ng-container>
+                    </div>
+                </ng-container>
+
+                <!-- No events -->
+                <ng-template #noEvents>
+                    <div
+                        class="flex flex-auto flex-col items-center justify-center bg-gray-100 dark:bg-transparent"
+                    >
+                        <mat-icon
+                            class="icon-size-24"
+                            [svgIcon]="'heroicons_outline:calendar-days'"
+                        >
+                        </mat-icon>
+                        <div
+                            class="text-secondary mt-4 text-2xl font-semibold tracking-tight"
+                        >
+                            {{ 'EVENTS.ADMIN.NO_EVENTS' | transloco }}
+                        </div>
+                    </div>
+                </ng-template>
+            </ng-container>
+        </div>
     </div>
 </div>
