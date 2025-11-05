@@ -87,7 +87,8 @@
             "PASSWORD_REQUIRED": "Le mot de passe est requis",
             "REMEMBER_ME": "Se souvenir de moi",
             "FORGOT_PASSWORD": "Mot de passe oublié ?",
-            "SIGNIN": "Se connecter"
+            "SIGNIN": "Se connecter",
+            "ERROR_MESSAGE": "Utilisateur ou mot de passe invalide"
         },
         "SIGN_OUT": {
             "TITLE": "Déconnexion",

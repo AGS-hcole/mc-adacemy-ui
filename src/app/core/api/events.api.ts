@@ -2,10 +2,7 @@ import { HttpClient, HttpParams } from '@angular/common/http';
 import { inject, Injectable } from '@angular/core';
 import { environment } from 'environments/environment';
 import { Observable } from 'rxjs';
-import {
-    PaginatedResponse,
-    PublicEvent,
-} from '../models/public-event.model';
+import { PaginatedResponse, PublicEvent } from '../models/public-event.model';
 
 @Injectable({ providedIn: 'root' })
 export class EventsApi {
@@ -23,7 +20,7 @@ export class EventsApi {
         if (params?.pageSize) p = p.set('pageSize', params.pageSize);
         p = p.set('sort', params?.sort ?? 'order');
         return this.http.get<PaginatedResponse<PublicEvent>>(
-            `${this.baseUrl}/events`,
+            `${this.baseUrl}/public/events`,
             { params: p }
         );
     }
@@ -47,41 +44,41 @@ export class EventsApi {
             p = p.set('publishedOnly', String(params.publishedOnly));
         p = p.set('sort', params?.sort ?? 'order');
         return this.http.get<PaginatedResponse<PublicEvent>>(
-            `${this.baseUrl}/events`,
+            `${this.baseUrl}/admin/events`,
             { params: p }
         );
     }
 
     getBySlug(slug: string): Observable<PublicEvent> {
         return this.http.get<PublicEvent>(
-            `${this.baseUrl}/events/slug/${slug}`
+            `${this.baseUrl}/public/events/${slug}`
         );
     }
 
     // Admin by id
     getById(id: string): Observable<PublicEvent> {
-        return this.http.get<PublicEvent>(`${this.baseUrl}/events/${id}`);
+        return this.http.get<PublicEvent>(`${this.baseUrl}/admin/events/${id}`);
     }
 
     create(dto: Partial<PublicEvent>): Observable<PublicEvent> {
-        return this.http.post<PublicEvent>(`${this.baseUrl}/events`, dto);
+        return this.http.post<PublicEvent>(`${this.baseUrl}/admin/events`, dto);
     }
 
     update(id: string, dto: Partial<PublicEvent>): Observable<PublicEvent> {
         return this.http.patch<PublicEvent>(
-            `${this.baseUrl}/events/${id}`,
+            `${this.baseUrl}/admin/events/${id}`,
             dto
         );
     }
 
     delete(id: string): Observable<void> {
-        return this.http.delete<void>(`${this.baseUrl}/events/${id}`);
+        return this.http.delete<void>(`${this.baseUrl}/admin/events/${id}`);
     }
 
     // QR PNG for the public /events page
     getQrPng(url?: string): Observable<Blob> {
         const params = url ? { params: new HttpParams().set('url', url) } : {};
-        return this.http.get(`${this.baseUrl}/events/qr`, {
+        return this.http.get(`${this.baseUrl}/public/events/qr`, {
             ...params,
             responseType: 'blob',
         });
