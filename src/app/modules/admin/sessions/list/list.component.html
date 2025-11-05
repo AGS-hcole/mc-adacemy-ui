@@ -1,4 +1,6 @@
-<div class="absolute inset-0 flex min-w-0 flex-col overflow-y-auto sm:overflow-hidden">
+<div
+    class="absolute inset-0 flex min-w-0 flex-col overflow-y-auto sm:overflow-hidden"
+>
     <!-- Header -->
     <div
         class="bg-card relative flex flex-0 flex-col border-b px-6 py-8 sm:flex-row sm:items-center sm:justify-between md:px-8 dark:bg-transparent"
@@ -25,7 +27,7 @@
 
     <!-- Filters -->
     <div
-        class="flex flex-0 flex-col items-start gap-0 bg-gray-50 p-6 sm:flex-row sm:items-center sm:gap-4 dark:bg-gray-900"
+        class="flex flex-0 flex-col items-start gap-0 bg-gray-50 p-6 pb-0 sm:flex-row sm:items-center sm:gap-4 dark:bg-gray-900"
     >
         <!-- Site filter -->
         <mat-form-field class="w-full sm:w-48">
@@ -91,7 +93,7 @@
     </div>
 
     <!-- Sessions list -->
-    <div class="flex flex-auto sm:overflow-hidden">
+    <div class="flex flex-auto border-t sm:overflow-hidden">
         <div class="flex flex-auto flex-col sm:overflow-y-auto">
             <ng-container *ngIf="sessions as sessions">
                 <!-- Sessions table -->
@@ -374,7 +376,8 @@
                                 <!-- Date and details -->
                                 <div class="flex flex-col">
                                     <span class="font-medium">{{
-                                        session.date | localizedDate: 'shortDate'
+                                        session.date
+                                            | localizedDate: 'shortDate'
                                     }}</span>
                                     <span class="text-secondary text-xs">
                                         {{ getDisplayTime(session) }}
@@ -530,7 +533,8 @@
                                         </mat-icon>
                                         <div class="flex flex-col">
                                             <span class="font-medium">{{
-                                                session.date | localizedDate: 'fullDate'
+                                                session.date
+                                                    | localizedDate: 'fullDate'
                                             }}</span>
                                             <span
                                                 class="text-secondary text-sm"

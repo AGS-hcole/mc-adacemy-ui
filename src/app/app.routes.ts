@@ -55,6 +55,16 @@ export const appRoutes: Route[] = [
         ],
     },
 
+    // Public Events (accessible to authenticated users)
+    {
+        path: 'events',
+        component: LayoutComponent,
+        data: {
+            layout: 'empty',
+        },
+        loadChildren: () => import('app/modules/pages/events/events.routes'),
+    },
+
     // Auth routes for authenticated users
     {
         path: '',

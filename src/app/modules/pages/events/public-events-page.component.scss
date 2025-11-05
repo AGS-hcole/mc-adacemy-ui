@@ -1,0 +1,11 @@
+public-events-page {
+    display: block;
+}
+
+/* Additional utility classes for line clamping if needed */
+.line-clamp-3 {
+    display: -webkit-box;
+    -webkit-line-clamp: 3;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+}
