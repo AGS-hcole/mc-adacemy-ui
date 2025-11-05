@@ -16,7 +16,7 @@ import { MatInputModule } from '@angular/material/input';
 import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 import { MatSlideToggleModule } from '@angular/material/slide-toggle';
 import { MatSnackBar } from '@angular/material/snack-bar';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, RouterLink } from '@angular/router';
 import { TranslocoModule, TranslocoService } from '@jsverse/transloco';
 import { UserService } from 'app/core/user/user.service';
 import { User } from 'app/core/user/user.types';
@@ -46,6 +46,7 @@ interface FeedItem {
         MatNativeDateModule,
         MatProgressSpinnerModule,
         MatSlideToggleModule,
+        RouterLink,
         MatCheckboxModule,
         TranslocoModule,
     ],
