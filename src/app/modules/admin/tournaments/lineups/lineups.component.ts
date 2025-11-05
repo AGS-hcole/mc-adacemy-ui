@@ -1,4 +1,9 @@
-import { CdkDrag, CdkDragDrop, CdkDropList, moveItemInArray } from '@angular/cdk/drag-drop';
+import {
+    CdkDrag,
+    CdkDragDrop,
+    CdkDropList,
+    moveItemInArray,
+} from '@angular/cdk/drag-drop';
 import { NgFor, NgIf } from '@angular/common';
 import {
     ChangeDetectionStrategy,
@@ -11,10 +16,7 @@ import {
 import { MatButtonModule } from '@angular/material/button';
 import { MatIconModule } from '@angular/material/icon';
 import { TranslocoModule } from '@jsverse/transloco';
-import {
-    Team,
-    Tournament,
-} from 'app/core/tournament/tournament.types';
+import { Team, Tournament } from 'app/core/tournament/tournament.types';
 import { TournamentsService } from 'app/core/tournament/tournaments.service';
 import { Subject, takeUntil } from 'rxjs';
 
@@ -63,6 +65,9 @@ export class TournamentLineupsComponent implements OnInit, OnDestroy {
                 if (tournament) {
                     this.tournament = tournament;
                     this.teams = tournament.teams || [];
+
+                    console.log(this.tournament);
+                    console.log(this.teams);
                 }
                 this._changeDetectorRef.markForCheck();
             });
@@ -101,11 +106,15 @@ export class TournamentLineupsComponent implements OnInit, OnDestroy {
      */
     dropTeam(event: CdkDragDrop<Team[]>): void {
         if (event.previousContainer === event.container) {
-            moveItemInArray(this.teams, event.previousIndex, event.currentIndex);
-            
+            moveItemInArray(
+                this.teams,
+                event.previousIndex,
+                event.currentIndex
+            );
+
             // Reorder teams on backend
             if (this.tournament) {
-                const teamOrder = this.teams.map(t => t.id);
+                const teamOrder = this.teams.map((t) => t.id);
                 this._tournamentsService
                     .reorderTeams(this.tournament.id, teamOrder)
                     .pipe(takeUntil(this._unsubscribeAll))

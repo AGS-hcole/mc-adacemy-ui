@@ -73,7 +73,11 @@ export class UserSessionsListComponent implements OnInit, OnDestroy {
             .pipe(takeUntil(this._unsubscribeAll))
             .subscribe(([user, sessions]) => {
                 this.user = user;
-                this.sessions = sessions;
+                this.sessions = sessions.slice().sort((a, b) => {
+                    const ta = a?.date ? new Date(a.date).getTime() : 0;
+                    const tb = b?.date ? new Date(b.date).getTime() : 0;
+                    return ta - tb;
+                });
                 this._changeDetectorRef.markForCheck();
             });
     }
