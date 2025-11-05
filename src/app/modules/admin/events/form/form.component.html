@@ -1,29 +1,21 @@
-<div class="flex min-h-screen flex-col">
+<div class="flex min-h-screen w-full flex-col">
     <!-- Header -->
-    <div class="flex items-center justify-between border-b p-6">
+    <div class="flex items-center justify-between gap-2 border-b p-6">
         <div>
             <h2 class="text-3xl font-semibold leading-8 tracking-tight">
                 {{
-                    (isEditMode
-                        ? 'EVENTS.ADMIN.EDIT'
-                        : 'EVENTS.ADMIN.CREATE'
-                    ) | transloco
+                    (isEditMode ? 'EVENTS.ADMIN.EDIT' : 'EVENTS.ADMIN.CREATE')
+                        | transloco
                 }}
             </h2>
         </div>
         <div class="flex gap-2">
-            <button
-                mat-stroked-button
-                (click)="openPreview()"
-            >
-                <mat-icon>heroicons_outline:eye</mat-icon>
+            <button mat-stroked-button (click)="openPreview()">
+                <mat-icon [svgIcon]="'heroicons_outline:eye'"></mat-icon>
                 <span class="ml-2">Preview</span>
             </button>
-            <button
-                mat-stroked-button
-                (click)="generateQr()"
-            >
-                <mat-icon>heroicons_outline:qr-code</mat-icon>
+            <button mat-stroked-button (click)="generateQr()">
+                <mat-icon [svgIcon]="'heroicons_outline:qr-code'"></mat-icon>
                 <span class="ml-2">{{ 'EVENTS.ADMIN.QR' | transloco }}</span>
             </button>
         </div>
@@ -31,21 +23,12 @@
 
     <!-- Form -->
     <div class="flex-auto p-6">
-        <div class="mx-auto max-w-3xl">
-            <form
-                [formGroup]="eventForm"
-                class="flex flex-col gap-6"
-            >
+        <div class="max-w-3xl">
+            <form [formGroup]="eventForm" class="flex flex-col gap-6">
                 <!-- Name -->
                 <mat-form-field class="w-full">
-                    <mat-label>{{
-                        'EVENTS.ADMIN.NAME' | transloco
-                    }}</mat-label>
-                    <input
-                        matInput
-                        formControlName="name"
-                        required
-                    />
+                    <mat-label>{{ 'EVENTS.ADMIN.NAME' | transloco }}</mat-label>
+                    <input matInput formControlName="name" required />
                     @if (eventForm.get('name')?.hasError('required')) {
                         <mat-error>Name is required</mat-error>
                     }
@@ -53,17 +36,11 @@
 
                 <!-- Slug -->
                 <mat-form-field class="w-full">
-                    <mat-label>{{
-                        'EVENTS.ADMIN.SLUG' | transloco
-                    }}</mat-label>
-                    <input
-                        matInput
-                        formControlName="slug"
-                    />
-                    <mat-hint
-                        >Unique identifier for URL (leave empty for
-                        auto-generation)</mat-hint
-                    >
+                    <mat-label>{{ 'EVENTS.ADMIN.SLUG' | transloco }}</mat-label>
+                    <input matInput formControlName="slug" />
+                    <mat-hint>{{
+                        'EVENTS.ADMIN.SLUG_INFO' | transloco
+                    }}</mat-hint>
                 </mat-form-field>
 
                 <!-- Description -->
@@ -103,9 +80,9 @@
                         @if (
                             eventForm.get('endTime')?.hasError('invalidEndTime')
                         ) {
-                            <mat-error
-                                >End time must be after start time</mat-error
-                            >
+                            <mat-error>{{
+                                'EVENTS.ADMIN.END_TIME_INVALID' | transloco
+                            }}</mat-error>
                         }
                     </mat-form-field>
                 </div>
@@ -145,9 +122,9 @@
                         type="number"
                         required
                     />
-                    <mat-hint
-                        >Lower numbers appear first (e.g., 0, 1, 2...)</mat-hint
-                    >
+                    <mat-hint>{{
+                        'EVENTS.ADMIN.ORDER_INDEX_HINT' | transloco
+                    }}</mat-hint>
                 </mat-form-field>
 
                 <!-- Published Toggle -->
@@ -164,11 +141,7 @@
 
                 <!-- Actions -->
                 <div class="flex justify-end gap-2 border-t pt-6">
-                    <button
-                        mat-stroked-button
-                        type="button"
-                        (click)="cancel()"
-                    >
+                    <button mat-stroked-button type="button" (click)="cancel()">
                         {{ 'EVENTS.ADMIN.CANCEL' | transloco }}
                     </button>
                     <button

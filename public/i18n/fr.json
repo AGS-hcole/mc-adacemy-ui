@@ -2,6 +2,7 @@
     "SHARED": {
         "UNDER_CONSTRUCTION": "En construction",
         "UNDER_CONSTRUCTION_DESCRIPTION": "Cette fonctionnalité est en cours de développement et sera bientôt disponible.",
+        "CLOSE": "Fermer",
         "CLIPBOARD": {
             "COPYTO": "Copier dans le presse-papiers",
             "SUCCESS": "Copié dans le presse-papiers",
@@ -785,8 +786,10 @@
             "PUBLISHED": "Publié",
             "ACTIVE": "Actif",
             "ORDER": "Ordre",
+            "ORDER_INDEX_HINT": "Plus la valeur est basse, plus l'événement apparaît en haut de la liste",
             "START": "Heure de début",
             "END": "Heure de fin",
+            "END_TIME_INVALID": "L'heure de fin doit être après l'heure de début",
             "UPDATED_AT": "Mis à jour",
             "COPY_PUBLIC_URL": "Copier l'URL publique",
             "OPEN_PUBLIC": "Ouvrir la page publique",
@@ -794,13 +797,15 @@
             "NAME": "Nom",
             "DESCRIPTION": "Description",
             "SLUG": "Slug",
+            "SLUG_INFO": "Identifiant unique pour l'URL publique (ex : mon-evenement), laissez vide pour générer automatiquement",
             "BACKGROUND_IMAGE_URL": "URL de l'image de fond",
             "EXTERNAL_REGISTRATION_URL": "URL d'inscription externe",
             "ORDER_INDEX": "Index d'ordre",
             "NO_EVENTS": "Aucun événement trouvé",
             "QR_DIALOG": {
                 "TITLE": "Code QR",
-                "DOWNLOAD": "Télécharger"
+                "DOWNLOAD": "Télécharger",
+                "ERROR": "Impossible de charger le QR Code"
             },
             "DELETE_SUCCESS": "Événement supprimé avec succès",
             "DELETE_ERROR": "Erreur lors de la suppression de l'événement",

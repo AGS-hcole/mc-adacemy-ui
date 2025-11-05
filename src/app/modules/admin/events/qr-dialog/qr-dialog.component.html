@@ -4,11 +4,8 @@
         <h2 class="text-xl font-semibold">
             {{ 'EVENTS.ADMIN.QR_DIALOG.TITLE' | transloco }}
         </h2>
-        <button
-            mat-icon-button
-            (click)="close()"
-        >
-            <mat-icon>heroicons_outline:x-mark</mat-icon>
+        <button mat-icon-button (click)="close()">
+            <mat-icon [svgIcon]="'heroicons_outline:x-mark'"></mat-icon>
         </button>
     </div>
 
@@ -21,30 +18,23 @@
             <mat-spinner diameter="40"></mat-spinner>
         } @else if (error) {
             <div class="text-center">
-                <mat-icon class="icon-size-16 text-red-500"
-                    >heroicons_outline:exclamation-triangle</mat-icon
-                >
-                <p class="mt-2 text-gray-600">Error loading QR code</p>
+                <mat-icon
+                    class="text-red-500 icon-size-16"
+                    [svgIcon]="'heroicons_outline:exclamation-triangle'"
+                ></mat-icon>
+                <p class="mt-2 text-gray-600">
+                    {{ 'EVENTS.ADMIN.QR_DIALOG.ERROR' | transloco }}
+                </p>
             </div>
         } @else if (qrImageUrl) {
-            <img
-                [src]="qrImageUrl"
-                alt="QR Code"
-                class="max-w-full"
-            />
+            <img [src]="qrImageUrl" alt="QR Code" class="max-w-full" />
         }
     </div>
 
     <!-- Actions -->
-    <div
-        mat-dialog-actions
-        class="flex justify-end gap-2"
-    >
-        <button
-            mat-stroked-button
-            (click)="close()"
-        >
-            Close
+    <div mat-dialog-actions class="flex justify-end gap-2">
+        <button mat-stroked-button (click)="close()">
+            {{ 'SHARED.CLOSE' | transloco }}
         </button>
         <button
             mat-flat-button
@@ -52,7 +42,9 @@
             [disabled]="!qrImageUrl"
             (click)="download()"
         >
-            <mat-icon>heroicons_outline:arrow-down-tray</mat-icon>
+            <mat-icon
+                [svgIcon]="'heroicons_outline:arrow-down-tray'"
+            ></mat-icon>
             <span class="ml-2">{{
                 'EVENTS.ADMIN.QR_DIALOG.DOWNLOAD' | transloco
             }}</span>

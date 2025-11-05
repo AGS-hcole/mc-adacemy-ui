@@ -1,4 +1,4 @@
-<div class="flex min-h-screen flex-col">
+<div class="flex min-h-screen w-full flex-col">
     <!-- Header -->
     <div class="flex items-center justify-between border-b p-6">
         <div class="flex-auto">
@@ -9,9 +9,11 @@
         <div class="flex items-center gap-2">
             <!-- Search -->
             <mat-form-field class="w-64">
-                <mat-icon matPrefix class="icon-size-5"
-                    >heroicons_solid:magnifying-glass</mat-icon
-                >
+                <mat-icon
+                    matPrefix
+                    class="icon-size-5"
+                    [svgIcon]="'heroicons_outline:magnifying-glass'"
+                ></mat-icon>
                 <input
                     matInput
                     [formControl]="searchInputControl"
@@ -25,23 +27,22 @@
                 [matTooltip]="'EVENTS.ADMIN.OPEN_PUBLIC' | transloco"
                 (click)="openPublicPage()"
             >
-                <mat-icon>heroicons_outline:arrow-top-right-on-square</mat-icon>
+                <mat-icon
+                    [svgIcon]="'heroicons_outline:arrow-top-right-on-square'"
+                ></mat-icon>
             </button>
             <button
                 mat-icon-button
                 [matTooltip]="'EVENTS.ADMIN.COPY_PUBLIC_URL' | transloco"
                 (click)="copyPublicUrl()"
             >
-                <mat-icon>heroicons_outline:link</mat-icon>
+                <mat-icon [svgIcon]="'heroicons_outline:link'"></mat-icon>
             </button>
-            <button
-                mat-flat-button
-                color="primary"
-                (click)="createEvent()"
-            >
-                <mat-icon class="icon-size-5"
-                    >heroicons_solid:plus</mat-icon
-                >
+            <button mat-flat-button color="primary" (click)="createEvent()">
+                <mat-icon
+                    class="icon-size-5"
+                    [svgIcon]="'heroicons_solid:plus'"
+                ></mat-icon>
                 <span class="ml-2">{{
                     'EVENTS.ADMIN.CREATE' | transloco
                 }}</span>
@@ -164,17 +165,17 @@
                                 (click)="editEvent(event)"
                             >
                                 <mat-icon
-                                    >heroicons_outline:pencil</mat-icon
-                                >
+                                    [svgIcon]="'heroicons_outline:pencil'"
+                                ></mat-icon>
                             </button>
                             <button
                                 mat-icon-button
-                                [matTooltip]="
-                                    'EVENTS.ADMIN.DELETE' | transloco
-                                "
+                                [matTooltip]="'EVENTS.ADMIN.DELETE' | transloco"
                                 (click)="deleteEvent(event)"
                             >
-                                <mat-icon>heroicons_outline:trash</mat-icon>
+                                <mat-icon
+                                    [svgIcon]="'heroicons_outline:trash'"
+                                ></mat-icon>
                             </button>
                         </td>
                     </ng-container>
@@ -183,17 +184,17 @@
                     <tr
                         mat-row
                         *matRowDef="let row; columns: displayedColumns"
-                        class="cursor-pointer hover:bg-gray-50"
-                        (click)="editEvent(row)"
+                        class="hover:bg-gray-100"
                     ></tr>
                 </table>
             </div>
         } @else {
             <!-- Empty State -->
             <div class="py-24 text-center">
-                <mat-icon class="icon-size-24 text-gray-400"
-                    >heroicons_outline:calendar-days</mat-icon
-                >
+                <mat-icon
+                    class="text-gray-400 icon-size-24"
+                    [svgIcon]="'heroicons_outline:calendar-days'"
+                ></mat-icon>
                 <p class="mt-4 text-lg text-gray-500">
                     {{ 'EVENTS.ADMIN.NO_EVENTS' | transloco }}
                 </p>
@@ -203,7 +204,7 @@
                     class="mt-6"
                     (click)="createEvent()"
                 >
-                    <mat-icon>heroicons_solid:plus</mat-icon>
+                    <mat-icon [svgIcon]="'heroicons_solid:plus'"></mat-icon>
                     <span class="ml-2">{{
                         'EVENTS.ADMIN.CREATE' | transloco
                     }}</span>

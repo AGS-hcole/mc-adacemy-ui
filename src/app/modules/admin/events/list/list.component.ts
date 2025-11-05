@@ -56,12 +56,12 @@ export class AdminEventsListComponent implements OnInit, OnDestroy {
     events: PublicEvent[] = [];
     displayedColumns: string[] = [
         'name',
-        'isPublished',
-        'isActive',
         'startTime',
         'endTime',
         'orderIndex',
         'updatedAt',
+        'isActive',
+        'isPublished',
         'actions',
     ];
 
@@ -140,7 +140,9 @@ export class AdminEventsListComponent implements OnInit, OnDestroy {
      */
     deleteEvent(event: PublicEvent): void {
         const confirmation = this._fuseConfirmationService.open({
-            title: this._translocoService.translate('DIALOGS.DELETE_EVENT.TITLE'),
+            title: this._translocoService.translate(
+                'DIALOGS.DELETE_EVENT.TITLE'
+            ),
             message: this._translocoService.translate(
                 'DIALOGS.DELETE_EVENT.MESSAGE',
                 { name: event.name }

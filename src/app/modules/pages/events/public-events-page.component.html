@@ -1,4 +1,4 @@
-<div class="flex min-h-screen flex-col">
+<div class="flex min-h-screen w-full flex-col">
     <!-- Header -->
     <div class="bg-primary py-12 text-white">
         <div class="container mx-auto px-6">
@@ -10,9 +10,7 @@
     <div class="container mx-auto flex-grow px-6 py-12">
         <!-- Events Grid -->
         @if (events().length > 0) {
-            <div
-                class="grid grid-cols-1 gap-6 sm:grid-cols-2 lg:grid-cols-3"
-            >
+            <div class="grid grid-cols-1 gap-6 sm:grid-cols-2 lg:grid-cols-3">
                 @for (event of events(); track trackByFn($index, event)) {
                     <div
                         class="group overflow-hidden rounded-lg bg-white shadow-md transition-shadow hover:shadow-xl dark:bg-gray-800"
@@ -23,9 +21,7 @@
                                 <div
                                     class="h-full w-full bg-cover bg-center transition-transform duration-300 group-hover:scale-105"
                                     [style.background-image]="
-                                        'url(' +
-                                        event.backgroundImageUrl +
-                                        ')'
+                                        'url(' + event.backgroundImageUrl + ')'
                                     "
                                     [attr.aria-label]="event.name"
                                 ></div>
