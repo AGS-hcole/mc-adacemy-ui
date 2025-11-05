@@ -66,6 +66,13 @@ export const adminNavigation: FuseNavigationItem[] = [
                 icon: 'heroicons_outline:trophy',
                 link: '/admin/tournaments',
             },
+            {
+                id: 'events',
+                title: 'NAVIGATION.ADMIN.EVENTS.TITLE',
+                type: 'basic',
+                icon: 'heroicons_outline:calendar-days',
+                link: '/admin/events',
+            },
         ],
     },
 ];
