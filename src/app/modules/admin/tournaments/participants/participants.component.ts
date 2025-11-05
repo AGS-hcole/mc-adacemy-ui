@@ -7,18 +7,19 @@ import {
     OnInit,
     ViewEncapsulation,
 } from '@angular/core';
-import { FormsModule } from '@angular/forms';
+import { FormBuilder, FormGroup, ReactiveFormsModule } from '@angular/forms';
 import { MatButtonModule } from '@angular/material/button';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatIconModule } from '@angular/material/icon';
 import { MatInputModule } from '@angular/material/input';
-import { TranslocoModule } from '@jsverse/transloco';
+import { MatSnackBar } from '@angular/material/snack-bar';
+import { TranslocoModule, TranslocoService } from '@jsverse/transloco';
 import {
     Tournament,
     UserLookupItem,
 } from 'app/core/tournament/tournament.types';
 import { TournamentsService } from 'app/core/tournament/tournaments.service';
-import { Subject, takeUntil } from 'rxjs';
+import { debounceTime, distinctUntilChanged, Subject, takeUntil } from 'rxjs';
 
 @Component({
     selector: 'tournament-participants',
@@ -29,7 +30,7 @@ import { Subject, takeUntil } from 'rxjs';
     imports: [
         NgFor,
         NgIf,
-        FormsModule,
+        ReactiveFormsModule,
         MatButtonModule,
         MatFormFieldModule,
         MatIconModule,
@@ -42,7 +43,7 @@ export class TournamentParticipantsComponent implements OnInit, OnDestroy {
     availableUsers: UserLookupItem[] = [];
     filteredUsers: UserLookupItem[] = [];
     selectedParticipantIds: string[] = [];
-    userSearchTerm = '';
+    searchForm: FormGroup;
 
     private _unsubscribeAll: Subject<void> = new Subject<void>();
 
@@ -51,8 +52,16 @@ export class TournamentParticipantsComponent implements OnInit, OnDestroy {
      */
     constructor(
         private _changeDetectorRef: ChangeDetectorRef,
-        private _tournamentsService: TournamentsService
-    ) {}
+        private _tournamentsService: TournamentsService,
+        private _translocoService: TranslocoService,
+        private _snackBar: MatSnackBar,
+        private _fb: FormBuilder
+    ) {
+        // Initialize form
+        this.searchForm = this._fb.group({
+            search: [''],
+        });
+    }
 
     // -----------------------------------------------------------------------------------------------------
     // @ Lifecycle hooks
@@ -71,6 +80,19 @@ export class TournamentParticipantsComponent implements OnInit, OnDestroy {
                     this.selectedParticipantIds =
                         tournament.participants?.map((p) => p.userId) || [];
                 }
+                this._changeDetectorRef.markForCheck();
+            });
+
+        // Subscribe to search form changes
+        this.searchForm
+            .get('search')
+            ?.valueChanges.pipe(
+                debounceTime(300),
+                distinctUntilChanged(),
+                takeUntil(this._unsubscribeAll)
+            )
+            .subscribe(() => {
+                this._applyFilter();
                 this._changeDetectorRef.markForCheck();
             });
 
@@ -108,10 +130,11 @@ export class TournamentParticipantsComponent implements OnInit, OnDestroy {
      * Apply search filter to users
      */
     private _applyFilter(): void {
-        if (!this.userSearchTerm) {
+        const searchTerm = this.searchForm.get('search')?.value || '';
+        if (!searchTerm) {
             this.filteredUsers = this.availableUsers;
         } else {
-            const term = this.userSearchTerm.toLowerCase();
+            const term = searchTerm.toLowerCase();
             this.filteredUsers = this.availableUsers.filter(
                 (user) =>
                     user.firstname.toLowerCase().includes(term) ||
@@ -126,11 +149,11 @@ export class TournamentParticipantsComponent implements OnInit, OnDestroy {
     // -----------------------------------------------------------------------------------------------------
 
     /**
-     * Handle search term change
+     * Handle search term change (kept for compatibility, but now handled by valueChanges)
      */
     onSearchChange(): void {
-        this._applyFilter();
-        this._changeDetectorRef.markForCheck();
+        // This is now handled automatically by the form valueChanges subscription
+        // Keeping the method for backward compatibility if needed
     }
 
     /**
@@ -169,6 +192,19 @@ export class TournamentParticipantsComponent implements OnInit, OnDestroy {
             .pipe(takeUntil(this._unsubscribeAll))
             .subscribe((tournament) => {
                 this.tournament = tournament;
+
+                this._snackBar.open(
+                    this._translocoService.translate(
+                        'TOURNAMENTS.FORMS.PARTICIPANTS.UPDATE_SUCCESS'
+                    ),
+                    this._translocoService.translate('SHARED.CLOSE'),
+                    {
+                        duration: 3000,
+                        horizontalPosition: 'center',
+                        verticalPosition: 'top',
+                    }
+                );
+
                 this._changeDetectorRef.markForCheck();
             });
     }

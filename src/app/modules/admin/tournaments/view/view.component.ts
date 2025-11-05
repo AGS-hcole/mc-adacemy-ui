@@ -9,8 +9,8 @@ import {
     ViewChild,
     ViewEncapsulation,
 } from '@angular/core';
-import { MatIconModule } from '@angular/material/icon';
 import { MatButtonModule } from '@angular/material/button';
+import { MatIconModule } from '@angular/material/icon';
 import {
     MatDrawer,
     MatDrawerContainer,
@@ -48,7 +48,9 @@ import { panels } from './view.data';
         class: 'h-full',
     },
 })
-export class TournamentViewComponent implements OnInit, OnDestroy, AfterViewInit {
+export class TournamentViewComponent
+    implements OnInit, OnDestroy, AfterViewInit
+{
     @ViewChild('drawer') drawer: MatDrawer;
     @ViewChild(MatDrawerContainer) drawerContainer!: MatDrawerContainer;
 

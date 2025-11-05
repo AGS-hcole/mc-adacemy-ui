@@ -1,7 +1,8 @@
 <div class="flex min-w-0 flex-auto flex-col">
     <!-- Header -->
     <div
-        class="flex flex-col gap-4 bg-card p-6 dark:bg-transparent sm:flex-row sm:items-center sm:justify-between md:px-8">
+        class="bg-card flex flex-col gap-4 p-6 sm:flex-row sm:items-center sm:justify-between md:px-8 dark:bg-transparent"
+    >
         <div>
             <div class="text-4xl font-extrabold leading-none tracking-tight">
                 {{
@@ -12,8 +13,9 @@
                 }}
             </div>
             <div
-                class="mt-2 text-lg text-secondary"
-                *ngIf="!isNew && tournament">
+                class="text-secondary mt-2 text-lg"
+                *ngIf="!isNew && tournament"
+            >
                 {{ tournament.title }}
                 <span
                     class="ml-2 inline-flex items-center rounded-full px-2.5 py-0.5 text-xs font-medium"
@@ -21,8 +23,9 @@
                         'bg-yellow-100 text-yellow-800':
                             tournament.status === TournamentStatus.DRAFT,
                         'bg-green-100 text-green-800':
-                            tournament.status === TournamentStatus.PUBLISHED
-                    }">
+                            tournament.status === TournamentStatus.PUBLISHED,
+                    }"
+                >
                     {{ 'TOURNAMENTS.STATUS.' + tournament.status | transloco }}
                 </span>
             </div>
@@ -35,16 +38,16 @@
                 mat-flat-button
                 [color]="'primary'"
                 [disabled]="tournamentForm.invalid"
-                (click)="save()">
+                (click)="save()"
+            >
                 {{ 'TOURNAMENTS.FORMS.SAVE' | transloco }}
             </button>
             <button
                 mat-flat-button
                 [color]="'accent'"
-                *ngIf="
-                    !isNew && tournament?.status === TournamentStatus.DRAFT
-                "
-                (click)="publish()">
+                *ngIf="!isNew && tournament?.status === TournamentStatus.DRAFT"
+                (click)="publish()"
+            >
                 {{ 'TOURNAMENTS.ADMIN.ACTIONS.PUBLISH' | transloco }}
             </button>
         </div>
@@ -56,7 +59,7 @@
             <!-- Two cards side by side on large screens -->
             <div class="grid grid-cols-1 gap-6 lg:grid-cols-2">
                 <!-- Basic Information Card -->
-                <div class="rounded-lg bg-card p-6 shadow">
+                <div class="bg-card rounded-lg p-6 shadow">
                     <h2 class="mb-4 text-2xl font-semibold">
                         {{ 'TOURNAMENTS.FORMS.BASIC_INFO' | transloco }}
                     </h2>
@@ -105,13 +108,16 @@
                             <input
                                 matInput
                                 [matDatepicker]="startsPicker"
-                                formControlName="startsAt" />
+                                formControlName="startsAt"
+                            />
                             <mat-datepicker-toggle
                                 matSuffix
-                                [for]="startsPicker"></mat-datepicker-toggle>
+                                [for]="startsPicker"
+                            ></mat-datepicker-toggle>
                             <mat-datepicker #startsPicker></mat-datepicker>
                             <mat-error>{{
-                                'TOURNAMENTS.FORMS.STARTS_AT_REQUIRED' | transloco
+                                'TOURNAMENTS.FORMS.STARTS_AT_REQUIRED'
+                                    | transloco
                             }}</mat-error>
                         </mat-form-field>
 
@@ -122,10 +128,12 @@
                             <input
                                 matInput
                                 [matDatepicker]="endsPicker"
-                                formControlName="endsAt" />
+                                formControlName="endsAt"
+                            />
                             <mat-datepicker-toggle
                                 matSuffix
-                                [for]="endsPicker"></mat-datepicker-toggle>
+                                [for]="endsPicker"
+                            ></mat-datepicker-toggle>
                             <mat-datepicker #endsPicker></mat-datepicker>
                             <mat-error>{{
                                 'TOURNAMENTS.FORMS.ENDS_AT_REQUIRED' | transloco
@@ -135,7 +143,7 @@
                 </div>
 
                 <!-- Address Card -->
-                <div class="rounded-lg bg-card p-6 shadow">
+                <div class="bg-card rounded-lg p-6 shadow">
                     <h2 class="mb-4 text-2xl font-semibold">
                         {{ 'TOURNAMENTS.FORMS.ADDRESS' | transloco }}
                     </h2>
@@ -166,7 +174,8 @@
                                 }}</mat-label>
                                 <input matInput formControlName="postalCode" />
                                 <mat-error>{{
-                                    'TOURNAMENTS.FORMS.POSTAL_CODE_REQUIRED' | transloco
+                                    'TOURNAMENTS.FORMS.POSTAL_CODE_REQUIRED'
+                                        | transloco
                                 }}</mat-error>
                             </mat-form-field>
 
@@ -176,7 +185,8 @@
                                 }}</mat-label>
                                 <input matInput formControlName="city" />
                                 <mat-error>{{
-                                    'TOURNAMENTS.FORMS.CITY_REQUIRED' | transloco
+                                    'TOURNAMENTS.FORMS.CITY_REQUIRED'
+                                        | transloco
                                 }}</mat-error>
                             </mat-form-field>
                         </div>
@@ -199,7 +209,8 @@
                                 <input
                                     matInput
                                     type="number"
-                                    formControlName="latitude" />
+                                    formControlName="latitude"
+                                />
                             </mat-form-field>
 
                             <mat-form-field class="w-full">
@@ -209,7 +220,8 @@
                                 <input
                                     matInput
                                     type="number"
-                                    formControlName="longitude" />
+                                    formControlName="longitude"
+                                />
                             </mat-form-field>
                         </div>
                     </div>

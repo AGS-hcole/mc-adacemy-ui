@@ -4,10 +4,15 @@ import { environment } from 'environments/environment';
 import { BehaviorSubject, Observable, tap } from 'rxjs';
 import {
     CreateTournamentRequest,
+    GenerateTeamsDto,
+    MoveParticipantDto,
     ParticipationStatus,
+    ReorderTeamsDto,
     ReorderTeamsRequest,
     ReplaceParticipantsRequest,
     SetTeamPlacementRequest,
+    SwapParticipantsDto,
+    TeamsResponseDto,
     Tournament,
     TournamentFeedbackRequest,
     TournamentFilters,
@@ -272,6 +277,116 @@ export class TournamentsService {
                     this._tournament.next(tournament);
                 })
             );
+    }
+
+    // -----------------------------------------------------------------------------------------------------
+    // @ Public methods - Teams Management (New API)
+    // -----------------------------------------------------------------------------------------------------
+
+    /**
+     * Get teams with members and bench
+     */
+    getTeams(
+        id: string,
+        includeBench: boolean = true
+    ): Observable<TeamsResponseDto> {
+        let params = new HttpParams();
+        if (includeBench) {
+            params = params.set('includeBench', 'true');
+        }
+        return this._httpClient.get<TeamsResponseDto>(
+            `${this.apiUrl}/tournaments/${id}/teams`,
+            { params }
+        );
+    }
+
+    /**
+     * Generate teams with options
+     */
+    generateTeamsWithOptions(
+        id: string,
+        options: GenerateTeamsDto
+    ): Observable<TeamsResponseDto> {
+        return this._httpClient.post<TeamsResponseDto>(
+            `${this.apiUrl}/tournaments/${id}/teams/generate`,
+            options
+        );
+    }
+
+    /**
+     * Rebalance teams (preserves locked teams)
+     */
+    rebalanceTeams(
+        id: string,
+        options: GenerateTeamsDto
+    ): Observable<TeamsResponseDto> {
+        return this._httpClient.post<TeamsResponseDto>(
+            `${this.apiUrl}/tournaments/${id}/teams/rebalance`,
+            options
+        );
+    }
+
+    /**
+     * Move participant to another team or bench
+     */
+    moveParticipant(
+        id: string,
+        dto: MoveParticipantDto
+    ): Observable<TeamsResponseDto> {
+        return this._httpClient.patch<TeamsResponseDto>(
+            `${this.apiUrl}/tournaments/${id}/teams/move`,
+            dto
+        );
+    }
+
+    /**
+     * Swap two participants
+     */
+    swapParticipants(
+        id: string,
+        dto: SwapParticipantsDto
+    ): Observable<TeamsResponseDto> {
+        return this._httpClient.patch<TeamsResponseDto>(
+            `${this.apiUrl}/tournaments/${id}/teams/swap`,
+            dto
+        );
+    }
+
+    /**
+     * Reorder teams
+     */
+    reorderTeamsWithIndex(
+        id: string,
+        dto: ReorderTeamsDto
+    ): Observable<TeamsResponseDto> {
+        return this._httpClient.patch<TeamsResponseDto>(
+            `${this.apiUrl}/tournaments/${id}/teams/reorder`,
+            dto
+        );
+    }
+
+    /**
+     * Set team lock status
+     */
+    setTeamLock(id: string, teamId: string, locked: boolean): Observable<void> {
+        return this._httpClient.patch<void>(
+            `${this.apiUrl}/tournaments/${id}/teams/${teamId}/lock`,
+            { locked }
+        );
+    }
+
+    /**
+     * Clear teams
+     */
+    clearTeams(id: string, preserveLocked: boolean = true): Observable<void> {
+        let params = new HttpParams();
+        if (preserveLocked) {
+            params = params.set('preserveLocked', 'true');
+        }
+        return this._httpClient.delete<void>(
+            `${this.apiUrl}/tournaments/${id}/teams`,
+            { params }
+        );
     }
 
     // -----------------------------------------------------------------------------------------------------

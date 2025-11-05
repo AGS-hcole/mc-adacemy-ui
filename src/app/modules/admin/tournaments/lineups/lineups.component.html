@@ -1,98 +1,392 @@
 <div class="flex min-w-0 flex-auto flex-col">
     <!-- Header -->
     <div
-        class="flex flex-col gap-4 bg-card p-6 dark:bg-transparent sm:flex-row sm:items-center sm:justify-between md:px-8">
+        class="bg-card flex flex-col gap-4 p-6 sm:flex-row sm:items-center sm:justify-between md:px-8 dark:bg-transparent"
+    >
         <div>
             <div class="text-4xl font-extrabold leading-none tracking-tight">
                 {{ 'TOURNAMENTS.VIEW.LINEUPS' | transloco }}
             </div>
-            <div class="mt-2 text-lg text-secondary">
+            <div class="text-secondary mt-2 text-lg">
                 {{ 'TOURNAMENTS.VIEW.LINEUPS_DESCRIPTION' | transloco }}
             </div>
         </div>
         <div class="flex shrink-0 items-center gap-2">
             <button
                 mat-flat-button
+                [color]="'accent'"
+                [disabled]="loading || teams.length === 0"
+                (click)="rebalanceTeams()"
+            >
+                <mat-icon>balance</mat-icon>
+                {{ 'TOURNAMENTS.FORMS.REBALANCE_TEAMS' | transloco }}
+            </button>
+            <button
+                mat-flat-button
+                [color]="'warn'"
+                [disabled]="loading || teams.length === 0"
+                (click)="clearTeams()"
+            >
+                <mat-icon>clear_all</mat-icon>
+                {{ 'TOURNAMENTS.FORMS.CLEAR_TEAMS' | transloco }}
+            </button>
+            <button
+                mat-flat-button
                 [color]="'primary'"
-                [disabled]="!tournament?.participants || tournament?.participants.length < 2"
-                (click)="generateTeams()">
-                {{
-                    'TOURNAMENTS.FORMS.GENERATE_TEAMS' | transloco
-                }}
+                [disabled]="loading"
+                (click)="generateTeams()"
+            >
+                <mat-icon>casino</mat-icon>
+                {{ 'TOURNAMENTS.FORMS.GENERATE_TEAMS' | transloco }}
             </button>
         </div>
     </div>
 
     <!-- Content -->
     <div class="flex-auto overflow-y-auto p-6 md:px-8">
-        <div class="rounded-lg bg-card p-6 shadow">
-            <h2 class="mb-4 text-2xl font-semibold">
-                {{ 'TOURNAMENTS.FORMS.TEAMS' | transloco }}
-            </h2>
+        <!-- Loading spinner -->
+        <div *ngIf="loading" class="flex items-center justify-center p-12">
+            <mat-spinner></mat-spinner>
+        </div>
 
-            <div
-                *ngIf="!tournament?.participants || tournament?.participants.length === 0"
-                class="rounded-lg border-2 border-dashed border-gray-300 bg-gray-50 p-8 text-center dark:border-gray-700 dark:bg-gray-800">
-                <mat-icon class="mb-2 text-gray-400 icon-size-12">group_add</mat-icon>
-                <p class="mb-2 text-lg font-medium text-gray-600 dark:text-gray-400">
-                    {{ 'TOURNAMENTS.FORMS.NO_PARTICIPANTS_YET' | transloco }}
-                </p>
-                <p class="text-sm text-gray-500 dark:text-gray-500">
-                    {{ 'TOURNAMENTS.FORMS.ADD_PARTICIPANTS_FIRST' | transloco }}
-                </p>
-            </div>
+        <!-- Main content -->
+        <div *ngIf="!loading" class="flex flex-col gap-6 lg:flex-row">
+            <!-- Teams section -->
+            <div class="min-w-0 flex-1">
+                <div class="bg-card rounded-lg p-6 shadow">
+                    <h2 class="mb-4 text-2xl font-semibold">
+                        {{ 'TOURNAMENTS.FORMS.TEAMS' | transloco }}
+                    </h2>
 
-            <div
-                cdkDropList
-                [cdkDropListData]="teams"
-                (cdkDropListDropped)="dropTeam($event)"
-                class="space-y-3"
-                *ngIf="tournament?.participants && tournament?.participants.length > 0">
-                <div
-                    *ngFor="let team of teams; let i = index; trackBy: trackByFn"
-                    cdkDrag
-                    class="flex items-center gap-4 rounded-lg border bg-white p-4 shadow-sm transition-shadow hover:shadow-md dark:border-gray-700 dark:bg-gray-800">
-                    <mat-icon class="cursor-move text-gray-400"
-                        >drag_indicator</mat-icon
+                    <!-- Empty state -->
+                    <div
+                        *ngIf="teams.length === 0"
+                        class="rounded-lg border-2 border-dashed border-gray-300 bg-gray-50 p-8 text-center dark:border-gray-700 dark:bg-gray-800"
                     >
-                    <div class="flex-1">
-                        <div class="mb-2 flex items-center gap-2">
-                            <span class="font-semibold text-lg">
-                                {{ 'TOURNAMENTS.FORMS.TEAM' | transloco }} {{ i + 1 }}
-                            </span>
-                            <span
-                                *ngIf="team.placement"
-                                class="inline-flex items-center rounded-full bg-yellow-100 px-3 py-1 text-xs font-medium text-yellow-800">
-                                {{ 'TOURNAMENTS.FORMS.PLACEMENT' | transloco }}:
-                                {{ team.placement }}{{ team.placement === 1 ? 'st' : team.placement === 2 ? 'nd' : team.placement === 3 ? 'rd' : 'th' }}
-                            </span>
-                        </div>
-                        <div class="flex flex-col gap-2 sm:flex-row sm:gap-6">
+                        <mat-icon class="mb-2 text-gray-400 icon-size-12"
+                            >group_add</mat-icon
+                        >
+                        <p
+                            class="mb-2 text-lg font-medium text-gray-600 dark:text-gray-400"
+                        >
+                            {{ 'TOURNAMENTS.FORMS.NO_TEAMS' | transloco }}
+                        </p>
+                        <p class="text-sm text-gray-500 dark:text-gray-500">
+                            {{
+                                'TOURNAMENTS.FORMS.CLICK_GENERATE_TEAMS'
+                                    | transloco
+                            }}
+                        </p>
+                    </div>
+
+                    <!-- Teams list with drag & drop -->
+                    <div
+                        *ngIf="teams.length > 0"
+                        cdkDropList
+                        [cdkDropListData]="teams"
+                        (cdkDropListDropped)="dropTeamCard($event)"
+                        class="space-y-3"
+                    >
+                        <div
+                            *ngFor="
+                                let team of teams;
+                                let i = index;
+                                trackBy: trackByFn
+                            "
+                            cdkDrag
+                            class="flex flex-col rounded-2xl border bg-white p-4 shadow-sm transition-shadow hover:shadow-md dark:border-gray-700 dark:bg-gray-800"
+                            [ngClass]="{
+                                'border-2 border-yellow-400': team.locked,
+                            }"
+                        >
+                            <!-- Team header -->
+                            <div class="mb-3 flex items-center gap-4">
+                                <mat-icon
+                                    class="cursor-move text-gray-400"
+                                    cdkDragHandle
+                                >
+                                    drag_indicator
+                                </mat-icon>
+                                <div
+                                    class="flex flex-1 flex-wrap items-center gap-2"
+                                >
+                                    <span class="text-lg font-semibold">
+                                        {{
+                                            'TOURNAMENTS.FORMS.TEAM' | transloco
+                                        }}
+                                        {{ i + 1 }}
+                                    </span>
+                                    <span
+                                        *ngIf="team.placement"
+                                        class="inline-flex items-center rounded-full bg-yellow-100 px-3 py-1 text-xs font-medium text-yellow-800"
+                                    >
+                                        {{
+                                            'TOURNAMENTS.FORMS.PLACEMENT'
+                                                | transloco
+                                        }}: {{ team.placement
+                                        }}{{
+                                            team.placement === 1
+                                                ? 'st'
+                                                : team.placement === 2
+                                                  ? 'nd'
+                                                  : team.placement === 3
+                                                    ? 'rd'
+                                                    : 'th'
+                                        }}
+                                    </span>
+                                    <span
+                                        *ngIf="team.locked"
+                                        class="inline-flex items-center rounded-full bg-amber-100 px-3 py-1 text-xs font-medium text-amber-800"
+                                    >
+                                        <mat-icon class="mr-1 icon-size-4"
+                                            >lock</mat-icon
+                                        >
+                                        {{
+                                            'TOURNAMENTS.FORMS.LOCKED'
+                                                | transloco
+                                        }}
+                                    </span>
+                                    <span
+                                        class="inline-flex items-center rounded-full bg-blue-100 px-3 py-1 text-xs font-medium text-blue-800"
+                                    >
+                                        {{
+                                            'TOURNAMENTS.FORMS.TEAM_STRENGTH'
+                                                | transloco
+                                        }}:
+                                        {{
+                                            team.teamStrength | number: '1.0-0'
+                                        }}
+                                    </span>
+                                    <span
+                                        class="inline-flex items-center rounded-full bg-green-100 px-3 py-1 text-xs font-medium text-green-800"
+                                    >
+                                        {{
+                                            'TOURNAMENTS.FORMS.AVG_STRENGTH'
+                                                | transloco
+                                        }}:
+                                        {{ team.avgStrength | number: '1.1-1' }}
+                                    </span>
+                                </div>
+                                <mat-slide-toggle
+                                    [checked]="team.locked"
+                                    (change)="toggleTeamLock(team)"
+                                    color="warn"
+                                >
+                                </mat-slide-toggle>
+                            </div>
+
+                            <!-- Team members drop zone -->
                             <div
-                                *ngFor="let member of team.members"
-                                class="flex items-center gap-2">
-                                <mat-icon class="text-gray-500 icon-size-5">person</mat-icon>
-                                <div>
-                                    <div class="font-medium">
-                                        {{ member.user?.firstname }}
-                                        {{ member.user?.lastname }}
+                                cdkDropList
+                                [id]="'team-' + team.id"
+                                [cdkDropListData]="team.members"
+                                [cdkDropListConnectedTo]="
+                                    getConnectedListIds(team.id)
+                                "
+                                (cdkDropListDropped)="dropMember($event)"
+                                class="flex min-h-[80px] flex-col gap-2 rounded-lg border-2 border-dashed border-gray-200 p-2 dark:border-gray-600"
+                                [ngClass]="{
+                                    'bg-gray-50 dark:bg-gray-900': team.locked,
+                                }"
+                            >
+                                <div
+                                    *ngFor="
+                                        let member of team.members;
+                                        trackBy: trackByFn
+                                    "
+                                    cdkDrag
+                                    [cdkDragDisabled]="team.locked"
+                                    class="flex items-center gap-2 rounded-lg bg-white p-3 shadow-sm transition-transform hover:scale-[1.02] dark:bg-gray-700"
+                                >
+                                    <mat-icon
+                                        class="text-gray-500 icon-size-5"
+                                        *ngIf="!team.locked"
+                                        >drag_handle</mat-icon
+                                    >
+                                    <mat-icon class="text-gray-500 icon-size-5"
+                                        >person</mat-icon
+                                    >
+                                    <div class="flex-1">
+                                        <div class="font-medium">
+                                            {{ member.firstname }}
+                                            {{ member.lastname }}
+                                        </div>
+                                        <div
+                                            *ngIf="
+                                                member.rankSnapshot ||
+                                                member.currentRanking
+                                            "
+                                            class="text-secondary text-xs"
+                                        >
+                                            {{
+                                                'TOURNAMENTS.FORMS.RANKING'
+                                                    | transloco
+                                            }}:
+                                            {{
+                                                member.rankSnapshot ??
+                                                    member.currentRanking
+                                            }}
+                                        </div>
                                     </div>
-                                    <div
-                                        *ngIf="member.currentRanking"
-                                        class="text-xs text-secondary">
-                                        {{ 'TOURNAMENTS.FORMS.RANKING' | transloco }}: {{ member.currentRanking }}
-                                    </div>
+                                    <button
+                                        mat-icon-button
+                                        [matMenuTriggerFor]="memberMenu"
+                                        *ngIf="!team.locked"
+                                    >
+                                        <mat-icon>more_vert</mat-icon>
+                                    </button>
+                                    <mat-menu #memberMenu="matMenu">
+                                        <button
+                                            mat-menu-item
+                                            *ngFor="
+                                                let availableTeam of getAvailableTeamsForMove(
+                                                    team.id
+                                                )
+                                            "
+                                            (click)="
+                                                moveToTeam(
+                                                    member.participantId,
+                                                    availableTeam.id
+                                                )
+                                            "
+                                        >
+                                            <mat-icon>arrow_forward</mat-icon>
+                                            <span
+                                                >{{
+                                                    'TOURNAMENTS.FORMS.MOVE_TO_TEAM'
+                                                        | transloco
+                                                }}
+                                                {{
+                                                    teams.indexOf(
+                                                        availableTeam
+                                                    ) + 1
+                                                }}</span
+                                            >
+                                        </button>
+                                        <button
+                                            mat-menu-item
+                                            (click)="
+                                                moveToBench(
+                                                    member.participantId
+                                                )
+                                            "
+                                        >
+                                            <mat-icon>inbox</mat-icon>
+                                            <span>{{
+                                                'TOURNAMENTS.FORMS.MOVE_TO_BENCH'
+                                                    | transloco
+                                            }}</span>
+                                        </button>
+                                    </mat-menu>
+                                </div>
+                                <div
+                                    *ngIf="team.members.length === 0"
+                                    class="flex items-center justify-center p-4 text-sm text-gray-400"
+                                >
+                                    {{
+                                        'TOURNAMENTS.FORMS.EMPTY_TEAM'
+                                            | transloco
+                                    }}
                                 </div>
                             </div>
                         </div>
                     </div>
                 </div>
+            </div>
 
-                <div
-                    class="mt-4 text-center text-sm text-secondary"
-                    *ngIf="teams.length === 0">
-                    <p class="mb-2">{{ 'TOURNAMENTS.FORMS.NO_TEAMS' | transloco }}</p>
-                    <p class="text-xs">{{ 'TOURNAMENTS.FORMS.CLICK_GENERATE_TEAMS' | transloco }}</p>
+            <!-- Bench section -->
+            <div class="w-full flex-shrink-0 lg:w-80">
+                <div class="bg-card sticky top-4 rounded-lg p-6 shadow">
+                    <h2 class="mb-4 text-2xl font-semibold">
+                        {{ 'TOURNAMENTS.FORMS.BENCH' | transloco }}
+                        <span class="text-secondary ml-2 text-sm font-normal"
+                            >({{ bench.length }})</span
+                        >
+                    </h2>
+
+                    <!-- Bench drop zone -->
+                    <div
+                        cdkDropList
+                        id="bench"
+                        [cdkDropListData]="bench"
+                        [cdkDropListConnectedTo]="getTeamListIds()"
+                        (cdkDropListDropped)="dropMember($event)"
+                        class="flex min-h-[200px] flex-col gap-2 rounded-lg border-2 border-dashed border-gray-200 p-2 dark:border-gray-600"
+                    >
+                        <div
+                            *ngFor="
+                                let participant of bench;
+                                trackBy: trackByFn
+                            "
+                            cdkDrag
+                            class="flex cursor-move items-center gap-2 rounded-lg bg-white p-3 shadow-sm transition-transform hover:scale-[1.02] dark:bg-gray-700"
+                        >
+                            <mat-icon class="text-gray-500 icon-size-5"
+                                >drag_handle</mat-icon
+                            >
+                            <mat-icon class="text-gray-500 icon-size-5"
+                                >person</mat-icon
+                            >
+                            <div class="min-w-0 flex-1">
+                                <div class="truncate font-medium">
+                                    {{ participant.firstname }}
+                                    {{ participant.lastname }}
+                                </div>
+                                <div
+                                    *ngIf="
+                                        participant.rankSnapshot ||
+                                        participant.currentRanking
+                                    "
+                                    class="text-secondary text-xs"
+                                >
+                                    {{
+                                        'TOURNAMENTS.FORMS.RANKING' | transloco
+                                    }}:
+                                    {{
+                                        participant.rankSnapshot ??
+                                            participant.currentRanking
+                                    }}
+                                </div>
+                            </div>
+                            <button
+                                mat-icon-button
+                                [matMenuTriggerFor]="benchMenu"
+                            >
+                                <mat-icon>more_vert</mat-icon>
+                            </button>
+                            <mat-menu #benchMenu="matMenu">
+                                <button
+                                    mat-menu-item
+                                    *ngFor="
+                                        let availableTeam of getAvailableTeamsForMove()
+                                    "
+                                    (click)="
+                                        moveToTeam(
+                                            participant.participantId,
+                                            availableTeam.id
+                                        )
+                                    "
+                                >
+                                    <mat-icon>arrow_forward</mat-icon>
+                                    <span
+                                        >{{
+                                            'TOURNAMENTS.FORMS.MOVE_TO_TEAM'
+                                                | transloco
+                                        }}
+                                        {{
+                                            teams.indexOf(availableTeam) + 1
+                                        }}</span
+                                    >
+                                </button>
+                            </mat-menu>
+                        </div>
+                        <div
+                            *ngIf="bench.length === 0"
+                            class="flex items-center justify-center p-8 text-center text-sm text-gray-400"
+                        >
+                            {{ 'TOURNAMENTS.FORMS.EMPTY_BENCH' | transloco }}
+                        </div>
+                    </div>
                 </div>
             </div>
         </div>

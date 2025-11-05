@@ -130,14 +130,8 @@ export class TournamentInfoComponent implements OnInit, OnDestroy {
                 this.tournament?.postalCode || '',
                 [Validators.required],
             ],
-            city: [
-                this.tournament?.city || '',
-                [Validators.required],
-            ],
-            country: [
-                this.tournament?.country || '',
-                [Validators.required],
-            ],
+            city: [this.tournament?.city || '', [Validators.required]],
+            country: [this.tournament?.country || '', [Validators.required]],
             latitude: [this.tournament?.latitude || null],
             longitude: [this.tournament?.longitude || null],
             startsAt: [
@@ -222,13 +216,24 @@ export class TournamentInfoComponent implements OnInit, OnDestroy {
         if (!this.tournament) return;
 
         // Validate before publish
-        if (!this.tournament.participants || this.tournament.participants.length < 2) {
-            alert(this._translocoService.translate('TOURNAMENTS.ADMIN.PUBLISH_ERROR_PARTICIPANTS'));
+        if (
+            !this.tournament.participants ||
+            this.tournament.participants.length < 2
+        ) {
+            alert(
+                this._translocoService.translate(
+                    'TOURNAMENTS.ADMIN.PUBLISH_ERROR_PARTICIPANTS'
+                )
+            );
             return;
         }
 
         if (!this.tournament.teams || this.tournament.teams.length === 0) {
-            alert(this._translocoService.translate('TOURNAMENTS.ADMIN.PUBLISH_ERROR_TEAMS'));
+            alert(
+                this._translocoService.translate(
+                    'TOURNAMENTS.ADMIN.PUBLISH_ERROR_TEAMS'
+                )
+            );
             return;
         }
 

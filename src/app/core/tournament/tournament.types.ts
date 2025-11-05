@@ -223,3 +223,87 @@ export interface UserLookupDto {
     page: number;
     pageSize: number;
 }
+
+/**
+ * Team member with snapshot ranking for lineups
+ */
+export interface TeamMemberDto {
+    memberId: string;
+    participantId: string;
+    userId: string;
+    firstname: string;
+    lastname: string;
+    currentRanking?: number | null;
+    rankSnapshot?: number | null;
+}
+
+/**
+ * Team with members for lineups management
+ */
+export interface TeamWithMembersDto {
+    id: string;
+    orderIndex: number;
+    locked: boolean;
+    placement?: number | null;
+    notes?: string | null;
+    members: TeamMemberDto[];
+    // Computed on frontend
+    teamStrength?: number;
+    avgStrength?: number;
+}
+
+/**
+ * Bench participant (not assigned to any team)
+ */
+export interface BenchParticipantDto {
+    participantId: string;
+    userId: string;
+    firstname: string;
+    lastname: string;
+    currentRanking?: number | null;
+    rankSnapshot?: number | null;
+}
+
+/**
+ * Teams response with bench
+ */
+export interface TeamsResponseDto {
+    teams: TeamWithMembersDto[];
+    bench: BenchParticipantDto[];
+}
+
+/**
+ * Generate teams options
+ */
+export interface GenerateTeamsDto {
+    method?: 'BALANCED' | 'RANDOM';
+    preserveLocked?: boolean;
+    clearExisting?: boolean;
+    randomSeed?: number;
+    teamSize?: number;
+    allowOddParticipant?: boolean;
+    snapshotRanking?: boolean;
+}
+
+/**
+ * Move participant between teams or to bench
+ */
+export interface MoveParticipantDto {
+    participantId: string;
+    targetTeamId: string | null; // null = move to bench
+}
+
+/**
+ * Swap two participants
+ */
+export interface SwapParticipantsDto {
+    participantIdA: string;
+    participantIdB: string;
+}
+
+/**
+ * Reorder teams
+ */
+export interface ReorderTeamsDto {
+    order: Array<{ teamId: string; orderIndex: number }>;
+}

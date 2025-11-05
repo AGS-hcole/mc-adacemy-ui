@@ -7,11 +7,7 @@ import {
     OnInit,
     ViewEncapsulation,
 } from '@angular/core';
-import {
-    FormControl,
-    FormsModule,
-    ReactiveFormsModule,
-} from '@angular/forms';
+import { FormControl, FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { MatButtonModule } from '@angular/material/button';
 import { MatOptionModule } from '@angular/material/core';
 import { MatFormFieldModule } from '@angular/material/form-field';
@@ -24,7 +20,6 @@ import { FuseConfirmationService } from '@fuse/services/confirmation';
 import { TranslocoModule, TranslocoService } from '@jsverse/transloco';
 import {
     Tournament,
-    TournamentFilters,
     TournamentStatus,
     TournamentType,
 } from 'app/core/tournament/tournament.types';

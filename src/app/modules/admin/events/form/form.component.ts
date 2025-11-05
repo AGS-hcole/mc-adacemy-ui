@@ -29,7 +29,6 @@ import { QrDialogComponent } from '../qr-dialog/qr-dialog.component';
 @Component({
     selector: 'admin-event-form',
     templateUrl: './form.component.html',
-    styleUrls: ['./form.component.scss'],
     encapsulation: ViewEncapsulation.None,
     changeDetection: ChangeDetectionStrategy.OnPush,
     imports: [
@@ -152,8 +151,7 @@ export class AdminEventFormComponent implements OnInit {
             startTime: formValue.startTime || null,
             endTime: formValue.endTime || null,
             backgroundImageUrl: formValue.backgroundImageUrl || null,
-            externalRegistrationUrl:
-                formValue.externalRegistrationUrl || null,
+            externalRegistrationUrl: formValue.externalRegistrationUrl || null,
             isPublished: formValue.isPublished,
             orderIndex: formValue.orderIndex,
         };
@@ -178,9 +176,7 @@ export class AdminEventFormComponent implements OnInit {
             error: (error) => {
                 console.error('Error saving event:', error);
                 this._snackBar.open(
-                    this._translocoService.translate(
-                        'EVENTS.ADMIN.SAVE_ERROR'
-                    ),
+                    this._translocoService.translate('EVENTS.ADMIN.SAVE_ERROR'),
                     'OK',
                     { duration: 3000 }
                 );

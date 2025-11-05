@@ -1,788 +1,749 @@
 {
-  "DASHBOARD": {
-    "LOADING": "Loading...",
-    "STATS": {
-      "SITES": "Sites",
-      "TOTAL_USERS": "Total Users",
-      "ADMINS": "Administrators",
-      "REGULAR_USERS": "Users",
-      "ACTIVE_SESSIONS": "Active Sessions",
-      "UPCOMING_TOURNAMENTS": "Upcoming Tournaments",
-      "COMING_SOON": "Coming Soon"
-    }
-  },
-  "ERROR": {
-    "404": {
-      "TITLE": "Ooops... 404!",
-      "MESSAGE": "The page you requested could not be found.",
-      "BACK": "Back to Dashboard"
-    },
-    "500": {
-      "TITLE": "Something went wrong!",
-      "MESSAGE": "Server Error 500. Our staff has been notified, thank you for your understanding.",
-      "BACK": "Back to Dashboard"
-    }
-  },
-  "SETTINGS": {
-    "THEME": "Theme",
-    "SCHEME": "Scheme",
-    "SCHEME_AUTO": "Auto",
-    "SCHEME_DARK": "Dark",
-    "SCHEME_LIGHT": "Light",
-    "LAYOUT": "Layout"
-  },
-  "DIALOGS": {
-    "DELETE_SESSION": {
-      "TITLE": "Delete session",
-      "MESSAGE": "Are you sure you want to delete this session?",
-      "CONFIRM": "Delete"
-    },
-    "CANCEL_SESSION": {
-      "TITLE": "Cancel session",
-      "MESSAGE": "Are you sure you want to cancel this session?",
-      "CONFIRM": "Cancel Session"
-    },
-    "REMOVE_PARTICIPANT": {
-      "TITLE": "Remove participant",
-      "MESSAGE": "Are you sure you want to remove this participant?",
-      "CONFIRM": "Remove"
-    },
-    "RESET_RATING": {
-      "TITLE": "Reset rating",
-      "MESSAGE": "Are you sure you want to reset this rating?",
-      "CONFIRM": "Reset"
-    },
-    "DELETE_SITE": {
-      "TITLE": "Delete site",
-      "MESSAGE": "Are you sure you want to delete \"{{name}}\"? This action cannot be undone.",
-      "CONFIRM": "Delete"
-    },
-    "DELETE_TOURNAMENT": {
-      "TITLE": "Delete tournament",
-      "MESSAGE": "Are you sure you want to delete \"{{title}}\"?",
-      "CONFIRM": "Delete"
-    },
-    "DELETE_USER": {
-      "TITLE": "Delete user",
-      "MESSAGE": "Are you sure you want to delete this user? This action cannot be undone!",
-      "CONFIRM": "Delete"
-    },
-    "DELETE_EVENT": {
-      "TITLE": "Delete event",
-      "MESSAGE": "Are you sure you want to delete \"{{name}}\"? This action cannot be undone.",
-      "CONFIRM": "Delete"
-    }
-  },
-  "AUTH": {
-    "SIGNIN": {
-      "ERROR_MESSAGE": "Wrong email or password"
-    },
-    "RESET_PASSWORD": {
-      "SUCCESS_MESSAGE": "Your password has been reset.",
-      "ERROR_MESSAGE": "An error occurred, please try again."
-    }
-  },
-  "HOME": {
-    "NAVIGATION": {
-      "TITLE": "Home",
-      "SUBTITLE": "Application Management",
-      "DASHBOARD": {
-        "TITLE": "Dashboard"
-      },
-      "GROUPS": {
-        "TITLE": "Groups"
-      },
-      "USERS": {
-        "TITLE": "Users"
-      },
-      "COMMUNICATIONPLANS": {
-        "TITLE": "Communication Plans"
-      },
-      "RELEASENOTES": {
-        "TITLE": "Release Notes"
-      },
-      "BRANDINGS": {
-        "TITLE": "White Labels"
-      },
-      "BILLINGS": {
-        "TITLE": "Billings"
-      },
-      "TRACKINGS": {
-        "TITLE": "Production Tracking"
-      },
-      "PORTOFOLIOS": {
-        "TITLE": "Equipment Rate"
-      }
-    },
     "DASHBOARD": {
-      "TITLE": "Dashboard"
-    },
-    "USERS": {
-      "TITLE": "Users",
-      "SEARCH": "Search a user",
-      "ADD": "Add",
-      "NO_USERS": "No users found",
-      "USER": "User",
-      "USERS": "Users",
-      "DETAILS": {
-        "ROLES": "Roles",
-        "ROLE": "Role",
-        "PH_EMAIL": "Email address",
-        "EMAIL": "Email address",
-        "PH_FIRSTNAME": "First name",
-        "FIRSTNAME": "First name",
-        "PH_LASTNAME": "Last name",
-        "LASTNAME": "Last name",
-        "PH_PHONE": "Phone number",
-        "PHONE": "Phone",
-        "PH_BIRTH_DATE": "Birth date",
-        "BIRTH_DATE": "Birth date",
-        "PH_FFT_LICENSE": "FFT license number",
-        "FFT_LICENSE": "FFT License",
-        "FORMULA": "Formula",
-        "NO_FORMULA": "No formula",
-        "CONSENTS": "Consents (GDPR)",
-        "PRIVACY_CONSENT": "Privacy policy and terms of use consent",
-        "PHOTO_CONSENT": "Photo usage consent",
-        "MARKETING_CONSENT": "Marketing and communications consent",
-        "NOTIFICATIONS": "Notification Preferences",
-        "NOTIFY_EMAIL": "Email notifications",
-        "NOTIFY_SMS": "SMS notifications",
-        "NOTIFY_WHATSAPP": "WhatsApp notifications",
-        "COMMUNICATION_PLAN": "Communication plan",
-        "PH_COMMUNICATION_PLAN": "Select a communication plan",
-        "ALLOW_LOGIN": "Allow login"
-      },
-      "ROLES": {
-        "ADD": "Add",
-        "EDIT": "Edit",
-        "USER": "User",
-        "ADMIN": "Administrator"
-      },
-      "FORMULAS": {
-        "MORNING": "Morning",
-        "AFTERNOON": "Afternoon",
-        "FULL": "Full day"
-      },
-      "ACTIONS": {
-        "DELETE": "Delete",
-        "CANCEL": "Cancel",
-        "SAVE": "Save",
-        "ADD": "Add",
-        "EDIT": "Edit"
-      }
-    }
-  },
-  "INTERNAL": {
-    "NAVIGATION": {
-      "TITLE": "Internal",
-      "SUBTITLE": "Billings and Tracking Tools"
-    }
-  },
-  "IAAS": {
-    "NAVIGATION": {
-      "TITLE": "IaaS",
-      "SUBTITLE": "Infrastructure as a Service",
-      "DASHBOARD": {
-        "TITLE": "Dashboard"
-      },
-      "VMS": {
-        "TITLE": "Virtual Machines"
-      },
-      "AUDITS": {
-        "TITLE": "Audits"
-      }
-    }
-  },
-  "SVAULT": {
-    "NAVIGATION": {
-      "TITLE": "SVault",
-      "SUBTITLE": "Backup as a Service",
-      "DASHBOARD": {
-        "TITLE": "Dashboard"
-      },
-      "LICENSES": {
-        "TITLE": "Licenses"
-      },
-      "TEMPLATES": {
-        "TITLE": "Templates"
-      },
-      "REPORTS": {
-        "TITLE": "Reports"
-      },
-      "DOWNLOADS": {
-        "TITLE": "Downloads"
-      },
-      "AUDITS": {
-        "TITLE": "Audits"
-      }
-    }
-  },
-  "VEEAMM365": {
-    "NAVIGATION": {
-      "TITLE": "Veeam M365",
-      "SUBTITLE": "Veeam Backup for Microsoft 365 as a Service",
-      "DASHBOARD": {
-        "TITLE": "Dashboard"
-      },
-      "ORGANIZATIONS": {
-        "TITLE": "Organizations"
-      },
-      "AUDITS": {
-        "TITLE": "Audits"
-      }
-    }
-  },
-  "VEEAMCLOUDCONNECT": {
-    "NAVIGATION": {
-      "TITLE": "Veeam Cloud Connect",
-      "SUBTITLE": "Backup and Replication as a Service",
-      "DASHBOARD": {
-        "TITLE": "Dashboard"
-      },
-      "COMPANIES": {
-        "TITLE": "Companies"
-      },
-      "DEVICES": {
-        "TITLE": "Devices"
-      },
-      "BACKUPAGENTS": {
-        "TITLE": "Backup Agents"
-      },
-      "BACKUPSERVERS": {
-        "TITLE": "Backup Servers"
-      },
-      "BACKUPJOBS": {
-        "TITLE": "Backup Jobs"
-      },
-      "PROTECTEDDATAS": {
-        "TITLE": "Protected Data"
-      },
-      "AUDITS": {
-        "TITLE": "Audits"
-      }
-    }
-  },
-  "VADESECUREM365": {
-    "NAVIGATION": {
-      "TITLE": "Vade Secure M365",
-      "SUBTITLE": "Vade Secure M365 as a Service",
-      "DASHBOARD": {
-        "TITLE": "Dashboard"
-      },
-      "CUSTOMERS": {
-        "TITLE": "Customers"
-      },
-      "AUDITS": {
-        "TITLE": "Audits"
-      }
-    }
-  },
-  "NAVIGATION": {
-    "TITLE": "Home",
-    "SUBTITLE": "General Information",
-    "DASHBOARD": {
-      "TITLE": "Dashboard"
-    },
-    "ADMIN": {
-      "TITLE": "Administration",
-      "SUBTITLE": "Application Management",
-      "USERS": {
-        "TITLE": "Users"
-      },
-      "SESSIONS": {
-        "TITLE": "Training Sessions"
-      },
-      "SITES": {
-        "TITLE": "Sites"
-      },
-      "TOURNAMENTS": {
-        "TITLE": "Tournaments"
-      },
-      "REPORTS": {
-        "TITLE": "Reports"
-      },
-      "EVENTS": {
-        "TITLE": "Events"
-      }
-    },
-    "USER": {
-      "TITLE": "User",
-      "SUBTITLE": "User Space",
-      "DASHBOARD": {
-        "TITLE": "Dashboard"
-      },
-      "SESSIONS": {
-        "TITLE": "My Sessions"
-      },
-      "TOURNAMENTS": {
-        "TITLE": "My Tournaments"
-      }
-    }
-  },
-  "SESSIONS": {
-    "SLOT": {
-      "AM": "Morning",
-      "PM": "Afternoon"
-    },
-    "STATUS": {
-      "PUBLISHED": "Published",
-      "DRAFT": "Draft",
-      "CANCELED": "Canceled"
-    },
-    "ADMIN": {
-      "TITLE": "Training Sessions",
-      "CREATE_SESSION": "Create Session",
-      "EDIT_SESSION": "Edit Session",
-      "NO_SESSIONS": "No sessions found",
-      "FILTERS": {
-        "SITE": "Site",
-        "ALL_SITES": "All sites",
-        "SLOT": "Slot",
-        "ALL_SLOTS": "All slots",
-        "STATUS": "Status",
-        "ALL_STATUS": "All statuses"
-      },
-      "TABLE": {
-        "SESSION": "Session",
-        "SLOT": "Slot",
-        "TIME": "Time",
-        "SITE": "Site",
-        "STATUS": "Status",
-        "ACTIONS": "Actions"
-      },
-      "ACTIONS": {
-        "EDIT": "Edit",
-        "DELETE": "Delete",
-        "CANCEL": "Cancel",
-        "PUBLISH": "Publish",
-        "UNPUBLISH": "Unpublish"
-      },
-      "FORM": {
-        "SITE": "Site",
-        "SITE_REQUIRED": "Site is required",
-        "DATE": "Date",
-        "DATE_REQUIRED": "Date is required",
-        "DATE_MULTIPLE": "Select dates",
-        "DATE_MULTIPLE_HINT": "Click on a date to add it to the list",
-        "SELECTED_DATES": "Selected dates",
-        "SLOT": "Slot",
-        "SLOT_REQUIRED": "Slot is required",
-        "START_TIME": "Start Time",
-        "START_TIME_HINT": "Leave empty to use default times",
-        "END_TIME": "End Time",
-        "END_TIME_HINT": "Leave empty to use default times",
-        "INVALID_TIME_RANGE": "End time must be after start time",
-        "NOTES": "Notes",
-        "NOTES_HINT": "Notes or instructions for this session",
-        "IS_PUBLISHED": "Publish this session",
-        "IS_PUBLISHED_HINT": "Published sessions are visible to users",
-        "CANCEL": "Cancel",
-        "SAVE": "Save",
-        "CREATE": "Create"
-      },
-      "RATINGS": {
-        "TITLE": "Ratings",
-        "AVERAGE": "Average",
-        "COUNT": "{{count}} rating",
-        "COUNT_plural": "{{count}} ratings",
-        "DISTRIBUTION": "Distribution",
-        "SET_RATING": "Set rating to {{value}} / {{max}}",
-        "RATING_LABEL": "Rating {{value}} out of {{max}}",
-        "COMMENT": {
-          "EDIT": "Edit comment",
-          "PLACEHOLDER": "Add a comment about this participant's performance...",
-          "TITLE": "Rating Comment",
-          "MAX_LENGTH": "Maximum 2000 characters"
-        },
-        "SAVE": "Save",
-        "CANCEL": "Cancel",
-        "RESET": "Reset rating",
-        "RESET_CONFIRM": "Are you sure you want to reset this rating?",
-        "SAVED": "Rating saved successfully",
-        "ERROR": "Failed to save rating",
-        "NO_RATINGS": "No ratings yet",
-        "PARTICIPANT": "Participant",
-        "FORMULA": "Formula",
-        "RATING": "Rating",
-        "ACTIONS": "Actions"
-      }
-    },
-    "USER": {
-      "TITLE": "My Training Sessions",
-      "NO_SESSIONS": "No upcoming sessions",
-      "NO_SESSIONS_DESCRIPTION": "Check back later for available sessions",
-      "STATUS": {
-        "AVAILABLE": "Available",
-        "REGISTERED": "Registered",
-        "CANCELED": "Canceled",
-        "CUTOFF_PASSED": "Registration deadline passed",
-        "FULL": "Full",
-        "NOT_PUBLISHED": "Not published",
-        "UNAVAILABLE": "Unavailable",
-        "OUT_OF_CONTRACT": "Out of contract"
-      },
-      "ACTIONS": {
-        "REGISTER": "Register",
-        "REGISTERED": "Registered"
-      }
-    }
-  },
-  "SITES": {
-    "ADMIN": {
-      "TITLE": "Training Sites",
-      "CREATE_SITE": "Create Site",
-      "EDIT_SITE": "Edit Site",
-      "NO_SITES": "No sites found",
-      "NO_SITES_DESCRIPTION": "Create a new site to get started",
-      "SEARCH": "Search for a site",
-      "TABLE": {
-        "NAME": "Name",
-        "CITY": "City",
-        "ADDRESS": "Address",
-        "ACTIONS": "Actions"
-      },
-      "ACTIONS": {
-        "EDIT": "Edit",
-        "DELETE": "Delete"
-      },
-      "FORM": {
-        "NAME": "Site Name",
-        "NAME_REQUIRED": "Name is required",
-        "NAME_HINT": "Training site name",
-        "CITY": "City",
-        "CITY_HINT": "City where the site is located",
-        "ADDRESS": "Address",
-        "ADDRESS_HINT": "Full address of the site",
-        "CANCEL": "Cancel",
-        "SAVE": "Save",
-        "CREATE": "Create"
-      }
-    }
-  },
-  "ONBOARDING": {
-    "TITLE": "Complete your profile",
-    "STEPS": {
-      "PROFILE": "Profile",
-      "CONTRACT": "Contract & Notifications",
-      "CONSENTS": "Consents",
-      "SUMMARY": "Summary"
-    },
-    "ACTIONS": {
-      "BACK": "Back",
-      "NEXT": "Next",
-      "FINISH": "Finish"
-    },
-    "PROFILE": {
-      "FIRSTNAME": "First name",
-      "FIRSTNAME_REQUIRED": "First name is required",
-      "FIRSTNAME_MIN": "First name must be at least 2 characters",
-      "LASTNAME": "Last name",
-      "LASTNAME_REQUIRED": "Last name is required",
-      "LASTNAME_MIN": "Last name must be at least 2 characters",
-      "EMAIL": "Email",
-      "PHONE": "Phone",
-      "PHONE_PATTERN": "Invalid phone number format",
-      "BIRTHDATE": "Date of birth",
-      "BIRTHDATE_INVALID": "Invalid date",
-      "FFT_NUMBER": "FFT license number",
-      "AVATAR": "Profile picture",
-      "AVATAR_HINT": "Upload a profile picture (max 2MB, PNG/JPEG)",
-      "AVATAR_UPLOAD": "Upload",
-      "AVATAR_REMOVE": "Remove",
-      "BACKGROUND": "Profile cover",
-      "BACKGROUND_HINT": "Upload a cover image (max 4MB, PNG/JPEG)",
-      "BACKGROUND_UPLOAD": "Upload",
-      "BACKGROUND_REMOVE": "Remove"
-    },
-    "CONTRACT": {
-      "FORMULA": "Training formula",
-      "FORMULA_REQUIRED": "Formula is required",
-      "FORMULA_OPTIONS": {
-        "MORNING": "Morning (AM)",
-        "AFTERNOON": "Afternoon (PM)",
-        "FULL": "Full access (AM + PM)"
-      },
-      "NOTIFY_EMAIL": "Email notifications",
-      "NOTIFY_SMS": "SMS notifications",
-      "NOTIFY_WHATSAPP": "WhatsApp notifications",
-      "SMS_HINT": "Requires a valid phone number.",
-      "SMS_WARNING": "Phone number is required for SMS notifications"
-    },
-    "CONSENTS": {
-      "TITLE": "Legal consents",
-      "PRIVACY": "I accept the Privacy Policy and Terms of Use.",
-      "PRIVACY_REQUIRED": "Privacy consent is required",
-      "PHOTO": "I authorize the use of my image for academy communications.",
-      "MARKETING": "I agree to receive marketing communications.",
-      "LINK_PRIVACY": "Read the Privacy Policy"
-    },
-    "SUMMARY": {
-      "CHECK": "Please verify your information before finishing.",
-      "PROFILE_TITLE": "Profile Information",
-      "CONTRACT_TITLE": "Contract & Notifications",
-      "CONSENTS_TITLE": "Legal Consents",
-      "FORMULA": "Formula",
-      "NOTIFICATIONS": "Notifications"
-    },
-    "SUCCESS": "Your profile is complete. Welcome!",
-    "ERROR": "Something went wrong. Please try again."
-  },
-  "TOURNAMENTS": {
-    "TYPE": {
-      "P250": "P250",
-      "P500": "P500",
-      "P1000": "P1000",
-      "P1500": "P1500",
-      "P2000": "P2000"
-    },
-    "STATUS": {
-      "DRAFT": "Draft",
-      "PUBLISHED": "Published",
-      "ARCHIVED": "Archived"
-    },
-    "RSVP": {
-      "CONFIRM": "Confirm",
-      "DECLINE": "Decline",
-      "CONFIRMED": "Confirmed",
-      "DECLINED": "Declined",
-      "PENDING": "Pending"
-    },
-    "ADMIN": {
-      "TITLE": "Tournaments",
-      "CREATE": "Create Tournament",
-      "EDIT": "Edit Tournament",
-      "NO_TOURNAMENTS": "No tournaments found",
-      "FILTERS": {
-        "SEARCH": "Search tournaments...",
-        "STATUS": "Status",
-        "ALL_STATUS": "All statuses",
-        "TYPE": "Type",
-        "ALL_TYPES": "All types"
-      },
-      "TABLE": {
-        "TITLE": "Title",
-        "TYPE": "Type",
-        "DATES": "Dates",
-        "LOCATION": "Location",
-        "STATUS": "Status",
-        "ACTIONS": "Actions"
-      },
-      "ACTIONS": {
-        "EDIT": "Edit",
-        "DELETE": "Delete",
-        "PUBLISH": "Publish",
-        "ARCHIVE": "Archive"
-      },
-      "PUBLISH_ERROR_PARTICIPANTS": "Cannot publish: need at least 2 participants",
-      "PUBLISH_ERROR_TEAMS": "Cannot publish: no teams generated"
-    },
-    "USER": {
-      "TITLE": "My Tournaments",
-      "UPCOMING": "Upcoming",
-      "PAST": "Past",
-      "NO_UPCOMING": "No upcoming tournaments",
-      "NO_PAST": "No past tournaments",
-      "INFO": "Tournament Information",
-      "DATES": "Dates",
-      "LOCATION": "Location",
-      "MY_TEAM": "My Team",
-      "YOU": "You",
-      "TEAMMATE": "Teammate",
-      "NO_TEAMMATE": "Solo",
-      "RANKING": "Ranking",
-      "PLACE": "Place",
-      "RSVP": "RSVP",
-      "CURRENT_STATUS": "Current status",
-      "RSVP_STATUS": "RSVP Status",
-      "FEEDBACK": "Feedback",
-      "PARTICIPANTS": "Participants",
-      "TEAMS": "Teams"
-    },
-    "FORMS": {
-      "BASIC_INFO": "Basic Information",
-      "TITLE": "Title",
-      "TITLE_REQUIRED": "Title is required",
-      "TYPE": "Type",
-      "TYPE_REQUIRED": "Type is required",
-      "STARTS_AT": "Starts At",
-      "STARTS_AT_REQUIRED": "Start date is required",
-      "ENDS_AT": "Ends At",
-      "ENDS_AT_REQUIRED": "End date is required",
-      "ADDRESS": "Address",
-      "ADDRESS_LINE1": "Address Line 1",
-      "ADDRESS_LINE1_REQUIRED": "Address line 1 is required",
-      "ADDRESS_LINE2": "Address Line 2 (Optional)",
-      "POSTAL_CODE": "Postal Code",
-      "POSTAL_CODE_REQUIRED": "Postal code is required",
-      "CITY": "City",
-      "CITY_REQUIRED": "City is required",
-      "COUNTRY": "Country",
-      "COUNTRY_REQUIRED": "Country is required",
-      "LATITUDE": "Latitude (Optional)",
-      "LONGITUDE": "Longitude (Optional)",
-      "PARTICIPANTS": "Participants",
-      "SEARCH_USERS": "Search users...",
-      "SAVE_PARTICIPANTS": "Save Participants",
-      "SELECTED": "selected",
-      "TEAMS": "Teams",
-      "GENERATE_TEAMS": "Generate Homogeneous Pairs",
-      "NO_TEAMS": "No teams generated yet",
-      "SAVE": "Save",
-      "CANCEL": "Cancel",
-      "RANKING": "Ranking",
-      "NO_USERS_FOUND": "No users found",
-      "TEAM": "Team",
-      "PLACEMENT": "Placement",
-      "NO_PARTICIPANTS_YET": "No participants yet",
-      "ADD_PARTICIPANTS_FIRST": "Add participants first to generate teams",
-      "CLICK_GENERATE_TEAMS": "Click the button above to generate balanced team pairings"
-    },
-    "FEEDBACK": {
-      "PLACEHOLDER": "Share your feedback about this tournament...",
-      "SUBMIT": "Submit Feedback"
-    },
-    "VIEW": {
-      "TITLE": "Tournament Details",
-      "BREADCRUMB": {
-        "BACK": "Back to Tournaments"
-      },
-      "INFO": "Tournament Information",
-      "INFO_DESCRIPTION": "General configuration and details",
-      "PARTICIPANTS": "Participants Management",
-      "PARTICIPANTS_DESCRIPTION": "Add, remove, and manage tournament participants",
-      "LINEUPS": "Team Lineups",
-      "LINEUPS_DESCRIPTION": "View and manage team compositions and pairings"
-    }
-  },
-  "REPORTS": {
-    "TITLE": "Reports",
-    "DESCRIPTION": "Training sessions analytics and statistics",
-    "CHART": {
-      "CONTRACT_SHARE": "Contract vs Non-Contract Sessions",
-      "SESSIONS_OVER_TIME": "Sessions Over Time"
+        "LOADING": "Loading...",
+        "STATS": {
+            "SITES": "Sites",
+            "TOTAL_USERS": "Total Users",
+            "ADMINS": "Administrators",
+            "REGULAR_USERS": "Users",
+            "ACTIVE_SESSIONS": "Active Sessions",
+            "UPCOMING_TOURNAMENTS": "Upcoming Tournaments",
+            "COMING_SOON": "Coming Soon"
+        }
     },
     "ERROR": {
-      "TITLE": "Failed to load reports data"
+        "404": {
+            "TITLE": "Ooops... 404!",
+            "MESSAGE": "The page you requested could not be found.",
+            "BACK": "Back to Dashboard"
+        },
+        "500": {
+            "TITLE": "Something went wrong!",
+            "MESSAGE": "Server Error 500. Our staff has been notified, thank you for your understanding.",
+            "BACK": "Back to Dashboard"
+        }
     },
-    "ACTIONS": {
-      "RETRY": "Retry",
-      "EXPORT_CSV": "Export CSV",
-      "EXPORT_JSON": "Export JSON",
-      "APPLY": "Apply",
-      "RESET": "Reset",
-      "VIEW_SESSION": "View Session"
+    "SETTINGS": {
+        "THEME": "Theme",
+        "SCHEME": "Scheme",
+        "SCHEME_AUTO": "Auto",
+        "SCHEME_DARK": "Dark",
+        "SCHEME_LIGHT": "Light",
+        "LAYOUT": "Layout"
     },
-    "EMPTY": {
-      "NO_DATA": "No data available for the selected period"
+    "DIALOGS": {
+        "DELETE_SESSION": {
+            "TITLE": "Delete session",
+            "MESSAGE": "Are you sure you want to delete this session?",
+            "CONFIRM": "Delete"
+        },
+        "CANCEL_SESSION": {
+            "TITLE": "Cancel session",
+            "MESSAGE": "Are you sure you want to cancel this session?",
+            "CONFIRM": "Cancel Session"
+        },
+        "REMOVE_PARTICIPANT": {
+            "TITLE": "Remove participant",
+            "MESSAGE": "Are you sure you want to remove this participant?",
+            "CONFIRM": "Remove"
+        },
+        "RESET_RATING": {
+            "TITLE": "Reset rating",
+            "MESSAGE": "Are you sure you want to reset this rating?",
+            "CONFIRM": "Reset"
+        },
+        "DELETE_SITE": {
+            "TITLE": "Delete site",
+            "MESSAGE": "Are you sure you want to delete \"{{name}}\"? This action cannot be undone.",
+            "CONFIRM": "Delete"
+        },
+        "DELETE_TOURNAMENT": {
+            "TITLE": "Delete tournament",
+            "MESSAGE": "Are you sure you want to delete \"{{title}}\"?",
+            "CONFIRM": "Delete"
+        },
+        "DELETE_USER": {
+            "TITLE": "Delete user",
+            "MESSAGE": "Are you sure you want to delete this user? This action cannot be undone!",
+            "CONFIRM": "Delete"
+        }
     },
-    "RATINGS": {
-      "TITLE": "Ratings",
-      "KPI": {
-        "AVERAGE": "Average Rating",
-        "TOTAL": "Total Ratings",
-        "RATED_SESSIONS": "Rated Sessions",
-        "UNRATED_SESSIONS": "Unrated Sessions"
-      },
-      "DISTRIBUTION": {
-        "TITLE": "Rating Distribution (1-10)"
-      },
-      "PER_USER": {
-        "TITLE": "Ratings by Student",
-        "NAME": "Name",
-        "AVERAGE": "Average",
-        "COUNT": "Count"
-      },
-      "TOP_USERS": "Top Students",
-      "BOTTOM_USERS": "Students Needing Support",
-      "PIE": {
-        "CONTRACT_VS_NONCONTRACT": "Ratings: Contract vs Non-Contract"
-      },
-      "EMPTY": "No ratings in this period",
-      "NO_DATA": "No information available",
-      "USER": "Student",
-      "RATINGS_COUNT": "ratings",
-      "USER_STATS": {
-        "TITLE": "Student Rating Statistics"
-      }
+    "AUTH": {
+        "SIGNIN": {
+            "ERROR_MESSAGE": "Wrong email or password"
+        },
+        "RESET_PASSWORD": {
+            "SUCCESS_MESSAGE": "Your password has been reset.",
+            "ERROR_MESSAGE": "An error occurred, please try again."
+        }
     },
-    "KPI": {
-      "TOTAL": "Total Sessions",
-      "UNDER": "Under Contract",
-      "OFF": "Off Contract",
-      "UNIQUE": "Unique Users"
+    "HOME": {
+        "NAVIGATION": {
+            "TITLE": "Home",
+            "SUBTITLE": "Application Management",
+            "DASHBOARD": {
+                "TITLE": "Dashboard"
+            },
+            "GROUPS": {
+                "TITLE": "Groups"
+            },
+            "USERS": {
+                "TITLE": "Users"
+            },
+            "COMMUNICATIONPLANS": {
+                "TITLE": "Communication Plans"
+            },
+            "RELEASENOTES": {
+                "TITLE": "Release Notes"
+            },
+            "BRANDINGS": {
+                "TITLE": "White Labels"
+            },
+            "BILLINGS": {
+                "TITLE": "Billings"
+            },
+            "TRACKINGS": {
+                "TITLE": "Production Tracking"
+            },
+            "PORTOFOLIOS": {
+                "TITLE": "Equipment Rate"
+            }
+        },
+        "DASHBOARD": {
+            "TITLE": "Dashboard"
+        },
+        "USERS": {
+            "TITLE": "Users",
+            "SEARCH": "Search a user",
+            "ADD": "Add",
+            "NO_USERS": "No users found",
+            "USER": "User",
+            "USERS": "Users",
+            "DETAILS": {
+                "ROLES": "Roles",
+                "ROLE": "Role",
+                "PH_EMAIL": "Email address",
+                "EMAIL": "Email address",
+                "PH_FIRSTNAME": "First name",
+                "FIRSTNAME": "First name",
+                "PH_LASTNAME": "Last name",
+                "LASTNAME": "Last name",
+                "PH_PHONE": "Phone number",
+                "PHONE": "Phone",
+                "PH_BIRTH_DATE": "Birth date",
+                "BIRTH_DATE": "Birth date",
+                "PH_FFT_LICENSE": "FFT license number",
+                "FFT_LICENSE": "FFT License",
+                "FORMULA": "Formula",
+                "NO_FORMULA": "No formula",
+                "CONSENTS": "Consents (GDPR)",
+                "PRIVACY_CONSENT": "Privacy policy and terms of use consent",
+                "PHOTO_CONSENT": "Photo usage consent",
+                "MARKETING_CONSENT": "Marketing and communications consent",
+                "NOTIFICATIONS": "Notification Preferences",
+                "NOTIFY_EMAIL": "Email notifications",
+                "NOTIFY_SMS": "SMS notifications",
+                "NOTIFY_WHATSAPP": "WhatsApp notifications",
+                "COMMUNICATION_PLAN": "Communication plan",
+                "PH_COMMUNICATION_PLAN": "Select a communication plan",
+                "ALLOW_LOGIN": "Allow login"
+            },
+            "ROLES": {
+                "ADD": "Add",
+                "EDIT": "Edit",
+                "USER": "User",
+                "ADMIN": "Administrator"
+            },
+            "FORMULAS": {
+                "MORNING": "Morning",
+                "AFTERNOON": "Afternoon",
+                "FULL": "Full day"
+            },
+            "ACTIONS": {
+                "DELETE": "Delete",
+                "CANCEL": "Cancel",
+                "SAVE": "Save",
+                "ADD": "Add",
+                "EDIT": "Edit"
+            }
+        }
+    },
+    "INTERNAL": {
+        "NAVIGATION": {
+            "TITLE": "Internal",
+            "SUBTITLE": "Billings and Tracking Tools"
+        }
+    },
+    "IAAS": {
+        "NAVIGATION": {
+            "TITLE": "IaaS",
+            "SUBTITLE": "Infrastructure as a Service",
+            "DASHBOARD": {
+                "TITLE": "Dashboard"
+            },
+            "VMS": {
+                "TITLE": "Virtual Machines"
+            },
+            "AUDITS": {
+                "TITLE": "Audits"
+            }
+        }
+    },
+    "SVAULT": {
+        "NAVIGATION": {
+            "TITLE": "SVault",
+            "SUBTITLE": "Backup as a Service",
+            "DASHBOARD": {
+                "TITLE": "Dashboard"
+            },
+            "LICENSES": {
+                "TITLE": "Licenses"
+            },
+            "TEMPLATES": {
+                "TITLE": "Templates"
+            },
+            "REPORTS": {
+                "TITLE": "Reports"
+            },
+            "DOWNLOADS": {
+                "TITLE": "Downloads"
+            },
+            "AUDITS": {
+                "TITLE": "Audits"
+            }
+        }
+    },
+    "VEEAMM365": {
+        "NAVIGATION": {
+            "TITLE": "Veeam M365",
+            "SUBTITLE": "Veeam Backup for Microsoft 365 as a Service",
+            "DASHBOARD": {
+                "TITLE": "Dashboard"
+            },
+            "ORGANIZATIONS": {
+                "TITLE": "Organizations"
+            },
+            "AUDITS": {
+                "TITLE": "Audits"
+            }
+        }
+    },
+    "VEEAMCLOUDCONNECT": {
+        "NAVIGATION": {
+            "TITLE": "Veeam Cloud Connect",
+            "SUBTITLE": "Backup and Replication as a Service",
+            "DASHBOARD": {
+                "TITLE": "Dashboard"
+            },
+            "COMPANIES": {
+                "TITLE": "Companies"
+            },
+            "DEVICES": {
+                "TITLE": "Devices"
+            },
+            "BACKUPAGENTS": {
+                "TITLE": "Backup Agents"
+            },
+            "BACKUPSERVERS": {
+                "TITLE": "Backup Servers"
+            },
+            "BACKUPJOBS": {
+                "TITLE": "Backup Jobs"
+            },
+            "PROTECTEDDATAS": {
+                "TITLE": "Protected Data"
+            },
+            "AUDITS": {
+                "TITLE": "Audits"
+            }
+        }
+    },
+    "VADESECUREM365": {
+        "NAVIGATION": {
+            "TITLE": "Vade Secure M365",
+            "SUBTITLE": "Vade Secure M365 as a Service",
+            "DASHBOARD": {
+                "TITLE": "Dashboard"
+            },
+            "CUSTOMERS": {
+                "TITLE": "Customers"
+            },
+            "AUDITS": {
+                "TITLE": "Audits"
+            }
+        }
+    },
+    "NAVIGATION": {
+        "TITLE": "Home",
+        "SUBTITLE": "General Information",
+        "DASHBOARD": {
+            "TITLE": "Dashboard"
+        },
+        "ADMIN": {
+            "TITLE": "Administration",
+            "SUBTITLE": "Application Management",
+            "USERS": {
+                "TITLE": "Users"
+            },
+            "SESSIONS": {
+                "TITLE": "Training Sessions"
+            },
+            "SITES": {
+                "TITLE": "Sites"
+            },
+            "TOURNAMENTS": {
+                "TITLE": "Tournaments"
+            },
+            "REPORTS": {
+                "TITLE": "Reports"
+            }
+        },
+        "USER": {
+            "TITLE": "User",
+            "SUBTITLE": "User Space",
+            "DASHBOARD": {
+                "TITLE": "Dashboard"
+            },
+            "SESSIONS": {
+                "TITLE": "My Sessions"
+            },
+            "TOURNAMENTS": {
+                "TITLE": "My Tournaments"
+            }
+        }
     },
     "SESSIONS": {
-      "TITLE": "Sessions"
+        "SLOT": {
+            "AM": "Morning",
+            "PM": "Afternoon"
+        },
+        "STATUS": {
+            "PUBLISHED": "Published",
+            "DRAFT": "Draft",
+            "CANCELED": "Canceled"
+        },
+        "ADMIN": {
+            "TITLE": "Training Sessions",
+            "CREATE_SESSION": "Create Session",
+            "EDIT_SESSION": "Edit Session",
+            "NO_SESSIONS": "No sessions found",
+            "FILTERS": {
+                "SITE": "Site",
+                "ALL_SITES": "All sites",
+                "SLOT": "Slot",
+                "ALL_SLOTS": "All slots",
+                "STATUS": "Status",
+                "ALL_STATUS": "All statuses"
+            },
+            "TABLE": {
+                "SESSION": "Session",
+                "SLOT": "Slot",
+                "TIME": "Time",
+                "SITE": "Site",
+                "STATUS": "Status",
+                "ACTIONS": "Actions"
+            },
+            "ACTIONS": {
+                "EDIT": "Edit",
+                "DELETE": "Delete",
+                "CANCEL": "Cancel",
+                "PUBLISH": "Publish",
+                "UNPUBLISH": "Unpublish"
+            },
+            "FORM": {
+                "SITE": "Site",
+                "SITE_REQUIRED": "Site is required",
+                "DATE": "Date",
+                "DATE_REQUIRED": "Date is required",
+                "DATE_MULTIPLE": "Select dates",
+                "DATE_MULTIPLE_HINT": "Click on a date to add it to the list",
+                "SELECTED_DATES": "Selected dates",
+                "SLOT": "Slot",
+                "SLOT_REQUIRED": "Slot is required",
+                "START_TIME": "Start Time",
+                "START_TIME_HINT": "Leave empty to use default times",
+                "END_TIME": "End Time",
+                "END_TIME_HINT": "Leave empty to use default times",
+                "INVALID_TIME_RANGE": "End time must be after start time",
+                "NOTES": "Notes",
+                "NOTES_HINT": "Notes or instructions for this session",
+                "IS_PUBLISHED": "Publish this session",
+                "IS_PUBLISHED_HINT": "Published sessions are visible to users",
+                "CANCEL": "Cancel",
+                "SAVE": "Save",
+                "CREATE": "Create"
+            },
+            "RATINGS": {
+                "TITLE": "Ratings",
+                "AVERAGE": "Average",
+                "COUNT": "{{count}} rating",
+                "COUNT_plural": "{{count}} ratings",
+                "DISTRIBUTION": "Distribution",
+                "SET_RATING": "Set rating to {{value}} / {{max}}",
+                "RATING_LABEL": "Rating {{value}} out of {{max}}",
+                "COMMENT": {
+                    "EDIT": "Edit comment",
+                    "PLACEHOLDER": "Add a comment about this participant's performance...",
+                    "TITLE": "Rating Comment",
+                    "MAX_LENGTH": "Maximum 2000 characters"
+                },
+                "SAVE": "Save",
+                "CANCEL": "Cancel",
+                "RESET": "Reset rating",
+                "RESET_CONFIRM": "Are you sure you want to reset this rating?",
+                "SAVED": "Rating saved successfully",
+                "ERROR": "Failed to save rating",
+                "NO_RATINGS": "No ratings yet",
+                "PARTICIPANT": "Participant",
+                "FORMULA": "Formula",
+                "RATING": "Rating",
+                "ACTIONS": "Actions"
+            }
+        },
+        "USER": {
+            "TITLE": "My Training Sessions",
+            "NO_SESSIONS": "No upcoming sessions",
+            "NO_SESSIONS_DESCRIPTION": "Check back later for available sessions",
+            "STATUS": {
+                "AVAILABLE": "Available",
+                "REGISTERED": "Registered",
+                "CANCELED": "Canceled",
+                "CUTOFF_PASSED": "Registration deadline passed",
+                "FULL": "Full",
+                "NOT_PUBLISHED": "Not published",
+                "UNAVAILABLE": "Unavailable",
+                "OUT_OF_CONTRACT": "Out of contract"
+            },
+            "ACTIONS": {
+                "REGISTER": "Register",
+                "REGISTERED": "Registered"
+            }
+        }
     },
-    "FILTERS": {
-      "PERIOD": "Period",
-      "USER": "Student",
-      "ALL_USERS": "All Students",
-      "CONTRACT_SCOPE": "Contract Scope",
-      "PRESET": {
-        "LAST_7": "Last 7 days",
-        "LAST_30": "Last 30 days",
-        "THIS_MONTH": "This month",
-        "PREV_MONTH": "Previous month",
-        "CUSTOM": "Custom range"
-      },
-      "CONTRACT": {
-        "ALL": "All sessions",
-        "UNDER": "Under contract",
-        "OFF": "Off contract"
-      }
+    "SITES": {
+        "ADMIN": {
+            "TITLE": "Training Sites",
+            "CREATE_SITE": "Create Site",
+            "EDIT_SITE": "Edit Site",
+            "NO_SITES": "No sites found",
+            "NO_SITES_DESCRIPTION": "Create a new site to get started",
+            "SEARCH": "Search for a site",
+            "TABLE": {
+                "NAME": "Name",
+                "CITY": "City",
+                "ADDRESS": "Address",
+                "ACTIONS": "Actions"
+            },
+            "ACTIONS": {
+                "EDIT": "Edit",
+                "DELETE": "Delete"
+            },
+            "FORM": {
+                "NAME": "Site Name",
+                "NAME_REQUIRED": "Name is required",
+                "NAME_HINT": "Training site name",
+                "CITY": "City",
+                "CITY_HINT": "City where the site is located",
+                "ADDRESS": "Address",
+                "ADDRESS_HINT": "Full address of the site",
+                "CANCEL": "Cancel",
+                "SAVE": "Save",
+                "CREATE": "Create"
+            }
+        }
     },
-    "TABLE": {
-      "TITLE": "Sessions List",
-      "DATE": "Date",
-      "SESSION_TITLE": "Session",
-      "COACH": "Coach",
-      "CONTRACT": "Contract",
-      "ATTENDEES": "Attendees",
-      "STATUS": "Status"
+    "ONBOARDING": {
+        "TITLE": "Complete your profile",
+        "STEPS": {
+            "PROFILE": "Profile",
+            "CONTRACT": "Contract & Notifications",
+            "CONSENTS": "Consents",
+            "SUMMARY": "Summary"
+        },
+        "ACTIONS": {
+            "BACK": "Back",
+            "NEXT": "Next",
+            "FINISH": "Finish"
+        },
+        "PROFILE": {
+            "FIRSTNAME": "First name",
+            "FIRSTNAME_REQUIRED": "First name is required",
+            "FIRSTNAME_MIN": "First name must be at least 2 characters",
+            "LASTNAME": "Last name",
+            "LASTNAME_REQUIRED": "Last name is required",
+            "LASTNAME_MIN": "Last name must be at least 2 characters",
+            "EMAIL": "Email",
+            "PHONE": "Phone",
+            "PHONE_PATTERN": "Invalid phone number format",
+            "BIRTHDATE": "Date of birth",
+            "BIRTHDATE_INVALID": "Invalid date",
+            "FFT_NUMBER": "FFT license number",
+            "AVATAR": "Profile picture",
+            "AVATAR_HINT": "Upload a profile picture (max 2MB, PNG/JPEG)",
+            "AVATAR_UPLOAD": "Upload",
+            "AVATAR_REMOVE": "Remove",
+            "BACKGROUND": "Profile cover",
+            "BACKGROUND_HINT": "Upload a cover image (max 4MB, PNG/JPEG)",
+            "BACKGROUND_UPLOAD": "Upload",
+            "BACKGROUND_REMOVE": "Remove"
+        },
+        "CONTRACT": {
+            "FORMULA": "Training formula",
+            "FORMULA_REQUIRED": "Formula is required",
+            "FORMULA_OPTIONS": {
+                "MORNING": "Morning (AM)",
+                "AFTERNOON": "Afternoon (PM)",
+                "FULL": "Full access (AM + PM)"
+            },
+            "NOTIFY_EMAIL": "Email notifications",
+            "NOTIFY_SMS": "SMS notifications",
+            "NOTIFY_WHATSAPP": "WhatsApp notifications",
+            "SMS_HINT": "Requires a valid phone number.",
+            "SMS_WARNING": "Phone number is required for SMS notifications"
+        },
+        "CONSENTS": {
+            "TITLE": "Legal consents",
+            "PRIVACY": "I accept the Privacy Policy and Terms of Use.",
+            "PRIVACY_REQUIRED": "Privacy consent is required",
+            "PHOTO": "I authorize the use of my image for academy communications.",
+            "MARKETING": "I agree to receive marketing communications.",
+            "LINK_PRIVACY": "Read the Privacy Policy"
+        },
+        "SUMMARY": {
+            "CHECK": "Please verify your information before finishing.",
+            "PROFILE_TITLE": "Profile Information",
+            "CONTRACT_TITLE": "Contract & Notifications",
+            "CONSENTS_TITLE": "Legal Consents",
+            "FORMULA": "Formula",
+            "NOTIFICATIONS": "Notifications"
+        },
+        "SUCCESS": "Your profile is complete. Welcome!",
+        "ERROR": "Something went wrong. Please try again."
+    },
+    "TOURNAMENTS": {
+        "TYPE": {
+            "P250": "P250",
+            "P500": "P500",
+            "P1000": "P1000",
+            "P1500": "P1500",
+            "P2000": "P2000"
+        },
+        "STATUS": {
+            "DRAFT": "Draft",
+            "PUBLISHED": "Published",
+            "ARCHIVED": "Archived"
+        },
+        "RSVP": {
+            "CONFIRM": "Confirm",
+            "DECLINE": "Decline",
+            "CONFIRMED": "Confirmed",
+            "DECLINED": "Declined",
+            "PENDING": "Pending"
+        },
+        "ADMIN": {
+            "TITLE": "Tournaments",
+            "CREATE": "Create Tournament",
+            "EDIT": "Edit Tournament",
+            "NO_TOURNAMENTS": "No tournaments found",
+            "FILTERS": {
+                "SEARCH": "Search tournaments...",
+                "STATUS": "Status",
+                "ALL_STATUS": "All statuses",
+                "TYPE": "Type",
+                "ALL_TYPES": "All types"
+            },
+            "TABLE": {
+                "TITLE": "Title",
+                "TYPE": "Type",
+                "DATES": "Dates",
+                "LOCATION": "Location",
+                "STATUS": "Status",
+                "ACTIONS": "Actions"
+            },
+            "ACTIONS": {
+                "EDIT": "Edit",
+                "DELETE": "Delete",
+                "PUBLISH": "Publish",
+                "ARCHIVE": "Archive"
+            },
+            "PUBLISH_ERROR_PARTICIPANTS": "Cannot publish: need at least 2 participants",
+            "PUBLISH_ERROR_TEAMS": "Cannot publish: no teams generated"
+        },
+        "USER": {
+            "TITLE": "My Tournaments",
+            "UPCOMING": "Upcoming",
+            "PAST": "Past",
+            "NO_UPCOMING": "No upcoming tournaments",
+            "NO_PAST": "No past tournaments",
+            "INFO": "Tournament Information",
+            "DATES": "Dates",
+            "LOCATION": "Location",
+            "MY_TEAM": "My Team",
+            "YOU": "You",
+            "TEAMMATE": "Teammate",
+            "NO_TEAMMATE": "Solo",
+            "RANKING": "Ranking",
+            "PLACE": "Place",
+            "RSVP": "RSVP",
+            "CURRENT_STATUS": "Current status",
+            "RSVP_STATUS": "RSVP Status",
+            "FEEDBACK": "Feedback",
+            "PARTICIPANTS": "Participants",
+            "TEAMS": "Teams"
+        },
+        "FORMS": {
+            "BASIC_INFO": "Basic Information",
+            "TITLE": "Title",
+            "TITLE_REQUIRED": "Title is required",
+            "TYPE": "Type",
+            "TYPE_REQUIRED": "Type is required",
+            "STARTS_AT": "Starts At",
+            "STARTS_AT_REQUIRED": "Start date is required",
+            "ENDS_AT": "Ends At",
+            "ENDS_AT_REQUIRED": "End date is required",
+            "ADDRESS": "Address",
+            "ADDRESS_LINE1": "Address Line 1",
+            "ADDRESS_LINE1_REQUIRED": "Address line 1 is required",
+            "ADDRESS_LINE2": "Address Line 2 (Optional)",
+            "POSTAL_CODE": "Postal Code",
+            "POSTAL_CODE_REQUIRED": "Postal code is required",
+            "CITY": "City",
+            "CITY_REQUIRED": "City is required",
+            "COUNTRY": "Country",
+            "COUNTRY_REQUIRED": "Country is required",
+            "LATITUDE": "Latitude (Optional)",
+            "LONGITUDE": "Longitude (Optional)",
+            "PARTICIPANTS": "Participants",
+            "SEARCH_USERS": "Search users...",
+            "SAVE_PARTICIPANTS": "Save Participants",
+            "SELECTED": "selected",
+            "TEAMS": "Teams",
+            "GENERATE_TEAMS": "Generate Homogeneous Pairs",
+            "REBALANCE_TEAMS": "Rebalance Teams",
+            "CLEAR_TEAMS": "Clear Teams",
+            "NO_TEAMS": "No teams generated yet",
+            "SAVE": "Save",
+            "CANCEL": "Cancel",
+            "RANKING": "Ranking",
+            "NO_USERS_FOUND": "No users found",
+            "TEAM": "Team",
+            "PLACEMENT": "Placement",
+            "NO_PARTICIPANTS_YET": "No participants yet",
+            "ADD_PARTICIPANTS_FIRST": "Add participants first to generate teams",
+            "CLICK_GENERATE_TEAMS": "Click the button above to generate balanced team pairings",
+            "BENCH": "Bench",
+            "LOCKED": "Locked",
+            "TEAM_STRENGTH": "Strength",
+            "AVG_STRENGTH": "Avg",
+            "MOVE_TO_TEAM": "Move to Team",
+            "MOVE_TO_BENCH": "Move to Bench",
+            "SWAP_WITH": "Swap with",
+            "EMPTY_TEAM": "Empty team - drag members here",
+            "EMPTY_BENCH": "No participants on bench"
+        },
+        "FEEDBACK": {
+            "PLACEHOLDER": "Share your feedback about this tournament...",
+            "SUBMIT": "Submit Feedback"
+        },
+        "VIEW": {
+            "TITLE": "Tournament Details",
+            "BREADCRUMB": {
+                "BACK": "Back to Tournaments"
+            },
+            "INFO": "Tournament Information",
+            "INFO_DESCRIPTION": "General configuration and details",
+            "PARTICIPANTS": "Participants Management",
+            "PARTICIPANTS_DESCRIPTION": "Add, remove, and manage tournament participants",
+            "LINEUPS": "Team Lineups",
+            "LINEUPS_DESCRIPTION": "View and manage team compositions and pairings"
+        }
+    },
+    "REPORTS": {
+        "TITLE": "Reports",
+        "DESCRIPTION": "Training sessions analytics and statistics",
+        "CHART": {
+            "CONTRACT_SHARE": "Contract vs Non-Contract Sessions",
+            "SESSIONS_OVER_TIME": "Sessions Over Time"
+        },
+        "ERROR": {
+            "TITLE": "Failed to load reports data"
+        },
+        "ACTIONS": {
+            "RETRY": "Retry",
+            "EXPORT_CSV": "Export CSV",
+            "EXPORT_JSON": "Export JSON",
+            "APPLY": "Apply",
+            "RESET": "Reset",
+            "VIEW_SESSION": "View Session"
+        },
+        "EMPTY": {
+            "NO_DATA": "No data available for the selected period"
+        },
+        "RATINGS": {
+            "TITLE": "Ratings",
+            "KPI": {
+                "AVERAGE": "Average Rating",
+                "TOTAL": "Total Ratings",
+                "RATED_SESSIONS": "Rated Sessions",
+                "UNRATED_SESSIONS": "Unrated Sessions"
+            },
+            "DISTRIBUTION": {
+                "TITLE": "Rating Distribution (1-10)"
+            },
+            "PER_USER": {
+                "TITLE": "Ratings by Student",
+                "NAME": "Name",
+                "AVERAGE": "Average",
+                "COUNT": "Count"
+            },
+            "TOP_USERS": "Top Students",
+            "BOTTOM_USERS": "Students Needing Support",
+            "PIE": {
+                "CONTRACT_VS_NONCONTRACT": "Ratings: Contract vs Non-Contract"
+            },
+            "EMPTY": "No ratings in this period",
+            "NO_DATA": "No information available",
+            "USER": "Student",
+            "RATINGS_COUNT": "ratings",
+            "USER_STATS": {
+                "TITLE": "Student Rating Statistics"
+            }
+        },
+        "KPI": {
+            "TOTAL": "Total Sessions",
+            "UNDER": "Under Contract",
+            "OFF": "Off Contract",
+            "UNIQUE": "Unique Users"
+        },
+        "SESSIONS": {
+            "TITLE": "Sessions"
+        },
+        "FILTERS": {
+            "PERIOD": "Period",
+            "USER": "Student",
+            "ALL_USERS": "All Students",
+            "CONTRACT_SCOPE": "Contract Scope",
+            "PRESET": {
+                "LAST_7": "Last 7 days",
+                "LAST_30": "Last 30 days",
+                "THIS_MONTH": "This month",
+                "PREV_MONTH": "Previous month",
+                "CUSTOM": "Custom range"
+            },
+            "CONTRACT": {
+                "ALL": "All sessions",
+                "UNDER": "Under contract",
+                "OFF": "Off contract"
+            }
+        },
+        "TABLE": {
+            "TITLE": "Sessions List",
+            "DATE": "Date",
+            "SESSION_TITLE": "Session",
+            "COACH": "Coach",
+            "CONTRACT": "Contract",
+            "ATTENDEES": "Attendees",
+            "STATUS": "Status"
+        }
     }
-  },
-  "EVENTS": {
-    "TITLE": "Events",
-    "EMPTY": "No events at the moment.",
-    "REGISTER": "Register",
-    "HAPPENING_NOW": "Happening now",
-    "LOAD_MORE": "Load more",
-    "ADMIN": {
-      "TITLE": "Events",
-      "CREATE": "Create Event",
-      "EDIT": "Edit Event",
-      "DELETE": "Delete",
-      "SAVE": "Save",
-      "CANCEL": "Cancel",
-      "SEARCH": "Search…",
-      "PUBLISHED": "Published",
-      "ACTIVE": "Active",
-      "ORDER": "Order",
-      "START": "Start time",
-      "END": "End time",
-      "UPDATED_AT": "Updated",
-      "COPY_PUBLIC_URL": "Copy public URL",
-      "OPEN_PUBLIC": "Open public page",
-      "QR": "Generate QR",
-      "NAME": "Name",
-      "DESCRIPTION": "Description",
-      "SLUG": "Slug",
-      "BACKGROUND_IMAGE_URL": "Background Image URL",
-      "EXTERNAL_REGISTRATION_URL": "External Registration URL",
-      "ORDER_INDEX": "Order Index",
-      "NO_EVENTS": "No events found",
-      "QR_DIALOG": {
-        "TITLE": "QR Code",
-        "DOWNLOAD": "Download"
-      },
-      "DELETE_SUCCESS": "Event deleted successfully",
-      "DELETE_ERROR": "Error deleting event",
-      "URL_COPIED": "URL copied to clipboard",
-      "CREATE_SUCCESS": "Event created successfully",
-      "UPDATE_SUCCESS": "Event updated successfully",
-      "SAVE_ERROR": "Error saving event"
-    }
-  }
 }
