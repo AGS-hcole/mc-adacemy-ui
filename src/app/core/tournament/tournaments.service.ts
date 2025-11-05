@@ -333,7 +333,7 @@ export class TournamentsService {
         id: string,
         dto: MoveParticipantDto
     ): Observable<TeamsResponseDto> {
-        return this._httpClient.post<TeamsResponseDto>(
+        return this._httpClient.patch<TeamsResponseDto>(
             `${this.apiUrl}/tournaments/${id}/teams/move`,
             dto
         );
@@ -346,7 +346,7 @@ export class TournamentsService {
         id: string,
         dto: SwapParticipantsDto
     ): Observable<TeamsResponseDto> {
-        return this._httpClient.post<TeamsResponseDto>(
+        return this._httpClient.patch<TeamsResponseDto>(
             `${this.apiUrl}/tournaments/${id}/teams/swap`,
             dto
         );
@@ -359,7 +359,7 @@ export class TournamentsService {
         id: string,
         dto: ReorderTeamsDto
     ): Observable<TeamsResponseDto> {
-        return this._httpClient.post<TeamsResponseDto>(
+        return this._httpClient.patch<TeamsResponseDto>(
             `${this.apiUrl}/tournaments/${id}/teams/reorder`,
             dto
         );
@@ -369,7 +369,7 @@ export class TournamentsService {
      * Set team lock status
      */
     setTeamLock(id: string, teamId: string, locked: boolean): Observable<void> {
-        return this._httpClient.put<void>(
+        return this._httpClient.patch<void>(
             `${this.apiUrl}/tournaments/${id}/teams/${teamId}/lock`,
             { locked }
         );

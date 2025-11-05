@@ -12,11 +12,15 @@
         <div class="flex gap-2">
             <button mat-stroked-button (click)="openPreview()">
                 <mat-icon [svgIcon]="'heroicons_outline:eye'"></mat-icon>
-                <span class="ml-2">Preview</span>
+                <span class="ml-2 hidden sm:block">{{
+                    'EVENTS.ADMIN.PREVIEW' | transloco
+                }}</span>
             </button>
             <button mat-stroked-button (click)="generateQr()">
                 <mat-icon [svgIcon]="'heroicons_outline:qr-code'"></mat-icon>
-                <span class="ml-2">{{ 'EVENTS.ADMIN.QR' | transloco }}</span>
+                <span class="ml-2 hidden sm:block">{{
+                    'EVENTS.ADMIN.QR' | transloco
+                }}</span>
             </button>
         </div>
     </div>

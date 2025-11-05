@@ -31,26 +31,5 @@
             }
         }
     ],
-    "dataGroups": [
-        {
-            "name": "api-performance",
-            "urls": ["https://app.padelhub.fr/api/**"],
-            "cacheConfig": {
-                "maxSize": 100,
-                "maxAge": "3h",
-                "timeout": "10s",
-                "strategy": "performance"
-            }
-        },
-        {
-            "name": "api-freshness",
-            "urls": ["https://app.padelhub.fr/api/auth/**"],
-            "cacheConfig": {
-                "maxSize": 20,
-                "maxAge": "1h",
-                "timeout": "5s",
-                "strategy": "freshness"
-            }
-        }
-    ]
+    "dataGroups": []
 }

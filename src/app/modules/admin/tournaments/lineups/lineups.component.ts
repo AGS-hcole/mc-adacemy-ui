@@ -4,7 +4,7 @@ import {
     CdkDropList,
     moveItemInArray,
 } from '@angular/cdk/drag-drop';
-import { NgClass, NgFor, NgIf } from '@angular/common';
+import { CommonModule, NgClass, NgFor, NgIf } from '@angular/common';
 import {
     ChangeDetectionStrategy,
     ChangeDetectorRef,
@@ -20,7 +20,7 @@ import { MatMenuModule } from '@angular/material/menu';
 import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 import { MatSlideToggleModule } from '@angular/material/slide-toggle';
 import { MatSnackBar, MatSnackBarModule } from '@angular/material/snack-bar';
-import { TranslocoModule } from '@jsverse/transloco';
+import { TranslocoModule, TranslocoService } from '@jsverse/transloco';
 import {
     BenchParticipantDto,
     GenerateTeamsDto,
@@ -49,6 +49,7 @@ import { Subject, takeUntil } from 'rxjs';
         MatSnackBarModule,
         MatDialogModule,
         TranslocoModule,
+        CommonModule,
         CdkDropList,
         CdkDrag,
     ],
@@ -69,7 +70,8 @@ export class TournamentLineupsComponent implements OnInit, OnDestroy {
         private _changeDetectorRef: ChangeDetectorRef,
         private _tournamentsService: TournamentsService,
         private _dialog: MatDialog,
-        private _snackBar: MatSnackBar
+        private _snackBar: MatSnackBar,
+        private _translocoService: TranslocoService
     ) {}
 
     // -----------------------------------------------------------------------------------------------------
@@ -192,6 +194,7 @@ export class TournamentLineupsComponent implements OnInit, OnDestroy {
             allowOddParticipant: true,
             snapshotRanking: true,
             teamSize: 2,
+            randomSeed: 1,
         };
 
         this.loading = true;
@@ -211,9 +214,17 @@ export class TournamentLineupsComponent implements OnInit, OnDestroy {
                 },
                 error: () => {
                     this.loading = false;
-                    this._snackBar.open('Failed to generate teams', 'Close', {
-                        duration: 3000,
-                    });
+                    this._snackBar.open(
+                        this._translocoService.translate(
+                            'TOURNAMENTS.FORMS.LINEUPS.GENERATE_ERROR'
+                        ),
+                        this._translocoService.translate('SHARED.CLOSE'),
+                        {
+                            duration: 3000,
+                            horizontalPosition: 'center',
+                            verticalPosition: 'top',
+                        }
+                    );
                     this._changeDetectorRef.markForCheck();
                 },
             });

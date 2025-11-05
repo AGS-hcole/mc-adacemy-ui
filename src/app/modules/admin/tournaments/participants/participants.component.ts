@@ -12,7 +12,8 @@ import { MatButtonModule } from '@angular/material/button';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatIconModule } from '@angular/material/icon';
 import { MatInputModule } from '@angular/material/input';
-import { TranslocoModule } from '@jsverse/transloco';
+import { MatSnackBar } from '@angular/material/snack-bar';
+import { TranslocoModule, TranslocoService } from '@jsverse/transloco';
 import {
     Tournament,
     UserLookupItem,
@@ -52,11 +53,13 @@ export class TournamentParticipantsComponent implements OnInit, OnDestroy {
     constructor(
         private _changeDetectorRef: ChangeDetectorRef,
         private _tournamentsService: TournamentsService,
+        private _translocoService: TranslocoService,
+        private _snackBar: MatSnackBar,
         private _fb: FormBuilder
     ) {
         // Initialize form
         this.searchForm = this._fb.group({
-            search: ['']
+            search: [''],
         });
     }
 
@@ -189,6 +192,19 @@ export class TournamentParticipantsComponent implements OnInit, OnDestroy {
             .pipe(takeUntil(this._unsubscribeAll))
             .subscribe((tournament) => {
                 this.tournament = tournament;
+
+                this._snackBar.open(
+                    this._translocoService.translate(
+                        'TOURNAMENTS.FORMS.PARTICIPANTS.UPDATE_SUCCESS'
+                    ),
+                    this._translocoService.translate('SHARED.CLOSE'),
+                    {
+                        duration: 3000,
+                        horizontalPosition: 'center',
+                        verticalPosition: 'top',
+                    }
+                );
+
                 this._changeDetectorRef.markForCheck();
             });
     }
