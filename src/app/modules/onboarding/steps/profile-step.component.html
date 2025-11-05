@@ -1,32 +1,54 @@
 <div class="w-full">
     <form [formGroup]="form" class="space-y-6">
         <!-- Name fields in grid -->
-        <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+        <div class="grid grid-cols-1 gap-6 md:grid-cols-2">
             <!-- First name -->
             <mat-form-field class="w-full">
-                <mat-label>{{ 'ONBOARDING.PROFILE.FIRSTNAME' | transloco }}</mat-label>
-                <input matInput formControlName="firstname" 
-                       [attr.aria-label]="'ONBOARDING.PROFILE.FIRSTNAME' | transloco"
-                       [attr.aria-required]="true" />
+                <mat-label>{{
+                    'ONBOARDING.PROFILE.FIRSTNAME' | transloco
+                }}</mat-label>
+                <input
+                    matInput
+                    formControlName="firstname"
+                    [attr.aria-label]="
+                        'ONBOARDING.PROFILE.FIRSTNAME' | transloco
+                    "
+                    [attr.aria-required]="true"
+                />
                 @if (form.get('firstname')?.hasError('required')) {
-                    <mat-error>{{ 'ONBOARDING.PROFILE.FIRSTNAME_REQUIRED' | transloco }}</mat-error>
+                    <mat-error>{{
+                        'ONBOARDING.PROFILE.FIRSTNAME_REQUIRED' | transloco
+                    }}</mat-error>
                 }
                 @if (form.get('firstname')?.hasError('minlength')) {
-                    <mat-error>{{ 'ONBOARDING.PROFILE.FIRSTNAME_MIN' | transloco }}</mat-error>
+                    <mat-error>{{
+                        'ONBOARDING.PROFILE.FIRSTNAME_MIN' | transloco
+                    }}</mat-error>
                 }
             </mat-form-field>
 
             <!-- Last name -->
             <mat-form-field class="w-full">
-                <mat-label>{{ 'ONBOARDING.PROFILE.LASTNAME' | transloco }}</mat-label>
-                <input matInput formControlName="lastname" 
-                       [attr.aria-label]="'ONBOARDING.PROFILE.LASTNAME' | transloco"
-                       [attr.aria-required]="true" />
+                <mat-label>{{
+                    'ONBOARDING.PROFILE.LASTNAME' | transloco
+                }}</mat-label>
+                <input
+                    matInput
+                    formControlName="lastname"
+                    [attr.aria-label]="
+                        'ONBOARDING.PROFILE.LASTNAME' | transloco
+                    "
+                    [attr.aria-required]="true"
+                />
                 @if (form.get('lastname')?.hasError('required')) {
-                    <mat-error>{{ 'ONBOARDING.PROFILE.LASTNAME_REQUIRED' | transloco }}</mat-error>
+                    <mat-error>{{
+                        'ONBOARDING.PROFILE.LASTNAME_REQUIRED' | transloco
+                    }}</mat-error>
                 }
                 @if (form.get('lastname')?.hasError('minlength')) {
-                    <mat-error>{{ 'ONBOARDING.PROFILE.LASTNAME_MIN' | transloco }}</mat-error>
+                    <mat-error>{{
+                        'ONBOARDING.PROFILE.LASTNAME_MIN' | transloco
+                    }}</mat-error>
                 }
             </mat-form-field>
         </div>
@@ -34,55 +56,109 @@
         <!-- Email (readonly) -->
         <mat-form-field class="w-full">
             <mat-label>{{ 'ONBOARDING.PROFILE.EMAIL' | transloco }}</mat-label>
-            <input matInput [value]="email" readonly 
-                   [attr.aria-label]="'ONBOARDING.PROFILE.EMAIL' | transloco" />
+            <input
+                matInput
+                [value]="email"
+                readonly
+                [attr.aria-label]="'ONBOARDING.PROFILE.EMAIL' | transloco"
+            />
         </mat-form-field>
 
         <!-- Phone and birth date -->
-        <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+        <div class="grid grid-cols-1 gap-6 md:grid-cols-2">
             <!-- Phone -->
             <mat-form-field class="w-full">
-                <mat-label>{{ 'ONBOARDING.PROFILE.PHONE' | transloco }}</mat-label>
+                <mat-label>{{
+                    'ONBOARDING.PROFILE.PHONE' | transloco
+                }}</mat-label>
                 <input matInput formControlName="phone" />
                 @if (form.get('phone')?.hasError('pattern')) {
-                    <mat-error>{{ 'ONBOARDING.PROFILE.PHONE_PATTERN' | transloco }}</mat-error>
+                    <mat-error>{{
+                        'ONBOARDING.PROFILE.PHONE_PATTERN' | transloco
+                    }}</mat-error>
                 }
             </mat-form-field>
 
             <!-- Birth date -->
             <mat-form-field class="w-full">
-                <mat-label>{{ 'ONBOARDING.PROFILE.BIRTHDATE' | transloco }}</mat-label>
-                <input matInput [matDatepicker]="birthDatePicker" formControlName="birthDate" 
-                       [max]="maxBirthDate" [min]="minBirthDate" />
-                <mat-datepicker-toggle matSuffix [for]="birthDatePicker"></mat-datepicker-toggle>
+                <mat-label>{{
+                    'ONBOARDING.PROFILE.BIRTHDATE' | transloco
+                }}</mat-label>
+                <input
+                    matInput
+                    [matDatepicker]="birthDatePicker"
+                    formControlName="birthDate"
+                    [max]="maxBirthDate"
+                    [min]="minBirthDate"
+                />
+                <mat-datepicker-toggle
+                    matSuffix
+                    [for]="birthDatePicker"
+                ></mat-datepicker-toggle>
                 <mat-datepicker #birthDatePicker></mat-datepicker>
             </mat-form-field>
         </div>
 
         <!-- FFT License Number -->
-        <mat-form-field class="w-full">
-            <mat-label>{{ 'ONBOARDING.PROFILE.FFT_NUMBER' | transloco }}</mat-label>
-            <input matInput formControlName="fftLicenseNumber" />
-        </mat-form-field>
+        <div class="grid grid-cols-1 gap-6 md:grid-cols-2">
+            <mat-form-field class="w-full">
+                <mat-label>{{
+                    'ONBOARDING.PROFILE.FFT_NUMBER' | transloco
+                }}</mat-label>
+                <input matInput formControlName="fftLicenseNumber" />
+            </mat-form-field>
+
+            <mat-form-field class="w-full">
+                <mat-label>{{
+                    'ONBOARDING.PROFILE.CURRENT_RANKING' | transloco
+                }}</mat-label>
+                <input
+                    matInput
+                    type="number"
+                    formControlName="currentRanking"
+                />
+            </mat-form-field>
+        </div>
 
         <!-- Avatar Upload -->
         <div class="space-y-2">
-            <label class="text-sm font-medium">{{ 'ONBOARDING.PROFILE.AVATAR' | transloco }}</label>
-            <p class="text-sm text-gray-500">{{ 'ONBOARDING.PROFILE.AVATAR_HINT' | transloco }}</p>
-            
+            <label class="text-sm font-medium">{{
+                'ONBOARDING.PROFILE.AVATAR' | transloco
+            }}</label>
+            <p class="text-sm text-gray-500">
+                {{ 'ONBOARDING.PROFILE.AVATAR_HINT' | transloco }}
+            </p>
+
             @if (avatarPreview) {
                 <div class="flex items-center gap-4">
-                    <img [src]="avatarPreview" class="w-24 h-24 rounded-full object-cover border-2" />
-                    <button type="button" mat-stroked-button color="warn" (click)="removeAvatar()">
+                    <img
+                        [src]="avatarPreview"
+                        class="h-24 w-24 rounded-full border-2 object-cover"
+                    />
+                    <button
+                        type="button"
+                        mat-stroked-button
+                        color="warn"
+                        (click)="removeAvatar()"
+                    >
                         <mat-icon>delete</mat-icon>
                         {{ 'ONBOARDING.PROFILE.AVATAR_REMOVE' | transloco }}
                     </button>
                 </div>
             } @else {
                 <div>
-                    <input type="file" #avatarInput accept="image/png,image/jpeg,image/jpg" 
-                           (change)="onAvatarSelect($event)" class="hidden" />
-                    <button type="button" mat-stroked-button (click)="avatarInput.click()">
+                    <input
+                        type="file"
+                        #avatarInput
+                        accept="image/png,image/jpeg,image/jpg"
+                        (change)="onAvatarSelect($event)"
+                        class="hidden"
+                    />
+                    <button
+                        type="button"
+                        mat-stroked-button
+                        (click)="avatarInput.click()"
+                    >
                         <mat-icon>upload</mat-icon>
                         {{ 'ONBOARDING.PROFILE.AVATAR_UPLOAD' | transloco }}
                     </button>
@@ -92,22 +168,43 @@
 
         <!-- Background Upload -->
         <div class="space-y-2">
-            <label class="text-sm font-medium">{{ 'ONBOARDING.PROFILE.BACKGROUND' | transloco }}</label>
-            <p class="text-sm text-gray-500">{{ 'ONBOARDING.PROFILE.BACKGROUND_HINT' | transloco }}</p>
-            
+            <label class="text-sm font-medium">{{
+                'ONBOARDING.PROFILE.BACKGROUND' | transloco
+            }}</label>
+            <p class="text-sm text-gray-500">
+                {{ 'ONBOARDING.PROFILE.BACKGROUND_HINT' | transloco }}
+            </p>
+
             @if (backgroundPreview) {
                 <div class="space-y-4">
-                    <img [src]="backgroundPreview" class="w-full h-32 rounded-lg object-cover border-2" />
-                    <button type="button" mat-stroked-button color="warn" (click)="removeBackground()">
+                    <img
+                        [src]="backgroundPreview"
+                        class="h-32 w-full rounded-lg border-2 object-cover"
+                    />
+                    <button
+                        type="button"
+                        mat-stroked-button
+                        color="warn"
+                        (click)="removeBackground()"
+                    >
                         <mat-icon>delete</mat-icon>
                         {{ 'ONBOARDING.PROFILE.BACKGROUND_REMOVE' | transloco }}
                     </button>
                 </div>
             } @else {
                 <div>
-                    <input type="file" #backgroundInput accept="image/png,image/jpeg,image/jpg" 
-                           (change)="onBackgroundSelect($event)" class="hidden" />
-                    <button type="button" mat-stroked-button (click)="backgroundInput.click()">
+                    <input
+                        type="file"
+                        #backgroundInput
+                        accept="image/png,image/jpeg,image/jpg"
+                        (change)="onBackgroundSelect($event)"
+                        class="hidden"
+                    />
+                    <button
+                        type="button"
+                        mat-stroked-button
+                        (click)="backgroundInput.click()"
+                    >
                         <mat-icon>upload</mat-icon>
                         {{ 'ONBOARDING.PROFILE.BACKGROUND_UPLOAD' | transloco }}
                     </button>

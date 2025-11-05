@@ -1,72 +1,128 @@
 <div class="w-full">
-    <p class="text-gray-600 mb-6">{{ 'ONBOARDING.SUMMARY.CHECK' | transloco }}</p>
+    <p class="mb-6 text-gray-600">
+        {{ 'ONBOARDING.SUMMARY.CHECK' | transloco }}
+    </p>
 
     @if (draft) {
         <div class="space-y-6">
             <!-- Profile Information -->
-            <div class="bg-gray-50 rounded-lg p-6">
-                <h3 class="text-lg font-semibold mb-4 flex items-center gap-2">
+            <div class="rounded-lg bg-gray-50 p-6">
+                <h3 class="mb-4 flex items-center gap-2 text-lg font-semibold">
                     <mat-icon>person</mat-icon>
                     {{ 'ONBOARDING.SUMMARY.PROFILE_TITLE' | transloco }}
                 </h3>
-                <dl class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                <dl class="grid grid-cols-1 gap-4 md:grid-cols-2">
                     <div>
-                        <dt class="text-sm text-gray-500">{{ 'ONBOARDING.PROFILE.FIRSTNAME' | transloco }}</dt>
-                        <dd class="font-medium">{{ draft.profile.firstname || '-' }}</dd>
+                        <dt class="text-sm text-gray-500">
+                            {{ 'ONBOARDING.PROFILE.FIRSTNAME' | transloco }}
+                        </dt>
+                        <dd class="font-medium">
+                            {{ draft.profile.firstname || '-' }}
+                        </dd>
                     </div>
                     <div>
-                        <dt class="text-sm text-gray-500">{{ 'ONBOARDING.PROFILE.LASTNAME' | transloco }}</dt>
-                        <dd class="font-medium">{{ draft.profile.lastname || '-' }}</dd>
+                        <dt class="text-sm text-gray-500">
+                            {{ 'ONBOARDING.PROFILE.LASTNAME' | transloco }}
+                        </dt>
+                        <dd class="font-medium">
+                            {{ draft.profile.lastname || '-' }}
+                        </dd>
                     </div>
                     <div>
-                        <dt class="text-sm text-gray-500">{{ 'ONBOARDING.PROFILE.EMAIL' | transloco }}</dt>
+                        <dt class="text-sm text-gray-500">
+                            {{ 'ONBOARDING.PROFILE.EMAIL' | transloco }}
+                        </dt>
                         <dd class="font-medium">{{ email || '-' }}</dd>
                     </div>
                     <div>
-                        <dt class="text-sm text-gray-500">{{ 'ONBOARDING.PROFILE.PHONE' | transloco }}</dt>
-                        <dd class="font-medium">{{ draft.profile.phone || '-' }}</dd>
+                        <dt class="text-sm text-gray-500">
+                            {{ 'ONBOARDING.PROFILE.PHONE' | transloco }}
+                        </dt>
+                        <dd class="font-medium">
+                            {{ draft.profile.phone || '-' }}
+                        </dd>
                     </div>
                     @if (draft.profile.birthDate) {
                         <div>
-                            <dt class="text-sm text-gray-500">{{ 'ONBOARDING.PROFILE.BIRTHDATE' | transloco }}</dt>
-                            <dd class="font-medium">{{ draft.profile.birthDate }}</dd>
+                            <dt class="text-sm text-gray-500">
+                                {{ 'ONBOARDING.PROFILE.BIRTHDATE' | transloco }}
+                            </dt>
+                            <dd class="font-medium">
+                                {{ draft.profile.birthDate }}
+                            </dd>
                         </div>
                     }
                     @if (draft.profile.fftLicenseNumber) {
                         <div>
-                            <dt class="text-sm text-gray-500">{{ 'ONBOARDING.PROFILE.FFT_NUMBER' | transloco }}</dt>
-                            <dd class="font-medium">{{ draft.profile.fftLicenseNumber }}</dd>
+                            <dt class="text-sm text-gray-500">
+                                {{
+                                    'ONBOARDING.PROFILE.FFT_NUMBER' | transloco
+                                }}
+                            </dt>
+                            <dd class="font-medium">
+                                {{ draft.profile.fftLicenseNumber }}
+                            </dd>
+                        </div>
+                    }
+                    @if (draft.profile.currentRanking) {
+                        <div>
+                            <dt class="text-sm text-gray-500">
+                                {{
+                                    'ONBOARDING.PROFILE.CURRENT_RANKING'
+                                        | transloco
+                                }}
+                            </dt>
+                            <dd class="font-medium">
+                                {{ draft.profile.currentRanking }}
+                            </dd>
                         </div>
                     }
                 </dl>
             </div>
 
             <!-- Contract & Notifications -->
-            <div class="bg-gray-50 rounded-lg p-6">
-                <h3 class="text-lg font-semibold mb-4 flex items-center gap-2">
+            <div class="rounded-lg bg-gray-50 p-6">
+                <h3 class="mb-4 flex items-center gap-2 text-lg font-semibold">
                     <mat-icon>notifications</mat-icon>
                     {{ 'ONBOARDING.SUMMARY.CONTRACT_TITLE' | transloco }}
                 </h3>
                 <dl class="space-y-4">
                     <div>
-                        <dt class="text-sm text-gray-500 mb-2">{{ 'ONBOARDING.SUMMARY.NOTIFICATIONS' | transloco }}</dt>
+                        <dt class="mb-2 text-sm text-gray-500">
+                            {{ 'ONBOARDING.SUMMARY.NOTIFICATIONS' | transloco }}
+                        </dt>
                         <dd class="space-y-1">
                             @if (draft.contract.notifyEmail) {
                                 <div class="flex items-center gap-2">
-                                    <mat-icon class="text-green-600">check_circle</mat-icon>
-                                    <span>{{ 'ONBOARDING.CONTRACT.NOTIFY_EMAIL' | transloco }}</span>
+                                    <mat-icon class="text-green-600"
+                                        >check_circle</mat-icon
+                                    >
+                                    <span>{{
+                                        'ONBOARDING.CONTRACT.NOTIFY_EMAIL'
+                                            | transloco
+                                    }}</span>
                                 </div>
                             }
                             @if (draft.contract.notifySMS) {
                                 <div class="flex items-center gap-2">
-                                    <mat-icon class="text-green-600">check_circle</mat-icon>
-                                    <span>{{ 'ONBOARDING.CONTRACT.NOTIFY_SMS' | transloco }}</span>
+                                    <mat-icon class="text-green-600"
+                                        >check_circle</mat-icon
+                                    >
+                                    <span>{{
+                                        'ONBOARDING.CONTRACT.NOTIFY_SMS'
+                                            | transloco
+                                    }}</span>
                                 </div>
                             }
                             @if (draft.contract.notifyWhatsApp) {
                                 <div class="flex items-center gap-2">
-                                    <mat-icon class="text-green-600">check_circle</mat-icon>
-                                    <span>{{ 'ONBOARDING.CONTRACT.NOTIFY_WHATSAPP' | transloco }}</span>
+                                    <mat-icon class="text-green-600"
+                                        >check_circle</mat-icon
+                                    >
+                                    <span>{{
+                                        'ONBOARDING.CONTRACT.NOTIFY_WHATSAPP'
+                                            | transloco
+                                    }}</span>
                                 </div>
                             }
                         </dd>
@@ -75,25 +131,31 @@
             </div>
 
             <!-- Legal Consents -->
-            <div class="bg-gray-50 rounded-lg p-6">
-                <h3 class="text-lg font-semibold mb-4 flex items-center gap-2">
+            <div class="rounded-lg bg-gray-50 p-6">
+                <h3 class="mb-4 flex items-center gap-2 text-lg font-semibold">
                     <mat-icon>gavel</mat-icon>
                     {{ 'ONBOARDING.SUMMARY.CONSENTS_TITLE' | transloco }}
                 </h3>
                 <dl class="space-y-2">
                     <div class="flex items-center gap-2">
                         @if (draft.consents.acceptPrivacy) {
-                            <mat-icon class="text-green-600">check_circle</mat-icon>
+                            <mat-icon class="text-green-600"
+                                >check_circle</mat-icon
+                            >
                         } @else {
                             <mat-icon class="text-gray-400">cancel</mat-icon>
                         }
-                        <span [class.font-medium]="draft.consents.acceptPrivacy">
+                        <span
+                            [class.font-medium]="draft.consents.acceptPrivacy"
+                        >
                             {{ 'ONBOARDING.CONSENTS.PRIVACY' | transloco }}
                         </span>
                     </div>
                     <div class="flex items-center gap-2">
                         @if (draft.consents.acceptPhoto) {
-                            <mat-icon class="text-green-600">check_circle</mat-icon>
+                            <mat-icon class="text-green-600"
+                                >check_circle</mat-icon
+                            >
                         } @else {
                             <mat-icon class="text-gray-400">cancel</mat-icon>
                         }
@@ -103,11 +165,15 @@
                     </div>
                     <div class="flex items-center gap-2">
                         @if (draft.consents.acceptMarketing) {
-                            <mat-icon class="text-green-600">check_circle</mat-icon>
+                            <mat-icon class="text-green-600"
+                                >check_circle</mat-icon
+                            >
                         } @else {
                             <mat-icon class="text-gray-400">cancel</mat-icon>
                         }
-                        <span [class.font-medium]="draft.consents.acceptMarketing">
+                        <span
+                            [class.font-medium]="draft.consents.acceptMarketing"
+                        >
                             {{ 'ONBOARDING.CONSENTS.MARKETING' | transloco }}
                         </span>
                     </div>

@@ -123,6 +123,7 @@ export class ProfileComponent implements OnInit {
     }
 
     private initializeForm(user: User): void {
+        console.log(user);
         this.form = this.fb.group({
             firstname: [
                 user.firstname || '',
@@ -139,6 +140,7 @@ export class ProfileComponent implements OnInit {
             ],
             birthDate: [user.birthDate ? new Date(user.birthDate) : null],
             fftLicenseNumber: [user.fftLicenseNumber || ''],
+            currentRanking: [user.currentRanking || ''],
             // Notification preferences
             notifyEmail: [user.notifyEmail || false],
             notifySMS: [user.notifySMS || false],
@@ -229,6 +231,7 @@ export class ProfileComponent implements OnInit {
                 ? formValue.birthDate.toISOString().split('T')[0]
                 : null,
             fftLicenseNumber: formValue.fftLicenseNumber || null,
+            currentRanking: formValue.currentRanking || null,
             notifyEmail: formValue.notifyEmail,
             notifySMS: formValue.notifySMS,
             notifyWhatsApp: formValue.notifyWhatsApp,

@@ -125,6 +125,7 @@ export class UsersDetailsComponent implements OnInit, OnDestroy {
             phone: [''],
             birthDate: [null],
             fftLicenseNumber: [''],
+            currentRanking: [''],
             role: [Role.user, Validators.required],
             formula: [null],
             privacyConsent: [false],
@@ -238,6 +239,7 @@ export class UsersDetailsComponent implements OnInit, OnDestroy {
             phone: user.phone || null,
             birthDate: user.birthDate || null,
             fftLicenseNumber: user.fftLicenseNumber || null,
+            currentRanking: user.currentRanking || null,
             role: user.role,
             formula: user.formula || null,
         };
@@ -263,6 +265,7 @@ export class UsersDetailsComponent implements OnInit, OnDestroy {
             phone: user.phone || null,
             birthDate: user.birthDate || null,
             fftLicenseNumber: user.fftLicenseNumber || null,
+            currentRanking: user.currentRanking || null,
             role: user.role,
             formula: user.formula || null,
         };
@@ -285,7 +288,9 @@ export class UsersDetailsComponent implements OnInit, OnDestroy {
     deleteUser(): void {
         // Open the confirmation dialog
         const confirmation = this._fuseConfirmationService.open({
-            title: this._translocoService.translate('DIALOGS.DELETE_USER.TITLE'),
+            title: this._translocoService.translate(
+                'DIALOGS.DELETE_USER.TITLE'
+            ),
             message: this._translocoService.translate(
                 'DIALOGS.DELETE_USER.MESSAGE'
             ),
