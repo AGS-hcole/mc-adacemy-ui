@@ -38,9 +38,11 @@ const tournamentResolver = (
 ) => {
     const tournamentsService = inject(TournamentsService);
     const router = inject(Router);
+    const tournamentId =
+        route.paramMap.get('id') || route.parent?.paramMap.get('id');
 
     return tournamentsService
-        .getById(route.paramMap.get('id'))
+        .getById(tournamentId)
         .pipe(catchError((error) => handleResolverError(error, state, router)));
 };
 

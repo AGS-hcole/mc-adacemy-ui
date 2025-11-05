@@ -2,6 +2,7 @@
     "SHARED": {
         "UNDER_CONSTRUCTION": "En construction",
         "UNDER_CONSTRUCTION_DESCRIPTION": "Cette fonctionnalité est en cours de développement et sera bientôt disponible.",
+        "CLOSE": "Fermer",
         "CLIPBOARD": {
             "COPYTO": "Copier dans le presse-papiers",
             "SUCCESS": "Copié dans le presse-papiers",
@@ -68,6 +69,11 @@
             "TITLE": "Supprimer l'utilisateur",
             "MESSAGE": "Êtes-vous sûr de vouloir supprimer cet utilisateur ? Cette action ne peut pas être annulée !",
             "CONFIRM": "Supprimer"
+        },
+        "DELETE_EVENT": {
+            "TITLE": "Supprimer l'événement",
+            "MESSAGE": "Êtes-vous sûr de vouloir supprimer \"{{name}}\" ? Cette action ne peut pas être annulée.",
+            "CONFIRM": "Supprimer"
         }
     },
     "AUTH": {
@@ -82,7 +88,8 @@
             "PASSWORD_REQUIRED": "Le mot de passe est requis",
             "REMEMBER_ME": "Se souvenir de moi",
             "FORGOT_PASSWORD": "Mot de passe oublié ?",
-            "SIGNIN": "Se connecter"
+            "SIGNIN": "Se connecter",
+            "ERROR_MESSAGE": "Utilisateur ou mot de passe invalide"
         },
         "SIGN_OUT": {
             "TITLE": "Déconnexion",
@@ -145,6 +152,9 @@
             },
             "TOURNAMENTS": {
                 "TITLE": "Tournois"
+            },
+            "EVENTS": {
+                "TITLE": "Événements"
             }
         },
         "USER": {
@@ -768,6 +778,52 @@
             "PARTICIPANTS_DESCRIPTION": "Ajouter, supprimer et gérer les participants du tournoi",
             "LINEUPS": "Compositions d'équipes",
             "LINEUPS_DESCRIPTION": "Voir et gérer les compositions et les paires d'équipes"
+        }
+    },
+    "EVENTS": {
+        "TITLE": "Événements",
+        "EMPTY": "Aucun événement pour le moment.",
+        "REGISTER": "S'inscrire",
+        "HAPPENING_NOW": "En cours",
+        "LOAD_MORE": "Charger plus",
+        "ADMIN": {
+            "TITLE": "Événements",
+            "CREATE": "Créer un événement",
+            "EDIT": "Modifier l'événement",
+            "DELETE": "Supprimer",
+            "SAVE": "Enregistrer",
+            "CANCEL": "Annuler",
+            "SEARCH": "Rechercher…",
+            "PUBLISHED": "Publié",
+            "ACTIVE": "Actif",
+            "ORDER": "Ordre",
+            "ORDER_INDEX_HINT": "Plus la valeur est basse, plus l'événement apparaît en haut de la liste",
+            "START": "Heure de début",
+            "END": "Heure de fin",
+            "END_TIME_INVALID": "L'heure de fin doit être après l'heure de début",
+            "UPDATED_AT": "Mis à jour",
+            "COPY_PUBLIC_URL": "Copier l'URL publique",
+            "OPEN_PUBLIC": "Ouvrir la page publique",
+            "QR": "Générer le QR",
+            "NAME": "Nom",
+            "DESCRIPTION": "Description",
+            "SLUG": "Slug",
+            "SLUG_INFO": "Identifiant unique pour l'URL publique (ex : mon-evenement), laissez vide pour générer automatiquement",
+            "BACKGROUND_IMAGE_URL": "URL de l'image de fond",
+            "EXTERNAL_REGISTRATION_URL": "URL d'inscription externe",
+            "ORDER_INDEX": "Index d'ordre",
+            "NO_EVENTS": "Aucun événement trouvé",
+            "QR_DIALOG": {
+                "TITLE": "Code QR",
+                "DOWNLOAD": "Télécharger",
+                "ERROR": "Impossible de charger le QR Code"
+            },
+            "DELETE_SUCCESS": "Événement supprimé avec succès",
+            "DELETE_ERROR": "Erreur lors de la suppression de l'événement",
+            "URL_COPIED": "URL copiée dans le presse-papiers",
+            "CREATE_SUCCESS": "Événement créé avec succès",
+            "UPDATE_SUCCESS": "Événement mis à jour avec succès",
+            "SAVE_ERROR": "Erreur lors de l'enregistrement de l'événement"
         }
     }
 }
