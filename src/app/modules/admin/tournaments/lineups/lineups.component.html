@@ -36,24 +36,24 @@
         <div class="flex shrink-0 items-center gap-2">
             <button
                 mat-flat-button
-                [color]="'accent'"
-                [disabled]="loading || teams.length === 0"
-                (click)="rebalanceTeams()"
-            >
-                <mat-icon>balance</mat-icon>
-                <span class="hidden lg:block">{{
-                    'TOURNAMENTS.FORMS.REBALANCE_TEAMS' | transloco
-                }}</span>
-            </button>
-            <button
-                mat-flat-button
                 [color]="'warn'"
                 [disabled]="loading || teams.length === 0"
                 (click)="clearTeams()"
             >
                 <mat-icon>clear_all</mat-icon>
-                <span class="hidden lg:block">{{
+                <span class="ml-2 hidden lg:block">{{
                     'TOURNAMENTS.FORMS.CLEAR_TEAMS' | transloco
+                }}</span>
+            </button>
+            <button
+                mat-flat-button
+                [color]="'accent'"
+                [disabled]="loading || teams.length === 0"
+                (click)="rebalanceTeams()"
+            >
+                <mat-icon>balance</mat-icon>
+                <span class="ml-2 hidden lg:block">{{
+                    'TOURNAMENTS.FORMS.REBALANCE_TEAMS' | transloco
                 }}</span>
             </button>
             <button
@@ -63,7 +63,7 @@
                 (click)="generateTeams()"
             >
                 <mat-icon>casino</mat-icon>
-                <span class="hidden lg:block">{{
+                <span class="ml-2 hidden lg:block">{{
                     'TOURNAMENTS.FORMS.GENERATE_TEAMS' | transloco
                 }}</span>
             </button>
@@ -133,7 +133,7 @@
                             "
                             class="flex h-full flex-col rounded-2xl border bg-white p-4 shadow-sm transition-shadow hover:shadow-md dark:border-gray-700 dark:bg-gray-800"
                             [ngClass]="{
-                                'border-2 border-yellow-400': team.locked,
+                                'border-2 border-green-400': team.locked,
                             }"
                         >
                             <!-- Team header -->
@@ -167,7 +167,7 @@
                                     </span>
                                     <span
                                         *ngIf="team.locked"
-                                        class="inline-flex items-center rounded-full bg-amber-100 px-3 py-1 text-xs font-medium text-amber-800"
+                                        class="inline-flex items-center rounded-full bg-green-100 px-3 py-1 text-xs font-medium text-green-800"
                                     >
                                         <mat-icon class="mr-1 icon-size-4"
                                             >lock</mat-icon
@@ -237,7 +237,11 @@
                                     "
                                     cdkDrag
                                     [cdkDragDisabled]="team.locked"
-                                    class="flex items-center gap-2 rounded-lg bg-white p-3 shadow-sm transition-transform hover:scale-[1.02] dark:bg-gray-700"
+                                    class="flex items-center gap-2 rounded-lg bg-white p-3 shadow-sm dark:bg-gray-700"
+                                    [ngClass]="{
+                                        'transition-transform hover:scale-[1.02]':
+                                            !team.locked,
+                                    }"
                                 >
                                     <mat-icon
                                         class="text-gray-500 icon-size-5"
@@ -336,7 +340,7 @@
             </div>
 
             <!-- Bench section -->
-            <div class="w-full flex-shrink-0 lg:w-80">
+            <div class="h-full w-full flex-shrink-0 lg:w-80">
                 <div class="bg-card sticky top-4 rounded-lg p-6 shadow">
                     <h2 class="mb-4 text-2xl font-semibold">
                         {{ 'TOURNAMENTS.FORMS.BENCH' | transloco }}

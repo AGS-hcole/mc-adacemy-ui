@@ -29,6 +29,7 @@ export interface OnboardingDraft {
         phone?: string;
         birthDate?: string | null; // ISO date
         fftLicenseNumber?: string;
+        currentRanking?: number | null;
         avatarFile?: File | null;
         backgroundFile?: File | null;
     };

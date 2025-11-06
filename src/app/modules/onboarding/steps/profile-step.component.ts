@@ -1,6 +1,18 @@
 import { CommonModule } from '@angular/common';
-import { Component, EventEmitter, inject, Input, OnInit, Output } from '@angular/core';
-import { FormBuilder, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
+import {
+    Component,
+    EventEmitter,
+    inject,
+    Input,
+    OnInit,
+    Output,
+} from '@angular/core';
+import {
+    FormBuilder,
+    FormGroup,
+    ReactiveFormsModule,
+    Validators,
+} from '@angular/forms';
 import { MatButtonModule } from '@angular/material/button';
 import { MatNativeDateModule } from '@angular/material/core';
 import { MatDatepickerModule } from '@angular/material/datepicker';
@@ -8,8 +20,8 @@ import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatIconModule } from '@angular/material/icon';
 import { MatInputModule } from '@angular/material/input';
 import { TranslocoModule } from '@jsverse/transloco';
-import { AvatarService } from '../services/avatar.service';
 import { OnboardingDraft } from '../models/onboarding.types';
+import { AvatarService } from '../services/avatar.service';
 
 @Component({
     selector: 'onboarding-profile-step',
@@ -30,14 +42,17 @@ import { OnboardingDraft } from '../models/onboarding.types';
 export class ProfileStepComponent implements OnInit {
     @Input() draft: OnboardingDraft['profile'] | null = null;
     @Input() email: string = '';
-    @Output() formChange = new EventEmitter<{ form: FormGroup; data: OnboardingDraft['profile'] }>();
+    @Output() formChange = new EventEmitter<{
+        form: FormGroup;
+        data: OnboardingDraft['profile'];
+    }>();
 
     form!: FormGroup;
     avatarPreview: string | null = null;
     backgroundPreview: string | null = null;
     avatarFile: File | null = null;
     backgroundFile: File | null = null;
-    
+
     private fb = inject(FormBuilder);
     private avatarService = inject(AvatarService);
 
@@ -46,11 +61,23 @@ export class ProfileStepComponent implements OnInit {
 
     ngOnInit(): void {
         this.form = this.fb.group({
-            firstname: [this.draft?.firstname || '', [Validators.required, Validators.minLength(2)]],
-            lastname: [this.draft?.lastname || '', [Validators.required, Validators.minLength(2)]],
-            phone: [this.draft?.phone || '', Validators.pattern(/^\+?[0-9\s.-]{7,15}$/)],
-            birthDate: [this.draft?.birthDate ? new Date(this.draft.birthDate) : null],
+            firstname: [
+                this.draft?.firstname || '',
+                [Validators.required, Validators.minLength(2)],
+            ],
+            lastname: [
+                this.draft?.lastname || '',
+                [Validators.required, Validators.minLength(2)],
+            ],
+            phone: [
+                this.draft?.phone || '',
+                Validators.pattern(/^\+?[0-9\s.-]{7,15}$/),
+            ],
+            birthDate: [
+                this.draft?.birthDate ? new Date(this.draft.birthDate) : null,
+            ],
             fftLicenseNumber: [this.draft?.fftLicenseNumber || ''],
+            currentRanking: [this.draft?.currentRanking || ''],
         });
 
         // Emit initial state
@@ -67,14 +94,14 @@ export class ProfileStepComponent implements OnInit {
         if (input.files && input.files[0]) {
             const file = input.files[0];
             const validation = this.avatarService.validateImage(file, 2);
-            
+
             if (!validation.valid) {
                 alert(validation.error);
                 return;
             }
 
             this.avatarFile = file;
-            this.avatarService.readFileAsDataUrl(file).subscribe(dataUrl => {
+            this.avatarService.readFileAsDataUrl(file).subscribe((dataUrl) => {
                 this.avatarPreview = dataUrl;
                 this.emitFormState();
             });
@@ -86,14 +113,14 @@ export class ProfileStepComponent implements OnInit {
         if (input.files && input.files[0]) {
             const file = input.files[0];
             const validation = this.avatarService.validateImage(file, 4);
-            
+
             if (!validation.valid) {
                 alert(validation.error);
                 return;
             }
 
             this.backgroundFile = file;
-            this.avatarService.readFileAsDataUrl(file).subscribe(dataUrl => {
+            this.avatarService.readFileAsDataUrl(file).subscribe((dataUrl) => {
                 this.backgroundPreview = dataUrl;
                 this.emitFormState();
             });
@@ -118,8 +145,11 @@ export class ProfileStepComponent implements OnInit {
             firstname: formValue.firstname || '',
             lastname: formValue.lastname || '',
             phone: formValue.phone || '',
-            birthDate: formValue.birthDate ? formValue.birthDate.toISOString().split('T')[0] : null,
+            birthDate: formValue.birthDate
+                ? formValue.birthDate.toISOString().split('T')[0]
+                : null,
             fftLicenseNumber: formValue.fftLicenseNumber || '',
+            currentRanking: formValue.currentRanking || '',
             avatarFile: this.avatarFile,
             backgroundFile: this.backgroundFile,
         };

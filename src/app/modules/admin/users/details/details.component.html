@@ -148,6 +148,26 @@
                         </div>
                     }
 
+                    <!-- Current Ranking -->
+                    @if (user.currentRanking) {
+                        <div class="flex sm:items-center">
+                            <mat-icon
+                                [svgIcon]="'heroicons_outline:chart-bar'"
+                            ></mat-icon>
+                            <div class="ml-6 leading-6">
+                                <div class="font-medium">
+                                    {{
+                                        'HOME.USERS.DETAILS.CURRENT_RANKING'
+                                            | transloco
+                                    }}
+                                </div>
+                                <div class="text-secondary">
+                                    {{ user.currentRanking }}
+                                </div>
+                            </div>
+                        </div>
+                    }
+
                     <!-- Role -->
                     @if (user.role) {
                         <div class="flex sm:items-center">
@@ -583,7 +603,7 @@
                     </div>
 
                     <!-- FFT License Number -->
-                    <div class="mt-8">
+                    <div class="mt-8 flex gap-4">
                         <mat-form-field
                             class="w-full"
                             [subscriptSizing]="'dynamic'"
@@ -601,6 +621,30 @@
                                 [formControlName]="'fftLicenseNumber'"
                                 [placeholder]="
                                     'HOME.USERS.DETAILS.PH_FFT_LICENSE'
+                                        | transloco
+                                "
+                                [spellcheck]="false"
+                            />
+                        </mat-form-field>
+
+                        <mat-form-field
+                            class="w-full"
+                            [subscriptSizing]="'dynamic'"
+                        >
+                            <mat-label>{{
+                                'HOME.USERS.DETAILS.CURRENT_RANKING' | transloco
+                            }}</mat-label>
+                            <mat-icon
+                                matPrefix
+                                class="hidden icon-size-5 sm:flex"
+                                [svgIcon]="'heroicons_outline:chart-bar'"
+                            ></mat-icon>
+                            <input
+                                matInput
+                                [formControlName]="'currentRanking'"
+                                type="number"
+                                [placeholder]="
+                                    'HOME.USERS.DETAILS.PH_CURRENT_RANKING'
                                         | transloco
                                 "
                                 [spellcheck]="false"

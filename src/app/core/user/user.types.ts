@@ -23,12 +23,13 @@ export interface User {
     phone?: string | null;
     birthDate?: Date | null;
     fftLicenseNumber?: string | null;
+    currentRanking?: number | null;
 
     // Contract / formula
     formula?: FormulaType | null;
 
     // Security (password not included in frontend model for security)
-    
+
     // Consents (RGPD)
     privacyConsentAt?: Date | null;
     photoConsentAt?: Date | null;
