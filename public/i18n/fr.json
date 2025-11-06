@@ -514,7 +514,8 @@
             "VIEW_SESSION": "Voir la session"
         },
         "EMPTY": {
-            "NO_DATA": "Aucune donnée disponible pour la période sélectionnée"
+            "NO_DATA": "Aucune donnée disponible pour la période sélectionnée",
+            "NO_SESSIONS": "Aucune session trouvée pour la période sélectionnée"
         },
         "RATINGS": {
             "TITLE": "Notes",

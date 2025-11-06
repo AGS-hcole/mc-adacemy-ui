@@ -187,7 +187,6 @@ export class UserTournamentListComponent implements OnInit, OnDestroy {
      * Track by function for ngFor loops
      */
     trackByFn(index: number, item: any): any {
-        console.log(item.id || index);
         return item.id || index;
     }
 }
