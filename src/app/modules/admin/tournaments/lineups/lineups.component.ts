@@ -308,7 +308,6 @@ export class TournamentLineupsComponent implements OnInit, OnDestroy {
     deleteTeam(team: TeamWithMembersDto): void {
         if (!this.tournament) return;
 
-        this.loading = true;
         this._tournamentsService
             .deleteTeam(this.tournament.id, team.id)
             .pipe(takeUntil(this._unsubscribeAll))

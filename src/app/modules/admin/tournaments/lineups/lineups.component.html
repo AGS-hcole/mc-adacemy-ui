@@ -19,7 +19,9 @@
                 (click)="rebalanceTeams()"
             >
                 <mat-icon>balance</mat-icon>
-                {{ 'TOURNAMENTS.FORMS.REBALANCE_TEAMS' | transloco }}
+                <span class="hidden lg:block">{{
+                    'TOURNAMENTS.FORMS.REBALANCE_TEAMS' | transloco
+                }}</span>
             </button>
             <button
                 mat-flat-button
@@ -28,7 +30,9 @@
                 (click)="clearTeams()"
             >
                 <mat-icon>clear_all</mat-icon>
-                {{ 'TOURNAMENTS.FORMS.CLEAR_TEAMS' | transloco }}
+                <span class="hidden lg:block">{{
+                    'TOURNAMENTS.FORMS.CLEAR_TEAMS' | transloco
+                }}</span>
             </button>
             <button
                 mat-flat-button
@@ -37,7 +41,9 @@
                 (click)="generateTeams()"
             >
                 <mat-icon>casino</mat-icon>
-                {{ 'TOURNAMENTS.FORMS.GENERATE_TEAMS' | transloco }}
+                <span class="hidden lg:block">{{
+                    'TOURNAMENTS.FORMS.GENERATE_TEAMS' | transloco
+                }}</span>
             </button>
         </div>
     </div>
@@ -68,9 +74,6 @@
                             }}"
                         >
                             <mat-icon>add</mat-icon>
-                            <span class="ml-2 hidden lg:block">
-                                {{ 'TOURNAMENTS.FORMS.ADD_TEAM' | transloco }}
-                            </span>
                         </button>
                     </div>
 
@@ -98,10 +101,7 @@
                     <!-- Teams list with drag & drop -->
                     <div
                         *ngIf="teams.length > 0"
-                        cdkDropList
-                        [cdkDropListData]="teams"
-                        (cdkDropListDropped)="dropTeamCard($event)"
-                        class="space-y-3"
+                        class="grid grid-cols-1 gap-4 md:grid-cols-2 lg:grid-cols-3"
                     >
                         <div
                             *ngFor="
@@ -109,20 +109,13 @@
                                 let i = index;
                                 trackBy: trackByFn
                             "
-                            cdkDrag
-                            class="flex flex-col rounded-2xl border bg-white p-4 shadow-sm transition-shadow hover:shadow-md dark:border-gray-700 dark:bg-gray-800"
+                            class="flex h-full flex-col rounded-2xl border bg-white p-4 shadow-sm transition-shadow hover:shadow-md dark:border-gray-700 dark:bg-gray-800"
                             [ngClass]="{
                                 'border-2 border-yellow-400': team.locked,
                             }"
                         >
                             <!-- Team header -->
                             <div class="mb-3 flex items-center gap-4">
-                                <mat-icon
-                                    class="cursor-move text-gray-400"
-                                    cdkDragHandle
-                                >
-                                    drag_indicator
-                                </mat-icon>
                                 <div
                                     class="flex flex-1 flex-wrap items-center gap-2"
                                 >
@@ -157,10 +150,6 @@
                                         <mat-icon class="mr-1 icon-size-4"
                                             >lock</mat-icon
                                         >
-                                        {{
-                                            'TOURNAMENTS.FORMS.LOCKED'
-                                                | transloco
-                                        }}
                                     </span>
                                     <span
                                         class="inline-flex items-center rounded-full bg-blue-100 px-3 py-1 text-xs font-medium text-blue-800"
@@ -183,14 +172,17 @@
                                         {{ team.avgStrength | number: '1.1-1' }}
                                     </span>
                                 </div>
-                                <div>
+                                <div class="flex items-center gap-2">
                                     <button
                                         mat-icon-button
                                         (click)="deleteTeam(team)"
                                         [disabled]="team.locked"
                                     >
                                         <mat-icon
-                                            [svgIcon]="'heroicons_outline:link'"
+                                            class="text-red-600"
+                                            [svgIcon]="
+                                                'heroicons_outline:trash'
+                                            "
                                         ></mat-icon>
                                     </button>
                                     <mat-slide-toggle
