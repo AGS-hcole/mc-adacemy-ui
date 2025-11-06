@@ -501,6 +501,27 @@
 
                                     <button
                                         mat-icon-button
+                                        *ngIf="
+                                            tournament.status ===
+                                            TournamentStatus.PUBLISHED
+                                        "
+                                        [matTooltip]="
+                                            'TOURNAMENTS.ADMIN.ACTIONS.ARCHIVE'
+                                                | transloco
+                                        "
+                                        (click)="archiveTournament(tournament)"
+                                    >
+                                        <mat-icon
+                                            class="icon-size-5"
+                                            [svgIcon]="
+                                                'heroicons_outline:archive-box'
+                                            "
+                                        >
+                                        </mat-icon>
+                                    </button>
+
+                                    <button
+                                        mat-icon-button
                                         [matTooltip]="
                                             'TOURNAMENTS.ADMIN.ACTIONS.DELETE'
                                                 | transloco
