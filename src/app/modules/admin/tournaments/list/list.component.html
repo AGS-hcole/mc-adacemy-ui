@@ -1,15 +1,18 @@
-<div class="flex min-w-0 flex-auto flex-col">
+<div
+    class="absolute inset-0 flex min-w-0 flex-col overflow-y-auto sm:overflow-hidden"
+>
     <!-- Header -->
     <div
-        class="bg-card flex flex-col gap-4 p-6 sm:flex-row sm:items-center sm:justify-between md:px-8 dark:bg-transparent"
+        class="bg-card relative flex flex-0 flex-col border-b px-6 py-8 sm:flex-row sm:items-center sm:justify-between md:px-8 dark:bg-transparent"
     >
-        <div>
-            <div class="text-4xl font-extrabold leading-none tracking-tight">
-                {{ 'TOURNAMENTS.ADMIN.TITLE' | transloco }}
-            </div>
+        <!-- Title -->
+        <div class="text-4xl font-extrabold tracking-tight">
+            {{ 'TOURNAMENTS.ADMIN.TITLE' | transloco }}
         </div>
-        <div class="flex shrink-0 items-center">
+        <!-- Actions -->
+        <div class="mt-6 flex shrink-0 items-center sm:ml-4 sm:mt-0">
             <button
+                class="ml-4"
                 mat-flat-button
                 [color]="'primary'"
                 (click)="createTournament()"
@@ -23,8 +26,11 @@
     </div>
 
     <!-- Filters -->
-    <div class="flex flex-wrap gap-4 px-6 py-4 md:px-8">
-        <mat-form-field class="fuse-mat-dense w-full sm:w-64">
+    <div
+        class="flex flex-0 flex-col items-start gap-0 bg-gray-50 p-6 pb-0 sm:flex-row sm:items-center sm:gap-4 dark:bg-gray-900"
+    >
+        <!-- Search filter -->
+        <mat-form-field class="w-full sm:w-64">
             <mat-icon
                 class="icon-size-5"
                 matPrefix
@@ -38,11 +44,12 @@
             />
         </mat-form-field>
 
-        <mat-form-field class="fuse-mat-dense w-full sm:w-44">
-            <mat-select
-                [formControl]="statusControl"
-                [placeholder]="'TOURNAMENTS.ADMIN.FILTERS.STATUS' | transloco"
-            >
+        <!-- Status filter -->
+        <mat-form-field class="w-full sm:w-40">
+            <mat-label>{{
+                'TOURNAMENTS.ADMIN.FILTERS.STATUS' | transloco
+            }}</mat-label>
+            <mat-select [formControl]="statusControl">
                 <mat-option [value]="null">{{
                     'TOURNAMENTS.ADMIN.FILTERS.ALL_STATUS' | transloco
                 }}</mat-option>
@@ -58,11 +65,12 @@
             </mat-select>
         </mat-form-field>
 
-        <mat-form-field class="fuse-mat-dense w-full sm:w-44">
-            <mat-select
-                [formControl]="typeControl"
-                [placeholder]="'TOURNAMENTS.ADMIN.FILTERS.TYPE' | transloco"
-            >
+        <!-- Type filter -->
+        <mat-form-field class="w-full sm:w-32">
+            <mat-label>{{
+                'TOURNAMENTS.ADMIN.FILTERS.TYPE' | transloco
+            }}</mat-label>
+            <mat-select [formControl]="typeControl">
                 <mat-option [value]="null">{{
                     'TOURNAMENTS.ADMIN.FILTERS.ALL_TYPES' | transloco
                 }}</mat-option>
@@ -85,103 +93,104 @@
         </mat-form-field>
     </div>
 
-    <!-- Content -->
-    <div class="flex flex-auto flex-col overflow-hidden">
-        <div class="overflow-x-auto sm:-mx-6">
-            <div class="align-middle inline-block min-w-full py-2 sm:px-6">
-                <!-- Table -->
-                <div
-                    class="overflow-hidden shadow ring-1 ring-black ring-opacity-5 sm:rounded-lg"
-                    *ngIf="filteredTournaments.length > 0"
+    <!-- Tournaments list -->
+    <div class="flex flex-auto border-t sm:overflow-hidden">
+        <div class="flex flex-auto flex-col sm:overflow-y-auto">
+            <ng-container *ngIf="filteredTournaments as tournaments">
+                <!-- Tournaments table -->
+                <ng-container
+                    *ngIf="tournaments.length > 0; else noTournaments"
                 >
-                    <table class="min-w-full divide-y divide-gray-300">
-                        <thead class="bg-gray-50 dark:bg-gray-800">
-                            <tr>
-                                <th
-                                    scope="col"
-                                    class="px-3 py-3.5 text-left text-sm font-semibold"
-                                >
-                                    {{
-                                        'TOURNAMENTS.ADMIN.TABLE.TITLE'
-                                            | transloco
-                                    }}
-                                </th>
-                                <th
-                                    scope="col"
-                                    class="px-3 py-3.5 text-left text-sm font-semibold"
-                                >
-                                    {{
-                                        'TOURNAMENTS.ADMIN.TABLE.TYPE'
-                                            | transloco
-                                    }}
-                                </th>
-                                <th
-                                    scope="col"
-                                    class="px-3 py-3.5 text-left text-sm font-semibold"
-                                >
-                                    {{
-                                        'TOURNAMENTS.ADMIN.TABLE.DATES'
-                                            | transloco
-                                    }}
-                                </th>
-                                <th
-                                    scope="col"
-                                    class="px-3 py-3.5 text-left text-sm font-semibold"
-                                >
-                                    {{
-                                        'TOURNAMENTS.ADMIN.TABLE.LOCATION'
-                                            | transloco
-                                    }}
-                                </th>
-                                <th
-                                    scope="col"
-                                    class="px-3 py-3.5 text-left text-sm font-semibold"
-                                >
-                                    {{
-                                        'TOURNAMENTS.ADMIN.TABLE.STATUS'
-                                            | transloco
-                                    }}
-                                </th>
-                                <th
-                                    scope="col"
-                                    class="relative px-3 py-3.5 text-right text-sm font-semibold"
-                                >
-                                    {{
-                                        'TOURNAMENTS.ADMIN.TABLE.ACTIONS'
-                                            | transloco
-                                    }}
-                                </th>
-                            </tr>
-                        </thead>
-                        <tbody
-                            class="divide-y divide-gray-200 bg-white dark:divide-gray-700 dark:bg-gray-900"
+                    <!-- Desktop table (lg and up) -->
+                    <div class="hidden lg:grid">
+                        <!-- Header -->
+                        <div
+                            class="text-secondary sticky top-0 z-10 grid gap-4 bg-gray-50 px-6 py-4 text-md font-semibold shadow md:px-8 dark:bg-gray-900"
+                            style="
+                                grid-template-columns: 48px auto 120px 180px 150px 120px 200px;
+                            "
                         >
-                            <tr
-                                *ngFor="
-                                    let tournament of filteredTournaments;
-                                    trackBy: trackByFn
+                            <div></div>
+                            <div>
+                                {{
+                                    'TOURNAMENTS.ADMIN.TABLE.TITLE' | transloco
+                                }}
+                            </div>
+                            <div>
+                                {{ 'TOURNAMENTS.ADMIN.TABLE.TYPE' | transloco }}
+                            </div>
+                            <div>
+                                {{
+                                    'TOURNAMENTS.ADMIN.TABLE.DATES' | transloco
+                                }}
+                            </div>
+                            <div>
+                                {{
+                                    'TOURNAMENTS.ADMIN.TABLE.LOCATION'
+                                        | transloco
+                                }}
+                            </div>
+                            <div>
+                                {{
+                                    'TOURNAMENTS.ADMIN.TABLE.STATUS' | transloco
+                                }}
+                            </div>
+                            <div class="text-right">
+                                {{
+                                    'TOURNAMENTS.ADMIN.TABLE.ACTIONS'
+                                        | transloco
+                                }}
+                            </div>
+                        </div>
+
+                        <!-- Rows -->
+                        <ng-container
+                            *ngFor="
+                                let tournament of tournaments;
+                                trackBy: trackByFn
+                            "
+                        >
+                            <div
+                                class="grid cursor-pointer items-center gap-4 border-b px-6 py-3 hover:bg-gray-50 md:px-8 dark:hover:bg-gray-900"
+                                style="
+                                    grid-template-columns: 48px auto 120px 180px 150px 120px 200px;
                                 "
+                                (click)="editTournament(tournament.id)"
                             >
-                                <td class="whitespace-nowrap px-3 py-4 text-sm">
-                                    {{ tournament.title }}
-                                </td>
-                                <td class="whitespace-nowrap px-3 py-4 text-sm">
+                                <!-- Icon -->
+                                <div>
+                                    <mat-icon
+                                        class="icon-size-5"
+                                        [svgIcon]="'heroicons_outline:trophy'"
+                                    >
+                                    </mat-icon>
+                                </div>
+
+                                <!-- Title -->
+                                <div class="flex flex-col">
+                                    <span class="font-medium">{{
+                                        tournament.title
+                                    }}</span>
+                                </div>
+
+                                <!-- Type -->
+                                <div>
                                     <span
-                                        class="inline-flex items-center rounded-full px-2.5 py-0.5 text-xs font-medium"
+                                        class="inline-flex items-center rounded-full px-2.5 py-0.5 text-xs font-bold uppercase tracking-wide"
                                         [ngClass]="{
-                                            'bg-blue-100 text-blue-800 dark:bg-blue-900 dark:text-blue-200':
+                                            'bg-blue-200 text-blue-800 dark:bg-blue-600 dark:text-blue-50':
                                                 tournament.type ===
                                                 TournamentType.P250,
-                                            'bg-green-100 text-green-800 dark:bg-green-900 dark:text-green-200':
+                                            'bg-green-200 text-green-800 dark:bg-green-600 dark:text-green-50':
                                                 tournament.type ===
                                                 TournamentType.P500,
-                                            'bg-purple-100 text-purple-800 dark:bg-purple-900 dark:text-purple-200':
+                                            'bg-purple-200 text-purple-800 dark:bg-purple-600 dark:text-purple-50':
                                                 tournament.type ===
                                                 TournamentType.P1000,
-                                            'bg-orange-100 text-orange-800 dark:bg-orange-900 dark:text-orange-200':
+                                            'bg-orange-200 text-orange-800 dark:bg-orange-600 dark:text-orange-50':
                                                 tournament.type ===
                                                 TournamentType.P1500,
-                                            'bg-red-100 text-red-800 dark:bg-red-900 dark:text-red-200':
+                                            'bg-red-200 text-red-800 dark:bg-red-600 dark:text-red-50':
                                                 tournament.type ===
                                                 TournamentType.P2000,
                                         }"
@@ -191,33 +200,39 @@
                                                 tournament.type | transloco
                                         }}
                                     </span>
-                                </td>
-                                <td class="whitespace-nowrap px-3 py-4 text-sm">
+                                </div>
+
+                                <!-- Dates -->
+                                <div class="text-sm">
                                     {{
                                         tournament.startsAt
-                                            | localizedDate: 'short'
+                                            | localizedDate: 'shortDate'
                                     }}
                                     -
                                     {{
                                         tournament.endsAt
-                                            | localizedDate: 'short'
+                                            | localizedDate: 'shortDate'
                                     }}
-                                </td>
-                                <td class="whitespace-nowrap px-3 py-4 text-sm">
+                                </div>
+
+                                <!-- Location -->
+                                <div class="text-sm">
                                     {{ tournament.city }},
                                     {{ tournament.country }}
-                                </td>
-                                <td class="whitespace-nowrap px-3 py-4 text-sm">
+                                </div>
+
+                                <!-- Status -->
+                                <div>
                                     <span
-                                        class="inline-flex items-center rounded-full px-2.5 py-0.5 text-xs font-medium"
+                                        class="inline-flex items-center rounded-full px-2.5 py-0.5 text-xs font-bold uppercase tracking-wide"
                                         [ngClass]="{
-                                            'bg-yellow-100 text-yellow-800 dark:bg-yellow-900 dark:text-yellow-200':
+                                            'bg-gray-200 text-gray-800 dark:bg-gray-600 dark:text-gray-50':
                                                 tournament.status ===
                                                 TournamentStatus.DRAFT,
-                                            'bg-green-100 text-green-800 dark:bg-green-900 dark:text-green-200':
+                                            'bg-green-200 text-green-800 dark:bg-green-600 dark:text-green-50':
                                                 tournament.status ===
                                                 TournamentStatus.PUBLISHED,
-                                            'bg-gray-100 text-gray-800 dark:bg-gray-700 dark:text-gray-200':
+                                            'bg-amber-200 text-amber-800 dark:bg-amber-600 dark:text-amber-50':
                                                 tournament.status ===
                                                 TournamentStatus.ARCHIVED,
                                         }"
@@ -227,9 +242,12 @@
                                                 tournament.status | transloco
                                         }}
                                     </span>
-                                </td>
-                                <td
-                                    class="relative whitespace-nowrap px-3 py-4 text-right text-sm"
+                                </div>
+
+                                <!-- Actions -->
+                                <div
+                                    class="flex items-center justify-end gap-2"
+                                    (click)="$event.stopPropagation()"
                                 >
                                     <button
                                         mat-icon-button
@@ -241,47 +259,55 @@
                                     >
                                         <mat-icon
                                             class="icon-size-5"
-                                            [svgIcon]="'heroicons_solid:pencil'"
-                                        ></mat-icon>
+                                            [svgIcon]="
+                                                'heroicons_outline:pencil'
+                                            "
+                                        >
+                                        </mat-icon>
                                     </button>
+
                                     <button
                                         mat-icon-button
-                                        [matTooltip]="
-                                            'TOURNAMENTS.ADMIN.ACTIONS.PUBLISH'
-                                                | transloco
-                                        "
                                         *ngIf="
                                             tournament.status ===
                                             TournamentStatus.DRAFT
+                                        "
+                                        [matTooltip]="
+                                            'TOURNAMENTS.ADMIN.ACTIONS.PUBLISH'
+                                                | transloco
                                         "
                                         (click)="publishTournament(tournament)"
                                     >
                                         <mat-icon
                                             class="icon-size-5"
                                             [svgIcon]="
-                                                'heroicons_solid:arrow-up-circle'
+                                                'heroicons_outline:arrow-up-circle'
                                             "
-                                        ></mat-icon>
+                                        >
+                                        </mat-icon>
                                     </button>
+
                                     <button
                                         mat-icon-button
-                                        [matTooltip]="
-                                            'TOURNAMENTS.ADMIN.ACTIONS.ARCHIVE'
-                                                | transloco
-                                        "
                                         *ngIf="
                                             tournament.status ===
                                             TournamentStatus.PUBLISHED
+                                        "
+                                        [matTooltip]="
+                                            'TOURNAMENTS.ADMIN.ACTIONS.ARCHIVE'
+                                                | transloco
                                         "
                                         (click)="archiveTournament(tournament)"
                                     >
                                         <mat-icon
                                             class="icon-size-5"
                                             [svgIcon]="
-                                                'heroicons_solid:archive-box'
+                                                'heroicons_outline:archive-box'
                                             "
-                                        ></mat-icon>
+                                        >
+                                        </mat-icon>
                                     </button>
+
                                     <button
                                         mat-icon-button
                                         [matTooltip]="
@@ -292,29 +318,476 @@
                                     >
                                         <mat-icon
                                             class="icon-size-5"
-                                            [svgIcon]="'heroicons_solid:trash'"
-                                        ></mat-icon>
+                                            [svgIcon]="
+                                                'heroicons_outline:trash'
+                                            "
+                                        >
+                                        </mat-icon>
                                     </button>
-                                </td>
-                            </tr>
-                        </tbody>
-                    </table>
-                </div>
-
-                <!-- Empty state -->
-                <div
-                    class="flex flex-col items-center justify-center py-16"
-                    *ngIf="filteredTournaments.length === 0"
-                >
-                    <mat-icon
-                        class="mb-4 text-gray-400 icon-size-24"
-                        [svgIcon]="'heroicons_outline:trophy'"
-                    ></mat-icon>
-                    <div class="text-2xl font-semibold">
-                        {{ 'TOURNAMENTS.ADMIN.NO_TOURNAMENTS' | transloco }}
+                                </div>
+                            </div>
+                        </ng-container>
                     </div>
-                </div>
-            </div>
+
+                    <!-- Tablet table (sm to lg) -->
+                    <div class="hidden sm:grid lg:hidden">
+                        <!-- Header -->
+                        <div
+                            class="text-secondary sticky top-0 z-10 grid gap-4 bg-gray-50 px-6 py-4 text-md font-semibold shadow dark:bg-gray-900"
+                            style="
+                                grid-template-columns: 48px auto 120px 120px 150px;
+                            "
+                        >
+                            <div></div>
+                            <div>
+                                {{
+                                    'TOURNAMENTS.ADMIN.TABLE.TITLE' | transloco
+                                }}
+                            </div>
+                            <div>
+                                {{ 'TOURNAMENTS.ADMIN.TABLE.TYPE' | transloco }}
+                            </div>
+                            <div>
+                                {{
+                                    'TOURNAMENTS.ADMIN.TABLE.STATUS' | transloco
+                                }}
+                            </div>
+                            <div class="text-right">
+                                {{
+                                    'TOURNAMENTS.ADMIN.TABLE.ACTIONS'
+                                        | transloco
+                                }}
+                            </div>
+                        </div>
+
+                        <!-- Rows -->
+                        <ng-container
+                            *ngFor="
+                                let tournament of tournaments;
+                                trackBy: trackByFn
+                            "
+                        >
+                            <div
+                                class="grid cursor-pointer items-center gap-4 border-b px-6 py-3 hover:bg-gray-50 dark:hover:bg-gray-900"
+                                style="
+                                    grid-template-columns: 48px auto 120px 120px 150px;
+                                "
+                                (click)="editTournament(tournament.id)"
+                            >
+                                <!-- Icon -->
+                                <div>
+                                    <mat-icon
+                                        class="icon-size-5"
+                                        [svgIcon]="'heroicons_outline:trophy'"
+                                    >
+                                    </mat-icon>
+                                </div>
+
+                                <!-- Title and details -->
+                                <div class="flex flex-col">
+                                    <span class="font-medium">{{
+                                        tournament.title
+                                    }}</span>
+                                    <span class="text-secondary text-xs">
+                                        {{
+                                            tournament.startsAt
+                                                | localizedDate: 'shortDate'
+                                        }}
+                                        -
+                                        {{
+                                            tournament.endsAt
+                                                | localizedDate: 'shortDate'
+                                        }}
+                                        <ng-container *ngIf="tournament.city">
+                                            • {{ tournament.city }}
+                                        </ng-container>
+                                    </span>
+                                </div>
+
+                                <!-- Type -->
+                                <div>
+                                    <span
+                                        class="inline-flex items-center rounded-full px-2.5 py-0.5 text-xs font-bold uppercase tracking-wide"
+                                        [ngClass]="{
+                                            'bg-blue-200 text-blue-800 dark:bg-blue-600 dark:text-blue-50':
+                                                tournament.type ===
+                                                TournamentType.P250,
+                                            'bg-green-200 text-green-800 dark:bg-green-600 dark:text-green-50':
+                                                tournament.type ===
+                                                TournamentType.P500,
+                                            'bg-purple-200 text-purple-800 dark:bg-purple-600 dark:text-purple-50':
+                                                tournament.type ===
+                                                TournamentType.P1000,
+                                            'bg-orange-200 text-orange-800 dark:bg-orange-600 dark:text-orange-50':
+                                                tournament.type ===
+                                                TournamentType.P1500,
+                                            'bg-red-200 text-red-800 dark:bg-red-600 dark:text-red-50':
+                                                tournament.type ===
+                                                TournamentType.P2000,
+                                        }"
+                                    >
+                                        {{
+                                            'TOURNAMENTS.TYPE.' +
+                                                tournament.type | transloco
+                                        }}
+                                    </span>
+                                </div>
+
+                                <!-- Status -->
+                                <div>
+                                    <span
+                                        class="inline-flex items-center rounded-full px-2.5 py-0.5 text-xs font-bold uppercase tracking-wide"
+                                        [ngClass]="{
+                                            'bg-gray-200 text-gray-800 dark:bg-gray-600 dark:text-gray-50':
+                                                tournament.status ===
+                                                TournamentStatus.DRAFT,
+                                            'bg-green-200 text-green-800 dark:bg-green-600 dark:text-green-50':
+                                                tournament.status ===
+                                                TournamentStatus.PUBLISHED,
+                                            'bg-amber-200 text-amber-800 dark:bg-amber-600 dark:text-amber-50':
+                                                tournament.status ===
+                                                TournamentStatus.ARCHIVED,
+                                        }"
+                                    >
+                                        {{
+                                            'TOURNAMENTS.STATUS.' +
+                                                tournament.status | transloco
+                                        }}
+                                    </span>
+                                </div>
+
+                                <!-- Actions -->
+                                <div
+                                    class="flex items-center justify-end gap-2"
+                                    (click)="$event.stopPropagation()"
+                                >
+                                    <button
+                                        mat-icon-button
+                                        [matTooltip]="
+                                            'TOURNAMENTS.ADMIN.ACTIONS.EDIT'
+                                                | transloco
+                                        "
+                                        (click)="editTournament(tournament.id)"
+                                    >
+                                        <mat-icon
+                                            class="icon-size-5"
+                                            [svgIcon]="
+                                                'heroicons_outline:pencil'
+                                            "
+                                        >
+                                        </mat-icon>
+                                    </button>
+
+                                    <button
+                                        mat-icon-button
+                                        *ngIf="
+                                            tournament.status ===
+                                            TournamentStatus.DRAFT
+                                        "
+                                        [matTooltip]="
+                                            'TOURNAMENTS.ADMIN.ACTIONS.PUBLISH'
+                                                | transloco
+                                        "
+                                        (click)="publishTournament(tournament)"
+                                    >
+                                        <mat-icon
+                                            class="icon-size-5"
+                                            [svgIcon]="
+                                                'heroicons_outline:arrow-up-circle'
+                                            "
+                                        >
+                                        </mat-icon>
+                                    </button>
+
+                                    <button
+                                        mat-icon-button
+                                        *ngIf="
+                                            tournament.status ===
+                                            TournamentStatus.PUBLISHED
+                                        "
+                                        [matTooltip]="
+                                            'TOURNAMENTS.ADMIN.ACTIONS.ARCHIVE'
+                                                | transloco
+                                        "
+                                        (click)="archiveTournament(tournament)"
+                                    >
+                                        <mat-icon
+                                            class="icon-size-5"
+                                            [svgIcon]="
+                                                'heroicons_outline:archive-box'
+                                            "
+                                        >
+                                        </mat-icon>
+                                    </button>
+
+                                    <button
+                                        mat-icon-button
+                                        [matTooltip]="
+                                            'TOURNAMENTS.ADMIN.ACTIONS.DELETE'
+                                                | transloco
+                                        "
+                                        (click)="deleteTournament(tournament)"
+                                    >
+                                        <mat-icon
+                                            class="icon-size-5"
+                                            [svgIcon]="
+                                                'heroicons_outline:trash'
+                                            "
+                                        >
+                                        </mat-icon>
+                                    </button>
+                                </div>
+                            </div>
+                        </ng-container>
+                    </div>
+
+                    <!-- Mobile cards (xs) -->
+                    <div class="sm:hidden">
+                        <ng-container
+                            *ngFor="
+                                let tournament of tournaments;
+                                trackBy: trackByFn
+                            "
+                        >
+                            <div
+                                class="bg-card border-b p-4 hover:bg-gray-50 dark:hover:bg-gray-900"
+                                (click)="editTournament(tournament.id)"
+                            >
+                                <!-- Header with icon and title -->
+                                <div
+                                    class="mb-3 flex items-start justify-between"
+                                >
+                                    <div class="flex items-start gap-3">
+                                        <mat-icon
+                                            class="mt-1 icon-size-5"
+                                            [svgIcon]="
+                                                'heroicons_outline:trophy'
+                                            "
+                                        >
+                                        </mat-icon>
+                                        <div class="flex flex-col">
+                                            <span class="font-medium">{{
+                                                tournament.title
+                                            }}</span>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <!-- Tournament details -->
+                                <div class="mb-3 flex flex-col gap-2">
+                                    <!-- Type -->
+                                    <div class="flex items-center gap-2">
+                                        <span
+                                            class="text-secondary text-sm font-medium"
+                                        >
+                                            {{
+                                                'TOURNAMENTS.ADMIN.TABLE.TYPE'
+                                                    | transloco
+                                            }}:
+                                        </span>
+                                        <span
+                                            class="inline-flex items-center rounded-full px-2.5 py-0.5 text-xs font-bold uppercase tracking-wide"
+                                            [ngClass]="{
+                                                'bg-blue-200 text-blue-800 dark:bg-blue-600 dark:text-blue-50':
+                                                    tournament.type ===
+                                                    TournamentType.P250,
+                                                'bg-green-200 text-green-800 dark:bg-green-600 dark:text-green-50':
+                                                    tournament.type ===
+                                                    TournamentType.P500,
+                                                'bg-purple-200 text-purple-800 dark:bg-purple-600 dark:text-purple-50':
+                                                    tournament.type ===
+                                                    TournamentType.P1000,
+                                                'bg-orange-200 text-orange-800 dark:bg-orange-600 dark:text-orange-50':
+                                                    tournament.type ===
+                                                    TournamentType.P1500,
+                                                'bg-red-200 text-red-800 dark:bg-red-600 dark:text-red-50':
+                                                    tournament.type ===
+                                                    TournamentType.P2000,
+                                            }"
+                                        >
+                                            {{
+                                                'TOURNAMENTS.TYPE.' +
+                                                    tournament.type | transloco
+                                            }}
+                                        </span>
+                                    </div>
+
+                                    <!-- Dates -->
+                                    <div class="flex items-center gap-2">
+                                        <span
+                                            class="text-secondary text-sm font-medium"
+                                        >
+                                            {{
+                                                'TOURNAMENTS.ADMIN.TABLE.DATES'
+                                                    | transloco
+                                            }}:
+                                        </span>
+                                        <span class="text-sm">
+                                            {{
+                                                tournament.startsAt
+                                                    | localizedDate: 'shortDate'
+                                            }}
+                                            -
+                                            {{
+                                                tournament.endsAt
+                                                    | localizedDate: 'shortDate'
+                                            }}
+                                        </span>
+                                    </div>
+
+                                    <!-- Location -->
+                                    <div class="flex items-center gap-2">
+                                        <span
+                                            class="text-secondary text-sm font-medium"
+                                        >
+                                            {{
+                                                'TOURNAMENTS.ADMIN.TABLE.LOCATION'
+                                                    | transloco
+                                            }}:
+                                        </span>
+                                        <span class="text-sm">
+                                            {{ tournament.city }},
+                                            {{ tournament.country }}
+                                        </span>
+                                    </div>
+
+                                    <!-- Status -->
+                                    <div class="flex items-center gap-2">
+                                        <span
+                                            class="text-secondary text-sm font-medium"
+                                        >
+                                            {{
+                                                'TOURNAMENTS.ADMIN.TABLE.STATUS'
+                                                    | transloco
+                                            }}:
+                                        </span>
+                                        <span
+                                            class="inline-flex items-center rounded-full px-2.5 py-0.5 text-xs font-bold uppercase tracking-wide"
+                                            [ngClass]="{
+                                                'bg-gray-200 text-gray-800 dark:bg-gray-600 dark:text-gray-50':
+                                                    tournament.status ===
+                                                    TournamentStatus.DRAFT,
+                                                'bg-green-200 text-green-800 dark:bg-green-600 dark:text-green-50':
+                                                    tournament.status ===
+                                                    TournamentStatus.PUBLISHED,
+                                                'bg-amber-200 text-amber-800 dark:bg-amber-600 dark:text-amber-50':
+                                                    tournament.status ===
+                                                    TournamentStatus.ARCHIVED,
+                                            }"
+                                        >
+                                            {{
+                                                'TOURNAMENTS.STATUS.' +
+                                                    tournament.status
+                                                    | transloco
+                                            }}
+                                        </span>
+                                    </div>
+                                </div>
+
+                                <!-- Actions -->
+                                <div
+                                    class="flex items-center justify-end gap-2 border-t pt-3"
+                                    (click)="$event.stopPropagation()"
+                                >
+                                    <button
+                                        mat-icon-button
+                                        [matTooltip]="
+                                            'TOURNAMENTS.ADMIN.ACTIONS.EDIT'
+                                                | transloco
+                                        "
+                                        (click)="editTournament(tournament.id)"
+                                    >
+                                        <mat-icon
+                                            class="icon-size-5"
+                                            [svgIcon]="
+                                                'heroicons_outline:pencil'
+                                            "
+                                        >
+                                        </mat-icon>
+                                    </button>
+
+                                    <button
+                                        mat-icon-button
+                                        *ngIf="
+                                            tournament.status ===
+                                            TournamentStatus.DRAFT
+                                        "
+                                        [matTooltip]="
+                                            'TOURNAMENTS.ADMIN.ACTIONS.PUBLISH'
+                                                | transloco
+                                        "
+                                        (click)="publishTournament(tournament)"
+                                    >
+                                        <mat-icon
+                                            class="icon-size-5"
+                                            [svgIcon]="
+                                                'heroicons_outline:arrow-up-circle'
+                                            "
+                                        >
+                                        </mat-icon>
+                                    </button>
+
+                                    <button
+                                        mat-icon-button
+                                        *ngIf="
+                                            tournament.status ===
+                                            TournamentStatus.PUBLISHED
+                                        "
+                                        [matTooltip]="
+                                            'TOURNAMENTS.ADMIN.ACTIONS.ARCHIVE'
+                                                | transloco
+                                        "
+                                        (click)="archiveTournament(tournament)"
+                                    >
+                                        <mat-icon
+                                            class="icon-size-5"
+                                            [svgIcon]="
+                                                'heroicons_outline:archive-box'
+                                            "
+                                        >
+                                        </mat-icon>
+                                    </button>
+
+                                    <button
+                                        mat-icon-button
+                                        [matTooltip]="
+                                            'TOURNAMENTS.ADMIN.ACTIONS.DELETE'
+                                                | transloco
+                                        "
+                                        (click)="deleteTournament(tournament)"
+                                    >
+                                        <mat-icon
+                                            class="icon-size-5"
+                                            [svgIcon]="
+                                                'heroicons_outline:trash'
+                                            "
+                                        >
+                                        </mat-icon>
+                                    </button>
+                                </div>
+                            </div>
+                        </ng-container>
+                    </div>
+                </ng-container>
+
+                <!-- No tournaments -->
+                <ng-template #noTournaments>
+                    <div
+                        class="flex flex-auto flex-col items-center justify-center bg-gray-100 dark:bg-transparent"
+                    >
+                        <mat-icon
+                            class="icon-size-24"
+                            [svgIcon]="'heroicons_outline:trophy'"
+                        >
+                        </mat-icon>
+                        <div
+                            class="text-secondary mt-4 text-2xl font-semibold tracking-tight"
+                        >
+                            {{ 'TOURNAMENTS.ADMIN.NO_TOURNAMENTS' | transloco }}
+                        </div>
+                    </div>
+                </ng-template>
+            </ng-container>
         </div>
     </div>
 </div>
