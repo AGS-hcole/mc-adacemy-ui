@@ -2,6 +2,7 @@ import { registerLocaleData } from '@angular/common';
 import { provideHttpClient } from '@angular/common/http';
 import {
     ApplicationConfig,
+    effect,
     inject,
     isDevMode,
     LOCALE_ID,
@@ -11,9 +12,9 @@ import { LuxonDateAdapter } from '@angular/material-luxon-adapter';
 import { DateAdapter, MAT_DATE_FORMATS } from '@angular/material/core';
 import { provideAnimations } from '@angular/platform-browser/animations';
 import { provideRouter, withInMemoryScrolling } from '@angular/router';
-import { provideServiceWorker } from '@angular/service-worker';
+import { provideServiceWorker, SwUpdate } from '@angular/service-worker';
 import { provideFuse } from '@fuse';
-import { TranslocoService, provideTransloco } from '@jsverse/transloco';
+import { provideTransloco, TranslocoService } from '@jsverse/transloco';
 import { appRoutes } from 'app/app.routes';
 import { provideAuth } from 'app/core/auth/auth.provider';
 import { provideIcons } from 'app/core/icons/icons.provider';
@@ -21,8 +22,8 @@ import { LocaleService } from 'app/core/locale/locale.service';
 import { firstValueFrom } from 'rxjs';
 import { TranslocoHttpLoader } from './core/transloco/transloco.http-loader';
 
-import localeFr from '@angular/common/locales/fr';
 import localeEn from '@angular/common/locales/en';
+import localeFr from '@angular/common/locales/fr';
 
 // Register locale data for French and English
 registerLocaleData(localeFr, 'fr');
@@ -87,16 +88,18 @@ export const appConfig: ApplicationConfig = {
             },
             loader: TranslocoHttpLoader,
         }),
+
         provideAppInitializer(() => {
             const translocoService = inject(TranslocoService);
             const dateAdapter = inject(DateAdapter);
             const defaultLang = translocoService.getDefaultLang();
-            
+
             translocoService.setActiveLang(defaultLang);
             dateAdapter.setLocale(defaultLang);
 
             return firstValueFrom(translocoService.load(defaultLang));
         }),
+
         // Initialize LocaleService to listen to language changes
         provideAppInitializer(() => {
             const localeService = inject(LocaleService);
@@ -107,8 +110,41 @@ export const appConfig: ApplicationConfig = {
         // Service Worker for PWA
         provideServiceWorker('ngsw-worker.js', {
             enabled: !isDevMode(),
-            registrationStrategy: 'registerWhenStable:30000',
+            registrationStrategy: 'registerImmediately',
         }),
+
+        {
+            provide: 'swUpdateHandler',
+            useFactory: () => {
+                const swUpdate = inject(SwUpdate);
+
+                if (!swUpdate.isEnabled) return;
+
+                // effet réactif moderne pour écouter les updates
+                effect(() => {
+                    swUpdate.versionUpdates.subscribe(async (event) => {
+                        if (event.type === 'VERSION_READY') {
+                            try {
+                                await swUpdate.activateUpdate();
+                            } finally {
+                                location.reload();
+                            }
+                        }
+                    });
+
+                    // recheck périodique + au retour d’onglet
+                    const check = () =>
+                        swUpdate.checkForUpdate().catch(() => {});
+                    setInterval(check, 60_000);
+                    document.addEventListener('visibilitychange', () => {
+                        if (document.visibilityState === 'visible') check();
+                    });
+
+                    // si le SW devient irrécupérable → reload
+                    swUpdate.unrecoverable.subscribe(() => location.reload());
+                });
+            },
+        },
 
         // Fuse
         provideAuth(),
