@@ -16,7 +16,7 @@ import { MatInputModule } from '@angular/material/input';
 import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 import { MatSlideToggleModule } from '@angular/material/slide-toggle';
 import { MatSnackBar } from '@angular/material/snack-bar';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, RouterLink } from '@angular/router';
 import { TranslocoModule, TranslocoService } from '@jsverse/transloco';
 import { UserService } from 'app/core/user/user.service';
 import { User } from 'app/core/user/user.types';
@@ -46,6 +46,7 @@ interface FeedItem {
         MatNativeDateModule,
         MatProgressSpinnerModule,
         MatSlideToggleModule,
+        RouterLink,
         MatCheckboxModule,
         TranslocoModule,
     ],
@@ -123,6 +124,7 @@ export class ProfileComponent implements OnInit {
     }
 
     private initializeForm(user: User): void {
+        console.log(user);
         this.form = this.fb.group({
             firstname: [
                 user.firstname || '',
@@ -139,6 +141,7 @@ export class ProfileComponent implements OnInit {
             ],
             birthDate: [user.birthDate ? new Date(user.birthDate) : null],
             fftLicenseNumber: [user.fftLicenseNumber || ''],
+            currentRanking: [user.currentRanking || ''],
             // Notification preferences
             notifyEmail: [user.notifyEmail || false],
             notifySMS: [user.notifySMS || false],
@@ -229,6 +232,7 @@ export class ProfileComponent implements OnInit {
                 ? formValue.birthDate.toISOString().split('T')[0]
                 : null,
             fftLicenseNumber: formValue.fftLicenseNumber || null,
+            currentRanking: formValue.currentRanking || null,
             notifyEmail: formValue.notifyEmail,
             notifySMS: formValue.notifySMS,
             notifyWhatsApp: formValue.notifyWhatsApp,

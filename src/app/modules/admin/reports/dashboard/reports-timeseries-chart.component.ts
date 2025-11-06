@@ -1,7 +1,15 @@
 import { CommonModule } from '@angular/common';
-import { Component, Input, OnChanges, SimpleChanges, ViewChild } from '@angular/core';
+import {
+    Component,
+    Input,
+    OnChanges,
+    SimpleChanges,
+    ViewChild,
+} from '@angular/core';
 import { MatIconModule } from '@angular/material/icon';
 import { TranslocoModule } from '@jsverse/transloco';
+import { SessionsTimeseriesDto } from 'app/core/reports/reports.types';
+import { DateTime } from 'luxon';
 import {
     ApexAxisChartSeries,
     ApexChart,
@@ -15,8 +23,6 @@ import {
     ChartComponent,
     NgApexchartsModule,
 } from 'ng-apexcharts';
-import { DateTime } from 'luxon';
-import { SessionsTimeseriesDto } from 'app/core/reports/reports.types';
 
 export type ChartOptions = {
     series: ApexAxisChartSeries;
@@ -79,7 +85,10 @@ export class ReportsTimeseriesChartComponent implements OnChanges {
                 height: 350,
                 fontFamily: 'inherit',
                 toolbar: {
-                    show: true,
+                    show: false,
+                },
+                zoom: {
+                    enabled: false,
                 },
             },
             dataLabels: {
