@@ -12,7 +12,9 @@ import { MatButtonModule } from '@angular/material/button';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatIconModule } from '@angular/material/icon';
 import { MatInputModule } from '@angular/material/input';
+import { MatDrawerToggleResult } from '@angular/material/sidenav';
 import { MatSnackBar } from '@angular/material/snack-bar';
+import { RouterLink } from '@angular/router';
 import { TranslocoModule, TranslocoService } from '@jsverse/transloco';
 import {
     Tournament,
@@ -20,6 +22,7 @@ import {
 } from 'app/core/tournament/tournament.types';
 import { TournamentsService } from 'app/core/tournament/tournaments.service';
 import { debounceTime, distinctUntilChanged, Subject, takeUntil } from 'rxjs';
+import { TournamentViewComponent } from '../view/view.component';
 
 @Component({
     selector: 'tournament-participants',
@@ -33,6 +36,7 @@ import { debounceTime, distinctUntilChanged, Subject, takeUntil } from 'rxjs';
         ReactiveFormsModule,
         MatButtonModule,
         MatFormFieldModule,
+        RouterLink,
         MatIconModule,
         MatInputModule,
         TranslocoModule,
@@ -55,7 +59,8 @@ export class TournamentParticipantsComponent implements OnInit, OnDestroy {
         private _tournamentsService: TournamentsService,
         private _translocoService: TranslocoService,
         private _snackBar: MatSnackBar,
-        private _fb: FormBuilder
+        private _fb: FormBuilder,
+        private _tournamentViewComponent: TournamentViewComponent
     ) {
         // Initialize form
         this.searchForm = this._fb.group({
@@ -214,5 +219,12 @@ export class TournamentParticipantsComponent implements OnInit, OnDestroy {
      */
     trackByFn(index: number, item: any): any {
         return item.id || index;
+    }
+
+    /**
+     * Toggle the parent drawer
+     */
+    toggleParentDrawer(): Promise<MatDrawerToggleResult> {
+        return this._tournamentViewComponent.drawer.toggle();
     }
 }

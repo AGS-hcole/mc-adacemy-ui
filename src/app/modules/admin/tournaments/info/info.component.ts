@@ -21,7 +21,8 @@ import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatIconModule } from '@angular/material/icon';
 import { MatInputModule } from '@angular/material/input';
 import { MatSelectModule } from '@angular/material/select';
-import { ActivatedRoute, Router } from '@angular/router';
+import { MatDrawerToggleResult } from '@angular/material/sidenav';
+import { ActivatedRoute, Router, RouterLink } from '@angular/router';
 import { TranslocoModule, TranslocoService } from '@jsverse/transloco';
 import {
     CreateTournamentRequest,
@@ -32,6 +33,7 @@ import {
 } from 'app/core/tournament/tournament.types';
 import { TournamentsService } from 'app/core/tournament/tournaments.service';
 import { Subject, takeUntil } from 'rxjs';
+import { TournamentViewComponent } from '../view/view.component';
 
 @Component({
     selector: 'tournament-info',
@@ -46,6 +48,7 @@ import { Subject, takeUntil } from 'rxjs';
         ReactiveFormsModule,
         MatButtonModule,
         MatFormFieldModule,
+        RouterLink,
         MatIconModule,
         MatInputModule,
         MatSelectModule,
@@ -73,7 +76,8 @@ export class TournamentInfoComponent implements OnInit, OnDestroy {
         private _formBuilder: FormBuilder,
         private _router: Router,
         private _tournamentsService: TournamentsService,
-        private _translocoService: TranslocoService
+        private _translocoService: TranslocoService,
+        private _tournamentViewComponent: TournamentViewComponent
     ) {}
 
     // -----------------------------------------------------------------------------------------------------
@@ -251,5 +255,12 @@ export class TournamentInfoComponent implements OnInit, OnDestroy {
      */
     cancel(): void {
         this._router.navigate(['../../'], { relativeTo: this._activatedRoute });
+    }
+
+    /**
+     * Toggle the parent drawer
+     */
+    toggleParentDrawer(): Promise<MatDrawerToggleResult> {
+        return this._tournamentViewComponent.drawer.toggle();
     }
 }

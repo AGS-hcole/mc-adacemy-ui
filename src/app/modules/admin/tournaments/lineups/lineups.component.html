@@ -3,7 +3,29 @@
     <div
         class="bg-card flex flex-col gap-4 p-6 sm:flex-row sm:items-center sm:justify-between md:px-8 dark:bg-transparent"
     >
-        <div>
+        <div class="flex sm:hidden">
+            <a
+                class="text-secondary -ml-1.5 mb-2 inline-flex items-center font-medium"
+                [routerLink]="'./../..'"
+            >
+                <mat-icon
+                    class="text-secondary icon-size-5"
+                    [svgIcon]="'heroicons_solid:chevron-left'"
+                ></mat-icon>
+                <span class="ml-2">{{
+                    'TOURNAMENTS.VIEW.BREADCRUMB.BACK' | transloco
+                }}</span>
+            </a>
+        </div>
+        <div class="flex items-center">
+            <!-- Drawer toggle -->
+            <button
+                class="-ml-2 lg:hidden"
+                mat-icon-button
+                (click)="toggleParentDrawer()"
+            >
+                <mat-icon [svgIcon]="'heroicons_outline:bars-3'"></mat-icon>
+            </button>
             <div class="text-4xl font-extrabold leading-none tracking-tight">
                 {{ 'TOURNAMENTS.VIEW.LINEUPS' | transloco }}
             </div>
@@ -60,9 +82,22 @@
             <!-- Teams section -->
             <div class="min-w-0 flex-1">
                 <div class="bg-card rounded-lg p-6 shadow">
-                    <h2 class="mb-4 text-2xl font-semibold">
-                        {{ 'TOURNAMENTS.FORMS.TEAMS' | transloco }}
-                    </h2>
+                    <div class="flex items-center justify-between">
+                        <h2 class="mb-4 text-2xl font-semibold">
+                            {{ 'TOURNAMENTS.FORMS.TEAMS' | transloco }}
+                        </h2>
+
+                        <!-- New Team Action -->
+                        <button
+                            mat-icon-button
+                            (click)="createTeam()"
+                            matTooltip="{{
+                                'TOURNAMENTS.FORMS.ADD_TEAM' | transloco
+                            }}"
+                        >
+                            <mat-icon>add</mat-icon>
+                        </button>
+                    </div>
 
                     <!-- Empty state -->
                     <div
@@ -137,10 +172,6 @@
                                         <mat-icon class="mr-1 icon-size-4"
                                             >lock</mat-icon
                                         >
-                                        {{
-                                            'TOURNAMENTS.FORMS.LOCKED'
-                                                | transloco
-                                        }}
                                     </span>
                                     <span
                                         class="inline-flex items-center rounded-full bg-blue-100 px-3 py-1 text-xs font-medium text-blue-800"
@@ -163,12 +194,26 @@
                                         {{ team.avgStrength | number: '1.1-1' }}
                                     </span>
                                 </div>
-                                <mat-slide-toggle
-                                    [checked]="team.locked"
-                                    (change)="toggleTeamLock(team)"
-                                    color="warn"
-                                >
-                                </mat-slide-toggle>
+                                <div class="flex items-center gap-2">
+                                    <button
+                                        mat-icon-button
+                                        (click)="deleteTeam(team)"
+                                        [disabled]="team.locked"
+                                    >
+                                        <mat-icon
+                                            class="text-red-600"
+                                            [svgIcon]="
+                                                'heroicons_outline:trash'
+                                            "
+                                        ></mat-icon>
+                                    </button>
+                                    <mat-slide-toggle
+                                        [checked]="team.locked"
+                                        (change)="toggleTeamLock(team)"
+                                        color="warn"
+                                    >
+                                    </mat-slide-toggle>
+                                </div>
                             </div>
 
                             <!-- Team members drop zone -->

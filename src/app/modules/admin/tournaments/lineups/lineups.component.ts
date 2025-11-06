@@ -18,11 +18,14 @@ import { MatDialog, MatDialogModule } from '@angular/material/dialog';
 import { MatIconModule } from '@angular/material/icon';
 import { MatMenuModule } from '@angular/material/menu';
 import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
+import { MatDrawerToggleResult } from '@angular/material/sidenav';
 import { MatSlideToggleModule } from '@angular/material/slide-toggle';
 import { MatSnackBar, MatSnackBarModule } from '@angular/material/snack-bar';
+import { RouterLink } from '@angular/router';
 import { TranslocoModule, TranslocoService } from '@jsverse/transloco';
 import {
     BenchParticipantDto,
+    CreateTeamDto,
     GenerateTeamsDto,
     TeamMemberDto,
     TeamWithMembersDto,
@@ -30,6 +33,7 @@ import {
 } from 'app/core/tournament/tournament.types';
 import { TournamentsService } from 'app/core/tournament/tournaments.service';
 import { Subject, takeUntil } from 'rxjs';
+import { TournamentViewComponent } from '../view/view.component';
 
 @Component({
     selector: 'tournament-lineups',
@@ -45,6 +49,7 @@ import { Subject, takeUntil } from 'rxjs';
         MatIconModule,
         MatMenuModule,
         MatSlideToggleModule,
+        RouterLink,
         MatProgressSpinnerModule,
         MatSnackBarModule,
         MatDialogModule,
@@ -71,7 +76,8 @@ export class TournamentLineupsComponent implements OnInit, OnDestroy {
         private _tournamentsService: TournamentsService,
         private _dialog: MatDialog,
         private _snackBar: MatSnackBar,
-        private _translocoService: TranslocoService
+        private _translocoService: TranslocoService,
+        private _tournamentViewComponent: TournamentViewComponent
     ) {}
 
     // -----------------------------------------------------------------------------------------------------
@@ -266,6 +272,60 @@ export class TournamentLineupsComponent implements OnInit, OnDestroy {
                         duration: 3000,
                     });
                     this._changeDetectorRef.markForCheck();
+                },
+            });
+    }
+
+    /**
+     * Create team
+     */
+    createTeam(): void {
+        if (!this.tournament) return;
+
+        const maxOrder = this.teams.length
+            ? Math.max(...this.teams.map((t) => t.orderIndex ?? 0))
+            : 0;
+
+        const request: CreateTeamDto = {
+            locked: false,
+            orderIndex: maxOrder + 1,
+        };
+
+        this._tournamentsService
+            .createTeam(this.tournament.id, request)
+            .pipe(takeUntil(this._unsubscribeAll))
+            .subscribe({
+                next: (response) => {
+                    this.teams.push(response);
+                    this._changeDetectorRef.markForCheck();
+                },
+                error: () => {
+                    this._snackBar.open('Failed to create team', 'Close', {
+                        duration: 3000,
+                    });
+                },
+            });
+    }
+
+    /**
+     * Delete team
+     */
+    deleteTeam(team: TeamWithMembersDto): void {
+        if (!this.tournament) return;
+
+        this._tournamentsService
+            .deleteTeam(this.tournament.id, team.id)
+            .pipe(takeUntil(this._unsubscribeAll))
+            .subscribe({
+                next: () => {
+                    this.teams = this.teams.filter((t) => t.id !== team.id);
+                    this._changeDetectorRef.markForCheck();
+                },
+                error: () => {
+                    this.loading = false;
+                    this._snackBar.open('Failed to delete team', 'Close', {
+                        duration: 3000,
+                    });
                 },
             });
     }
@@ -557,5 +617,12 @@ export class TournamentLineupsComponent implements OnInit, OnDestroy {
      */
     trackByFn(index: number, item: any): any {
         return item.id || index;
+    }
+
+    /**
+     * Toggle the parent drawer
+     */
+    toggleParentDrawer(): Promise<MatDrawerToggleResult> {
+        return this._tournamentViewComponent.drawer.toggle();
     }
 }

@@ -206,12 +206,15 @@ export class AuthService {
         }
 
         // Check the access token availability
-        if (!this.accessToken) {
+        if (!this.accessToken && !this.refreshToken) {
             return of(false);
         }
 
         // Check the access token expire date
-        if (AuthUtils.isTokenExpired(this.accessToken)) {
+        if (
+            AuthUtils.isTokenExpired(this.accessToken) &&
+            AuthUtils.isTokenExpired(this.refreshToken)
+        ) {
             return of(false);
         }
 
