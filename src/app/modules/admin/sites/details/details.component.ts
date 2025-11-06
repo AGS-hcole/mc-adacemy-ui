@@ -1,3 +1,4 @@
+import { CommonModule } from '@angular/common';
 import {
     ChangeDetectionStrategy,
     ChangeDetectorRef,
@@ -39,6 +40,7 @@ import { Subject, takeUntil } from 'rxjs';
         MatInputModule,
         TranslocoModule,
         MatSlideToggle,
+        CommonModule,
     ],
 })
 export class AdminSiteDetailsComponent implements OnInit, OnDestroy {
@@ -168,6 +170,8 @@ export class AdminSiteDetailsComponent implements OnInit, OnDestroy {
             name: site.name,
             address: site.address || '',
             city: site.city || '',
+            isMorningDefault: site.isMorningDefault || false,
+            isAfternoonDefault: site.isAfternoonDefault || false,
         });
     }
 }

@@ -26,8 +26,8 @@ export interface Site {
     name: string;
     address?: string;
     city?: string;
-    isMorningDefault: boolean;
-    isAfternoonDefault: boolean;
+    isMorningDefault?: boolean;
+    isAfternoonDefault?: boolean;
 }
 
 /**
