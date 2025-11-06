@@ -423,7 +423,9 @@
                 "ADDRESS_HINT": "Adresse complète du site",
                 "CANCEL": "Annuler",
                 "SAVE": "Enregistrer",
-                "CREATE": "Créer"
+                "CREATE": "Créer",
+                "MORNING_DEFAULT": "Définir ce site par défaut pour les sessions du matin",
+                "AFTERNOON_DEFAULT": "Définir ce site par défaut pour les sessions de l'après-midi"
             }
         }
     },

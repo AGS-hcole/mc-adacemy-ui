@@ -17,6 +17,7 @@ import { MatButtonModule } from '@angular/material/button';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatIconModule } from '@angular/material/icon';
 import { MatInputModule } from '@angular/material/input';
+import { MatSlideToggle } from '@angular/material/slide-toggle';
 import { ActivatedRoute, Router, RouterLink } from '@angular/router';
 import { TranslocoModule } from '@jsverse/transloco';
 import { Site } from 'app/core/session/session.types';
@@ -37,6 +38,7 @@ import { Subject, takeUntil } from 'rxjs';
         MatIconModule,
         MatInputModule,
         TranslocoModule,
+        MatSlideToggle,
     ],
 })
 export class AdminSiteDetailsComponent implements OnInit, OnDestroy {
@@ -70,6 +72,8 @@ export class AdminSiteDetailsComponent implements OnInit, OnDestroy {
             name: ['', [Validators.required]],
             address: [''],
             city: [''],
+            isMorningDefault: [false],
+            isAfternoonDefault: [false],
         });
 
         // Get site from resolver
@@ -116,6 +120,8 @@ export class AdminSiteDetailsComponent implements OnInit, OnDestroy {
                 name: formValue.name,
                 address: formValue.address || null,
                 city: formValue.city || null,
+                isMorningDefault: formValue.isMorningDefault,
+                isAfternoonDefault: formValue.isAfternoonDefault,
             };
 
             this._sitesService
@@ -131,6 +137,8 @@ export class AdminSiteDetailsComponent implements OnInit, OnDestroy {
                 name: formValue.name,
                 address: formValue.address || null,
                 city: formValue.city || null,
+                isMorningDefault: formValue.isMorningDefault,
+                isAfternoonDefault: formValue.isAfternoonDefault,
             };
 
             this._sitesService.createSite(createData).subscribe(() => {
