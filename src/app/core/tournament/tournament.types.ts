@@ -68,8 +68,8 @@ export interface Team {
     id: UUID;
     tournamentId: UUID;
     name?: string | null;
-    position: number; // Order in the tournament
-    placement?: number | null; // Final placement (1st, 2nd, etc.)
+    position: number;
+    placement?: number | null;
     members: TeamMember[];
 }
 
@@ -270,6 +270,15 @@ export interface BenchParticipantDto {
 export interface TeamsResponseDto {
     teams: TeamWithMembersDto[];
     bench: BenchParticipantDto[];
+}
+
+/**
+ * Create team DTO
+ */
+export interface CreateTeamDto {
+    orderIndex?: number;
+    locked?: boolean;
+    notes?: string | null;
 }
 
 /**

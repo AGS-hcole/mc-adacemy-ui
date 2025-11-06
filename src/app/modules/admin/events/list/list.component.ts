@@ -32,7 +32,6 @@ import { Subject, debounceTime, takeUntil } from 'rxjs';
 @Component({
     selector: 'admin-events-list',
     templateUrl: './list.component.html',
-    styleUrls: ['./list.component.scss'],
     encapsulation: ViewEncapsulation.None,
     changeDetection: ChangeDetectionStrategy.OnPush,
     imports: [

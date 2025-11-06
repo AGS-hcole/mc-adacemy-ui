@@ -23,6 +23,7 @@ import { MatSnackBar, MatSnackBarModule } from '@angular/material/snack-bar';
 import { TranslocoModule, TranslocoService } from '@jsverse/transloco';
 import {
     BenchParticipantDto,
+    CreateTeamDto,
     GenerateTeamsDto,
     TeamMemberDto,
     TeamWithMembersDto,
@@ -266,6 +267,61 @@ export class TournamentLineupsComponent implements OnInit, OnDestroy {
                         duration: 3000,
                     });
                     this._changeDetectorRef.markForCheck();
+                },
+            });
+    }
+
+    /**
+     * Create team
+     */
+    createTeam(): void {
+        if (!this.tournament) return;
+
+        const maxOrder = this.teams.length
+            ? Math.max(...this.teams.map((t) => t.orderIndex ?? 0))
+            : 0;
+
+        const request: CreateTeamDto = {
+            locked: false,
+            orderIndex: maxOrder + 1,
+        };
+
+        this._tournamentsService
+            .createTeam(this.tournament.id, request)
+            .pipe(takeUntil(this._unsubscribeAll))
+            .subscribe({
+                next: (response) => {
+                    this.teams.push(response);
+                    this._changeDetectorRef.markForCheck();
+                },
+                error: () => {
+                    this._snackBar.open('Failed to create team', 'Close', {
+                        duration: 3000,
+                    });
+                },
+            });
+    }
+
+    /**
+     * Delete team
+     */
+    deleteTeam(team: TeamWithMembersDto): void {
+        if (!this.tournament) return;
+
+        this.loading = true;
+        this._tournamentsService
+            .deleteTeam(this.tournament.id, team.id)
+            .pipe(takeUntil(this._unsubscribeAll))
+            .subscribe({
+                next: () => {
+                    this.teams = this.teams.filter((t) => t.id !== team.id);
+                    this._changeDetectorRef.markForCheck();
+                },
+                error: () => {
+                    this.loading = false;
+                    this._snackBar.open('Failed to delete team', 'Close', {
+                        duration: 3000,
+                    });
                 },
             });
     }

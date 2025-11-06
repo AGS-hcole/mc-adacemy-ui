@@ -8,14 +8,13 @@ import {
 } from '@angular/material/dialog';
 import { MatIconModule } from '@angular/material/icon';
 import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
+import { DomSanitizer, SafeUrl } from '@angular/platform-browser';
 import { TranslocoModule } from '@jsverse/transloco';
 import { EventsApi } from 'app/core/api/events.api';
-import { DomSanitizer, SafeUrl } from '@angular/platform-browser';
 
 @Component({
     selector: 'qr-dialog',
     templateUrl: './qr-dialog.component.html',
-    styleUrls: ['./qr-dialog.component.scss'],
     encapsulation: ViewEncapsulation.None,
     imports: [
         CommonModule,

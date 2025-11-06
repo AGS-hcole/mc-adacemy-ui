@@ -3,6 +3,7 @@ import { Injectable } from '@angular/core';
 import { environment } from 'environments/environment';
 import { BehaviorSubject, Observable, tap } from 'rxjs';
 import {
+    CreateTeamDto,
     CreateTournamentRequest,
     GenerateTeamsDto,
     MoveParticipantDto,
@@ -13,6 +14,7 @@ import {
     SetTeamPlacementRequest,
     SwapParticipantsDto,
     TeamsResponseDto,
+    TeamWithMembersDto,
     Tournament,
     TournamentFeedbackRequest,
     TournamentFilters,
@@ -372,6 +374,28 @@ export class TournamentsService {
         return this._httpClient.patch<void>(
             `${this.apiUrl}/tournaments/${id}/teams/${teamId}/lock`,
             { locked }
+        );
+    }
+
+    /**
+     * Create team
+     */
+    createTeam(
+        tournamentId: string,
+        request: CreateTeamDto
+    ): Observable<TeamWithMembersDto> {
+        return this._httpClient.post<TeamWithMembersDto>(
+            `${this.apiUrl}/tournaments/${tournamentId}/teams`,
+            request
+        );
+    }
+
+    /**
+     * Delete team
+     */
+    deleteTeam(tournamentId: string, teamId: string): Observable<void> {
+        return this._httpClient.delete<void>(
+            `${this.apiUrl}/tournaments/${tournamentId}/teams/${teamId}`
         );
     }
 
