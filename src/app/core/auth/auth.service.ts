@@ -3,38 +3,45 @@ import { inject, Injectable } from '@angular/core';
 import { AuthUtils } from 'app/core/auth/auth.utils';
 import { UserService } from 'app/core/user/user.service';
 import { environment } from 'environments/environment';
-import { catchError, Observable, of, switchMap, throwError } from 'rxjs';
+import {
+    BehaviorSubject,
+    catchError,
+    filter,
+    finalize,
+    map,
+    Observable,
+    of,
+    switchMap,
+    take,
+    tap,
+    throwError,
+} from 'rxjs';
 
 @Injectable({ providedIn: 'root' })
 export class AuthService {
     private apiUrl = environment.apiUrl;
-    private _authenticated: boolean = false;
-    private _httpClient = inject(HttpClient);
+    private _http = inject(HttpClient);
     private _userService = inject(UserService);
+    private _authenticated = false;
     private _mustOnboard: boolean = false;
+
+    private _refreshInProgress = false;
+    private _refreshSubject = new BehaviorSubject<string | null>(null);
 
     // -----------------------------------------------------------------------------------------------------
     // @ Accessors
     // -----------------------------------------------------------------------------------------------------
 
-    /**
-     * Setter & getter for access token
-     */
     set accessToken(token: string) {
         localStorage.setItem('accessToken', token);
     }
-
     get accessToken(): string {
         return localStorage.getItem('accessToken') ?? '';
     }
 
-    /**
-     * Setter & getter for refresh token
-     */
     set refreshToken(token: string) {
         localStorage.setItem('refreshToken', token);
     }
-
     get refreshToken(): string {
         return localStorage.getItem('refreshToken') ?? '';
     }
@@ -54,7 +61,7 @@ export class AuthService {
      * Get current user with mustOnboard flag
      */
     getMe(): Observable<any> {
-        return this._httpClient.get(`${this.apiUrl}/auth/me`).pipe(
+        return this._http.get(`${this.apiUrl}/auth/me`).pipe(
             switchMap((response: any) => {
                 // Update mustOnboard flag
                 this._mustOnboard =
@@ -77,7 +84,7 @@ export class AuthService {
      * @param email
      */
     forgotPassword(email: string): Observable<any> {
-        return this._httpClient.post(
+        return this._http.post(
             `${this.apiUrl}/auth/request-reset-password`,
             email
         );
@@ -89,7 +96,7 @@ export class AuthService {
      * @param password
      */
     resetPassword(token: string, password: string): Observable<any> {
-        return this._httpClient.post(`${this.apiUrl}/auth/reset-password`, {
+        return this._http.post(`${this.apiUrl}/auth/reset-password`, {
             token: token,
             password: password,
         });
@@ -106,7 +113,7 @@ export class AuthService {
             return throwError('User is already logged in.');
         }
 
-        return this._httpClient
+        return this._http
             .post(`${this.apiUrl}/auth/sign-in`, {
                 email: credentials.email,
                 password: credentials.password,
@@ -139,7 +146,7 @@ export class AuthService {
      */
     signInUsingToken(): Observable<any> {
         // Sign in using the token
-        return this._httpClient
+        return this._http
             .post(`${this.apiUrl}/auth/refresh-token`, {
                 refreshToken: this.refreshToken,
             })
@@ -220,5 +227,53 @@ export class AuthService {
 
         // If the access token exists, and it didn't expire, sign in using it
         return this.signInUsingToken();
+    }
+
+    /**
+     * Centralized refresh: single-flight + queue
+     */
+    refreshAccessToken(): Observable<string> {
+        // No valid refresh token -> fail fast
+        if (!this.refreshToken || AuthUtils.isTokenExpired(this.refreshToken)) {
+            return throwError(() => new Error('No valid refresh token'));
+        }
+
+        if (this._refreshInProgress) {
+            // Wait for the in-flight refresh to finish
+            return this._refreshSubject.pipe(
+                filter((t) => t !== null),
+                take(1)
+            ) as Observable<string>;
+        }
+
+        this._refreshInProgress = true;
+        this._refreshSubject.next(null);
+
+        return this._http
+            .post(`${this.apiUrl}/auth/refresh-token`, {
+                refreshToken: this.refreshToken,
+            })
+            .pipe(
+                tap((resp: any) => {
+                    if (!resp?.accessToken)
+                        throw new Error('No accessToken in refresh response');
+                    // Update tokens
+                    this.accessToken = resp.accessToken;
+                    if (resp.refreshToken)
+                        this.refreshToken = resp.refreshToken;
+                    this._authenticated = true;
+                    if (resp.user) this._userService.user = resp.user;
+                }),
+                map((resp: any) => resp.accessToken as string),
+                tap((newToken) => this._refreshSubject.next(newToken)),
+                catchError((err) => {
+                    // Hard sign out on refresh failure
+                    this.signOut().subscribe();
+                    return throwError(() => err);
+                }),
+                finalize(() => {
+                    this._refreshInProgress = false;
+                })
+            );
     }
 }

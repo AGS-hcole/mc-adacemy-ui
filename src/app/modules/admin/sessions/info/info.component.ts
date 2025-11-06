@@ -22,6 +22,7 @@ import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatIconModule } from '@angular/material/icon';
 import { MatInputModule } from '@angular/material/input';
 import { MatSelectModule } from '@angular/material/select';
+import { MatDrawerToggleResult } from '@angular/material/sidenav';
 import { ActivatedRoute, Router, RouterLink } from '@angular/router';
 import { FuseAlertComponent } from '@fuse/components/alert';
 import { TranslocoModule } from '@jsverse/transloco';
@@ -35,6 +36,7 @@ import {
 } from 'app/core/session/session.types';
 import { SessionsService } from 'app/core/session/sessions.service';
 import { combineLatest, forkJoin, Subject, takeUntil } from 'rxjs';
+import { SessionsViewComponent } from '../view/view.component';
 
 @Component({
     selector: 'session-info',
@@ -78,7 +80,8 @@ export class SessionInfoComponent implements OnInit, OnDestroy {
         private _changeDetectorRef: ChangeDetectorRef,
         private _formBuilder: UntypedFormBuilder,
         private _router: Router,
-        private _sessionsService: SessionsService
+        private _sessionsService: SessionsService,
+        private _sessionsViewComponent: SessionsViewComponent
     ) {}
 
     // -----------------------------------------------------------------------------------------------------
@@ -315,6 +318,13 @@ export class SessionInfoComponent implements OnInit, OnDestroy {
             month: 'short',
             day: 'numeric',
         });
+    }
+
+    /**
+     * Toggle the parent drawer
+     */
+    toggleParentDrawer(): Promise<MatDrawerToggleResult> {
+        return this._sessionsViewComponent.drawer.toggle();
     }
 
     // -----------------------------------------------------------------------------------------------------

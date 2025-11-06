@@ -16,6 +16,7 @@ import { MatIconModule } from '@angular/material/icon';
 import { MatMenuModule } from '@angular/material/menu';
 import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 import { MatSelectModule } from '@angular/material/select';
+import { MatDrawerToggleResult } from '@angular/material/sidenav';
 import { MatTooltipModule } from '@angular/material/tooltip';
 import { FuseConfirmationService } from '@fuse/services/confirmation';
 import { TranslocoModule, TranslocoService } from '@jsverse/transloco';
@@ -41,6 +42,7 @@ import {
     distinctUntilChanged,
     takeUntil,
 } from 'rxjs';
+import { SessionsViewComponent } from '../view/view.component';
 
 @Component({
     selector: 'session-participants',
@@ -87,7 +89,8 @@ export class SessionParticipantsComponent implements OnInit, OnDestroy {
         private _changeDetectorRef: ChangeDetectorRef,
         private _fuseConfirmationService: FuseConfirmationService,
         private _dialog: MatDialog,
-        private _translocoService: TranslocoService
+        private _translocoService: TranslocoService,
+        private _sessionsViewComponent: SessionsViewComponent
     ) {}
 
     // -----------------------------------------------------------------------------------------------------
@@ -440,6 +443,13 @@ export class SessionParticipantsComponent implements OnInit, OnDestroy {
                 this.saveRatingWithComment(attendance.userId, score, comment);
             }
         });
+    }
+
+    /**
+     * Toggle the parent drawer
+     */
+    toggleParentDrawer(): Promise<MatDrawerToggleResult> {
+        return this._sessionsViewComponent.drawer.toggle();
     }
 
     /**

@@ -1,242 +1,308 @@
-<div class="flex w-full max-w-6xl flex-col p-6 md:p-8">
-    <!-- Stats Header -->
+<div class="flex w-full flex-col overflow-hidden">
+    <!-- Header -->
     <div
-        *ngIf="ratingsResponse?.stats && ratingsResponse.stats.count > 0"
-        class="mb-8 rounded-2xl bg-card p-6 shadow-lg"
+        class="bg-card relative flex flex-0 flex-col border-b px-6 py-8 sm:flex-row sm:items-center sm:justify-between md:px-8 dark:bg-transparent"
     >
-        <h3 class="mb-4 text-lg font-semibold">
-            {{ 'SESSIONS.ADMIN.RATINGS.TITLE' | transloco }}
-        </h3>
-        <div class="grid grid-cols-1 gap-4 sm:grid-cols-2">
-            <!-- Average -->
-            <div>
-                <div class="text-secondary mb-1 text-sm">
-                    {{ 'SESSIONS.ADMIN.RATINGS.AVERAGE' | transloco }}
-                </div>
-                <div class="text-3xl font-bold text-amber-500">
-                    {{ ratingsResponse.stats.average | number: '1.1-1' }}/10
-                </div>
-                <div class="text-secondary mt-1 text-sm">
+        <!-- Title -->
+        <div>
+            <div class="flex items-center">
+                @if (!session) {
+                    <button mat-icon-button [routerLink]="['../']">
+                        <mat-icon
+                            [svgIcon]="'heroicons_outline:arrow-left'"
+                        ></mat-icon>
+                    </button>
+                } @else {
+                    <button
+                        class="-ml-2 lg:hidden"
+                        mat-icon-button
+                        (click)="toggleParentDrawer()"
+                    >
+                        <mat-icon
+                            [svgIcon]="'heroicons_outline:bars-3'"
+                        ></mat-icon>
+                    </button>
+                }
+                <div class="ml-2 text-4xl font-extrabold tracking-tight">
                     {{
-                        'SESSIONS.ADMIN.RATINGS.COUNT'
-                            | transloco: { count: ratingsResponse.stats.count }
+                        (!session
+                            ? 'SESSIONS.ADMIN.CREATE_SESSION'
+                            : 'SESSIONS.ADMIN.EDIT_SESSION'
+                        ) | transloco
                     }}
                 </div>
             </div>
-            <!-- Distribution -->
-            <div>
-                <div class="text-secondary mb-2 text-sm">
-                    {{ 'SESSIONS.ADMIN.RATINGS.DISTRIBUTION' | transloco }}
+        </div>
+    </div>
+
+    <!-- Main content -->
+    <div class="flex w-full max-w-6xl flex-col p-6 md:p-8">
+        <!-- Stats Header -->
+        <div
+            *ngIf="ratingsResponse?.stats && ratingsResponse.stats.count > 0"
+            class="bg-card mb-8 rounded-2xl p-6 shadow-lg"
+        >
+            <h3 class="mb-4 text-lg font-semibold">
+                {{ 'SESSIONS.ADMIN.RATINGS.TITLE' | transloco }}
+            </h3>
+            <div class="grid grid-cols-1 gap-4 sm:grid-cols-2">
+                <!-- Average -->
+                <div>
+                    <div class="text-secondary mb-1 text-sm">
+                        {{ 'SESSIONS.ADMIN.RATINGS.AVERAGE' | transloco }}
+                    </div>
+                    <div class="text-3xl font-bold text-amber-500">
+                        {{ ratingsResponse.stats.average | number: '1.1-1' }}/10
+                    </div>
+                    <div class="text-secondary mt-1 text-sm">
+                        {{
+                            'SESSIONS.ADMIN.RATINGS.COUNT'
+                                | transloco
+                                    : { count: ratingsResponse.stats.count }
+                        }}
+                    </div>
                 </div>
-                <div class="flex h-8 gap-0.5 rounded-lg overflow-hidden">
-                    <div
-                        *ngFor="
-                            let count of getDistributionSegments();
-                            let i = index
-                        "
-                        class="flex-1 bg-amber-500 transition-opacity"
-                        [style.opacity]="getSegmentOpacity(count)"
-                        [matTooltip]="i + ': ' + count"
-                    ></div>
+                <!-- Distribution -->
+                <div>
+                    <div class="text-secondary mb-2 text-sm">
+                        {{ 'SESSIONS.ADMIN.RATINGS.DISTRIBUTION' | transloco }}
+                    </div>
+                    <div class="flex h-8 gap-0.5 overflow-hidden rounded-lg">
+                        <div
+                            *ngFor="
+                                let count of getDistributionSegments();
+                                let i = index
+                            "
+                            class="flex-1 bg-amber-500 transition-opacity"
+                            [style.opacity]="getSegmentOpacity(count)"
+                            [matTooltip]="i + ': ' + count"
+                        ></div>
+                    </div>
                 </div>
             </div>
         </div>
-    </div>
 
-    <!-- Add participant section -->
-    <div class="mb-6">
-        <h3 class="mb-3 text-lg font-medium">
-            {{ 'SESSIONS.ADMIN.ATTENDEES.ADD_PARTICIPANT' | transloco }}
-        </h3>
-        <div class="flex flex-row items-center gap-2">
-            <mat-form-field class="flex-auto">
-                <mat-label>{{
-                    'SESSIONS.ADMIN.ATTENDEES.SELECT_USER' | transloco
-                }}</mat-label>
-                <mat-select [(ngModel)]="selectedUserId">
-                    <mat-option
-                        *ngFor="let user of getAvailableUsers(users$ | async)"
-                        [value]="user.id"
-                    >
-                        {{ user.firstname }} {{ user.lastname }} ({{
-                            user.email
-                        }})
-                    </mat-option>
-                </mat-select>
-            </mat-form-field>
-            <button
-                mat-flat-button
-                [color]="'primary'"
-                class="ml-4"
-                [disabled]="!selectedUserId"
-                (click)="addParticipant()"
-            >
-                <mat-icon [svgIcon]="'heroicons_outline:plus'"></mat-icon>
-                <span class="ml-2">{{
-                    'SESSIONS.ADMIN.ATTENDEES.ADD' | transloco
-                }}</span>
-            </button>
-        </div>
-    </div>
-
-    <!-- Participants list with ratings -->
-    <div>
-        <h3 class="mb-3 text-lg font-medium">
-            {{ 'SESSIONS.ADMIN.ATTENDEES.PARTICIPANTS_LIST' | transloco }}
-            <span class="text-secondary ml-2 text-sm" *ngIf="session">
-                ({{ session.currentAttendees || 0
-                }}<ng-container *ngIf="session.maxAttendees">
-                    / {{ session.maxAttendees }}</ng-container
-                >)
-            </span>
-        </h3>
-
-        <ng-container
-            *ngIf="
-                session &&
-                    session.attendances &&
-                    session.attendances.length > 0;
-                else noAttendees
-            "
-        >
-            <div
-                class="grid grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-3"
-            >
-                <ng-container
-                    *ngFor="
-                        let attendance of getConfirmedParticipants();
-                        trackBy: trackByFn
-                    "
+        <!-- Add participant section -->
+        <div class="mb-6">
+            <h3 class="mb-3 text-lg font-medium">
+                {{ 'SESSIONS.ADMIN.ATTENDEES.ADD_PARTICIPANT' | transloco }}
+            </h3>
+            <div class="flex flex-row items-center gap-2">
+                <mat-form-field class="flex-auto">
+                    <mat-label>{{
+                        'SESSIONS.ADMIN.ATTENDEES.SELECT_USER' | transloco
+                    }}</mat-label>
+                    <mat-select [(ngModel)]="selectedUserId">
+                        <mat-option
+                            *ngFor="
+                                let user of getAvailableUsers(users$ | async)
+                            "
+                            [value]="user.id"
+                        >
+                            {{ user.firstname }} {{ user.lastname }} ({{
+                                user.email
+                            }})
+                        </mat-option>
+                    </mat-select>
+                </mat-form-field>
+                <button
+                    mat-flat-button
+                    [color]="'primary'"
+                    class="ml-4"
+                    [disabled]="!selectedUserId"
+                    (click)="addParticipant()"
                 >
-                    <div
-                        class="group flex flex-col gap-3 rounded-2xl bg-card p-4 shadow transition hover:shadow-lg"
+                    <mat-icon [svgIcon]="'heroicons_outline:plus'"></mat-icon>
+                    <span class="ml-2">{{
+                        'SESSIONS.ADMIN.ATTENDEES.ADD' | transloco
+                    }}</span>
+                </button>
+            </div>
+        </div>
+
+        <!-- Participants list with ratings -->
+        <div>
+            <h3 class="mb-3 text-lg font-medium">
+                {{ 'SESSIONS.ADMIN.ATTENDEES.PARTICIPANTS_LIST' | transloco }}
+                <span class="text-secondary ml-2 text-sm" *ngIf="session">
+                    ({{ session.currentAttendees || 0
+                    }}<ng-container *ngIf="session.maxAttendees">
+                        / {{ session.maxAttendees }}</ng-container
+                    >)
+                </span>
+            </h3>
+
+            <ng-container
+                *ngIf="
+                    session &&
+                        session.attendances &&
+                        session.attendances.length > 0;
+                    else noAttendees
+                "
+            >
+                <div
+                    class="grid grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-3"
+                >
+                    <ng-container
+                        *ngFor="
+                            let attendance of getConfirmedParticipants();
+                            trackBy: trackByFn
+                        "
                     >
-                        <!-- Participant info -->
-                        <div class="flex items-center justify-between">
-                            <div class="flex items-center gap-3">
-                                <mat-icon
-                                    class="text-secondary icon-size-8"
-                                    [svgIcon]="'heroicons_outline:user-circle'"
-                                >
-                                </mat-icon>
-                                <div>
-                                    <div class="font-medium">
-                                        {{ attendance.user?.firstname || '' }}
-                                        {{ attendance.user?.lastname || '' }}
-                                    </div>
-                                    <div class="text-secondary text-sm">
-                                        {{ attendance.user?.formula || 'N/A' }}
+                        <div
+                            class="group bg-card flex flex-col gap-3 rounded-2xl p-4 shadow transition hover:shadow-lg"
+                        >
+                            <!-- Participant info -->
+                            <div class="flex items-center justify-between">
+                                <div class="flex items-center gap-3">
+                                    <mat-icon
+                                        class="text-secondary icon-size-8"
+                                        [svgIcon]="
+                                            'heroicons_outline:user-circle'
+                                        "
+                                    >
+                                    </mat-icon>
+                                    <div>
+                                        <div class="font-medium">
+                                            {{
+                                                attendance.user?.firstname || ''
+                                            }}
+                                            {{
+                                                attendance.user?.lastname || ''
+                                            }}
+                                        </div>
+                                        <div class="text-secondary text-sm">
+                                            {{
+                                                attendance.user?.formula ||
+                                                    'N/A'
+                                            }}
+                                        </div>
                                     </div>
                                 </div>
-                            </div>
-                            <button
-                                mat-icon-button
-                                [matMenuTriggerFor]="actionsMenu"
-                            >
-                                <mat-icon
-                                    class="icon-size-5"
-                                    [svgIcon]="
-                                        'heroicons_outline:ellipsis-vertical'
-                                    "
-                                >
-                                </mat-icon>
-                            </button>
-                            <mat-menu #actionsMenu="matMenu">
-                                <button
-                                    mat-menu-item
-                                    (click)="resetRating(attendance.user?.id)"
-                                    *ngIf="getRating(attendance.user?.id) > 0"
-                                >
-                                    <mat-icon
-                                        [svgIcon]="
-                                            'heroicons_outline:arrow-path'
-                                        "
-                                    ></mat-icon>
-                                    <span>{{
-                                        'SESSIONS.ADMIN.RATINGS.RESET'
-                                            | transloco
-                                    }}</span>
-                                </button>
-                                <button
-                                    mat-menu-item
-                                    (click)="
-                                        removeParticipant(attendance?.user?.id)
-                                    "
-                                >
-                                    <mat-icon
-                                        [svgIcon]="'heroicons_outline:trash'"
-                                    ></mat-icon>
-                                    <span>{{
-                                        'SESSIONS.ADMIN.ATTENDEES.REMOVE'
-                                            | transloco
-                                    }}</span>
-                                </button>
-                            </mat-menu>
-                        </div>
-
-                        <!-- Rating -->
-                        <div class="flex items-center justify-between gap-2">
-                            <star-rating
-                                [value]="getRating(attendance.user?.id)"
-                                [max]="10"
-                                [readonly]="false"
-                                (change)="
-                                    onRatingChange(attendance.user?.id, $event)
-                                "
-                            ></star-rating>
-                            <div class="flex items-center gap-1">
                                 <button
                                     mat-icon-button
-                                    [matTooltip]="
-                                        'SESSIONS.ADMIN.RATINGS.COMMENT.EDIT'
-                                            | transloco
-                                    "
-                                    (click)="openCommentDialog(attendance)"
-                                    [color]="
-                                        hasComment(attendance.user?.id)
-                                            ? 'primary'
-                                            : ''
-                                    "
+                                    [matMenuTriggerFor]="actionsMenu"
                                 >
                                     <mat-icon
                                         class="icon-size-5"
                                         [svgIcon]="
-                                            hasComment(attendance.user?.id)
-                                                ? 'heroicons_solid:chat-bubble-left-right'
-                                                : 'heroicons_outline:chat-bubble-left-right'
+                                            'heroicons_outline:ellipsis-vertical'
                                         "
-                                    ></mat-icon>
+                                    >
+                                    </mat-icon>
                                 </button>
-                                <mat-spinner
-                                    *ngIf="isRatingPending(attendance.user?.id)"
-                                    [diameter]="20"
-                                ></mat-spinner>
+                                <mat-menu #actionsMenu="matMenu">
+                                    <button
+                                        mat-menu-item
+                                        (click)="
+                                            resetRating(attendance.user?.id)
+                                        "
+                                        *ngIf="
+                                            getRating(attendance.user?.id) > 0
+                                        "
+                                    >
+                                        <mat-icon
+                                            [svgIcon]="
+                                                'heroicons_outline:arrow-path'
+                                            "
+                                        ></mat-icon>
+                                        <span>{{
+                                            'SESSIONS.ADMIN.RATINGS.RESET'
+                                                | transloco
+                                        }}</span>
+                                    </button>
+                                    <button
+                                        mat-menu-item
+                                        (click)="
+                                            removeParticipant(
+                                                attendance?.user?.id
+                                            )
+                                        "
+                                    >
+                                        <mat-icon
+                                            [svgIcon]="
+                                                'heroicons_outline:trash'
+                                            "
+                                        ></mat-icon>
+                                        <span>{{
+                                            'SESSIONS.ADMIN.ATTENDEES.REMOVE'
+                                                | transloco
+                                        }}</span>
+                                    </button>
+                                </mat-menu>
+                            </div>
+
+                            <!-- Rating -->
+                            <div
+                                class="flex items-center justify-between gap-2"
+                            >
+                                <star-rating
+                                    [value]="getRating(attendance.user?.id)"
+                                    [max]="10"
+                                    [readonly]="false"
+                                    (change)="
+                                        onRatingChange(
+                                            attendance.user?.id,
+                                            $event
+                                        )
+                                    "
+                                ></star-rating>
+                                <div class="flex items-center gap-1">
+                                    <button
+                                        mat-icon-button
+                                        [matTooltip]="
+                                            'SESSIONS.ADMIN.RATINGS.COMMENT.EDIT'
+                                                | transloco
+                                        "
+                                        (click)="openCommentDialog(attendance)"
+                                        [color]="
+                                            hasComment(attendance.user?.id)
+                                                ? 'primary'
+                                                : ''
+                                        "
+                                    >
+                                        <mat-icon
+                                            class="icon-size-5"
+                                            [svgIcon]="
+                                                hasComment(attendance.user?.id)
+                                                    ? 'heroicons_solid:chat-bubble-left-right'
+                                                    : 'heroicons_outline:chat-bubble-left-right'
+                                            "
+                                        ></mat-icon>
+                                    </button>
+                                    <mat-spinner
+                                        *ngIf="
+                                            isRatingPending(attendance.user?.id)
+                                        "
+                                        [diameter]="20"
+                                    ></mat-spinner>
+                                </div>
+                            </div>
+
+                            <!-- Admin registered badge -->
+                            <div
+                                *ngIf="attendance.createdByAdmin"
+                                class="text-xs"
+                            >
+                                <span
+                                    class="rounded bg-blue-100 px-2 py-1 text-blue-800 dark:bg-blue-900 dark:text-blue-200"
+                                >
+                                    {{
+                                        'SESSIONS.ADMIN.ATTENDEES.ADMIN_REGISTERED'
+                                            | transloco
+                                    }}
+                                </span>
                             </div>
                         </div>
+                    </ng-container>
+                </div>
+            </ng-container>
 
-                        <!-- Admin registered badge -->
-                        <div
-                            *ngIf="attendance.createdByAdmin"
-                            class="text-xs"
-                        >
-                            <span
-                                class="rounded bg-blue-100 px-2 py-1 text-blue-800 dark:bg-blue-900 dark:text-blue-200"
-                            >
-                                {{
-                                    'SESSIONS.ADMIN.ATTENDEES.ADMIN_REGISTERED'
-                                        | transloco
-                                }}
-                            </span>
-                        </div>
-                    </div>
-                </ng-container>
-            </div>
-        </ng-container>
-
-        <ng-template #noAttendees>
-            <div class="text-secondary py-8 text-center">
-                {{ 'SESSIONS.ADMIN.ATTENDEES.NO_PARTICIPANTS' | transloco }}
-            </div>
-        </ng-template>
+            <ng-template #noAttendees>
+                <div class="text-secondary py-8 text-center">
+                    {{ 'SESSIONS.ADMIN.ATTENDEES.NO_PARTICIPANTS' | transloco }}
+                </div>
+            </ng-template>
+        </div>
     </div>
 </div>

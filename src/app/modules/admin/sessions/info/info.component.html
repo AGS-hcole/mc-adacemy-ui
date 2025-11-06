@@ -1,24 +1,39 @@
 <div class="absolute inset-0 flex min-w-0 flex-col overflow-hidden">
-    @if (!session) {
-        <!-- Header -->
-        <div
-            class="bg-card relative flex flex-0 flex-col border-b px-6 py-8 sm:flex-row sm:items-center sm:justify-between md:px-8 dark:bg-transparent"
-        >
-            <!-- Title -->
-            <div>
-                <div class="flex items-center">
+    <!-- Header -->
+    <div
+        class="bg-card relative flex flex-0 flex-col border-b px-6 py-8 sm:flex-row sm:items-center sm:justify-between md:px-8 dark:bg-transparent"
+    >
+        <!-- Title -->
+        <div>
+            <div class="flex items-center">
+                @if (!session) {
                     <button mat-icon-button [routerLink]="['../']">
                         <mat-icon
                             [svgIcon]="'heroicons_outline:arrow-left'"
                         ></mat-icon>
                     </button>
-                    <div class="ml-2 text-4xl font-extrabold tracking-tight">
-                        {{ 'SESSIONS.ADMIN.CREATE_SESSION' | transloco }}
-                    </div>
+                } @else {
+                    <button
+                        class="-ml-2 lg:hidden"
+                        mat-icon-button
+                        (click)="toggleParentDrawer()"
+                    >
+                        <mat-icon
+                            [svgIcon]="'heroicons_outline:bars-3'"
+                        ></mat-icon>
+                    </button>
+                }
+                <div class="ml-2 text-4xl font-extrabold tracking-tight">
+                    {{
+                        (!session
+                            ? 'SESSIONS.ADMIN.CREATE_SESSION'
+                            : 'SESSIONS.ADMIN.EDIT_SESSION'
+                        ) | transloco
+                    }}
                 </div>
             </div>
         </div>
-    }
+    </div>
 
     <!-- Main content -->
     <div class="flex flex-auto overflow-y-auto">

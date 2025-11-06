@@ -262,7 +262,7 @@
             "BREADCRUMB": {
                 "BACK": "Retour aux sessions"
             },
-            "TITLE": "Détails de la session",
+            "TITLE": "Session",
             "INFO": "Informations",
             "INFO_DESCRIPTION": "Détails et paramètres de la session",
             "PARTICIPANTS": "Participants",
