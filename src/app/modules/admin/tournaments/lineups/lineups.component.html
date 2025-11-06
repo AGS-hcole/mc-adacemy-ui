@@ -3,7 +3,29 @@
     <div
         class="bg-card flex flex-col gap-4 p-6 sm:flex-row sm:items-center sm:justify-between md:px-8 dark:bg-transparent"
     >
-        <div>
+        <div class="flex sm:hidden">
+            <a
+                class="text-secondary -ml-1.5 mb-2 inline-flex items-center font-medium"
+                [routerLink]="'./../..'"
+            >
+                <mat-icon
+                    class="text-secondary icon-size-5"
+                    [svgIcon]="'heroicons_solid:chevron-left'"
+                ></mat-icon>
+                <span class="ml-2">{{
+                    'TOURNAMENTS.VIEW.BREADCRUMB.BACK' | transloco
+                }}</span>
+            </a>
+        </div>
+        <div class="flex items-center">
+            <!-- Drawer toggle -->
+            <button
+                class="-ml-2 lg:hidden"
+                mat-icon-button
+                (click)="toggleParentDrawer()"
+            >
+                <mat-icon [svgIcon]="'heroicons_outline:bars-3'"></mat-icon>
+            </button>
             <div class="text-4xl font-extrabold leading-none tracking-tight">
                 {{ 'TOURNAMENTS.VIEW.LINEUPS' | transloco }}
             </div>

@@ -18,8 +18,10 @@ import { MatDialog, MatDialogModule } from '@angular/material/dialog';
 import { MatIconModule } from '@angular/material/icon';
 import { MatMenuModule } from '@angular/material/menu';
 import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
+import { MatDrawerToggleResult } from '@angular/material/sidenav';
 import { MatSlideToggleModule } from '@angular/material/slide-toggle';
 import { MatSnackBar, MatSnackBarModule } from '@angular/material/snack-bar';
+import { RouterLink } from '@angular/router';
 import { TranslocoModule, TranslocoService } from '@jsverse/transloco';
 import {
     BenchParticipantDto,
@@ -31,6 +33,7 @@ import {
 } from 'app/core/tournament/tournament.types';
 import { TournamentsService } from 'app/core/tournament/tournaments.service';
 import { Subject, takeUntil } from 'rxjs';
+import { TournamentViewComponent } from '../view/view.component';
 
 @Component({
     selector: 'tournament-lineups',
@@ -46,6 +49,7 @@ import { Subject, takeUntil } from 'rxjs';
         MatIconModule,
         MatMenuModule,
         MatSlideToggleModule,
+        RouterLink,
         MatProgressSpinnerModule,
         MatSnackBarModule,
         MatDialogModule,
@@ -72,7 +76,8 @@ export class TournamentLineupsComponent implements OnInit, OnDestroy {
         private _tournamentsService: TournamentsService,
         private _dialog: MatDialog,
         private _snackBar: MatSnackBar,
-        private _translocoService: TranslocoService
+        private _translocoService: TranslocoService,
+        private _tournamentViewComponent: TournamentViewComponent
     ) {}
 
     // -----------------------------------------------------------------------------------------------------
@@ -612,5 +617,12 @@ export class TournamentLineupsComponent implements OnInit, OnDestroy {
      */
     trackByFn(index: number, item: any): any {
         return item.id || index;
+    }
+
+    /**
+     * Toggle the parent drawer
+     */
+    toggleParentDrawer(): Promise<MatDrawerToggleResult> {
+        return this._tournamentViewComponent.drawer.toggle();
     }
 }

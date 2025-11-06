@@ -753,15 +753,15 @@
             "NO_PARTICIPANTS_YET": "Aucun participant pour le moment",
             "ADD_PARTICIPANTS_FIRST": "Ajoutez d'abord des participants pour générer des équipes",
             "CLICK_GENERATE_TEAMS": "Cliquez sur le bouton ci-dessus pour générer des paires équilibrées",
-            "BENCH": "Remplaçants",
+            "BENCH": "Liste d'attente",
             "LOCKED": "Verrouillé",
             "TEAM_STRENGTH": "F",
             "AVG_STRENGTH": "M",
             "MOVE_TO_TEAM": "Déplacer vers l'équipe",
-            "MOVE_TO_BENCH": "Déplacer vers les remplaçants",
+            "MOVE_TO_BENCH": "Déplacer vers la liste d'attente",
             "SWAP_WITH": "Échanger avec",
             "EMPTY_TEAM": "Équipe vide - glissez les membres ici",
-            "EMPTY_BENCH": "Aucun participant sur le banc",
+            "EMPTY_BENCH": "Aucun participant sur la liste d'attente",
             "PARTICIPANTS": {
                 "PARTICIPANTS": "Participants",
                 "UPDATE_SUCCESS": "Participants mis à jour avec succès"
