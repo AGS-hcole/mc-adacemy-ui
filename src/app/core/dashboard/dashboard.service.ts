@@ -8,6 +8,7 @@ import { DashboardStats } from './dashboard.types';
 export class DashboardService {
     private apiUrl = environment.apiUrl;
     private _stats: BehaviorSubject<any | null> = new BehaviorSubject(null);
+    private _userStats: BehaviorSubject<any | null> = new BehaviorSubject(null);
 
     constructor(private _httpClient: HttpClient) {}
 
@@ -23,6 +24,13 @@ export class DashboardService {
     }
 
     /**
+     * Getter for user stats
+     */
+    get userStats$(): Observable<any> {
+        return this._userStats.asObservable();
+    }
+
+    /**
      * Get dashboard statistics
      * This aggregates data from multiple endpoints
      */
@@ -30,7 +38,9 @@ export class DashboardService {
         return forkJoin({
             sites: this._httpClient.get<any[]>(`${this.apiUrl}/sites`),
             users: this._httpClient.get<any[]>(`${this.apiUrl}/users`),
-            sessions: this._httpClient.get<any[]>(`${this.apiUrl}/sessions`),
+            sessions: this._httpClient.get<any[]>(
+                `${this.apiUrl}/sessions/upcoming`
+            ),
         }).pipe(
             map(({ sites, users, sessions }) => {
                 const admins = users.filter((u) => u.role === 'admin').length;
@@ -56,6 +66,30 @@ export class DashboardService {
                 return stats;
             }),
             tap((stats) => this._stats.next(stats))
+        );
+    }
+
+    /**
+     * Get user statistics
+     */
+    getUserStats(): Observable<any> {
+        return forkJoin({
+            sessions: this._httpClient.get<any[]>(
+                `${this.apiUrl}/sessions/upcoming`
+            ),
+            tournaments: this._httpClient.get<any[]>(
+                `${this.apiUrl}/tournaments/upcoming`
+            ),
+        }).pipe(
+            map(({ sessions, tournaments }) => {
+                const stats: any = {
+                    sessions: { upcoming: sessions.length },
+                    tournaments: { upcoming: tournaments.length },
+                };
+
+                return stats;
+            }),
+            tap((stats) => this._userStats.next(stats))
         );
     }
 }
