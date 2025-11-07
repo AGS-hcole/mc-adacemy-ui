@@ -5,6 +5,8 @@ import {
     Component,
     OnDestroy,
     OnInit,
+    Optional,
+    SkipSelf,
     ViewEncapsulation,
 } from '@angular/core';
 import {
@@ -77,7 +79,9 @@ export class TournamentInfoComponent implements OnInit, OnDestroy {
         private _router: Router,
         private _tournamentsService: TournamentsService,
         private _translocoService: TranslocoService,
-        private _tournamentViewComponent: TournamentViewComponent
+        @Optional()
+        @SkipSelf()
+        private _tournamentViewComponent: TournamentViewComponent | null
     ) {}
 
     // -----------------------------------------------------------------------------------------------------
@@ -261,6 +265,6 @@ export class TournamentInfoComponent implements OnInit, OnDestroy {
      * Toggle the parent drawer
      */
     toggleParentDrawer(): Promise<MatDrawerToggleResult> {
-        return this._tournamentViewComponent.drawer.toggle();
+        return this._tournamentViewComponent?.drawer.toggle();
     }
 }

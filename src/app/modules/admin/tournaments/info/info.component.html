@@ -6,7 +6,7 @@
         <div class="flex sm:hidden">
             <a
                 class="text-secondary -ml-1.5 mb-2 inline-flex items-center font-medium"
-                [routerLink]="'./../..'"
+                [routerLink]="!isNew ? './../..' : './../'"
             >
                 <mat-icon
                     class="text-secondary icon-size-5"
@@ -19,13 +19,15 @@
         </div>
         <div class="flex items-center">
             <!-- Drawer toggle -->
-            <button
-                class="-ml-2 lg:hidden"
-                mat-icon-button
-                (click)="toggleParentDrawer()"
-            >
-                <mat-icon [svgIcon]="'heroicons_outline:bars-3'"></mat-icon>
-            </button>
+            @if (!isNew) {
+                <button
+                    class="-ml-2 lg:hidden"
+                    mat-icon-button
+                    (click)="toggleParentDrawer()"
+                >
+                    <mat-icon [svgIcon]="'heroicons_outline:bars-3'"></mat-icon>
+                </button>
+            }
             <div
                 class="ml-2 text-4xl font-extrabold leading-none tracking-tight"
             >

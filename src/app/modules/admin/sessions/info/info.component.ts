@@ -5,6 +5,8 @@ import {
     Component,
     OnDestroy,
     OnInit,
+    Optional,
+    SkipSelf,
     ViewEncapsulation,
 } from '@angular/core';
 import {
@@ -81,7 +83,9 @@ export class SessionInfoComponent implements OnInit, OnDestroy {
         private _formBuilder: UntypedFormBuilder,
         private _router: Router,
         private _sessionsService: SessionsService,
-        private _sessionsViewComponent: SessionsViewComponent
+        @Optional()
+        @SkipSelf()
+        private _sessionsViewComponent: SessionsViewComponent | null
     ) {}
 
     // -----------------------------------------------------------------------------------------------------
@@ -324,7 +328,7 @@ export class SessionInfoComponent implements OnInit, OnDestroy {
      * Toggle the parent drawer
      */
     toggleParentDrawer(): Promise<MatDrawerToggleResult> {
-        return this._sessionsViewComponent.drawer.toggle();
+        return this._sessionsViewComponent?.drawer.toggle();
     }
 
     // -----------------------------------------------------------------------------------------------------
