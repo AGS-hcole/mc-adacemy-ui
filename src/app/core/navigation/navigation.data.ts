@@ -32,13 +32,6 @@ export const adminNavigation: FuseNavigationItem[] = [
         subtitle: 'NAVIGATION.ADMIN.SUBTITLE',
         children: [
             {
-                id: 'sites',
-                title: 'NAVIGATION.ADMIN.SITES.TITLE',
-                type: 'basic',
-                icon: 'heroicons_outline:map-pin',
-                link: '/admin/sites',
-            },
-            {
                 id: 'users',
                 title: 'NAVIGATION.ADMIN.USERS.TITLE',
                 type: 'basic',
@@ -46,18 +39,18 @@ export const adminNavigation: FuseNavigationItem[] = [
                 link: '/admin/users',
             },
             {
+                id: 'sites',
+                title: 'NAVIGATION.ADMIN.SITES.TITLE',
+                type: 'basic',
+                icon: 'heroicons_outline:map-pin',
+                link: '/admin/sites',
+            },
+            {
                 id: 'sessions',
                 title: 'NAVIGATION.ADMIN.SESSIONS.TITLE',
                 type: 'basic',
                 icon: 'heroicons_outline:calendar',
                 link: '/admin/sessions',
-            },
-            {
-                id: 'reports',
-                title: 'NAVIGATION.ADMIN.REPORTS.TITLE',
-                type: 'basic',
-                icon: 'heroicons_outline:chart-bar',
-                link: '/admin/reports',
             },
             {
                 id: 'tournaments',
@@ -72,6 +65,13 @@ export const adminNavigation: FuseNavigationItem[] = [
                 type: 'basic',
                 icon: 'heroicons_outline:calendar-days',
                 link: '/admin/events',
+            },
+            {
+                id: 'reports',
+                title: 'NAVIGATION.ADMIN.REPORTS.TITLE',
+                type: 'basic',
+                icon: 'heroicons_outline:chart-bar',
+                link: '/admin/reports',
             },
         ],
     },
