@@ -1,4 +1,4 @@
-import { CommonModule, NgClass } from '@angular/common';
+import { CommonModule, KeyValue, NgClass } from '@angular/common';
 import {
     ChangeDetectionStrategy,
     ChangeDetectorRef,
@@ -226,19 +226,41 @@ export class UserSessionsListComponent implements OnInit, OnDestroy {
         return `${start} - ${end}`;
     }
 
+    dateDesc = (
+        a: KeyValue<string, Session[]>,
+        b: KeyValue<string, Session[]>
+    ) => new Date(a.key).getTime() - new Date(b.key).getTime();
+
     /**
      * Group sessions by date
      */
     groupSessionsByDate(sessions: Session[]): Map<string, Session[]> {
+        // trie global DESC (optionnel)
+        const sorted = [...sessions].sort(
+            (a, b) => new Date(a.date).getTime() - new Date(b.date).getTime()
+        );
+
         const grouped = new Map<string, Session[]>();
 
-        sessions.forEach((session) => {
-            const dateKey = new Date(session.date).toDateString();
-            if (!grouped.has(dateKey)) {
-                grouped.set(dateKey, []);
-            }
-            grouped.get(dateKey).push(session);
-        });
+        for (const s of sorted) {
+            // clé ISO yyyy-MM-dd pour un tri fiable
+            const d = new Date(s.date);
+            d.setHours(0, 0, 0, 0);
+            const key = d.toISOString().slice(0, 10); // ex: "2025-11-14"
+
+            if (!grouped.has(key)) grouped.set(key, []);
+            grouped.get(key)!.push(s);
+        }
+
+        // (optionnel) trier les sessions du jour par heure de début ASC
+        for (const [k, arr] of grouped) {
+            arr.sort(
+                (a, b) =>
+                    new Date(a.startTime ?? a.date).getTime() -
+                    new Date(b.startTime ?? b.date).getTime()
+            );
+            grouped.set(k, arr);
+        }
 
         return grouped;
     }
