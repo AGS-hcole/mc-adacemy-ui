@@ -33,21 +33,20 @@ export function isFormulaCompatibleWithSlot(
  * Returns true if cutoff has passed (registration blocked)
  */
 export function isCutoffPassed(sessionDate: Date | string): boolean {
-    const session = typeof sessionDate === 'string' ? new Date(sessionDate) : sessionDate;
+    const session =
+        typeof sessionDate === 'string' ? new Date(sessionDate) : sessionDate;
     const now = new Date();
 
-    // Find the Friday before the session
-    const sessionDay = session.getDay();
-    let daysToFriday = sessionDay === 0 ? 2 : sessionDay === 6 ? 1 : sessionDay - 5;
-    if (daysToFriday < 0) {
-        daysToFriday += 7;
-    }
+    // Trouver le samedi précédent la session
+    const sessionDay = session.getDay(); // 0 = dimanche, 6 = samedi
+    // Nombre de jours à soustraire pour arriver au samedi précédent
+    const daysToPreviousSaturday = ((sessionDay + 1) % 7) + 1; // ex: lundi -> 2, dimanche -> 1
 
-    const cutoffFriday = new Date(session);
-    cutoffFriday.setDate(session.getDate() - daysToFriday);
-    cutoffFriday.setHours(18, 0, 0, 0);
+    const cutoff = new Date(session);
+    cutoff.setDate(session.getDate() - daysToPreviousSaturday);
+    cutoff.setHours(20, 0, 0, 0); // 20h00
 
-    return now > cutoffFriday;
+    return now > cutoff;
 }
 
 /**
@@ -55,11 +54,13 @@ export function isCutoffPassed(sessionDate: Date | string): boolean {
  * Returns the Friday 18:00 before the session
  */
 export function getCutoffDateTime(sessionDate: Date | string): Date {
-    const session = typeof sessionDate === 'string' ? new Date(sessionDate) : sessionDate;
+    const session =
+        typeof sessionDate === 'string' ? new Date(sessionDate) : sessionDate;
 
     // Find the Friday before the session
     const sessionDay = session.getDay();
-    let daysToFriday = sessionDay === 0 ? 2 : sessionDay === 6 ? 1 : sessionDay - 5;
+    let daysToFriday =
+        sessionDay === 0 ? 2 : sessionDay === 6 ? 1 : sessionDay - 5;
     if (daysToFriday < 0) {
         daysToFriday += 7;
     }
