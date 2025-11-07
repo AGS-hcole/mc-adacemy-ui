@@ -31,5 +31,6 @@
             }
         }
     ],
-    "dataGroups": []
+    "dataGroups": [],
+    "navigationUrls": ["/**", "!/api/**", "!/swagger/**"]
 }
