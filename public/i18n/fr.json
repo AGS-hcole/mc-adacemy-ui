@@ -455,6 +455,7 @@
             "BIRTHDATE": "Date de naissance",
             "BIRTHDATE_INVALID": "Date invalide",
             "FFT_NUMBER": "Numéro de licence FFT",
+            "CURRENT_RANKING": "Classement",
             "AVATAR": "Photo de profil",
             "AVATAR_HINT": "Télécharger une photo de profil (max 2MB, PNG/JPEG)",
             "AVATAR_UPLOAD": "Télécharger",
