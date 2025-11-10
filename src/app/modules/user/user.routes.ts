@@ -50,4 +50,8 @@ export default [
         loadChildren: () =>
             import('app/modules/user/tournaments/tournaments.routes'),
     },
+    {
+        path: 'planning',
+        loadChildren: () => import('app/modules/user/planning/planning.routes').then(m => m.PLANNING_ROUTES),
+    },
 ] as Routes;

@@ -1,0 +1,92 @@
+<div class="flex flex-col w-full">
+    <!-- Header -->
+    <div
+        class="flex flex-col sm:flex-row flex-0 sm:items-center sm:justify-between p-6 sm:py-8 sm:px-10 border-b bg-card dark:bg-transparent"
+    >
+        <div class="flex-1 min-w-0">
+            <h2 class="text-3xl font-extrabold tracking-tight leading-7 sm:leading-10 truncate">
+                {{ 'RUNS.TITLE' | transloco }}
+            </h2>
+        </div>
+        <div class="flex items-center mt-4 sm:mt-0">
+            <button
+                mat-flat-button
+                [color]="'primary'"
+                [disabled]="isGenerating"
+                (click)="onGenerate()"
+            >
+                <mat-spinner *ngIf="isGenerating" [diameter]="20"></mat-spinner>
+                <mat-icon *ngIf="!isGenerating" [svgIcon]="'heroicons_outline:cog'"></mat-icon>
+                <span class="ml-2">{{ 'RUNS.GENERATE' | transloco }}</span>
+            </button>
+        </div>
+    </div>
+
+    <!-- Main -->
+    <div class="flex-auto p-6 sm:p-10">
+        <!-- Loading -->
+        <div *ngIf="isLoading" class="flex items-center justify-center py-12">
+            <mat-spinner [diameter]="40"></mat-spinner>
+        </div>
+
+        <!-- Runs list -->
+        <div *ngIf="!isLoading" class="space-y-4">
+            <div
+                *ngFor="let run of runs"
+                class="p-4 rounded-lg border bg-white dark:bg-gray-900"
+            >
+                <div class="flex items-start justify-between">
+                    <div class="flex-1">
+                        <div class="font-semibold text-lg">{{ run.template?.name || 'N/A' }}</div>
+                        <div class="text-sm text-secondary mt-1">
+                            {{ formatDate(run.date) }} - {{ formatTime(run.plannedTime) }}
+                        </div>
+                        <div class="text-sm text-secondary mt-1">
+                            {{ 'RUNS.STATUS' | transloco }}: {{ getStatusLabel(run.status) | transloco }}
+                        </div>
+                        <div class="text-sm text-secondary mt-1">
+                            {{ 'RUNS.VEHICLE' | transloco }}: {{ run.vehicle || 'N/A' }}
+                        </div>
+                    </div>
+                    <div class="text-right">
+                        <div class="text-sm font-medium">
+                            {{ 'RUNS.ASSIGNMENTS' | transloco }}: {{ run.assignments.length }}
+                        </div>
+                        <div class="text-sm text-secondary mt-1">
+                            {{ 'RUNS.PRESENCES' | transloco }}: {{ run.presences.length }}
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Assignments -->
+                <div *ngIf="run.assignments.length > 0" class="mt-4 pt-4 border-t">
+                    <div class="text-sm font-medium mb-2">{{ 'RUNS.ASSIGNMENTS' | transloco }}:</div>
+                    <div class="flex flex-wrap gap-2">
+                        <span
+                            *ngFor="let assignment of run.assignments"
+                            class="px-2 py-1 text-xs rounded"
+                            [class.bg-green-100]="assignment.status === 'ASSIGNED'"
+                            [class.text-green-800]="assignment.status === 'ASSIGNED'"
+                            [class.dark:bg-green-900]="assignment.status === 'ASSIGNED'"
+                            [class.dark:text-green-200]="assignment.status === 'ASSIGNED'"
+                            [class.bg-yellow-100]="assignment.status === 'WAITLISTED'"
+                            [class.text-yellow-800]="assignment.status === 'WAITLISTED'"
+                            [class.dark:bg-yellow-900]="assignment.status === 'WAITLISTED'"
+                            [class.dark:text-yellow-200]="assignment.status === 'WAITLISTED'"
+                        >
+                            {{ assignment.studentId }} ({{ assignment.status }})
+                        </span>
+                    </div>
+                </div>
+            </div>
+
+            <div
+                *ngIf="runs.length === 0"
+                class="flex flex-col items-center justify-center py-12 text-secondary"
+            >
+                <mat-icon [svgIcon]="'heroicons_outline:inbox'" class="icon-size-24"></mat-icon>
+                <p class="mt-4 text-lg">{{ 'RUNS.NO_RUNS' | transloco }}</p>
+            </div>
+        </div>
+    </div>
+</div>

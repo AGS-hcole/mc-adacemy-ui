@@ -66,4 +66,8 @@ export default [
         path: 'events',
         loadChildren: () => import('app/modules/admin/events/events.routes'),
     },
+    {
+        path: 'planning',
+        loadChildren: () => import('app/modules/admin/planning/planning.routes').then(m => m.PLANNING_ROUTES),
+    },
 ] as Routes;
