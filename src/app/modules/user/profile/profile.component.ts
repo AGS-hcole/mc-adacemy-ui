@@ -236,7 +236,7 @@ export class ProfileComponent implements OnInit {
                 `PROFILE.SESSION_STATUS.${item.userStatus}`
             ),
             sessionTypeLabel: this._translocoService.translate(
-                `PROFILE.SESSION_TYPE.${item.sessionType}`
+                `PROFILE.SOCIAL_TYPE.${item.socialTargetType}`
             ),
         };
     }

@@ -658,7 +658,7 @@
             "PARTICIPANTS": "participants",
             "LOAD_MORE": "Charger plus",
             "LIKE": "J'aime",
-            "COMMENT": "Commenter",
+            "COMMENT": "Commentaire",
             "ADD_COMMENT": "Ajouter un commentaire",
             "COMMENT_PLACEHOLDER": "Partagez votre avis sur cette session...",
             "COMMENT_ADDED": "Commentaire ajouté avec succès",
@@ -673,9 +673,8 @@
             "CANCELLED": "Annulé",
             "WAITING": "Liste d'attente"
         },
-        "SESSION_TYPE": {
-            "TRAINING": "Entraînement",
-            "MATCH": "Match",
+        "SOCIAL_TYPE": {
+            "SESSION": "Entraînement",
             "TOURNAMENT": "Tournoi",
             "OTHER": "Autre"
         }

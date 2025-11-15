@@ -1,4 +1,7 @@
-<div class="absolute inset-0 flex min-w-0 flex-col overflow-y-auto" (scroll)="onFeedScroll($event)">
+<div
+    class="absolute inset-0 flex min-w-0 flex-col overflow-y-auto"
+    (scroll)="onFeedScroll($event)"
+>
     <!-- Header -->
     <div class="bg-card flex flex-col shadow">
         <!-- Cover Image -->
@@ -660,7 +663,7 @@
 
                                                 <!-- Content -->
                                                 <div class="min-w-0 flex-1">
-                                                    <!-- Date & Site -->
+                                                    <!-- SessionType & Site -->
                                                     <div
                                                         class="flex flex-wrap items-center gap-2"
                                                     >
@@ -668,16 +671,8 @@
                                                             class="font-medium"
                                                         >
                                                             {{
-                                                                capitalizeDate(
-                                                                    item.startTimeObj
-                                                                        | date
-                                                                            : 'EEEE d MMMM yyyy HH:mm'
-                                                                )
+                                                                item.sessionTypeLabel
                                                             }}
-                                                            @if (item.slot) {
-                                                                ·
-                                                                {{ item.slot }}
-                                                            }
                                                         </div>
                                                         <span
                                                             class="text-secondary text-sm"
@@ -685,6 +680,22 @@
                                                             •
                                                             {{ item.siteName }}
                                                         </span>
+                                                    </div>
+
+                                                    <!-- Date -->
+                                                    <div
+                                                        class="text-hint mt-1 text-xs"
+                                                    >
+                                                        {{
+                                                            capitalizeDate(
+                                                                item.startTimeObj
+                                                                    | date
+                                                                        : 'EEEE d MMMM yyyy HH:mm'
+                                                            )
+                                                        }}
+                                                        @if (item.slot) {
+                                                            · {{ item.slot }}
+                                                        }
                                                     </div>
 
                                                     <!-- Ratings & stats -->
