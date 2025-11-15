@@ -658,11 +658,16 @@
             "PARTICIPANTS": "participants",
             "LOAD_MORE": "Charger plus",
             "LIKE": "J'aime",
-            "COMMENT": "Commenter",
+            "COMMENT": "Commentaire",
             "ADD_COMMENT": "Ajouter un commentaire",
             "COMMENT_PLACEHOLDER": "Partagez votre avis sur cette session...",
             "COMMENT_ADDED": "Commentaire ajouté avec succès",
-            "COMMENTS_PLACEHOLDER": "Les commentaires apparaîtront ici prochainement"
+            "COMMENTS_PLACEHOLDER": "Les commentaires apparaîtront ici prochainement",
+            "NO_COMMENTS": "Aucun commentaire pour le moment. Soyez le premier à commenter !",
+            "LOAD_MORE_COMMENTS": "Charger plus de commentaires",
+            "LIKE_ERROR": "Impossible de mettre à jour le like pour le moment.",
+            "COMMENT_ERROR": "Impossible d'ajouter le commentaire pour le moment.",
+            "COMMENT_LOAD_ERROR": "Impossible de charger les commentaires."
         },
         "SESSION_STATUS": {
             "YES": "Présent",
@@ -670,9 +675,8 @@
             "CANCELLED": "Annulé",
             "WAITING": "Liste d'attente"
         },
-        "SESSION_TYPE": {
-            "TRAINING": "Entraînement",
-            "MATCH": "Match",
+        "SOCIAL_TYPE": {
+            "SESSION": "Entraînement",
             "TOURNAMENT": "Tournoi",
             "OTHER": "Autre"
         }

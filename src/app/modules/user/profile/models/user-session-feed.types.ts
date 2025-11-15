@@ -1,3 +1,5 @@
+import { SocialComment, SocialTargetType } from './social.types';
+
 /**
  * User session feed item from API
  */
@@ -14,6 +16,10 @@ export interface UserSessionFeedItem {
     participantsCount: number;
     userStatus: string;
     startTime?: string; // ISO string for session start time
+    
+    // Social properties
+    socialTargetType?: SocialTargetType;
+    socialEntityId?: string;
     likesCount?: number;
     commentsCount?: number;
     isLikedByUser?: boolean;
@@ -35,5 +41,15 @@ export interface UserSessionFeedViewItem extends UserSessionFeedItem {
     startTimeObj: Date;
     userStatusLabel: string;
     sessionTypeLabel: string;
-    showComments?: boolean; // UI state for showing comment section
+    
+    // UI-only state for comments and likes
+    showComments?: boolean;
+    isLiking?: boolean;
+    isLoadingComments?: boolean;
+    isSubmittingComment?: boolean;
+    
+    // Comments cache
+    comments?: SocialComment[];
+    commentsNextCursor?: string | null;
+    hasMoreComments?: boolean;
 }

@@ -236,7 +236,7 @@ export class ProfileComponent implements OnInit {
                 `PROFILE.SESSION_STATUS.${item.userStatus}`
             ),
             sessionTypeLabel: this._translocoService.translate(
-                `PROFILE.SESSION_TYPE.${item.sessionType}`
+                `PROFILE.SOCIAL_TYPE.${item.socialTargetType}`
             ),
         };
     }
@@ -264,18 +264,58 @@ export class ProfileComponent implements OnInit {
      * Toggle like on a session
      */
     toggleLike(item: UserSessionFeedViewItem): void {
-        // Toggle the like state
-        item.isLikedByUser = !item.isLikedByUser;
-
-        // Update likes count
-        if (item.isLikedByUser) {
-            item.likesCount = (item.likesCount || 0) + 1;
-        } else {
-            item.likesCount = Math.max(0, (item.likesCount || 0) - 1);
+        if (item.isLiking) {
+            return;
         }
 
-        // TODO: Call API to persist like state
-        // this.sessionFeedService.toggleLike(item.sessionId).subscribe();
+        const prevIsLiked = item.isLikedByUser;
+        const prevLikesCount = item.likesCount || 0;
+
+        // Optimistic UI update
+        item.isLikedByUser = !item.isLikedByUser;
+        if (item.isLikedByUser) {
+            item.likesCount = prevLikesCount + 1;
+        } else {
+            item.likesCount = Math.max(0, prevLikesCount - 1);
+        }
+        item.isLiking = true;
+
+        this.sessionFeedService
+            .toggleLike(
+                item.socialTargetType || 'SESSION',
+                item.socialEntityId || item.sessionId,
+                item.isLikedByUser
+            )
+            .pipe(
+                finalize(() => {
+                    item.isLiking = false;
+                })
+            )
+            .subscribe({
+                next: (resp) => {
+                    // Sync with backend state in case counts changed
+                    item.likesCount = resp.likesCount;
+                    item.isLikedByUser = resp.userHasLiked;
+                },
+                error: (error) => {
+                    console.error('Error toggling like', error);
+
+                    // Rollback UI
+                    item.isLikedByUser = prevIsLiked;
+                    item.likesCount = prevLikesCount;
+
+                    this.snackBar.open(
+                        this._translocoService.translate(
+                            'PROFILE.ACTIVITY.LIKE_ERROR'
+                        ),
+                        '',
+                        {
+                            duration: 2000,
+                            verticalPosition: 'top',
+                        }
+                    );
+                },
+            });
     }
 
     /**
@@ -283,35 +323,155 @@ export class ProfileComponent implements OnInit {
      */
     toggleComments(item: UserSessionFeedViewItem): void {
         item.showComments = !item.showComments;
-        // TODO: Load comments if not already loaded
-        // if (item.showComments && !item.comments) {
-        //     this.sessionFeedService.getComments(item.sessionId).subscribe();
-        // }
+
+        if (item.showComments && !item.comments && !item.isLoadingComments) {
+            item.isLoadingComments = true;
+
+            this.sessionFeedService
+                .getComments(
+                    item.socialTargetType || 'SESSION',
+                    item.socialEntityId || item.sessionId
+                )
+                .pipe(
+                    finalize(() => {
+                        item.isLoadingComments = false;
+                    })
+                )
+                .subscribe({
+                    next: (page) => {
+                        item.comments = page.items;
+                        item.commentsNextCursor = page.nextCursor;
+                        item.hasMoreComments = page.hasMore;
+                    },
+                    error: (error) => {
+                        console.error('Error loading comments', error);
+                        this.snackBar.open(
+                            this._translocoService.translate(
+                                'PROFILE.ACTIVITY.COMMENT_LOAD_ERROR'
+                            ),
+                            '',
+                            {
+                                duration: 2000,
+                                verticalPosition: 'top',
+                            }
+                        );
+                    },
+                });
+        }
     }
 
     /**
      * Submit a comment on a session
      */
     submitComment(item: UserSessionFeedViewItem, commentText: string): void {
-        if (!commentText.trim()) {
+        const trimmed = commentText.trim();
+        if (!trimmed || item.isSubmittingComment) {
             return;
         }
 
-        // TODO: Call API to submit comment
-        // this.sessionFeedService.addComment(item.sessionId, commentText).subscribe();
+        item.isSubmittingComment = true;
 
-        // Update comment count
-        item.commentsCount = (item.commentsCount || 0) + 1;
+        this.sessionFeedService
+            .addComment(
+                item.socialTargetType || 'SESSION',
+                item.socialEntityId || item.sessionId,
+                trimmed
+            )
+            .pipe(
+                finalize(() => {
+                    item.isSubmittingComment = false;
+                })
+            )
+            .subscribe({
+                next: (comment) => {
+                    // Ensure comments array exists
+                    if (!item.comments) {
+                        item.comments = [];
+                    }
 
-        // Show success message
-        this.snackBar.open(
-            this._translocoService.translate('PROFILE.ACTIVITY.COMMENT_ADDED'),
-            '',
-            {
-                duration: 2000,
-                verticalPosition: 'top',
-            }
-        );
+                    // Add new comment at the top
+                    item.comments.unshift(comment);
+
+                    // Update comment count
+                    item.commentsCount = (item.commentsCount || 0) + 1;
+
+                    // Show success message
+                    this.snackBar.open(
+                        this._translocoService.translate(
+                            'PROFILE.ACTIVITY.COMMENT_ADDED'
+                        ),
+                        '',
+                        {
+                            duration: 2000,
+                            verticalPosition: 'top',
+                        }
+                    );
+
+                    // TODO: clear the input in the template (via FormControl or two-way binding)
+                },
+                error: (error) => {
+                    console.error('Error adding comment', error);
+                    this.snackBar.open(
+                        this._translocoService.translate(
+                            'PROFILE.ACTIVITY.COMMENT_ERROR'
+                        ),
+                        '',
+                        {
+                            duration: 2000,
+                            verticalPosition: 'top',
+                        }
+                    );
+                },
+            });
+    }
+
+    /**
+     * Load more comments for a session
+     */
+    loadMoreComments(item: UserSessionFeedViewItem): void {
+        if (item.isLoadingComments || !item.commentsNextCursor) {
+            return;
+        }
+
+        item.isLoadingComments = true;
+
+        this.sessionFeedService
+            .getComments(
+                item.socialTargetType || 'SESSION',
+                item.socialEntityId || item.sessionId,
+                item.commentsNextCursor
+            )
+            .pipe(
+                finalize(() => {
+                    item.isLoadingComments = false;
+                })
+            )
+            .subscribe({
+                next: (page) => {
+                    // Ensure comments array exists
+                    if (!item.comments) {
+                        item.comments = [];
+                    }
+
+                    // Append new comments to the end
+                    item.comments = [...item.comments, ...page.items];
+                    item.commentsNextCursor = page.nextCursor;
+                    item.hasMoreComments = page.hasMore;
+                },
+                error: (error) => {
+                    console.error('Error loading more comments', error);
+                    this.snackBar.open(
+                        this._translocoService.translate(
+                            'PROFILE.ACTIVITY.COMMENT_LOAD_ERROR'
+                        ),
+                        '',
+                        {
+                            duration: 2000,
+                            verticalPosition: 'top',
+                        }
+                    );
+                },
+            });
     }
 
     toggleEditMode(): void {
@@ -493,5 +653,20 @@ export class ProfileComponent implements OnInit {
     capitalizeDate(value: string | null): string {
         if (!value) return '';
         return value.replace(/\b\p{L}/gu, (c) => c.toUpperCase());
+    }
+
+    getStatusClasses(status: string): string {
+        switch (status) {
+            case 'YES':
+                return 'bg-green-100 text-green-700';
+            case 'NO':
+                return 'bg-red-100 text-red-700';
+            case 'CANCELLED':
+                return 'bg-orange-100 text-orange-700';
+            case 'WAITING':
+                return 'bg-yellow-100 text-yellow-700';
+            default:
+                return 'bg-gray-100 text-gray-700';
+        }
     }
 }
