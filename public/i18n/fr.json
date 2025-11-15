@@ -662,7 +662,10 @@
             "ADD_COMMENT": "Ajouter un commentaire",
             "COMMENT_PLACEHOLDER": "Partagez votre avis sur cette session...",
             "COMMENT_ADDED": "Commentaire ajouté avec succès",
-            "COMMENTS_PLACEHOLDER": "Les commentaires apparaîtront ici prochainement"
+            "COMMENTS_PLACEHOLDER": "Les commentaires apparaîtront ici prochainement",
+            "LIKE_ERROR": "Impossible de mettre à jour le like pour le moment.",
+            "COMMENT_ERROR": "Impossible d'ajouter le commentaire pour le moment.",
+            "COMMENT_LOAD_ERROR": "Impossible de charger les commentaires."
         },
         "SESSION_STATUS": {
             "YES": "Présent",
