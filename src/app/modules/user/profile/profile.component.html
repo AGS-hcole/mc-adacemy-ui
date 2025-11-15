@@ -869,6 +869,9 @@
                                                                     'PROFILE.ACTIVITY.COMMENT_PLACEHOLDER'
                                                                         | transloco
                                                                 "
+                                                                [disabled]="
+                                                                    item.isSubmittingComment
+                                                                "
                                                                 (keydown.enter)="
                                                                     submitComment(
                                                                         item,
@@ -883,6 +886,9 @@
                                                             mat-icon-button
                                                             color="primary"
                                                             type="button"
+                                                            [disabled]="
+                                                                item.isSubmittingComment
+                                                            "
                                                             (click)="
                                                                 submitComment(
                                                                     item,
@@ -897,6 +903,121 @@
                                                             >
                                                         </button>
                                                     </div>
+
+                                                    <!-- Comments Loading State -->
+                                                    @if (item.isLoadingComments) {
+                                                        <div
+                                                            class="mt-4 flex items-center justify-center py-4"
+                                                        >
+                                                            <mat-spinner
+                                                                diameter="24"
+                                                            ></mat-spinner>
+                                                        </div>
+                                                    }
+
+                                                    <!-- Comments List -->
+                                                    @if (
+                                                        !item.isLoadingComments &&
+                                                        item.comments &&
+                                                        item.comments.length > 0
+                                                    ) {
+                                                        <div
+                                                            class="mt-4 space-y-3"
+                                                        >
+                                                            @for (
+                                                                comment of item.comments;
+                                                                track comment.id
+                                                            ) {
+                                                                <div
+                                                                    class="flex gap-3"
+                                                                >
+                                                                    <!-- Comment Avatar -->
+                                                                    <div
+                                                                        class="flex h-8 w-8 flex-shrink-0 items-center justify-center rounded-full bg-gray-200"
+                                                                    >
+                                                                        <mat-icon
+                                                                            class="text-gray-600 icon-size-5"
+                                                                            >person</mat-icon
+                                                                        >
+                                                                    </div>
+
+                                                                    <!-- Comment Content -->
+                                                                    <div
+                                                                        class="min-w-0 flex-1"
+                                                                    >
+                                                                        <div
+                                                                            class="rounded-lg bg-gray-50 p-3"
+                                                                        >
+                                                                            <div
+                                                                                class="text-secondary text-xs font-medium"
+                                                                            >
+                                                                                {{
+                                                                                    comment.userId
+                                                                                }}
+                                                                                ·
+                                                                                <span
+                                                                                    class="text-hint"
+                                                                                >
+                                                                                    {{
+                                                                                        comment.createdAt
+                                                                                            | date
+                                                                                                : 'short'
+                                                                                    }}
+                                                                                </span>
+                                                                            </div>
+                                                                            <div
+                                                                                class="mt-1 text-sm"
+                                                                            >
+                                                                                {{
+                                                                                    comment.content
+                                                                                }}
+                                                                            </div>
+                                                                        </div>
+                                                                    </div>
+                                                                </div>
+                                                            }
+                                                        </div>
+                                                    }
+
+                                                    <!-- Empty Comments State -->
+                                                    @if (
+                                                        !item.isLoadingComments &&
+                                                        item.comments &&
+                                                        item.comments.length ===
+                                                            0
+                                                    ) {
+                                                        <div
+                                                            class="text-hint mt-4 py-4 text-center text-sm"
+                                                        >
+                                                            {{
+                                                                'PROFILE.ACTIVITY.NO_COMMENTS'
+                                                                    | transloco
+                                                            }}
+                                                        </div>
+                                                    }
+
+                                                    <!-- Load More Comments -->
+                                                    @if (item.hasMoreComments) {
+                                                        <div
+                                                            class="mt-3 flex justify-center"
+                                                        >
+                                                            <button
+                                                                type="button"
+                                                                mat-button
+                                                                class="text-xs"
+                                                                (click)="
+                                                                    loadMoreComments(
+                                                                        item
+                                                                    )
+                                                                "
+                                                            >
+                                                                {{
+                                                                    'PROFILE.ACTIVITY.LOAD_MORE_COMMENTS'
+                                                                        | transloco
+                                                                }}
+                                                            </button>
+                                                        </div>
+                                                    }
                                                 </div>
                                             }
                                         </div>

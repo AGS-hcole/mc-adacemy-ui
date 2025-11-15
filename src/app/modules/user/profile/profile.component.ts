@@ -425,6 +425,55 @@ export class ProfileComponent implements OnInit {
             });
     }
 
+    /**
+     * Load more comments for a session
+     */
+    loadMoreComments(item: UserSessionFeedViewItem): void {
+        if (item.isLoadingComments || !item.commentsNextCursor) {
+            return;
+        }
+
+        item.isLoadingComments = true;
+
+        this.sessionFeedService
+            .getComments(
+                item.socialTargetType || 'SESSION',
+                item.socialEntityId || item.sessionId,
+                item.commentsNextCursor
+            )
+            .pipe(
+                finalize(() => {
+                    item.isLoadingComments = false;
+                })
+            )
+            .subscribe({
+                next: (page) => {
+                    // Ensure comments array exists
+                    if (!item.comments) {
+                        item.comments = [];
+                    }
+
+                    // Append new comments to the end
+                    item.comments = [...item.comments, ...page.items];
+                    item.commentsNextCursor = page.nextCursor;
+                    item.hasMoreComments = page.hasMore;
+                },
+                error: (error) => {
+                    console.error('Error loading more comments', error);
+                    this.snackBar.open(
+                        this._translocoService.translate(
+                            'PROFILE.ACTIVITY.COMMENT_LOAD_ERROR'
+                        ),
+                        '',
+                        {
+                            duration: 2000,
+                            verticalPosition: 'top',
+                        }
+                    );
+                },
+            });
+    }
+
     toggleEditMode(): void {
         this.editMode = !this.editMode;
         if (!this.editMode && this.user) {

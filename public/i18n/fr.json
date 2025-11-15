@@ -663,6 +663,8 @@
             "COMMENT_PLACEHOLDER": "Partagez votre avis sur cette session...",
             "COMMENT_ADDED": "Commentaire ajouté avec succès",
             "COMMENTS_PLACEHOLDER": "Les commentaires apparaîtront ici prochainement",
+            "NO_COMMENTS": "Aucun commentaire pour le moment. Soyez le premier à commenter !",
+            "LOAD_MORE_COMMENTS": "Charger plus de commentaires",
             "LIKE_ERROR": "Impossible de mettre à jour le like pour le moment.",
             "COMMENT_ERROR": "Impossible d'ajouter le commentaire pour le moment.",
             "COMMENT_LOAD_ERROR": "Impossible de charger les commentaires."
