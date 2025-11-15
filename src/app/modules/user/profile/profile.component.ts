@@ -294,7 +294,7 @@ export class ProfileComponent implements OnInit {
             .subscribe({
                 next: (resp) => {
                     // Sync with backend state in case counts changed
-                    item.likesCount = resp.likeCount;
+                    item.likesCount = resp.likesCount;
                     item.isLikedByUser = resp.userHasLiked;
                 },
                 error: (error) => {
@@ -653,5 +653,20 @@ export class ProfileComponent implements OnInit {
     capitalizeDate(value: string | null): string {
         if (!value) return '';
         return value.replace(/\b\p{L}/gu, (c) => c.toUpperCase());
+    }
+
+    getStatusClasses(status: string): string {
+        switch (status) {
+            case 'YES':
+                return 'bg-green-100 text-green-700';
+            case 'NO':
+                return 'bg-red-100 text-red-700';
+            case 'CANCELLED':
+                return 'bg-orange-100 text-orange-700';
+            case 'WAITING':
+                return 'bg-yellow-100 text-yellow-700';
+            default:
+                return 'bg-gray-100 text-gray-700';
+        }
     }
 }
