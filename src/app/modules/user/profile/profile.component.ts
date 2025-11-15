@@ -85,7 +85,6 @@ export class ProfileComponent implements OnInit {
             this.user = user;
             this.initializeForm(user);
             this.loadUserImages();
-            // Load session feed after user is loaded
             this.loadInitialFeed();
         });
     }
@@ -127,7 +126,6 @@ export class ProfileComponent implements OnInit {
     }
 
     private initializeForm(user: User): void {
-        console.log(user);
         this.form = this.fb.group({
             firstname: [
                 user.firstname || '',
