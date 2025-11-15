@@ -1,4 +1,4 @@
-<div class="absolute inset-0 flex min-w-0 flex-col overflow-y-auto">
+<div class="absolute inset-0 flex min-w-0 flex-col overflow-y-auto" (scroll)="onFeedScroll($event)">
     <!-- Header -->
     <div class="bg-card flex flex-col shadow">
         <!-- Cover Image -->
@@ -632,11 +632,8 @@
                                     </div>
                                 </div>
                             } @else {
-                                <!-- Scrollable container -->
-                                <div
-                                    class="max-h-[800px] space-y-4 overflow-y-auto pr-2"
-                                    (scroll)="onFeedScroll($event)"
-                                >
+                                <!-- Session Cards Container -->
+                                <div class="space-y-4">
                                     <!-- Session Cards -->
                                     @for (
                                         item of sessionFeedItems;
