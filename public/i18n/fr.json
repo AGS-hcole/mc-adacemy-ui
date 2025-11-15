@@ -656,7 +656,13 @@
             "NO_AVG_RATING": "Aucune note moyenne disponible",
             "AVG_RATING": "Note moyenne",
             "PARTICIPANTS": "participants",
-            "LOAD_MORE": "Charger plus"
+            "LOAD_MORE": "Charger plus",
+            "LIKE": "J'aime",
+            "COMMENT": "Commenter",
+            "ADD_COMMENT": "Ajouter un commentaire",
+            "COMMENT_PLACEHOLDER": "Partagez votre avis sur cette session...",
+            "COMMENT_ADDED": "Commentaire ajouté avec succès",
+            "COMMENTS_PLACEHOLDER": "Les commentaires apparaîtront ici prochainement"
         },
         "SESSION_STATUS": {
             "YES": "Présent",

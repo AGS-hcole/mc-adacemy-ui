@@ -569,9 +569,8 @@
                 }
 
                 <!-- Activity Feed -->
-                <div class="space-y-6">
-                    <!-- Feed Header -->
-                    <div class="flex items-center justify-between">
+                <div class="bg-card rounded-lg p-6 shadow">
+                    <div class="mb-6 flex items-center justify-between">
                         <div class="text-lg font-semibold">
                             {{ 'PROFILE.ACTIVITY.TITLE' | transloco }}
                         </div>
@@ -580,14 +579,14 @@
 
                     <!-- Loading initial feed -->
                     @if (isLoadingFeed) {
-                        <div class="bg-card flex items-center justify-center rounded-lg p-8 shadow">
+                        <div class="flex items-center justify-center py-8">
                             <mat-spinner diameter="32"></mat-spinner>
                         </div>
                     } @else {
                         <!-- Error -->
                         @if (feedError) {
                             <div
-                                class="bg-card flex flex-col items-center justify-center rounded-lg p-8 text-center shadow"
+                                class="flex flex-col items-center justify-center py-8 text-center"
                             >
                                 <mat-icon class="text-error icon-size-16"
                                     >error_outline</mat-icon
@@ -610,7 +609,7 @@
                             <!-- Empty state -->
                             @if (!sessionFeedItems.length && !feedHasMore) {
                                 <div
-                                    class="bg-card flex flex-col items-center justify-center rounded-lg p-12 text-center shadow"
+                                    class="flex flex-col items-center justify-center py-12 text-center"
                                 >
                                     <mat-icon class="text-hint icon-size-16"
                                         >inbox</mat-icon
@@ -632,23 +631,23 @@
                             } @else {
                                 <!-- Scrollable container -->
                                 <div
-                                    class="max-h-[800px] space-y-4 overflow-y-auto pr-2"
+                                    class="max-h-[600px] overflow-y-auto pr-2"
                                     (scroll)="onFeedScroll($event)"
                                 >
-                                    <!-- Session Cards -->
-                                    @for (
-                                        item of sessionFeedItems;
-                                        track item.sessionId
-                                    ) {
-                                        <div class="bg-card rounded-lg p-6 shadow">
-                                            <!-- Session Header -->
-                                            <div class="flex items-start gap-4">
+                                    <div class="space-y-4">
+                                        @for (
+                                            item of sessionFeedItems;
+                                            track item.sessionId
+                                        ) {
+                                            <div
+                                                class="flex items-start gap-4 border-b pb-4 last:border-b-0"
+                                            >
                                                 <!-- Icon / session type avatar -->
                                                 <div
-                                                    class="flex h-12 w-12 flex-shrink-0 items-center justify-center rounded-full bg-primary-50"
+                                                    class="flex h-10 w-10 flex-shrink-0 items-center justify-center rounded-full bg-primary-50"
                                                 >
                                                     <mat-icon
-                                                        class="text-primary icon-size-6"
+                                                        class="text-primary icon-size-5"
                                                         [svgIcon]="
                                                             'heroicons_outline:calendar'
                                                         "
@@ -659,11 +658,11 @@
 
                                                 <!-- Content -->
                                                 <div class="min-w-0 flex-1">
-                                                    <!-- Date & Site -->
+                                                    <!-- Header: type + site -->
                                                     <div
                                                         class="flex flex-wrap items-center gap-2"
                                                     >
-                                                        <div class="font-medium">
+                                                        <div class="">
                                                             {{
                                                                 capitalizeDate(
                                                                     item.startTime
@@ -677,16 +676,21 @@
                                                             }
                                                         </div>
                                                         <span
-                                                            class="text-secondary text-sm"
+                                                            class="text-secondary"
                                                         >
                                                             •
                                                             {{ item.siteName }}
                                                         </span>
                                                     </div>
 
+                                                    <!-- Date -->
+                                                    <div
+                                                        class="text-hint mt-1 text-xs"
+                                                    ></div>
+
                                                     <!-- Ratings & stats -->
                                                     <div
-                                                        class="mt-3 flex flex-wrap items-center gap-4 text-sm"
+                                                        class="mt-2 flex flex-wrap items-center gap-4 text-sm"
                                                     >
                                                         <!-- User rating -->
                                                         @if (
@@ -766,130 +770,13 @@
                                                     </div>
                                                 </div>
                                             </div>
-
-                                            <!-- Actions: Like & Comment -->
-                                            <div
-                                                class="mt-4 flex items-center gap-4 border-t pt-4"
-                                            >
-                                                <!-- Like Button -->
-                                                <button
-                                                    type="button"
-                                                    mat-button
-                                                    class="flex items-center gap-2"
-                                                    (click)="toggleLike(item)"
-                                                >
-                                                    <mat-icon
-                                                        [class.text-red-500]="item.isLikedByUser"
-                                                        class="icon-size-5"
-                                                    >
-                                                        {{
-                                                            item.isLikedByUser
-                                                                ? 'favorite'
-                                                                : 'favorite_border'
-                                                        }}
-                                                    </mat-icon>
-                                                    <span>
-                                                        @if (item.likesCount) {
-                                                            {{ item.likesCount }}
-                                                        }
-                                                        {{
-                                                            'PROFILE.ACTIVITY.LIKE'
-                                                                | transloco
-                                                        }}
-                                                    </span>
-                                                </button>
-
-                                                <!-- Comment Button -->
-                                                <button
-                                                    type="button"
-                                                    mat-button
-                                                    class="flex items-center gap-2"
-                                                    (click)="toggleComments(item)"
-                                                >
-                                                    <mat-icon class="icon-size-5">
-                                                        comment
-                                                    </mat-icon>
-                                                    <span>
-                                                        @if (item.commentsCount) {
-                                                            {{
-                                                                item.commentsCount
-                                                            }}
-                                                        }
-                                                        {{
-                                                            'PROFILE.ACTIVITY.COMMENT'
-                                                                | transloco
-                                                        }}
-                                                    </span>
-                                                </button>
-                                            </div>
-
-                                            <!-- Comment Section -->
-                                            @if (item.showComments) {
-                                                <div
-                                                    class="mt-4 border-t pt-4"
-                                                >
-                                                    <!-- Comment Input -->
-                                                    <div class="flex gap-3">
-                                                        <mat-form-field
-                                                            class="flex-1"
-                                                            subscriptSizing="dynamic"
-                                                        >
-                                                            <mat-label>{{
-                                                                'PROFILE.ACTIVITY.ADD_COMMENT'
-                                                                    | transloco
-                                                            }}</mat-label>
-                                                            <input
-                                                                matInput
-                                                                #commentInput
-                                                                [placeholder]="
-                                                                    'PROFILE.ACTIVITY.COMMENT_PLACEHOLDER'
-                                                                        | transloco
-                                                                "
-                                                                (keydown.enter)="
-                                                                    submitComment(
-                                                                        item,
-                                                                        commentInput.value
-                                                                    );
-                                                                    commentInput.value = ''
-                                                                "
-                                                            />
-                                                        </mat-form-field>
-                                                        <button
-                                                            mat-icon-button
-                                                            color="primary"
-                                                            type="button"
-                                                            (click)="
-                                                                submitComment(
-                                                                    item,
-                                                                    commentInput.value
-                                                                );
-                                                                commentInput.value = ''
-                                                            "
-                                                        >
-                                                            <mat-icon
-                                                                >send</mat-icon
-                                                            >
-                                                        </button>
-                                                    </div>
-
-                                                    <!-- Comments list placeholder -->
-                                                    <div
-                                                        class="text-hint mt-4 text-center text-sm italic"
-                                                    >
-                                                        {{
-                                                            'PROFILE.ACTIVITY.COMMENTS_PLACEHOLDER'
-                                                                | transloco
-                                                        }}
-                                                    </div>
-                                                </div>
-                                            }
-                                        </div>
-                                    }
+                                        }
+                                    </div>
 
                                     <!-- Load more indicator -->
                                     @if (isLoadingMore) {
                                         <div
-                                            class="bg-card flex items-center justify-center rounded-lg p-4 shadow"
+                                            class="flex items-center justify-center py-4"
                                         >
                                             <mat-spinner
                                                 diameter="24"
@@ -903,7 +790,9 @@
                                             <button
                                                 type="button"
                                                 mat-stroked-button
-                                                (click)="fetchNextFeedPage(false)"
+                                                (click)="
+                                                    fetchNextFeedPage(false)
+                                                "
                                             >
                                                 {{
                                                     'PROFILE.ACTIVITY.LOAD_MORE'

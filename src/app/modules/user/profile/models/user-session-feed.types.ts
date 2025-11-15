@@ -13,6 +13,10 @@ export interface UserSessionFeedItem {
     averageRating: number | null;
     participantsCount: number;
     userStatus: string;
+    startTime?: string; // ISO string for session start time
+    likesCount?: number;
+    commentsCount?: number;
+    isLikedByUser?: boolean;
 }
 
 /**
@@ -31,4 +35,5 @@ export interface UserSessionFeedViewItem extends UserSessionFeedItem {
     dateObj: Date;
     userStatusLabel: string;
     sessionTypeLabel: string;
+    showComments?: boolean; // UI state for showing comment section
 }

@@ -259,6 +259,60 @@ export class ProfileComponent implements OnInit {
         }
     }
 
+    /**
+     * Toggle like on a session
+     */
+    toggleLike(item: UserSessionFeedViewItem): void {
+        // Toggle the like state
+        item.isLikedByUser = !item.isLikedByUser;
+        
+        // Update likes count
+        if (item.isLikedByUser) {
+            item.likesCount = (item.likesCount || 0) + 1;
+        } else {
+            item.likesCount = Math.max(0, (item.likesCount || 0) - 1);
+        }
+
+        // TODO: Call API to persist like state
+        // this.sessionFeedService.toggleLike(item.sessionId).subscribe();
+    }
+
+    /**
+     * Toggle comment section visibility
+     */
+    toggleComments(item: UserSessionFeedViewItem): void {
+        item.showComments = !item.showComments;
+        // TODO: Load comments if not already loaded
+        // if (item.showComments && !item.comments) {
+        //     this.sessionFeedService.getComments(item.sessionId).subscribe();
+        // }
+    }
+
+    /**
+     * Submit a comment on a session
+     */
+    submitComment(item: UserSessionFeedViewItem, commentText: string): void {
+        if (!commentText.trim()) {
+            return;
+        }
+
+        // TODO: Call API to submit comment
+        // this.sessionFeedService.addComment(item.sessionId, commentText).subscribe();
+        
+        // Update comment count
+        item.commentsCount = (item.commentsCount || 0) + 1;
+        
+        // Show success message
+        this.snackBar.open(
+            this._translocoService.translate('PROFILE.ACTIVITY.COMMENT_ADDED'),
+            '',
+            {
+                duration: 2000,
+                verticalPosition: 'top',
+            }
+        );
+    }
+
     toggleEditMode(): void {
         this.editMode = !this.editMode;
         if (!this.editMode && this.user) {
