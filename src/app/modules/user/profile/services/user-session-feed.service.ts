@@ -2,9 +2,7 @@ import { HttpClient, HttpParams } from '@angular/common/http';
 import { inject, Injectable } from '@angular/core';
 import { environment } from 'environments/environment';
 import { Observable } from 'rxjs';
-import {
-    UserSessionFeedResponse,
-} from '../models/user-session-feed.types';
+import { UserSessionFeedResponse } from '../models/user-session-feed.types';
 
 /**
  * Service for managing user session feed data
@@ -23,7 +21,7 @@ export class UserSessionFeedService {
         direction?: 'past' | 'all';
     }): Observable<UserSessionFeedResponse> {
         let httpParams = new HttpParams();
-        
+
         if (params.cursor) {
             httpParams = httpParams.set('cursor', params.cursor);
         }
@@ -35,7 +33,7 @@ export class UserSessionFeedService {
         }
 
         return this.http.get<UserSessionFeedResponse>(
-            `${this.apiUrl}/me/sessions/feed`,
+            `${this.apiUrl}/users/me/sessions/feed`,
             { params: httpParams }
         );
     }
@@ -52,7 +50,7 @@ export class UserSessionFeedService {
         }
     ): Observable<UserSessionFeedResponse> {
         let httpParams = new HttpParams();
-        
+
         if (params.cursor) {
             httpParams = httpParams.set('cursor', params.cursor);
         }

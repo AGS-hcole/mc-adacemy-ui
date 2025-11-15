@@ -23,8 +23,8 @@ import { User } from 'app/core/user/user.types';
 import { AvatarService } from 'app/modules/onboarding/services/avatar.service';
 import { finalize } from 'rxjs/operators';
 import {
-    UserSessionFeedViewItem,
     UserSessionFeedItem,
+    UserSessionFeedViewItem,
 } from './models/user-session-feed.types';
 import { UserSessionFeedService } from './services/user-session-feed.service';
 
@@ -204,6 +204,7 @@ export class ProfileComponent implements OnInit {
             )
             .subscribe({
                 next: (resp) => {
+                    console.log(resp);
                     const newItems = resp.items.map((item) =>
                         this.mapToViewItem(item)
                     );
@@ -226,9 +227,7 @@ export class ProfileComponent implements OnInit {
     /**
      * Map API item to view item with computed properties
      */
-    private mapToViewItem(
-        item: UserSessionFeedItem
-    ): UserSessionFeedViewItem {
+    private mapToViewItem(item: UserSessionFeedItem): UserSessionFeedViewItem {
         return {
             ...item,
             dateObj: new Date(item.date),
@@ -434,5 +433,10 @@ export class ProfileComponent implements OnInit {
                     this.isSaving = false;
                 },
             });
+    }
+
+    capitalizeDate(value: string | null): string {
+        if (!value) return '';
+        return value.replace(/\b\p{L}/gu, (c) => c.toUpperCase());
     }
 }

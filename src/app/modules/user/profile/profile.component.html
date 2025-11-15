@@ -591,7 +591,9 @@
                                 <mat-icon class="text-error icon-size-16"
                                     >error_outline</mat-icon
                                 >
-                                <div class="text-error mt-4 text-lg font-medium">
+                                <div
+                                    class="text-error mt-4 text-lg font-medium"
+                                >
                                     {{ feedError }}
                                 </div>
                                 <button
@@ -646,103 +648,95 @@
                                                 >
                                                     <mat-icon
                                                         class="text-primary icon-size-5"
+                                                        [svgIcon]="
+                                                            'heroicons_outline:calendar'
+                                                        "
                                                     >
                                                         sports_tennis
                                                     </mat-icon>
                                                 </div>
 
                                                 <!-- Content -->
-                                                <div class="flex-1 min-w-0">
+                                                <div class="min-w-0 flex-1">
                                                     <!-- Header: type + site -->
                                                     <div
                                                         class="flex flex-wrap items-center gap-2"
                                                     >
-                                                        <div class="font-medium">
+                                                        <div class="">
                                                             {{
-                                                                item.sessionTypeLabel
+                                                                capitalizeDate(
+                                                                    item.startTime
+                                                                        | date
+                                                                            : 'EEEE d MMMM yyyy HH:mm'
+                                                                )
                                                             }}
+                                                            @if (item.slot) {
+                                                                ·
+                                                                {{ item.slot }}
+                                                            }
                                                         </div>
                                                         <span
-                                                            class="text-secondary text-xs"
+                                                            class="text-secondary"
                                                         >
-                                                            • {{ item.siteName }}
+                                                            •
+                                                            {{ item.siteName }}
                                                         </span>
                                                     </div>
 
                                                     <!-- Date -->
                                                     <div
                                                         class="text-hint mt-1 text-xs"
-                                                    >
-                                                        {{
-                                                            item.dateObj
-                                                                | date: 'fullDate'
-                                                        }}
-                                                        @if (item.slot) {
-                                                            · {{ item.slot }}
-                                                        }
-                                                    </div>
+                                                    ></div>
 
                                                     <!-- Ratings & stats -->
                                                     <div
                                                         class="mt-2 flex flex-wrap items-center gap-4 text-sm"
                                                     >
                                                         <!-- User rating -->
-                                                        <div
-                                                            class="flex items-center gap-1"
-                                                        >
-                                                            <mat-icon
-                                                                class="text-amber-500 icon-size-4"
-                                                                >star</mat-icon
+                                                        @if (
+                                                            item.userRating !==
+                                                            null
+                                                        ) {
+                                                            <div
+                                                                class="flex items-center gap-1"
                                                             >
-                                                            <span
-                                                                class="font-medium"
-                                                            >
-                                                                @if (
-                                                                    item.userRating !==
-                                                                    null
-                                                                ) {
+                                                                <mat-icon
+                                                                    class="text-amber-500 icon-size-4"
+                                                                    >star</mat-icon
+                                                                >
+                                                                <span
+                                                                    class="font-medium"
+                                                                >
                                                                     {{
                                                                         item.userRating
-                                                                            | number: '1.1-1'
-                                                                    }}/5
-                                                                } @else {
-                                                                    {{
-                                                                        'PROFILE.ACTIVITY.NO_RATING'
-                                                                            | transloco
+                                                                            | number
+                                                                                : '1.1-1'
                                                                     }}
-                                                                }
-                                                            </span>
-                                                        </div>
+                                                                </span>
+                                                            </div>
+                                                        }
 
                                                         <!-- Average rating -->
-                                                        <div
-                                                            class="text-secondary flex items-center gap-1"
-                                                        >
-                                                            <mat-icon
-                                                                class="icon-size-4"
-                                                                >star_half</mat-icon
+                                                        @if (
+                                                            item.averageRating !==
+                                                            null
+                                                        ) {
+                                                            <div
+                                                                class="text-secondary flex items-center gap-1"
                                                             >
-                                                            <span>
-                                                                @if (
-                                                                    item.averageRating !==
-                                                                    null
-                                                                ) {
-                                                                    {{
-                                                                        'PROFILE.ACTIVITY.AVG_RATING'
-                                                                            | transloco
-                                                                    }}:
+                                                                <mat-icon
+                                                                    class="icon-size-4"
+                                                                    >star_half</mat-icon
+                                                                >
+                                                                <span>
                                                                     {{
                                                                         item.averageRating
-                                                                            | number: '1.1-1'
-                                                                    }}/5
-                                                                } @else {
-                                                                    {{
-                                                                        'PROFILE.ACTIVITY.NO_AVG_RATING'
-                                                                            | transloco
+                                                                            | number
+                                                                                : '1.1-1'
                                                                     }}
-                                                                }
-                                                            </span>
-                                                        </div>
+                                                                </span>
+                                                            </div>
+                                                        }
 
                                                         <!-- Participants -->
                                                         <div
@@ -796,7 +790,9 @@
                                             <button
                                                 type="button"
                                                 mat-stroked-button
-                                                (click)="fetchNextFeedPage(false)"
+                                                (click)="
+                                                    fetchNextFeedPage(false)
+                                                "
                                             >
                                                 {{
                                                     'PROFILE.ACTIVITY.LOAD_MORE'
