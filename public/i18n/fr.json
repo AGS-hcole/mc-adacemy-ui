@@ -649,7 +649,26 @@
         "ACTIVITY": {
             "TITLE": "Activité récente",
             "EMPTY": "Aucune activité pour le moment",
-            "EMPTY_DESC": "Vos sessions et résultats de tournois apparaîtront ici"
+            "EMPTY_DESC": "Les sessions auxquelles vous participez apparaîtront ici.",
+            "ERROR": "Impossible de charger l'activité pour le moment.",
+            "RETRY": "Réessayer",
+            "NO_RATING": "Pas encore de note",
+            "NO_AVG_RATING": "Aucune note moyenne disponible",
+            "AVG_RATING": "Note moyenne",
+            "PARTICIPANTS": "participants",
+            "LOAD_MORE": "Charger plus"
+        },
+        "SESSION_STATUS": {
+            "YES": "Présent",
+            "NO": "Absent",
+            "CANCELLED": "Annulé",
+            "WAITING": "Liste d'attente"
+        },
+        "SESSION_TYPE": {
+            "TRAINING": "Entraînement",
+            "MATCH": "Match",
+            "TOURNAMENT": "Tournoi",
+            "OTHER": "Autre"
         }
     },
     "TOURNAMENTS": {

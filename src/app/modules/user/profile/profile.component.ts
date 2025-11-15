@@ -21,16 +21,12 @@ import { TranslocoModule, TranslocoService } from '@jsverse/transloco';
 import { UserService } from 'app/core/user/user.service';
 import { User } from 'app/core/user/user.types';
 import { AvatarService } from 'app/modules/onboarding/services/avatar.service';
-import { Observable, of } from 'rxjs';
 import { finalize } from 'rxjs/operators';
-
-interface FeedItem {
-    id: string;
-    icon: string;
-    title: string;
-    description: string;
-    date: Date;
-}
+import {
+    UserSessionFeedViewItem,
+    UserSessionFeedItem,
+} from './models/user-session-feed.types';
+import { UserSessionFeedService } from './services/user-session-feed.service';
 
 @Component({
     selector: 'user-profile',
@@ -62,11 +58,20 @@ export class ProfileComponent implements OnInit {
     isSaving = false;
     editMode = false;
     isCurrentUser = true; // For now, always true since we're viewing our own profile
-    feed$: Observable<FeedItem[]> = of([]); // Placeholder for future implementation
+
+    // Session feed properties
+    sessionFeedItems: UserSessionFeedViewItem[] = [];
+    isLoadingFeed = false;
+    isLoadingMore = false;
+    feedError: string | null = null;
+    feedHasMore = true;
+    private feedCursor: string | null = null;
+    private readonly feedPageSize = 10;
 
     private fb = inject(FormBuilder);
     private userService = inject(UserService);
     private avatarService = inject(AvatarService);
+    private sessionFeedService = inject(UserSessionFeedService);
     private _activatedRoute = inject(ActivatedRoute);
     private snackBar = inject(MatSnackBar);
     private _translocoService = inject(TranslocoService);
@@ -80,11 +85,9 @@ export class ProfileComponent implements OnInit {
             this.user = user;
             this.initializeForm(user);
             this.loadUserImages();
+            // Load session feed after user is loaded
+            this.loadInitialFeed();
         });
-
-        // Initialize placeholder feed
-        // TODO: Replace with actual API call to get user sessions and tournament results
-        this.initializeFeed();
     }
 
     private loadUserImages(): void {
@@ -153,13 +156,108 @@ export class ProfileComponent implements OnInit {
         });
     }
 
-    private initializeFeed(): void {
-        // Placeholder data - will be replaced with real API data
-        // TODO: Fetch actual sessions and tournament results from backend
-        const placeholderFeed: FeedItem[] = [
-            // Empty for now, will be populated when sessions and tournaments are added
-        ];
-        this.feed$ = of(placeholderFeed);
+    /**
+     * Load initial session feed
+     */
+    private loadInitialFeed(): void {
+        this.sessionFeedItems = [];
+        this.feedCursor = null;
+        this.feedHasMore = true;
+        this.feedError = null;
+        this.fetchNextFeedPage(true);
+    }
+
+    /**
+     * Fetch next page of session feed
+     */
+    private fetchNextFeedPage(isInitial = false): void {
+        if (this.isLoadingFeed || this.isLoadingMore || !this.feedHasMore) {
+            return;
+        }
+
+        this.feedError = null;
+        if (isInitial) {
+            this.isLoadingFeed = true;
+        } else {
+            this.isLoadingMore = true;
+        }
+
+        const params = {
+            cursor: this.feedCursor || undefined,
+            limit: this.feedPageSize,
+            direction: 'past' as const,
+        };
+
+        const request$ = this.isCurrentUser
+            ? this.sessionFeedService.getMySessionsFeed(params)
+            : this.sessionFeedService.getUserSessionsFeed(
+                  this.user!.id,
+                  params
+              );
+
+        request$
+            .pipe(
+                finalize(() => {
+                    this.isLoadingFeed = false;
+                    this.isLoadingMore = false;
+                })
+            )
+            .subscribe({
+                next: (resp) => {
+                    const newItems = resp.items.map((item) =>
+                        this.mapToViewItem(item)
+                    );
+                    this.sessionFeedItems = [
+                        ...this.sessionFeedItems,
+                        ...newItems,
+                    ];
+                    this.feedCursor = resp.nextCursor;
+                    this.feedHasMore = resp.hasMore;
+                },
+                error: (error) => {
+                    console.error('Error loading session feed', error);
+                    this.feedError = this._translocoService.translate(
+                        'PROFILE.ACTIVITY.ERROR'
+                    );
+                },
+            });
+    }
+
+    /**
+     * Map API item to view item with computed properties
+     */
+    private mapToViewItem(
+        item: UserSessionFeedItem
+    ): UserSessionFeedViewItem {
+        return {
+            ...item,
+            dateObj: new Date(item.date),
+            userStatusLabel: this._translocoService.translate(
+                `PROFILE.SESSION_STATUS.${item.userStatus}`
+            ),
+            sessionTypeLabel: this._translocoService.translate(
+                `PROFILE.SESSION_TYPE.${item.sessionType}`
+            ),
+        };
+    }
+
+    /**
+     * Handle scroll event for infinite scroll
+     */
+    onFeedScroll(event: Event): void {
+        const target = event.target as HTMLElement;
+        const threshold = 150; // px before the bottom
+
+        if (!this.feedHasMore || this.isLoadingMore || this.isLoadingFeed) {
+            return;
+        }
+
+        const position = target.scrollTop + target.clientHeight;
+        const height = target.scrollHeight;
+
+        if (height - position < threshold) {
+            this.fetchNextFeedPage(false);
+        }
     }
 
     toggleEditMode(): void {
