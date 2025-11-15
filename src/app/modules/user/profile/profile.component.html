@@ -1,4 +1,4 @@
-<div class="absolute inset-0 flex min-w-0 flex-col overflow-y-auto">
+<div class="absolute inset-0 flex min-w-0 flex-col overflow-y-auto" (scroll)="onFeedScroll($event)">
     <!-- Header -->
     <div class="bg-card flex flex-col shadow">
         <!-- Cover Image -->
@@ -569,65 +569,358 @@
                 }
 
                 <!-- Activity Feed -->
-                <div class="bg-card rounded-lg p-6 shadow">
-                    <div class="mb-6 flex items-center justify-between">
+                <div class="space-y-6">
+                    <!-- Feed Header -->
+                    <div class="flex items-center justify-between">
                         <div class="text-lg font-semibold">
                             {{ 'PROFILE.ACTIVITY.TITLE' | transloco }}
                         </div>
                         <mat-icon class="text-secondary">rss_feed</mat-icon>
                     </div>
 
-                    <!-- Feed Items (Placeholder) -->
-                    @if (feed$ | async; as feedItems) {
-                        @if (feedItems.length > 0) {
-                            <div class="space-y-4">
-                                @for (item of feedItems; track item.id) {
-                                    <div
-                                        class="flex items-start gap-4 border-b pb-4 last:border-b-0"
-                                    >
-                                        <div
-                                            class="flex h-10 w-10 items-center justify-center rounded-full bg-primary-50"
-                                        >
-                                            <mat-icon
-                                                class="text-primary icon-size-5"
-                                                >{{ item.icon }}</mat-icon
-                                            >
-                                        </div>
-                                        <div class="flex-1">
-                                            <div class="font-medium">
-                                                {{ item.title }}
-                                            </div>
-                                            <div
-                                                class="text-secondary mt-1 text-sm"
-                                            >
-                                                {{ item.description }}
-                                            </div>
-                                            <div class="text-hint mt-2 text-xs">
-                                                {{ item.date | date: 'medium' }}
-                                            </div>
-                                        </div>
-                                    </div>
-                                }
-                            </div>
-                        } @else {
+                    <!-- Loading initial feed -->
+                    @if (isLoadingFeed) {
+                        <div
+                            class="bg-card flex items-center justify-center rounded-lg p-8 shadow"
+                        >
+                            <mat-spinner diameter="32"></mat-spinner>
+                        </div>
+                    } @else {
+                        <!-- Error -->
+                        @if (feedError) {
                             <div
-                                class="flex flex-col items-center justify-center py-12 text-center"
+                                class="bg-card flex flex-col items-center justify-center rounded-lg p-8 text-center shadow"
                             >
-                                <mat-icon class="text-hint icon-size-16"
-                                    >inbox</mat-icon
+                                <mat-icon class="text-error icon-size-16"
+                                    >error_outline</mat-icon
                                 >
                                 <div
-                                    class="text-secondary mt-4 text-lg font-medium"
+                                    class="text-error mt-4 text-lg font-medium"
                                 >
-                                    {{ 'PROFILE.ACTIVITY.EMPTY' | transloco }}
+                                    {{ feedError }}
                                 </div>
-                                <div class="text-hint mt-2 text-sm">
-                                    {{
-                                        'PROFILE.ACTIVITY.EMPTY_DESC'
-                                            | transloco
-                                    }}
-                                </div>
+                                <button
+                                    type="button"
+                                    mat-stroked-button
+                                    class="mt-4"
+                                    (click)="loadInitialFeed()"
+                                >
+                                    {{ 'PROFILE.ACTIVITY.RETRY' | transloco }}
+                                </button>
                             </div>
+                        } @else {
+                            <!-- Empty state -->
+                            @if (!sessionFeedItems.length && !feedHasMore) {
+                                <div
+                                    class="bg-card flex flex-col items-center justify-center rounded-lg p-12 text-center shadow"
+                                >
+                                    <mat-icon class="text-hint icon-size-16"
+                                        >inbox</mat-icon
+                                    >
+                                    <div
+                                        class="text-secondary mt-4 text-lg font-medium"
+                                    >
+                                        {{
+                                            'PROFILE.ACTIVITY.EMPTY' | transloco
+                                        }}
+                                    </div>
+                                    <div class="text-hint mt-2 text-sm">
+                                        {{
+                                            'PROFILE.ACTIVITY.EMPTY_DESC'
+                                                | transloco
+                                        }}
+                                    </div>
+                                </div>
+                            } @else {
+                                <!-- Session Cards Container -->
+                                <div class="space-y-4">
+                                    <!-- Session Cards -->
+                                    @for (
+                                        item of sessionFeedItems;
+                                        track item.sessionId
+                                    ) {
+                                        <div
+                                            class="bg-card rounded-lg p-6 shadow"
+                                        >
+                                            <!-- Session Header -->
+                                            <div class="flex items-start gap-4">
+                                                <!-- Icon / session type avatar -->
+                                                <div
+                                                    class="flex h-12 w-12 flex-shrink-0 items-center justify-center rounded-full bg-primary-50"
+                                                >
+                                                    <mat-icon
+                                                        class="text-primary icon-size-6"
+                                                        [svgIcon]="
+                                                            'heroicons_outline:calendar'
+                                                        "
+                                                    >
+                                                        sports_tennis
+                                                    </mat-icon>
+                                                </div>
+
+                                                <!-- Content -->
+                                                <div class="min-w-0 flex-1">
+                                                    <!-- Date & Site -->
+                                                    <div
+                                                        class="flex flex-wrap items-center gap-2"
+                                                    >
+                                                        <div
+                                                            class="font-medium"
+                                                        >
+                                                            {{
+                                                                capitalizeDate(
+                                                                    item.startTimeObj
+                                                                        | date
+                                                                            : 'EEEE d MMMM yyyy HH:mm'
+                                                                )
+                                                            }}
+                                                            @if (item.slot) {
+                                                                ·
+                                                                {{ item.slot }}
+                                                            }
+                                                        </div>
+                                                        <span
+                                                            class="text-secondary text-sm"
+                                                        >
+                                                            •
+                                                            {{ item.siteName }}
+                                                        </span>
+                                                    </div>
+
+                                                    <!-- Ratings & stats -->
+                                                    <div
+                                                        class="mt-3 flex flex-wrap items-center gap-4 text-sm"
+                                                    >
+                                                        <!-- User rating -->
+                                                        @if (
+                                                            item.userRating !==
+                                                            null
+                                                        ) {
+                                                            <div
+                                                                class="flex items-center gap-1"
+                                                            >
+                                                                <mat-icon
+                                                                    class="text-amber-500 icon-size-4"
+                                                                    >star</mat-icon
+                                                                >
+                                                                <span
+                                                                    class="font-medium"
+                                                                >
+                                                                    {{
+                                                                        item.userRating
+                                                                            | number
+                                                                                : '1.1-1'
+                                                                    }}
+                                                                </span>
+                                                            </div>
+                                                        }
+
+                                                        <!-- Average rating -->
+                                                        @if (
+                                                            item.averageRating !==
+                                                            null
+                                                        ) {
+                                                            <div
+                                                                class="text-secondary flex items-center gap-1"
+                                                            >
+                                                                <mat-icon
+                                                                    class="icon-size-4"
+                                                                    >star_half</mat-icon
+                                                                >
+                                                                <span>
+                                                                    {{
+                                                                        item.averageRating
+                                                                            | number
+                                                                                : '1.1-1'
+                                                                    }}
+                                                                </span>
+                                                            </div>
+                                                        }
+
+                                                        <!-- Participants -->
+                                                        <div
+                                                            class="text-secondary flex items-center gap-1"
+                                                        >
+                                                            <mat-icon
+                                                                class="icon-size-4"
+                                                                >group</mat-icon
+                                                            >
+                                                            <span>
+                                                                {{
+                                                                    item.participantsCount
+                                                                }}
+                                                                {{
+                                                                    'PROFILE.ACTIVITY.PARTICIPANTS'
+                                                                        | transloco
+                                                                }}
+                                                            </span>
+                                                        </div>
+
+                                                        <!-- Status -->
+                                                        <div class="ml-auto">
+                                                            <span
+                                                                class="text-secondary rounded-full bg-gray-100 px-3 py-1 text-xs font-medium"
+                                                            >
+                                                                {{
+                                                                    item.userStatusLabel
+                                                                }}
+                                                            </span>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+
+                                            <!-- Actions: Like & Comment -->
+                                            <div
+                                                class="mt-4 flex items-center gap-4 border-t pt-4"
+                                            >
+                                                <!-- Like Button -->
+                                                <button
+                                                    type="button"
+                                                    mat-button
+                                                    class="flex items-center gap-2"
+                                                    (click)="toggleLike(item)"
+                                                >
+                                                    <mat-icon
+                                                        [class.text-red-500]="
+                                                            item.isLikedByUser
+                                                        "
+                                                        class="icon-size-5"
+                                                    >
+                                                        {{
+                                                            item.isLikedByUser
+                                                                ? 'favorite'
+                                                                : 'favorite_border'
+                                                        }}
+                                                    </mat-icon>
+                                                    <span>
+                                                        @if (item.likesCount) {
+                                                            {{
+                                                                item.likesCount
+                                                            }}
+                                                        }
+                                                        {{
+                                                            'PROFILE.ACTIVITY.LIKE'
+                                                                | transloco
+                                                        }}
+                                                    </span>
+                                                </button>
+
+                                                <!-- Comment Button -->
+                                                <button
+                                                    type="button"
+                                                    mat-button
+                                                    class="flex items-center gap-2"
+                                                    (click)="
+                                                        toggleComments(item)
+                                                    "
+                                                >
+                                                    <mat-icon
+                                                        class="icon-size-5"
+                                                    >
+                                                        comment
+                                                    </mat-icon>
+                                                    <span>
+                                                        @if (
+                                                            item.commentsCount
+                                                        ) {
+                                                            {{
+                                                                item.commentsCount
+                                                            }}
+                                                        }
+                                                        {{
+                                                            'PROFILE.ACTIVITY.COMMENT'
+                                                                | transloco
+                                                        }}
+                                                    </span>
+                                                </button>
+                                            </div>
+
+                                            <!-- Comment Section -->
+                                            @if (item.showComments) {
+                                                <div class="mt-4 border-t pt-4">
+                                                    <!-- Comment Input -->
+                                                    <div
+                                                        class="flex items-end gap-3"
+                                                    >
+                                                        <mat-form-field
+                                                            class="flex-1"
+                                                            subscriptSizing="dynamic"
+                                                        >
+                                                            <mat-label>{{
+                                                                'PROFILE.ACTIVITY.ADD_COMMENT'
+                                                                    | transloco
+                                                            }}</mat-label>
+                                                            <input
+                                                                matInput
+                                                                #commentInput
+                                                                [placeholder]="
+                                                                    'PROFILE.ACTIVITY.COMMENT_PLACEHOLDER'
+                                                                        | transloco
+                                                                "
+                                                                (keydown.enter)="
+                                                                    submitComment(
+                                                                        item,
+                                                                        commentInput.value
+                                                                    );
+                                                                    commentInput.value =
+                                                                        ''
+                                                                "
+                                                            />
+                                                        </mat-form-field>
+                                                        <button
+                                                            mat-icon-button
+                                                            color="primary"
+                                                            type="button"
+                                                            (click)="
+                                                                submitComment(
+                                                                    item,
+                                                                    commentInput.value
+                                                                );
+                                                                commentInput.value =
+                                                                    ''
+                                                            "
+                                                        >
+                                                            <mat-icon
+                                                                >send</mat-icon
+                                                            >
+                                                        </button>
+                                                    </div>
+                                                </div>
+                                            }
+                                        </div>
+                                    }
+
+                                    <!-- Load more indicator -->
+                                    @if (isLoadingMore) {
+                                        <div
+                                            class="bg-card flex items-center justify-center rounded-lg p-4 shadow"
+                                        >
+                                            <mat-spinner
+                                                diameter="24"
+                                            ></mat-spinner>
+                                        </div>
+                                    }
+
+                                    <!-- Manual "Load more" button fallback -->
+                                    @if (feedHasMore && !isLoadingMore) {
+                                        <div class="flex justify-center py-4">
+                                            <button
+                                                type="button"
+                                                mat-stroked-button
+                                                (click)="
+                                                    fetchNextFeedPage(false)
+                                                "
+                                            >
+                                                {{
+                                                    'PROFILE.ACTIVITY.LOAD_MORE'
+                                                        | transloco
+                                                }}
+                                            </button>
+                                        </div>
+                                    }
+                                </div>
+                            }
                         }
                     }
                 </div>
