@@ -580,7 +580,9 @@
 
                     <!-- Loading initial feed -->
                     @if (isLoadingFeed) {
-                        <div class="bg-card flex items-center justify-center rounded-lg p-8 shadow">
+                        <div
+                            class="bg-card flex items-center justify-center rounded-lg p-8 shadow"
+                        >
                             <mat-spinner diameter="32"></mat-spinner>
                         </div>
                     } @else {
@@ -640,7 +642,9 @@
                                         item of sessionFeedItems;
                                         track item.sessionId
                                     ) {
-                                        <div class="bg-card rounded-lg p-6 shadow">
+                                        <div
+                                            class="bg-card rounded-lg p-6 shadow"
+                                        >
                                             <!-- Session Header -->
                                             <div class="flex items-start gap-4">
                                                 <!-- Icon / session type avatar -->
@@ -663,10 +667,12 @@
                                                     <div
                                                         class="flex flex-wrap items-center gap-2"
                                                     >
-                                                        <div class="font-medium">
+                                                        <div
+                                                            class="font-medium"
+                                                        >
                                                             {{
                                                                 capitalizeDate(
-                                                                    item.startTime
+                                                                    item.startTimeObj
                                                                         | date
                                                                             : 'EEEE d MMMM yyyy HH:mm'
                                                                 )
@@ -779,7 +785,9 @@
                                                     (click)="toggleLike(item)"
                                                 >
                                                     <mat-icon
-                                                        [class.text-red-500]="item.isLikedByUser"
+                                                        [class.text-red-500]="
+                                                            item.isLikedByUser
+                                                        "
                                                         class="icon-size-5"
                                                     >
                                                         {{
@@ -790,7 +798,9 @@
                                                     </mat-icon>
                                                     <span>
                                                         @if (item.likesCount) {
-                                                            {{ item.likesCount }}
+                                                            {{
+                                                                item.likesCount
+                                                            }}
                                                         }
                                                         {{
                                                             'PROFILE.ACTIVITY.LIKE'
@@ -804,13 +814,19 @@
                                                     type="button"
                                                     mat-button
                                                     class="flex items-center gap-2"
-                                                    (click)="toggleComments(item)"
+                                                    (click)="
+                                                        toggleComments(item)
+                                                    "
                                                 >
-                                                    <mat-icon class="icon-size-5">
+                                                    <mat-icon
+                                                        class="icon-size-5"
+                                                    >
                                                         comment
                                                     </mat-icon>
                                                     <span>
-                                                        @if (item.commentsCount) {
+                                                        @if (
+                                                            item.commentsCount
+                                                        ) {
                                                             {{
                                                                 item.commentsCount
                                                             }}
@@ -825,11 +841,11 @@
 
                                             <!-- Comment Section -->
                                             @if (item.showComments) {
-                                                <div
-                                                    class="mt-4 border-t pt-4"
-                                                >
+                                                <div class="mt-4 border-t pt-4">
                                                     <!-- Comment Input -->
-                                                    <div class="flex gap-3">
+                                                    <div
+                                                        class="flex items-end gap-3"
+                                                    >
                                                         <mat-form-field
                                                             class="flex-1"
                                                             subscriptSizing="dynamic"
@@ -850,7 +866,8 @@
                                                                         item,
                                                                         commentInput.value
                                                                     );
-                                                                    commentInput.value = ''
+                                                                    commentInput.value =
+                                                                        ''
                                                                 "
                                                             />
                                                         </mat-form-field>
@@ -863,23 +880,14 @@
                                                                     item,
                                                                     commentInput.value
                                                                 );
-                                                                commentInput.value = ''
+                                                                commentInput.value =
+                                                                    ''
                                                             "
                                                         >
                                                             <mat-icon
                                                                 >send</mat-icon
                                                             >
                                                         </button>
-                                                    </div>
-
-                                                    <!-- Comments list placeholder -->
-                                                    <div
-                                                        class="text-hint mt-4 text-center text-sm italic"
-                                                    >
-                                                        {{
-                                                            'PROFILE.ACTIVITY.COMMENTS_PLACEHOLDER'
-                                                                | transloco
-                                                        }}
                                                     </div>
                                                 </div>
                                             }
@@ -903,7 +911,9 @@
                                             <button
                                                 type="button"
                                                 mat-stroked-button
-                                                (click)="fetchNextFeedPage(false)"
+                                                (click)="
+                                                    fetchNextFeedPage(false)
+                                                "
                                             >
                                                 {{
                                                     'PROFILE.ACTIVITY.LOAD_MORE'

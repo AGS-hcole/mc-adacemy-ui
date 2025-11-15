@@ -212,6 +212,7 @@ export class ProfileComponent implements OnInit {
                         ...this.sessionFeedItems,
                         ...newItems,
                     ];
+                    console.log(this.sessionFeedItems);
                     this.feedCursor = resp.nextCursor;
                     this.feedHasMore = resp.hasMore;
                 },
@@ -230,7 +231,7 @@ export class ProfileComponent implements OnInit {
     private mapToViewItem(item: UserSessionFeedItem): UserSessionFeedViewItem {
         return {
             ...item,
-            dateObj: new Date(item.date),
+            startTimeObj: new Date(item.startTime),
             userStatusLabel: this._translocoService.translate(
                 `PROFILE.SESSION_STATUS.${item.userStatus}`
             ),
@@ -265,7 +266,7 @@ export class ProfileComponent implements OnInit {
     toggleLike(item: UserSessionFeedViewItem): void {
         // Toggle the like state
         item.isLikedByUser = !item.isLikedByUser;
-        
+
         // Update likes count
         if (item.isLikedByUser) {
             item.likesCount = (item.likesCount || 0) + 1;
@@ -298,10 +299,10 @@ export class ProfileComponent implements OnInit {
 
         // TODO: Call API to submit comment
         // this.sessionFeedService.addComment(item.sessionId, commentText).subscribe();
-        
+
         // Update comment count
         item.commentsCount = (item.commentsCount || 0) + 1;
-        
+
         // Show success message
         this.snackBar.open(
             this._translocoService.translate('PROFILE.ACTIVITY.COMMENT_ADDED'),

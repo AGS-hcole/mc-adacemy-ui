@@ -32,7 +32,7 @@ export interface UserSessionFeedResponse {
  * View model for session feed item with computed properties
  */
 export interface UserSessionFeedViewItem extends UserSessionFeedItem {
-    dateObj: Date;
+    startTimeObj: Date;
     userStatusLabel: string;
     sessionTypeLabel: string;
     showComments?: boolean; // UI state for showing comment section
