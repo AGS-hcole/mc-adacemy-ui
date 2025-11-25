@@ -289,6 +289,8 @@
                 }
             },
             "FILTERS": {
+                "START_DATE": "Date de début",
+                "END_DATE": "Date de fin",
                 "SITE": "Site",
                 "ALL_SITES": "Tous les sites",
                 "SLOT": "Créneau",

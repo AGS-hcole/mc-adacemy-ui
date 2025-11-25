@@ -14,6 +14,7 @@ import {
 } from '@angular/forms';
 import { MatButtonModule } from '@angular/material/button';
 import { MatOptionModule } from '@angular/material/core';
+import { MatDatepickerModule } from '@angular/material/datepicker';
 import { MatDialog } from '@angular/material/dialog';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatIconModule } from '@angular/material/icon';
@@ -31,6 +32,7 @@ import {
 } from 'app/core/session/session.types';
 import { SessionsService } from 'app/core/session/sessions.service';
 import { LocalizedDatePipe } from 'app/shared/pipes/localized-date.pipe';
+import { DateTime } from 'luxon';
 import { Subject, combineLatest, debounceTime, takeUntil } from 'rxjs';
 
 @Component({
@@ -46,6 +48,7 @@ import { Subject, combineLatest, debounceTime, takeUntil } from 'rxjs';
         MatButtonModule,
         NgIf,
         NgForOf,
+        MatDatepickerModule,
         MatFormFieldModule,
         MatIconModule,
         MatInputModule,
@@ -63,6 +66,8 @@ export class AdminSessionsListComponent implements OnInit, OnDestroy {
     selectedSite: string | null = null;
     selectedSlot: SessionSlot | null = null;
     selectedPublished: boolean | null = null;
+    selectedStartDate: Date | null = null;
+    selectedEndDate: Date | null = null;
 
     SessionSlot = SessionSlot;
 
@@ -89,6 +94,9 @@ export class AdminSessionsListComponent implements OnInit, OnDestroy {
      * On init
      */
     ngOnInit(): void {
+        // Set default startDate to today
+        this.selectedStartDate = DateTime.now().startOf('day').toJSDate();
+
         combineLatest([
             this._sessionsService.sites$,
             this._sessionsService.sessions$,
@@ -106,6 +114,9 @@ export class AdminSessionsListComponent implements OnInit, OnDestroy {
             .subscribe(() => {
                 this.loadSessions();
             });
+
+        // Load sessions with default filters
+        this.loadSessions();
     }
 
     /**
@@ -124,11 +135,37 @@ export class AdminSessionsListComponent implements OnInit, OnDestroy {
      * Load sessions with filters
      */
     loadSessions(): void {
+        const toIsoDate = (value: any): string | null => {
+            if (!value) return null;
+
+            // Luxon DateTime
+            if (DateTime.isDateTime(value)) {
+                return value.isValid ? value.toISODate() : null;
+            }
+
+            // Native Date
+            if (value instanceof Date) {
+                const dt = DateTime.fromJSDate(value);
+                return dt.isValid ? dt.toISODate() : null;
+            }
+
+            return null;
+        };
+
         const filters: SessionFilters = {
             siteId: this.selectedSite,
             slot: this.selectedSlot,
             isPublished: this.selectedPublished,
+            startDate: this.selectedStartDate
+                ? toIsoDate(this.selectedStartDate)
+                : null,
+            endDate: this.selectedEndDate
+                ? toIsoDate(this.selectedEndDate)
+                : null,
         };
+        console.log(this.selectedStartDate);
+
+        console.log('Loading sessions with filters:', filters);
 
         this._sessionsService.getSessions(filters).subscribe();
     }

@@ -7,6 +7,7 @@ import {
 } from '@angular/router';
 import { SessionsService } from 'app/core/session/sessions.service';
 import { handleResolverError } from 'app/shared/helpers/router-error-handler';
+import { DateTime } from 'luxon';
 import { catchError } from 'rxjs';
 import { SessionInfoComponent } from './info/info.component';
 import { AdminSessionsListComponent } from './list/list.component';
@@ -23,8 +24,11 @@ const sessionsResolver = (
     const sessionsService = inject(SessionsService);
     const router = inject(Router);
 
+    // Default to today's date to load only current/upcoming sessions
+    const startDate = DateTime.now().startOf('day').toISODate();
+
     return sessionsService
-        .getSessions()
+        .getSessions({ startDate })
         .pipe(catchError((error) => handleResolverError(error, state, router)));
 };
 

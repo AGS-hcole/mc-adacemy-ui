@@ -27,8 +27,44 @@
 
     <!-- Filters -->
     <div
-        class="flex flex-0 flex-col items-start gap-0 bg-gray-50 p-6 pb-0 sm:flex-row sm:items-center sm:gap-4 dark:bg-gray-900"
+        class="flex flex-0 flex-col flex-wrap items-start gap-0 bg-gray-50 p-6 pb-0 sm:flex-row sm:items-center sm:gap-4 dark:bg-gray-900"
     >
+        <!-- Start date filter -->
+        <mat-form-field class="w-full sm:w-40">
+            <mat-label>{{
+                'SESSIONS.ADMIN.FILTERS.START_DATE' | transloco
+            }}</mat-label>
+            <input
+                matInput
+                [matDatepicker]="startDatePicker"
+                [(ngModel)]="selectedStartDate"
+                (ngModelChange)="onFilterChange()"
+            />
+            <mat-datepicker-toggle
+                matSuffix
+                [for]="startDatePicker"
+            ></mat-datepicker-toggle>
+            <mat-datepicker #startDatePicker></mat-datepicker>
+        </mat-form-field>
+
+        <!-- End date filter -->
+        <mat-form-field class="w-full sm:w-40">
+            <mat-label>{{
+                'SESSIONS.ADMIN.FILTERS.END_DATE' | transloco
+            }}</mat-label>
+            <input
+                matInput
+                [matDatepicker]="endDatePicker"
+                [(ngModel)]="selectedEndDate"
+                (ngModelChange)="onFilterChange()"
+            />
+            <mat-datepicker-toggle
+                matSuffix
+                [for]="endDatePicker"
+            ></mat-datepicker-toggle>
+            <mat-datepicker #endDatePicker></mat-datepicker>
+        </mat-form-field>
+
         <!-- Site filter -->
         <mat-form-field class="w-full sm:w-48">
             <mat-label>{{

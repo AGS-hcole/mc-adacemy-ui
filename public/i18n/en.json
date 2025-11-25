@@ -328,6 +328,8 @@
             "EDIT_SESSION": "Edit Session",
             "NO_SESSIONS": "No sessions found",
             "FILTERS": {
+                "START_DATE": "Start date",
+                "END_DATE": "End date",
                 "SITE": "Site",
                 "ALL_SITES": "All sites",
                 "SLOT": "Slot",
