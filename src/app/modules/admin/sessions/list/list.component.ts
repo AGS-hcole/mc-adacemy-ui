@@ -135,17 +135,37 @@ export class AdminSessionsListComponent implements OnInit, OnDestroy {
      * Load sessions with filters
      */
     loadSessions(): void {
+        const toIsoDate = (value: any): string | null => {
+            if (!value) return null;
+
+            // Luxon DateTime
+            if (DateTime.isDateTime(value)) {
+                return value.isValid ? value.toISODate() : null;
+            }
+
+            // Native Date
+            if (value instanceof Date) {
+                const dt = DateTime.fromJSDate(value);
+                return dt.isValid ? dt.toISODate() : null;
+            }
+
+            return null;
+        };
+
         const filters: SessionFilters = {
             siteId: this.selectedSite,
             slot: this.selectedSlot,
             isPublished: this.selectedPublished,
             startDate: this.selectedStartDate
-                ? DateTime.fromJSDate(this.selectedStartDate).toISODate()
+                ? toIsoDate(this.selectedStartDate)
                 : null,
             endDate: this.selectedEndDate
-                ? DateTime.fromJSDate(this.selectedEndDate).toISODate()
+                ? toIsoDate(this.selectedEndDate)
                 : null,
         };
+        console.log(this.selectedStartDate);
+
+        console.log('Loading sessions with filters:', filters);
 
         this._sessionsService.getSessions(filters).subscribe();
     }
