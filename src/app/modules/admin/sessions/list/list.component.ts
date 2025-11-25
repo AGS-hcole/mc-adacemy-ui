@@ -163,9 +163,6 @@ export class AdminSessionsListComponent implements OnInit, OnDestroy {
                 ? toIsoDate(this.selectedEndDate)
                 : null,
         };
-        console.log(this.selectedStartDate);
-
-        console.log('Loading sessions with filters:', filters);
 
         this._sessionsService.getSessions(filters).subscribe();
     }
