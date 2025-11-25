@@ -114,6 +114,9 @@ export class AdminSessionsListComponent implements OnInit, OnDestroy {
             .subscribe(() => {
                 this.loadSessions();
             });
+
+        // Load sessions with default filters
+        this.loadSessions();
     }
 
     /**
