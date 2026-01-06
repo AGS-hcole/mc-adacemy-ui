@@ -1,0 +1,99 @@
+<div class="w-full">
+    <!-- Loading -->
+    <div *ngIf="isLoading" class="flex items-center justify-center py-12">
+        <mat-spinner [diameter]="40"></mat-spinner>
+    </div>
+
+    <!-- Content -->
+    <div *ngIf="!isLoading">
+        <!-- Window closed warning -->
+        <fuse-alert
+            *ngIf="!isWindowOpen"
+            [type]="'warning'"
+            [appearance]="'outline'"
+            class="mb-6"
+        >
+            <span class="font-semibold">{{ 'PLANNING.WINDOW_CLOSED' | transloco }}</span>
+            <div class="mt-1 text-sm">{{ 'PLANNING.WINDOW_CLOSED_DESC' | transloco }}</div>
+        </fuse-alert>
+
+        <!-- Success alert -->
+        <fuse-alert
+            *ngIf="showSuccessAlert"
+            [type]="'success'"
+            [appearance]="'outline'"
+            [dismissible]="true"
+            (dismissed)="showSuccessAlert = false"
+            class="mb-6"
+        >
+            {{ 'PLANNING.SAVE_SUCCESS' | transloco }}
+        </fuse-alert>
+
+        <!-- Error alert -->
+        <fuse-alert
+            *ngIf="showErrorAlert"
+            [type]="'error'"
+            [appearance]="'outline'"
+            [dismissible]="true"
+            (dismissed)="showErrorAlert = false"
+            class="mb-6"
+        >
+            {{ errorMessage }}
+        </fuse-alert>
+
+        <!-- Form -->
+        <form [formGroup]="form">
+            <div class="mb-6">
+                <div class="text-lg font-semibold mb-4">
+                    {{ 'PLANNING.NEXT_WEEK' | transloco }}
+                </div>
+                <div class="text-secondary mb-6">
+                    {{ 'PLANNING.SELECT_NIGHTS' | transloco }}
+                </div>
+
+                <div formGroupName="nights" class="space-y-3">
+                    <div
+                        *ngFor="let day of weekDays"
+                        class="flex items-center p-4 rounded-lg border"
+                        [ngClass]="{
+                            'bg-gray-50 dark:bg-gray-800': form.get('nights.' + day.isoDate)?.value,
+                            'bg-white dark:bg-gray-900': !form.get('nights.' + day.isoDate)?.value
+                        }"
+                    >
+                        <mat-checkbox
+                            [formControlName]="day.isoDate"
+                            class="flex-auto"
+                            color="primary"
+                        >
+                            <span class="font-medium">{{ day.date }}</span>
+                            <span
+                                *ngIf="form.get('nights.' + day.isoDate)?.disabled"
+                                class="ml-2 text-xs px-2 py-1 rounded bg-green-100 text-green-800 dark:bg-green-900 dark:text-green-200"
+                            >
+                                {{ 'PLANNING.CONFIRMED' | transloco }}
+                            </span>
+                        </mat-checkbox>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Actions -->
+            <div class="flex items-center justify-end gap-4 mt-8">
+                <button
+                    mat-flat-button
+                    [color]="'primary'"
+                    [disabled]="form.invalid || isSaving || !isWindowOpen"
+                    (click)="onSave()"
+                >
+                    <mat-icon
+                        *ngIf="!isSaving"
+                        [svgIcon]="'heroicons_outline:check'"
+                        class="icon-size-5"
+                    ></mat-icon>
+                    <mat-spinner *ngIf="isSaving" [diameter]="20"></mat-spinner>
+                    <span class="ml-2">{{ 'PLANNING.SAVE' | transloco }}</span>
+                </button>
+            </div>
+        </form>
+    </div>
+</div>

@@ -1,0 +1,175 @@
+<div class="flex flex-col w-full">
+    <!-- Header -->
+    <div
+        class="flex flex-col sm:flex-row flex-0 sm:items-center sm:justify-between p-6 sm:py-8 sm:px-10 border-b bg-card dark:bg-transparent"
+    >
+        <div class="flex-1 min-w-0">
+            <h2 class="text-3xl font-extrabold tracking-tight leading-7 sm:leading-10 truncate">
+                {{ 'TEMPLATES.TITLE' | transloco }}
+            </h2>
+        </div>
+        <div class="flex items-center mt-4 sm:mt-0">
+            <button
+                mat-flat-button
+                [color]="'primary'"
+                (click)="openDrawer()"
+            >
+                <mat-icon [svgIcon]="'heroicons_outline:plus'"></mat-icon>
+                <span class="ml-2">{{ 'TEMPLATES.CREATE' | transloco }}</span>
+            </button>
+        </div>
+    </div>
+
+    <!-- Main -->
+    <div class="flex-auto p-6 sm:p-10">
+        <!-- Loading -->
+        <div *ngIf="isLoading" class="flex items-center justify-center py-12">
+            <mat-spinner [diameter]="40"></mat-spinner>
+        </div>
+
+        <!-- Templates list -->
+        <div *ngIf="!isLoading" class="space-y-4">
+            <div
+                *ngFor="let template of templates"
+                class="flex items-center justify-between p-4 rounded-lg border bg-white dark:bg-gray-900"
+            >
+                <div class="flex-1">
+                    <div class="font-semibold text-lg">{{ template.name }}</div>
+                    <div class="text-sm text-secondary mt-1">
+                        {{ template.originLabel }} → {{ template.destination?.name || template.destinationId }}
+                    </div>
+                    <div class="text-sm text-secondary mt-1">
+                        {{ 'TEMPLATES.TARGET_TIME' | transloco }}: {{ template.targetTime }} |
+                        {{ 'TEMPLATES.CAPACITY' | transloco }}: {{ template.capacity }}
+                    </div>
+                </div>
+                <div class="flex items-center gap-2">
+                    <button
+                        mat-icon-button
+                        (click)="openDrawer(template)"
+                        [matTooltip]="'TEMPLATES.EDIT' | transloco"
+                    >
+                        <mat-icon [svgIcon]="'heroicons_outline:pencil'"></mat-icon>
+                    </button>
+                    <button
+                        mat-icon-button
+                        (click)="onDelete(template)"
+                        [matTooltip]="'TEMPLATES.DELETE' | transloco"
+                    >
+                        <mat-icon [svgIcon]="'heroicons_outline:trash'"></mat-icon>
+                    </button>
+                </div>
+            </div>
+
+            <div
+                *ngIf="templates.length === 0"
+                class="flex flex-col items-center justify-center py-12 text-secondary"
+            >
+                <mat-icon [svgIcon]="'heroicons_outline:inbox'" class="icon-size-24"></mat-icon>
+                <p class="mt-4 text-lg">{{ 'TEMPLATES.NO_TEMPLATES' | transloco }}</p>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Drawer -->
+<mat-drawer-container class="absolute inset-0 flex flex-col min-w-0 overflow-hidden">
+    <mat-drawer
+        class="w-full sm:w-128 dark:bg-gray-900"
+        [mode]="'over'"
+        [position]="'end'"
+        [opened]="drawerOpened"
+        (closedStart)="closeDrawer()"
+        #drawer
+    >
+        <div class="flex flex-col h-full">
+            <!-- Header -->
+            <div class="flex items-center justify-between p-6 border-b">
+                <h3 class="text-xl font-semibold">
+                    {{ selectedTemplate ? ('TEMPLATES.EDIT' | transloco) : ('TEMPLATES.CREATE' | transloco) }}
+                </h3>
+                <button
+                    mat-icon-button
+                    (click)="closeDrawer()"
+                >
+                    <mat-icon [svgIcon]="'heroicons_outline:x-mark'"></mat-icon>
+                </button>
+            </div>
+
+            <!-- Form -->
+            <div class="flex-auto overflow-y-auto p-6">
+                <form [formGroup]="form" class="space-y-4">
+                    <mat-form-field class="w-full">
+                        <mat-label>{{ 'TEMPLATES.NAME' | transloco }}</mat-label>
+                        <input matInput formControlName="name" />
+                    </mat-form-field>
+
+                    <mat-form-field class="w-full">
+                        <mat-label>{{ 'TEMPLATES.DIRECTION' | transloco }}</mat-label>
+                        <mat-select formControlName="direction">
+                            <mat-option value="GO">{{ 'PLANNING.DIRECTION_GO' | transloco }}</mat-option>
+                            <mat-option value="RETURN">{{ 'PLANNING.DIRECTION_RETURN' | transloco }}</mat-option>
+                        </mat-select>
+                    </mat-form-field>
+
+                    <mat-form-field class="w-full">
+                        <mat-label>{{ 'TEMPLATES.ORIGIN' | transloco }}</mat-label>
+                        <input matInput formControlName="originLabel" />
+                    </mat-form-field>
+
+                    <mat-form-field class="w-full">
+                        <mat-label>{{ 'TEMPLATES.DESTINATION' | transloco }}</mat-label>
+                        <mat-select formControlName="destinationId">
+                            <mat-option *ngFor="let school of schools" [value]="school.id">
+                                {{ school.name }}
+                            </mat-option>
+                        </mat-select>
+                    </mat-form-field>
+
+                    <mat-form-field class="w-full">
+                        <mat-label>{{ 'TEMPLATES.TARGET_TIME' | transloco }}</mat-label>
+                        <input matInput formControlName="targetTime" placeholder="HH:mm" />
+                    </mat-form-field>
+
+                    <mat-form-field class="w-full">
+                        <mat-label>{{ 'TEMPLATES.CAPACITY' | transloco }}</mat-label>
+                        <input matInput type="number" formControlName="capacity" />
+                    </mat-form-field>
+
+                    <mat-form-field class="w-full">
+                        <mat-label>{{ 'TEMPLATES.DAYS_OF_WEEK' | transloco }}</mat-label>
+                        <mat-select formControlName="daysOfWeek" multiple>
+                            <mat-option *ngFor="let day of daysOfWeek" [value]="day.value">
+                                {{ day.label | transloco }}
+                            </mat-option>
+                        </mat-select>
+                    </mat-form-field>
+
+                    <mat-form-field class="w-full">
+                        <mat-label>{{ 'TEMPLATES.DEFAULT_VEHICLE' | transloco }}</mat-label>
+                        <input matInput formControlName="defaultVehicle" />
+                    </mat-form-field>
+                </form>
+            </div>
+
+            <!-- Actions -->
+            <div class="flex items-center justify-end gap-4 p-6 border-t">
+                <button
+                    mat-button
+                    (click)="closeDrawer()"
+                >
+                    {{ 'TEMPLATES.CANCEL' | transloco }}
+                </button>
+                <button
+                    mat-flat-button
+                    [color]="'primary'"
+                    [disabled]="form.invalid || isSaving"
+                    (click)="onSave()"
+                >
+                    <mat-spinner *ngIf="isSaving" [diameter]="20"></mat-spinner>
+                    <span [class.ml-2]="isSaving">{{ 'TEMPLATES.SAVE' | transloco }}</span>
+                </button>
+            </div>
+        </div>
+    </mat-drawer>
+</mat-drawer-container>

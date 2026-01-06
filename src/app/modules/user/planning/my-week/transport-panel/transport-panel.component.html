@@ -1,0 +1,136 @@
+<div class="w-full">
+    <!-- Loading -->
+    <div *ngIf="isLoading" class="flex items-center justify-center py-12">
+        <mat-spinner [diameter]="40"></mat-spinner>
+    </div>
+
+    <!-- Content -->
+    <div *ngIf="!isLoading">
+        <!-- Window closed warning -->
+        <fuse-alert
+            *ngIf="!isWindowOpen"
+            [type]="'warning'"
+            [appearance]="'outline'"
+            class="mb-6"
+        >
+            <span class="font-semibold">{{ 'PLANNING.WINDOW_CLOSED' | transloco }}</span>
+            <div class="mt-1 text-sm">{{ 'PLANNING.WINDOW_CLOSED_DESC' | transloco }}</div>
+        </fuse-alert>
+
+        <!-- Success alert -->
+        <fuse-alert
+            *ngIf="showSuccessAlert"
+            [type]="'success'"
+            [appearance]="'outline'"
+            [dismissible]="true"
+            (dismissed)="showSuccessAlert = false"
+            class="mb-6"
+        >
+            {{ 'PLANNING.SAVE_SUCCESS' | transloco }}
+        </fuse-alert>
+
+        <!-- Error alert -->
+        <fuse-alert
+            *ngIf="showErrorAlert"
+            [type]="'error'"
+            [appearance]="'outline'"
+            [dismissible]="true"
+            (dismissed)="showErrorAlert = false"
+            class="mb-6"
+        >
+            {{ errorMessage }}
+        </fuse-alert>
+
+        <!-- No templates warning -->
+        <fuse-alert
+            *ngIf="templates.length === 0"
+            [type]="'info'"
+            [appearance]="'outline'"
+            class="mb-6"
+        >
+            {{ 'PLANNING.NO_TEMPLATES' | transloco }}
+        </fuse-alert>
+
+        <!-- Form -->
+        <form [formGroup]="form" *ngIf="templates.length > 0">
+            <div class="mb-6">
+                <div class="text-lg font-semibold mb-4">
+                    {{ 'PLANNING.NEXT_WEEK' | transloco }}
+                </div>
+                <div class="text-secondary mb-6">
+                    {{ 'PLANNING.SELECT_TRANSPORTS' | transloco }}
+                </div>
+
+                <div formArrayName="days" class="space-y-4">
+                    <div
+                        *ngFor="let dayGroup of getDaysArray().controls; let i = index"
+                        [formGroupName]="i"
+                        class="p-4 rounded-lg border bg-white dark:bg-gray-900"
+                    >
+                        <div class="font-medium mb-3">{{ weekDays[i].date }}</div>
+
+                        <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                            <!-- GO -->
+                            <div>
+                                <label class="block text-sm font-medium mb-2">
+                                    {{ 'PLANNING.DIRECTION_GO' | transloco }}
+                                </label>
+                                <mat-select
+                                    formControlName="goTemplateId"
+                                    [placeholder]="'COMMON.SEARCH' | transloco"
+                                    class="w-full"
+                                >
+                                    <mat-option [value]="null">-</mat-option>
+                                    <mat-option
+                                        *ngFor="let template of getAvailableTemplates(weekDays[i].dayOfWeek, 'GO')"
+                                        [value]="template.id"
+                                    >
+                                        {{ template.name }}
+                                    </mat-option>
+                                </mat-select>
+                            </div>
+
+                            <!-- RETURN -->
+                            <div>
+                                <label class="block text-sm font-medium mb-2">
+                                    {{ 'PLANNING.DIRECTION_RETURN' | transloco }}
+                                </label>
+                                <mat-select
+                                    formControlName="returnTemplateId"
+                                    [placeholder]="'COMMON.SEARCH' | transloco"
+                                    class="w-full"
+                                >
+                                    <mat-option [value]="null">-</mat-option>
+                                    <mat-option
+                                        *ngFor="let template of getAvailableTemplates(weekDays[i].dayOfWeek, 'RETURN')"
+                                        [value]="template.id"
+                                    >
+                                        {{ template.name }}
+                                    </mat-option>
+                                </mat-select>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Actions -->
+            <div class="flex items-center justify-end gap-4 mt-8">
+                <button
+                    mat-flat-button
+                    [color]="'primary'"
+                    [disabled]="form.invalid || isSaving || !isWindowOpen"
+                    (click)="onSave()"
+                >
+                    <mat-icon
+                        *ngIf="!isSaving"
+                        [svgIcon]="'heroicons_outline:check'"
+                        class="icon-size-5"
+                    ></mat-icon>
+                    <mat-spinner *ngIf="isSaving" [diameter]="20"></mat-spinner>
+                    <span class="ml-2">{{ 'PLANNING.SAVE' | transloco }}</span>
+                </button>
+            </div>
+        </form>
+    </div>
+</div>

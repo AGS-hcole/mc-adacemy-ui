@@ -1,0 +1,33 @@
+<div class="flex flex-col w-full">
+    <!-- Header -->
+    <div
+        class="flex flex-col sm:flex-row flex-0 sm:items-center sm:justify-between p-6 sm:py-8 sm:px-10 border-b bg-card dark:bg-transparent"
+    >
+        <div class="flex-1 min-w-0">
+            <div class="flex flex-wrap items-center font-medium">
+                <div>
+                    <h2 class="text-3xl font-extrabold tracking-tight leading-7 sm:leading-10 truncate">
+                        {{ 'PLANNING.MY_WEEK' | transloco }}
+                    </h2>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Main -->
+    <div class="flex-auto p-6 sm:p-10">
+        <mat-tab-group class="fuse-mat-no-header-tab-group">
+            <mat-tab [label]="'PLANNING.RESIDENCE' | transloco">
+                <ng-template matTabContent>
+                    <user-residence-planning-panel></user-residence-planning-panel>
+                </ng-template>
+            </mat-tab>
+
+            <mat-tab [label]="'PLANNING.TRANSPORT' | transloco">
+                <ng-template matTabContent>
+                    <user-transport-planning-panel></user-transport-planning-panel>
+                </ng-template>
+            </mat-tab>
+        </mat-tab-group>
+    </div>
+</div>
