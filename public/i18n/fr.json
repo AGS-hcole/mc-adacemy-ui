@@ -3,6 +3,7 @@
         "UNDER_CONSTRUCTION": "En construction",
         "UNDER_CONSTRUCTION_DESCRIPTION": "Cette fonctionnalité est en cours de développement et sera bientôt disponible.",
         "CLOSE": "Fermer",
+        "LOADING": "Chargement...",
         "CLIPBOARD": {
             "COPYTO": "Copier dans le presse-papiers",
             "SUCCESS": "Copié dans le presse-papiers",
@@ -873,6 +874,103 @@
             "CREATE_SUCCESS": "Événement créé avec succès",
             "UPDATE_SUCCESS": "Événement mis à jour avec succès",
             "SAVE_ERROR": "Erreur lors de l'enregistrement de l'événement"
+        }
+    },
+    "ADMIN": {
+        "MANORS": {
+            "TITLE": "Manoirs",
+            "SUBTITLE": "Gérer les manoirs disponibles, leur capacité et les restrictions.",
+            "NEW": "Nouveau manoir",
+            "EDIT": "Modifier le manoir",
+            "SAVED": "Manoir enregistré avec succès",
+            "ERROR": "Une erreur est survenue",
+            "CONFIRM_DISCARD": "Voulez-vous abandonner les modifications ?",
+            "YES": "Oui",
+            "NO": "Non",
+            "ACTIVE": "Actif",
+            "INACTIVE": "Inactif",
+            "NO_MANORS": "Aucun manoir trouvé",
+            "FIELDS": {
+                "NAME": "Nom",
+                "ADDRESS": "Adresse",
+                "CITY": "Ville",
+                "CAPACITY": "Capacité",
+                "ENFORCE": "Limiter à la capacité",
+                "ACTIVE": "Actif"
+            },
+            "TABLE": {
+                "ACTIONS": "Actions"
+            },
+            "ACTIONS": {
+                "EDIT": "Modifier",
+                "DISABLE": "Désactiver",
+                "DELETE_CONFIRM": "Désactiver ce manoir ?",
+                "DELETE_MESSAGE": "Êtes-vous sûr de vouloir désactiver \"{{name}}\" ?"
+            }
+        }
+    },
+    "USERS": {
+        "MY_NIGHTS": {
+            "TITLE": "Mes nuits au manoir",
+            "SUBTITLE": "Inscris-toi avant midi pour la nuit du jour même.",
+            "CUTOFF_LOCKED": "Modifications fermées (après midi).",
+            "CUTOFF_ERROR": "Trop tard : modifications fermées après midi.",
+            "SELECT_MANOR": "Choisir un manoir",
+            "SUBSCRIBE": "S'inscrire",
+            "UNSUBSCRIBE": "Se désinscrire",
+            "SAVED": "Mise à jour enregistrée",
+            "ERROR": "Une erreur est survenue",
+            "FULL": "Manoir complet pour cette nuit",
+            "NO_DAYS": "Aucune date disponible"
+        }
+    },
+    "COMMON": {
+        "CANCEL": "Annuler",
+        "SAVE": "Enregistrer",
+        "CONFIRM": "Confirmer"
+    },
+    "NAVIGATION": {
+        "TITLE": "Navigation",
+        "DASHBOARD": {
+            "TITLE": "Tableau de bord"
+        },
+        "ADMIN": {
+            "TITLE": "Administration",
+            "SUBTITLE": "Gestion avancée",
+            "USERS": {
+                "TITLE": "Utilisateurs"
+            },
+            "SITES": {
+                "TITLE": "Sites"
+            },
+            "SESSIONS": {
+                "TITLE": "Sessions"
+            },
+            "TOURNAMENTS": {
+                "TITLE": "Tournois"
+            },
+            "EVENTS": {
+                "TITLE": "Événements"
+            },
+            "REPORTS": {
+                "TITLE": "Rapports"
+            },
+            "MANORS": {
+                "TITLE": "Manoirs"
+            }
+        },
+        "USER": {
+            "TITLE": "Mon espace",
+            "SUBTITLE": "Mes activités",
+            "SESSIONS": {
+                "TITLE": "Mes sessions"
+            },
+            "TOURNAMENTS": {
+                "TITLE": "Mes tournois"
+            },
+            "MY_NIGHTS": {
+                "TITLE": "Mes nuits"
+            }
         }
     }
 }

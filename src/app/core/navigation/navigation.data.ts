@@ -73,6 +73,13 @@ export const adminNavigation: FuseNavigationItem[] = [
                 icon: 'heroicons_outline:chart-bar',
                 link: '/admin/reports',
             },
+            {
+                id: 'manors',
+                title: 'NAVIGATION.ADMIN.MANORS.TITLE',
+                type: 'basic',
+                icon: 'heroicons_outline:building-office-2',
+                link: '/admin/manors',
+            },
         ],
     },
 ];
@@ -100,6 +107,13 @@ export const userNavigation: FuseNavigationItem[] = [
                 type: 'basic',
                 icon: 'heroicons_outline:trophy',
                 link: '/user/tournaments',
+            },
+            {
+                id: 'my-nights',
+                title: 'NAVIGATION.USER.MY_NIGHTS.TITLE',
+                type: 'basic',
+                icon: 'heroicons_outline:moon',
+                link: '/user/my-nights',
             },
         ],
     },

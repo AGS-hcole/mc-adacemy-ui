@@ -1,0 +1,177 @@
+<div
+    class="absolute inset-0 flex min-w-0 flex-col overflow-y-auto sm:overflow-hidden"
+>
+    <!-- Header -->
+    <div
+        class="bg-card relative flex flex-0 flex-col border-b px-6 py-8 sm:flex-row sm:items-center sm:justify-between md:px-8 dark:bg-transparent"
+    >
+        <!-- Title -->
+        <div>
+            <div class="text-4xl font-extrabold tracking-tight">
+                {{ 'USERS.MY_NIGHTS.TITLE' | transloco }}
+            </div>
+            <div class="text-secondary mt-2 text-lg">
+                {{ 'USERS.MY_NIGHTS.SUBTITLE' | transloco }}
+            </div>
+        </div>
+    </div>
+
+    <!-- Days list -->
+    <div class="flex flex-auto border-t sm:overflow-hidden">
+        <div class="flex flex-auto flex-col p-6 sm:overflow-y-auto md:p-8">
+            <ng-container *ngIf="!loading; else loadingTemplate">
+                <ng-container *ngIf="days.length > 0; else noDays">
+                    <div class="flex flex-col gap-4">
+                        <ng-container
+                            *ngFor="let day of days; trackBy: trackByYmd"
+                        >
+                            <div
+                                class="bg-card flex flex-col gap-4 rounded-lg border p-4 shadow-sm sm:flex-row sm:items-center sm:justify-between"
+                            >
+                                <!-- Left: Date label -->
+                                <div class="flex items-center gap-3">
+                                    <mat-icon
+                                        class="icon-size-6"
+                                        [svgIcon]="'heroicons_outline:calendar'"
+                                    ></mat-icon>
+                                    <div class="flex flex-col">
+                                        <span class="text-lg font-medium">{{
+                                            day.displayLabel
+                                        }}</span>
+                                        <span class="text-secondary text-sm">{{
+                                            day.ymd
+                                        }}</span>
+                                    </div>
+                                </div>
+
+                                <!-- Right: Manor selection or current stay -->
+                                <div
+                                    class="flex flex-1 items-center justify-end gap-3"
+                                >
+                                    <ng-container *ngIf="day.stay; else noStay">
+                                        <!-- Display current stay -->
+                                        <div class="flex items-center gap-3">
+                                            <span
+                                                class="inline-flex items-center rounded-full bg-green-200 px-3 py-1 text-sm font-medium text-green-800 dark:bg-green-600 dark:text-green-50"
+                                            >
+                                                {{ day.stay.manor.name }}
+                                            </span>
+                                            <button
+                                                mat-stroked-button
+                                                color="warn"
+                                                [disabled]="day.isLocked"
+                                                (click)="unsubscribe(day)"
+                                            >
+                                                {{
+                                                    'USERS.MY_NIGHTS.UNSUBSCRIBE'
+                                                        | transloco
+                                                }}
+                                            </button>
+                                        </div>
+                                    </ng-container>
+
+                                    <ng-template #noStay>
+                                        <!-- Manor selection -->
+                                        <div class="flex items-center gap-3">
+                                            <mat-form-field class="w-48">
+                                                <mat-label>{{
+                                                    'USERS.MY_NIGHTS.SELECT_MANOR'
+                                                        | transloco
+                                                }}</mat-label>
+                                                <mat-select
+                                                    [ngModel]="
+                                                        selectedManorByDate.get(
+                                                            day.ymd
+                                                        )
+                                                    "
+                                                    (ngModelChange)="
+                                                        selectedManorByDate.set(
+                                                            day.ymd,
+                                                            $event
+                                                        )
+                                                    "
+                                                    [disabled]="day.isLocked"
+                                                >
+                                                    <mat-option
+                                                        *ngFor="
+                                                            let manor of manors
+                                                        "
+                                                        [value]="manor.id"
+                                                    >
+                                                        {{ manor.name }}
+                                                    </mat-option>
+                                                </mat-select>
+                                            </mat-form-field>
+                                            <button
+                                                mat-flat-button
+                                                color="primary"
+                                                [disabled]="
+                                                    day.isLocked ||
+                                                    !selectedManorByDate.get(
+                                                        day.ymd
+                                                    )
+                                                "
+                                                (click)="subscribe(day)"
+                                            >
+                                                {{
+                                                    'USERS.MY_NIGHTS.SUBSCRIBE'
+                                                        | transloco
+                                                }}
+                                            </button>
+                                        </div>
+                                    </ng-template>
+                                </div>
+                            </div>
+
+                            <!-- Locked warning -->
+                            <div
+                                *ngIf="day.isLocked"
+                                class="text-secondary ml-12 text-sm italic"
+                            >
+                                {{
+                                    'USERS.MY_NIGHTS.CUTOFF_LOCKED' | transloco
+                                }}
+                            </div>
+                        </ng-container>
+                    </div>
+                </ng-container>
+
+                <!-- No days -->
+                <ng-template #noDays>
+                    <div
+                        class="flex flex-auto flex-col items-center justify-center bg-gray-100 dark:bg-transparent"
+                    >
+                        <mat-icon
+                            class="icon-size-24"
+                            [svgIcon]="'heroicons_outline:calendar'"
+                        >
+                        </mat-icon>
+                        <div
+                            class="text-secondary mt-4 text-2xl font-semibold tracking-tight"
+                        >
+                            {{ 'USERS.MY_NIGHTS.NO_DAYS' | transloco }}
+                        </div>
+                    </div>
+                </ng-template>
+            </ng-container>
+
+            <!-- Loading -->
+            <ng-template #loadingTemplate>
+                <div
+                    class="flex flex-auto flex-col items-center justify-center bg-gray-100 dark:bg-transparent"
+                >
+                    <mat-icon
+                        class="animate-spin icon-size-24"
+                        [svgIcon]="'heroicons_outline:arrow-path'"
+                    >
+                    </mat-icon>
+                    <div
+                        class="text-secondary mt-4 text-2xl font-semibold tracking-tight"
+                    >
+                        {{ 'SHARED.LOADING' | transloco }}
+                    </div>
+                </div>
+            </ng-template>
+        </div>
+    </div>
+</div>

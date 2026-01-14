@@ -66,4 +66,8 @@ export default [
         path: 'events',
         loadChildren: () => import('app/modules/admin/events/events.routes'),
     },
+    {
+        path: 'manors',
+        loadChildren: () => import('app/modules/admin/manors/manors.routes'),
+    },
 ] as Routes;

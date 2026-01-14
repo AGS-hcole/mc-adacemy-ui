@@ -50,4 +50,9 @@ export default [
         loadChildren: () =>
             import('app/modules/user/tournaments/tournaments.routes'),
     },
+    {
+        path: 'my-nights',
+        loadChildren: () =>
+            import('app/modules/user/my-nights/my-nights.routes'),
+    },
 ] as Routes;

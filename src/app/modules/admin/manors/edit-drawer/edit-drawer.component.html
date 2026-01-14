@@ -1,0 +1,108 @@
+<div class="flex h-full flex-col">
+    <!-- Header -->
+    <div
+        class="bg-card flex items-center justify-between border-b px-6 py-4 dark:bg-transparent"
+    >
+        <div class="text-2xl font-bold">
+            {{
+                (isEditMode
+                    ? 'ADMIN.MANORS.EDIT'
+                    : 'ADMIN.MANORS.NEW'
+                ) | transloco
+            }}
+        </div>
+        <button mat-icon-button (click)="cancel()">
+            <mat-icon [svgIcon]="'heroicons_outline:x-mark'"></mat-icon>
+        </button>
+    </div>
+
+    <!-- Form -->
+    <div class="flex-1 overflow-y-auto p-6">
+        <form [formGroup]="manorForm" class="flex flex-col gap-6">
+            <!-- Name -->
+            <mat-form-field class="w-full">
+                <mat-label>{{
+                    'ADMIN.MANORS.FIELDS.NAME' | transloco
+                }}</mat-label>
+                <input matInput formControlName="name" required />
+                <mat-icon
+                    matPrefix
+                    class="icon-size-5"
+                    [svgIcon]="'heroicons_outline:building-office-2'"
+                ></mat-icon>
+            </mat-form-field>
+
+            <!-- Address -->
+            <mat-form-field class="w-full">
+                <mat-label>{{
+                    'ADMIN.MANORS.FIELDS.ADDRESS' | transloco
+                }}</mat-label>
+                <input matInput formControlName="address" />
+                <mat-icon
+                    matPrefix
+                    class="icon-size-5"
+                    [svgIcon]="'heroicons_outline:map-pin'"
+                ></mat-icon>
+            </mat-form-field>
+
+            <!-- City -->
+            <mat-form-field class="w-full">
+                <mat-label>{{
+                    'ADMIN.MANORS.FIELDS.CITY' | transloco
+                }}</mat-label>
+                <input matInput formControlName="city" />
+                <mat-icon
+                    matPrefix
+                    class="icon-size-5"
+                    [svgIcon]="'heroicons_outline:map'"
+                ></mat-icon>
+            </mat-form-field>
+
+            <!-- Capacity -->
+            <mat-form-field class="w-full">
+                <mat-label>{{
+                    'ADMIN.MANORS.FIELDS.CAPACITY' | transloco
+                }}</mat-label>
+                <input matInput type="number" formControlName="capacity" required />
+                <mat-icon
+                    matPrefix
+                    class="icon-size-5"
+                    [svgIcon]="'heroicons_outline:user-group'"
+                ></mat-icon>
+            </mat-form-field>
+
+            <!-- Enforce capacity -->
+            <div class="flex items-center gap-3">
+                <mat-checkbox formControlName="enforceCapacity">
+                    {{ 'ADMIN.MANORS.FIELDS.ENFORCE' | transloco }}
+                </mat-checkbox>
+            </div>
+
+            <!-- Active -->
+            <div class="flex items-center gap-3">
+                <mat-checkbox formControlName="isActive">
+                    {{ 'ADMIN.MANORS.FIELDS.ACTIVE' | transloco }}
+                </mat-checkbox>
+            </div>
+        </form>
+    </div>
+
+    <!-- Footer -->
+    <div
+        class="border-t bg-gray-50 px-6 py-4 dark:bg-gray-900"
+    >
+        <div class="flex items-center justify-end gap-2">
+            <button mat-button (click)="cancel()">
+                {{ 'COMMON.CANCEL' | transloco }}
+            </button>
+            <button
+                mat-flat-button
+                [color]="'primary'"
+                [disabled]="manorForm.invalid"
+                (click)="save()"
+            >
+                {{ 'COMMON.SAVE' | transloco }}
+            </button>
+        </div>
+    </div>
+</div>
