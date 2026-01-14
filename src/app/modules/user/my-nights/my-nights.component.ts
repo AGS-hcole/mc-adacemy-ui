@@ -94,6 +94,9 @@ export class MyNightsPageComponent implements OnInit, OnDestroy {
                 next: ({ manors, stays }) => {
                     this.manors = manors;
 
+                    // If there's only one manor, pre-select it for all days
+                    const defaultManorId = manors.length === 1 ? manors[0].id : null;
+
                     // Build days array
                     this.days = [];
                     for (let i = 0; i < 14; i++) {
@@ -112,6 +115,11 @@ export class MyNightsPageComponent implements OnInit, OnDestroy {
                             stay,
                             isLocked,
                         });
+
+                        // Auto-select the manor if there's only one and no existing stay
+                        if (defaultManorId && !stay) {
+                            this.selectedManorByDate.set(ymd, defaultManorId);
+                        }
                     }
 
                     this.loading = false;
