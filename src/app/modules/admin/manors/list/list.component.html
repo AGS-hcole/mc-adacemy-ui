@@ -1,0 +1,370 @@
+<div
+    class="absolute inset-0 flex min-w-0 flex-col overflow-y-auto sm:overflow-hidden"
+>
+    <!-- Header -->
+    <div
+        class="bg-card relative flex flex-0 flex-col border-b px-6 py-8 sm:flex-row sm:items-center sm:justify-between md:px-8 dark:bg-transparent"
+    >
+        <!-- Title -->
+        <div>
+            <div class="text-4xl font-extrabold tracking-tight">
+                {{ 'ADMIN.MANORS.TITLE' | transloco }}
+            </div>
+            <div class="text-secondary mt-2 text-lg">
+                {{ 'ADMIN.MANORS.SUBTITLE' | transloco }}
+            </div>
+        </div>
+        <!-- Actions -->
+        <div class="mt-6 flex shrink-0 items-center sm:ml-4 sm:mt-0">
+            <button mat-flat-button [color]="'primary'" (click)="createManor()">
+                <mat-icon [svgIcon]="'heroicons_outline:plus'"></mat-icon>
+                <span class="ml-2">{{ 'ADMIN.MANORS.NEW' | transloco }}</span>
+            </button>
+        </div>
+    </div>
+
+    <!-- Manors list -->
+    <div class="flex flex-auto border-t sm:overflow-hidden">
+        <div class="flex flex-auto flex-col sm:overflow-y-auto">
+            <ng-container *ngIf="manors as manors">
+                <!-- Manors table -->
+                <ng-container *ngIf="manors.length > 0; else noManors">
+                    <!-- Desktop table (lg and up) -->
+                    <div class="hidden lg:grid">
+                        <!-- Header -->
+                        <div
+                            class="text-secondary sticky top-0 z-10 grid gap-4 bg-gray-50 px-6 py-4 text-md font-semibold shadow md:px-8 dark:bg-gray-900"
+                            style="
+                                grid-template-columns: auto 150px 120px 140px 120px 100px;
+                            "
+                        >
+                            <div>{{ 'ADMIN.MANORS.FIELDS.NAME' | transloco }}</div>
+                            <div>{{ 'ADMIN.MANORS.FIELDS.CITY' | transloco }}</div>
+                            <div>
+                                {{ 'ADMIN.MANORS.FIELDS.CAPACITY' | transloco }}
+                            </div>
+                            <div>
+                                {{ 'ADMIN.MANORS.FIELDS.ENFORCE' | transloco }}
+                            </div>
+                            <div>
+                                {{ 'ADMIN.MANORS.FIELDS.ACTIVE' | transloco }}
+                            </div>
+                            <div class="text-right">
+                                {{ 'ADMIN.MANORS.TABLE.ACTIONS' | transloco }}
+                            </div>
+                        </div>
+
+                        <!-- Rows -->
+                        <ng-container
+                            *ngFor="let manor of manors; trackBy: trackByFn"
+                        >
+                            <div
+                                class="grid cursor-pointer items-center gap-4 border-b px-6 py-3 hover:bg-gray-50 md:px-8 dark:hover:bg-gray-900"
+                                style="
+                                    grid-template-columns: auto 150px 120px 140px 120px 100px;
+                                "
+                                (click)="editManor(manor)"
+                            >
+                                <!-- Name -->
+                                <div class="flex flex-col">
+                                    <span class="font-medium">{{
+                                        manor.name
+                                    }}</span>
+                                    <span
+                                        class="text-secondary text-sm"
+                                        *ngIf="manor.address"
+                                        >{{ manor.address }}</span
+                                    >
+                                </div>
+
+                                <!-- City -->
+                                <div class="text-sm">
+                                    {{ manor.city || '-' }}
+                                </div>
+
+                                <!-- Capacity -->
+                                <div class="text-sm">{{ manor.capacity }}</div>
+
+                                <!-- Enforce capacity -->
+                                <div>
+                                    <span
+                                        class="inline-flex items-center rounded-full px-2.5 py-0.5 text-xs font-bold uppercase tracking-wide"
+                                        [ngClass]="{
+                                            'bg-green-200 text-green-800 dark:bg-green-600 dark:text-green-50':
+                                                manor.enforceCapacity,
+                                            'bg-gray-200 text-gray-800 dark:bg-gray-600 dark:text-gray-50':
+                                                !manor.enforceCapacity,
+                                        }"
+                                    >
+                                        {{
+                                            manor.enforceCapacity
+                                                ? ('ADMIN.MANORS.YES' | transloco)
+                                                : ('ADMIN.MANORS.NO' | transloco)
+                                        }}
+                                    </span>
+                                </div>
+
+                                <!-- Active -->
+                                <div>
+                                    <span
+                                        class="inline-flex items-center rounded-full px-2.5 py-0.5 text-xs font-bold uppercase tracking-wide"
+                                        [ngClass]="{
+                                            'bg-green-200 text-green-800 dark:bg-green-600 dark:text-green-50':
+                                                manor.isActive,
+                                            'bg-red-200 text-red-800 dark:bg-red-600 dark:text-red-50':
+                                                !manor.isActive,
+                                        }"
+                                    >
+                                        {{
+                                            manor.isActive
+                                                ? ('ADMIN.MANORS.ACTIVE'
+                                                  | transloco)
+                                                : ('ADMIN.MANORS.INACTIVE'
+                                                  | transloco)
+                                        }}
+                                    </span>
+                                </div>
+
+                                <!-- Actions -->
+                                <div
+                                    class="flex items-center justify-end gap-2"
+                                    (click)="$event.stopPropagation()"
+                                >
+                                    <button
+                                        mat-icon-button
+                                        [matMenuTriggerFor]="actionsMenu"
+                                    >
+                                        <mat-icon
+                                            class="icon-size-5"
+                                            [svgIcon]="
+                                                'heroicons_outline:ellipsis-vertical'
+                                            "
+                                        >
+                                        </mat-icon>
+                                    </button>
+
+                                    <mat-menu #actionsMenu="matMenu">
+                                        <button
+                                            mat-menu-item
+                                            (click)="editManor(manor)"
+                                        >
+                                            <mat-icon
+                                                [svgIcon]="
+                                                    'heroicons_outline:pencil'
+                                                "
+                                            ></mat-icon>
+                                            <span>{{
+                                                'ADMIN.MANORS.ACTIONS.EDIT'
+                                                    | transloco
+                                            }}</span>
+                                        </button>
+                                        <button
+                                            mat-menu-item
+                                            (click)="deleteManor(manor)"
+                                        >
+                                            <mat-icon
+                                                [svgIcon]="
+                                                    'heroicons_outline:trash'
+                                                "
+                                            ></mat-icon>
+                                            <span>{{
+                                                'ADMIN.MANORS.ACTIONS.DISABLE'
+                                                    | transloco
+                                            }}</span>
+                                        </button>
+                                    </mat-menu>
+                                </div>
+                            </div>
+                        </ng-container>
+                    </div>
+
+                    <!-- Mobile cards (xs to lg) -->
+                    <div class="lg:hidden">
+                        <ng-container
+                            *ngFor="let manor of manors; trackBy: trackByFn"
+                        >
+                            <div
+                                class="bg-card border-b p-4 hover:bg-gray-50 dark:hover:bg-gray-900"
+                                (click)="editManor(manor)"
+                            >
+                                <!-- Header -->
+                                <div class="mb-3 flex items-start justify-between">
+                                    <div class="flex-1">
+                                        <div class="font-medium">
+                                            {{ manor.name }}
+                                        </div>
+                                        <div
+                                            class="text-secondary text-sm"
+                                            *ngIf="manor.address"
+                                        >
+                                            {{ manor.address }}
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <!-- Details -->
+                                <div class="mb-3 flex flex-col gap-2">
+                                    <!-- City -->
+                                    <div class="flex items-center gap-2">
+                                        <span
+                                            class="text-secondary text-sm font-medium"
+                                        >
+                                            {{
+                                                'ADMIN.MANORS.FIELDS.CITY'
+                                                    | transloco
+                                            }}:
+                                        </span>
+                                        <span class="text-sm">
+                                            {{ manor.city || '-' }}
+                                        </span>
+                                    </div>
+
+                                    <!-- Capacity -->
+                                    <div class="flex items-center gap-2">
+                                        <span
+                                            class="text-secondary text-sm font-medium"
+                                        >
+                                            {{
+                                                'ADMIN.MANORS.FIELDS.CAPACITY'
+                                                    | transloco
+                                            }}:
+                                        </span>
+                                        <span class="text-sm">
+                                            {{ manor.capacity }}
+                                        </span>
+                                    </div>
+
+                                    <!-- Enforce capacity -->
+                                    <div class="flex items-center gap-2">
+                                        <span
+                                            class="text-secondary text-sm font-medium"
+                                        >
+                                            {{
+                                                'ADMIN.MANORS.FIELDS.ENFORCE'
+                                                    | transloco
+                                            }}:
+                                        </span>
+                                        <span
+                                            class="inline-flex items-center rounded-full px-2.5 py-0.5 text-xs font-bold uppercase tracking-wide"
+                                            [ngClass]="{
+                                                'bg-green-200 text-green-800 dark:bg-green-600 dark:text-green-50':
+                                                    manor.enforceCapacity,
+                                                'bg-gray-200 text-gray-800 dark:bg-gray-600 dark:text-gray-50':
+                                                    !manor.enforceCapacity,
+                                            }"
+                                        >
+                                            {{
+                                                manor.enforceCapacity
+                                                    ? ('ADMIN.MANORS.YES'
+                                                      | transloco)
+                                                    : ('ADMIN.MANORS.NO'
+                                                      | transloco)
+                                            }}
+                                        </span>
+                                    </div>
+
+                                    <!-- Active -->
+                                    <div class="flex items-center gap-2">
+                                        <span
+                                            class="text-secondary text-sm font-medium"
+                                        >
+                                            {{
+                                                'ADMIN.MANORS.FIELDS.ACTIVE'
+                                                    | transloco
+                                            }}:
+                                        </span>
+                                        <span
+                                            class="inline-flex items-center rounded-full px-2.5 py-0.5 text-xs font-bold uppercase tracking-wide"
+                                            [ngClass]="{
+                                                'bg-green-200 text-green-800 dark:bg-green-600 dark:text-green-50':
+                                                    manor.isActive,
+                                                'bg-red-200 text-red-800 dark:bg-red-600 dark:text-red-50':
+                                                    !manor.isActive,
+                                            }"
+                                        >
+                                            {{
+                                                manor.isActive
+                                                    ? ('ADMIN.MANORS.ACTIVE'
+                                                      | transloco)
+                                                    : ('ADMIN.MANORS.INACTIVE'
+                                                      | transloco)
+                                            }}
+                                        </span>
+                                    </div>
+                                </div>
+
+                                <!-- Actions -->
+                                <div
+                                    class="flex items-center justify-end gap-2 border-t pt-3"
+                                    (click)="$event.stopPropagation()"
+                                >
+                                    <button
+                                        mat-icon-button
+                                        [matMenuTriggerFor]="mobileActionsMenu"
+                                    >
+                                        <mat-icon
+                                            class="icon-size-5"
+                                            [svgIcon]="
+                                                'heroicons_outline:ellipsis-vertical'
+                                            "
+                                        >
+                                        </mat-icon>
+                                    </button>
+
+                                    <mat-menu #mobileActionsMenu="matMenu">
+                                        <button
+                                            mat-menu-item
+                                            (click)="editManor(manor)"
+                                        >
+                                            <mat-icon
+                                                [svgIcon]="
+                                                    'heroicons_outline:pencil'
+                                                "
+                                            ></mat-icon>
+                                            <span>{{
+                                                'ADMIN.MANORS.ACTIONS.EDIT'
+                                                    | transloco
+                                            }}</span>
+                                        </button>
+                                        <button
+                                            mat-menu-item
+                                            (click)="deleteManor(manor)"
+                                        >
+                                            <mat-icon
+                                                [svgIcon]="
+                                                    'heroicons_outline:trash'
+                                                "
+                                            ></mat-icon>
+                                            <span>{{
+                                                'ADMIN.MANORS.ACTIONS.DISABLE'
+                                                    | transloco
+                                            }}</span>
+                                        </button>
+                                    </mat-menu>
+                                </div>
+                            </div>
+                        </ng-container>
+                    </div>
+                </ng-container>
+
+                <!-- No manors -->
+                <ng-template #noManors>
+                    <div
+                        class="flex flex-auto flex-col items-center justify-center bg-gray-100 dark:bg-transparent"
+                    >
+                        <mat-icon
+                            class="icon-size-24"
+                            [svgIcon]="'heroicons_outline:building-office-2'"
+                        >
+                        </mat-icon>
+                        <div
+                            class="text-secondary mt-4 text-2xl font-semibold tracking-tight"
+                        >
+                            {{ 'ADMIN.MANORS.NO_MANORS' | transloco }}
+                        </div>
+                    </div>
+                </ng-template>
+            </ng-container>
+        </div>
+    </div>
+</div>
