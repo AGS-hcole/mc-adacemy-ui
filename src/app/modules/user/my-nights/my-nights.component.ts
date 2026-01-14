@@ -1,4 +1,4 @@
-import { NgClass, NgFor, NgIf } from '@angular/common';
+import { NgFor, NgIf } from '@angular/common';
 import {
     ChangeDetectionStrategy,
     ChangeDetectorRef,
@@ -7,7 +7,7 @@ import {
     OnInit,
     ViewEncapsulation,
 } from '@angular/core';
-import { ReactiveFormsModule } from '@angular/forms';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { MatButtonModule } from '@angular/material/button';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatIconModule } from '@angular/material/icon';
@@ -15,13 +15,9 @@ import { MatSelectModule } from '@angular/material/select';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { TranslocoModule, TranslocoService } from '@jsverse/transloco';
 import { ResidenceApi } from 'app/core/api/residence.api';
-import {
-    ManorDto,
-    ResidenceStayDto,
-} from 'app/core/models/residence.models';
+import { ManorDto, ResidenceStayDto } from 'app/core/models/residence.models';
 import {
     isAfterCutoffForDate,
-    nowParis,
     startOfWeekRange,
     toYmd,
 } from 'app/core/utils/residence-date.utils';
@@ -46,6 +42,7 @@ interface DayInfo {
         NgFor,
         ReactiveFormsModule,
         MatButtonModule,
+        FormsModule,
         MatFormFieldModule,
         MatIconModule,
         MatSelectModule,
@@ -95,7 +92,8 @@ export class MyNightsPageComponent implements OnInit, OnDestroy {
                     this.manors = manors;
 
                     // If there's only one manor, pre-select it for all days
-                    const defaultManorId = manors.length === 1 ? manors[0].id : null;
+                    const defaultManorId =
+                        manors.length === 1 ? manors[0].id : null;
 
                     // Build days array
                     this.days = [];
@@ -149,7 +147,9 @@ export class MyNightsPageComponent implements OnInit, OnDestroy {
             .subscribe({
                 next: () => {
                     this._snackBar.open(
-                        this._translocoService.translate('USERS.MY_NIGHTS.SAVED'),
+                        this._translocoService.translate(
+                            'USERS.MY_NIGHTS.SAVED'
+                        ),
                         '',
                         { duration: 3000 }
                     );
@@ -196,7 +196,9 @@ export class MyNightsPageComponent implements OnInit, OnDestroy {
             .subscribe({
                 next: () => {
                     this._snackBar.open(
-                        this._translocoService.translate('USERS.MY_NIGHTS.SAVED'),
+                        this._translocoService.translate(
+                            'USERS.MY_NIGHTS.SAVED'
+                        ),
                         '',
                         { duration: 3000 }
                     );
