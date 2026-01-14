@@ -26,7 +26,8 @@
                     "/background.png",
                     "/images/**",
                     "/icons/**",
-                    "/fonts/**"
+                    "/fonts/**",
+                    "/i18n/**"
                 ]
             }
         }
