@@ -73,7 +73,8 @@ describe('residence-date.utils', () => {
             // Mock to exactly 12:00 Paris time (11:00 UTC in winter, 10:00 UTC in summer)
             Settings.now = () => new Date('2025-01-15T11:00:00Z').valueOf();
             const result = isAfterCutoffForDate('2025-01-15');
-            expect(result).toBe(false); // >= cutoff but we're checking for strict >
+            // At exactly 12:00, it should return true (>= cutoff)
+            expect(result).toBe(true);
         });
     });
 

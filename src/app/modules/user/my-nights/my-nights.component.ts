@@ -42,7 +42,6 @@ interface DayInfo {
     encapsulation: ViewEncapsulation.None,
     changeDetection: ChangeDetectionStrategy.OnPush,
     imports: [
-        NgClass,
         NgIf,
         NgFor,
         ReactiveFormsModule,
@@ -82,12 +81,13 @@ export class MyNightsPageComponent implements OnInit, OnDestroy {
         this.loading = true;
 
         const today = startOfWeekRange();
-        const fromYmd = toYmd(today);
-        const toYmd = toYmd(today.plus({ days: 13 })); // 14 days total
+        const fromDate = toYmd(today);
+        const toDate = today.plus({ days: 13 }); // 14 days total
+        const toDateStr = toYmd(toDate);
 
         forkJoin({
             manors: this._residenceApi.listManors(true),
-            stays: this._residenceApi.getMyStays(fromYmd, toYmd),
+            stays: this._residenceApi.getMyStays(fromDate, toDateStr),
         })
             .pipe(takeUntil(this._unsubscribeAll))
             .subscribe({

@@ -1,4 +1,4 @@
-import { NgIf } from '@angular/common';
+import { NgClass, NgFor, NgIf } from '@angular/common';
 import {
     ChangeDetectionStrategy,
     Component,
@@ -29,7 +29,6 @@ import { ManorDto } from 'app/core/models/residence.models';
     encapsulation: ViewEncapsulation.None,
     changeDetection: ChangeDetectionStrategy.OnPush,
     imports: [
-        NgIf,
         ReactiveFormsModule,
         MatButtonModule,
         MatFormFieldModule,
