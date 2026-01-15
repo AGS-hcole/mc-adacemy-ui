@@ -1,0 +1,307 @@
+<div
+    class="absolute inset-0 flex min-w-0 flex-col overflow-y-auto sm:overflow-hidden"
+>
+    <!-- Header -->
+    <div
+        class="bg-card relative flex flex-0 flex-col border-b px-6 py-8 sm:flex-row sm:items-center sm:justify-between md:px-8 dark:bg-transparent"
+    >
+        <!-- Title -->
+        <div class="text-4xl font-extrabold tracking-tight">
+            {{ 'TRANSPORTS.USER.TITLE' | transloco }}
+        </div>
+    </div>
+
+    <!-- Filters -->
+    <div
+        class="flex flex-0 flex-col flex-wrap items-start gap-0 bg-gray-50 p-6 pb-0 sm:flex-row sm:items-center sm:gap-4 dark:bg-gray-900"
+    >
+        <!-- From date -->
+        <mat-form-field class="w-full sm:w-40">
+            <mat-label>{{
+                'TRANSPORTS.USER.FILTERS.FROM_DATE' | transloco
+            }}</mat-label>
+            <input
+                matInput
+                [matDatepicker]="fromDatePicker"
+                [(ngModel)]="fromDate"
+            />
+            <mat-datepicker-toggle
+                matSuffix
+                [for]="fromDatePicker"
+            ></mat-datepicker-toggle>
+            <mat-datepicker #fromDatePicker></mat-datepicker>
+        </mat-form-field>
+
+        <!-- To date -->
+        <mat-form-field class="w-full sm:w-40">
+            <mat-label>{{
+                'TRANSPORTS.USER.FILTERS.TO_DATE' | transloco
+            }}</mat-label>
+            <input
+                matInput
+                [matDatepicker]="toDatePicker"
+                [(ngModel)]="toDate"
+            />
+            <mat-datepicker-toggle
+                matSuffix
+                [for]="toDatePicker"
+            ></mat-datepicker-toggle>
+            <mat-datepicker #toDatePicker></mat-datepicker>
+        </mat-form-field>
+
+        <!-- Apply button -->
+        <button mat-flat-button color="primary" (click)="applyFilter()">
+            {{ 'TRANSPORTS.USER.FILTERS.APPLY' | transloco }}
+        </button>
+
+        <!-- Reset button -->
+        <button mat-button (click)="resetFilter()">
+            {{ 'TRANSPORTS.USER.FILTERS.RESET' | transloco }}
+        </button>
+    </div>
+
+    <!-- Occurrences list -->
+    <div class="flex flex-auto border-t sm:overflow-hidden">
+        <div class="flex flex-auto flex-col sm:overflow-y-auto">
+            <!-- Loading -->
+            <div
+                *ngIf="loading"
+                class="flex flex-auto items-center justify-center"
+            >
+                <mat-spinner [diameter]="48"></mat-spinner>
+            </div>
+
+            <!-- Occurrences -->
+            <ng-container *ngIf="!loading">
+                <ng-container
+                    *ngIf="occurrences.length > 0; else noOccurrences"
+                >
+                    <div class="grid gap-6 p-6 sm:grid-cols-2 lg:grid-cols-3">
+                        @for (
+                            occurrence of occurrences;
+                            track trackByFn($index, occurrence)
+                        ) {
+                            <div
+                                class="bg-card flex flex-col gap-4 rounded-2xl border p-6 shadow transition hover:shadow-lg dark:border-gray-700"
+                            >
+                                <!-- Header -->
+                                <div class="flex items-start justify-between">
+                                    <div class="flex items-center gap-3">
+                                        <mat-icon
+                                            class="icon-size-8 text-primary"
+                                            [svgIcon]="
+                                                'heroicons_outline:truck'
+                                            "
+                                        ></mat-icon>
+                                        <div>
+                                            <div class="font-semibold">
+                                                {{
+                                                    occurrence.template?.name ||
+                                                        'Transport'
+                                                }}
+                                            </div>
+                                            <div
+                                                class="text-secondary text-sm"
+                                            >
+                                                {{
+                                                    occurrence.departureAt
+                                                        | localizedDate
+                                                            : 'fullDate'
+                                                }}
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <!-- Route -->
+                                <div class="flex items-center gap-2">
+                                    <span class="font-medium">{{
+                                        occurrence.template?.fromLabel
+                                    }}</span>
+                                    <mat-icon
+                                        class="icon-size-5 text-primary"
+                                        [svgIcon]="
+                                            'heroicons_solid:arrow-right'
+                                        "
+                                    ></mat-icon>
+                                    <span class="font-medium">{{
+                                        occurrence.template?.toLabel
+                                    }}</span>
+                                </div>
+
+                                <!-- Departure time -->
+                                <div class="flex items-center gap-2 text-sm">
+                                    <mat-icon
+                                        class="icon-size-5 text-secondary"
+                                        [svgIcon]="'heroicons_outline:clock'"
+                                    ></mat-icon>
+                                    <span>{{
+                                        occurrence.departureAt
+                                            | localizedDate: 'timeOnly'
+                                    }}</span>
+                                </div>
+
+                                <!-- Capacity info -->
+                                <div class="flex items-center gap-2">
+                                    <mat-icon
+                                        class="icon-size-5 text-secondary"
+                                        [svgIcon]="
+                                            'heroicons_outline:user-group'
+                                        "
+                                    ></mat-icon>
+                                    <span class="text-sm">
+                                        {{ occurrence.bookedSeats }} /
+                                        {{ occurrence.capacitySnapshot }}
+                                        {{
+                                            'TRANSPORTS.USER.SEATS_BOOKED'
+                                                | transloco
+                                        }}
+                                    </span>
+                                    <span
+                                        *ngIf="
+                                            occurrence.allowOverbookSnapshot
+                                        "
+                                        class="ml-1 inline-flex items-center rounded-full bg-amber-100 px-2 py-0.5 text-xs font-medium text-amber-800 dark:bg-amber-800 dark:text-amber-100"
+                                        [matTooltip]="
+                                            'TRANSPORTS.USER.OVERBOOK_ALLOWED'
+                                                | transloco
+                                        "
+                                    >
+                                        {{
+                                            'TRANSPORTS.USER.OVERBOOK'
+                                                | transloco
+                                        }}
+                                    </span>
+                                </div>
+
+                                <!-- Booking closed badge -->
+                                <div
+                                    *ngIf="isBookingClosed(occurrence)"
+                                    class="rounded-lg bg-red-50 p-3 text-sm text-red-800 dark:bg-red-900/20 dark:text-red-200"
+                                >
+                                    <div class="flex items-center gap-2">
+                                        <mat-icon
+                                            class="icon-size-5"
+                                            [svgIcon]="
+                                                'heroicons_outline:lock-closed'
+                                            "
+                                        ></mat-icon>
+                                        <span class="font-medium">{{
+                                            'TRANSPORTS.USER.BOOKING_CLOSED'
+                                                | transloco
+                                        }}</span>
+                                    </div>
+                                </div>
+
+                                <!-- Fully booked badge -->
+                                <div
+                                    *ngIf="
+                                        !isBookingClosed(occurrence) &&
+                                        isFullyBooked(occurrence) &&
+                                        !hasBooking(occurrence)
+                                    "
+                                    class="rounded-lg bg-amber-50 p-3 text-sm text-amber-800 dark:bg-amber-900/20 dark:text-amber-200"
+                                >
+                                    <div class="flex items-center gap-2">
+                                        <mat-icon
+                                            class="icon-size-5"
+                                            [svgIcon]="
+                                                'heroicons_outline:exclamation-triangle'
+                                            "
+                                        ></mat-icon>
+                                        <span class="font-medium">{{
+                                            'TRANSPORTS.USER.FULLY_BOOKED'
+                                                | transloco
+                                        }}</span>
+                                    </div>
+                                </div>
+
+                                <!-- Already booked badge -->
+                                <div
+                                    *ngIf="hasBooking(occurrence)"
+                                    class="rounded-lg bg-green-50 p-3 text-sm text-green-800 dark:bg-green-900/20 dark:text-green-200"
+                                >
+                                    <div class="flex items-center gap-2">
+                                        <mat-icon
+                                            class="icon-size-5"
+                                            [svgIcon]="
+                                                'heroicons_outline:check-circle'
+                                            "
+                                        ></mat-icon>
+                                        <span class="font-medium">{{
+                                            'TRANSPORTS.USER.ALREADY_BOOKED'
+                                                | transloco
+                                        }}</span>
+                                    </div>
+                                </div>
+
+                                <!-- Actions -->
+                                <div class="flex gap-2 border-t pt-4">
+                                    <!-- Book button -->
+                                    <button
+                                        *ngIf="!hasBooking(occurrence)"
+                                        mat-flat-button
+                                        color="primary"
+                                        class="flex-1"
+                                        [disabled]="
+                                            isBookingClosed(occurrence) ||
+                                            isFullyBooked(occurrence)
+                                        "
+                                        (click)="bookOccurrence(occurrence)"
+                                    >
+                                        <mat-icon
+                                            class="icon-size-5"
+                                            [svgIcon]="'heroicons_outline:plus'"
+                                        ></mat-icon>
+                                        <span class="ml-2">{{
+                                            'TRANSPORTS.USER.BOOK' | transloco
+                                        }}</span>
+                                    </button>
+
+                                    <!-- Cancel button -->
+                                    <button
+                                        *ngIf="hasBooking(occurrence)"
+                                        mat-stroked-button
+                                        color="warn"
+                                        class="flex-1"
+                                        (click)="cancelBooking(occurrence)"
+                                    >
+                                        <mat-icon
+                                            class="icon-size-5"
+                                            [svgIcon]="
+                                                'heroicons_outline:x-circle'
+                                            "
+                                        ></mat-icon>
+                                        <span class="ml-2">{{
+                                            'TRANSPORTS.USER.CANCEL'
+                                                | transloco
+                                        }}</span>
+                                    </button>
+                                </div>
+                            </div>
+                        }
+                    </div>
+                </ng-container>
+
+                <!-- No occurrences -->
+                <ng-template #noOccurrences>
+                    <div
+                        class="flex flex-auto flex-col items-center justify-center bg-gray-100 dark:bg-transparent"
+                    >
+                        <mat-icon
+                            class="icon-size-24"
+                            [svgIcon]="'heroicons_outline:truck'"
+                        ></mat-icon>
+                        <div
+                            class="text-secondary mt-4 text-2xl font-semibold tracking-tight"
+                        >
+                            {{
+                                'TRANSPORTS.USER.NO_OCCURRENCES' | transloco
+                            }}
+                        </div>
+                    </div>
+                </ng-template>
+            </ng-container>
+        </div>
+    </div>
+</div>
