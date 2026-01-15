@@ -1,4 +1,4 @@
-import { NgClass, NgForOf, NgIf } from '@angular/common';
+import { NgIf } from '@angular/common';
 import {
     ChangeDetectionStrategy,
     ChangeDetectorRef,
@@ -31,12 +31,10 @@ import { Subject, takeUntil } from 'rxjs';
     encapsulation: ViewEncapsulation.None,
     changeDetection: ChangeDetectionStrategy.OnPush,
     imports: [
-        NgClass,
         FormsModule,
         ReactiveFormsModule,
         MatButtonModule,
         NgIf,
-        NgForOf,
         MatFormFieldModule,
         MatIconModule,
         MatInputModule,

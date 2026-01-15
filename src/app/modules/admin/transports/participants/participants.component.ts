@@ -1,4 +1,4 @@
-import { AsyncPipe, DatePipe, NgForOf, NgIf } from '@angular/common';
+import { NgIf } from '@angular/common';
 import {
     ChangeDetectionStrategy,
     ChangeDetectorRef,
@@ -39,10 +39,7 @@ import { AdminTransportTemplateComponent } from '../view/view.component';
     encapsulation: ViewEncapsulation.None,
     changeDetection: ChangeDetectionStrategy.OnPush,
     imports: [
-        AsyncPipe,
         NgIf,
-        NgForOf,
-        DatePipe,
         FormsModule,
         ReactiveFormsModule,
         MatButtonModule,
@@ -84,7 +81,7 @@ export class AdminTransportTemplateParticipantsComponent
         private _fuseConfirmationService: FuseConfirmationService,
         private _dialog: MatDialog,
         private _translocoService: TranslocoService,
-        private _transportTemplateViewComponent: AdminTransportTemplateComponent
+        public _transportTemplateViewComponent: AdminTransportTemplateComponent
     ) {}
 
     // -----------------------------------------------------------------------------------------------------

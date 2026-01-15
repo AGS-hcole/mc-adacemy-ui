@@ -37,7 +37,6 @@ import { panels } from './view.data';
         RouterOutlet,
         MatSidenavModule,
         MatIconModule,
-        DatePipe,
         MatButtonModule,
         TranslocoModule,
         RouterLink,

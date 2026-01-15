@@ -24,7 +24,6 @@ import { MatIconModule } from '@angular/material/icon';
 import { MatInputModule } from '@angular/material/input';
 import { MatSelectModule } from '@angular/material/select';
 import { ActivatedRoute, Router, RouterLink } from '@angular/router';
-import { FuseAlertComponent } from '@fuse/components/alert';
 import { TranslocoModule } from '@jsverse/transloco';
 import {
     CreateTransportTemplateRequest,
@@ -51,7 +50,6 @@ import { AdminTransportTemplateComponent } from '../view/view.component';
         RouterLink,
         CommonModule,
         MatFormFieldModule,
-        FuseAlertComponent,
         MatIconModule,
         MatInputModule,
         MatSelectModule,
