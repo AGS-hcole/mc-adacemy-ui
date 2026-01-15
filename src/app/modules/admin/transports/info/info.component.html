@@ -114,15 +114,24 @@
                     </div>
                     <div class="flex flex-wrap gap-2">
                         @for (day of allDaysOfWeek; track day) {
-                            <button
-                                type="button"
-                                mat-stroked-button
-                                [class.mat-flat-button]="isDaySelected(day)"
-                                [color]="isDaySelected(day) ? 'primary' : ''"
-                                (click)="toggleDay(day)"
-                            >
-                                {{ 'TRANSPORTS.DAYS.' + day + '_SHORT' | transloco }}
-                            </button>
+                            @if (isDaySelected(day)) {
+                                <button
+                                    type="button"
+                                    mat-flat-button
+                                    color="primary"
+                                    (click)="toggleDay(day)"
+                                >
+                                    {{ 'TRANSPORTS.DAYS.' + day + '_SHORT' | transloco }}
+                                </button>
+                            } @else {
+                                <button
+                                    type="button"
+                                    mat-stroked-button
+                                    (click)="toggleDay(day)"
+                                >
+                                    {{ 'TRANSPORTS.DAYS.' + day + '_SHORT' | transloco }}
+                                </button>
+                            }
                         }
                     </div>
                     <mat-error
