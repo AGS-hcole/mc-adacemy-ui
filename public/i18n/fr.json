@@ -75,6 +75,21 @@
             "TITLE": "Supprimer l'événement",
             "MESSAGE": "Êtes-vous sûr de vouloir supprimer \"{{name}}\" ? Cette action ne peut pas être annulée.",
             "CONFIRM": "Supprimer"
+        },
+        "DISABLE_TEMPLATE": {
+            "TITLE": "Désactiver le modèle de transport",
+            "MESSAGE": "Êtes-vous sûr de vouloir désactiver ce modèle de transport ? Il ne générera plus d'occurrences.",
+            "CONFIRM": "Désactiver"
+        },
+        "CANCEL_OCCURRENCE": {
+            "TITLE": "Annuler l'occurrence de transport",
+            "MESSAGE": "Êtes-vous sûr de vouloir annuler cette occurrence de transport ? Toutes les réservations seront affectées.",
+            "CONFIRM": "Annuler l'occurrence"
+        },
+        "CANCEL_BOOKING": {
+            "TITLE": "Annuler la réservation",
+            "MESSAGE": "Êtes-vous sûr de vouloir annuler cette réservation ?",
+            "CONFIRM": "Annuler la réservation"
         }
     },
     "AUTH": {
@@ -153,6 +168,9 @@
             },
             "TOURNAMENTS": {
                 "TITLE": "Tournois"
+            },
+            "TRANSPORTS": {
+                "TITLE": "Transports"
             },
             "EVENTS": {
                 "TITLE": "Événements"
@@ -949,6 +967,9 @@
             "TOURNAMENTS": {
                 "TITLE": "Tournois"
             },
+            "TRANSPORTS": {
+                "TITLE": "Transports"
+            },
             "EVENTS": {
                 "TITLE": "Événements"
             },
@@ -965,12 +986,157 @@
             "SESSIONS": {
                 "TITLE": "Mes sessions"
             },
+            "TRANSPORTS": {
+                "TITLE": "Mes transports"
+            },
             "TOURNAMENTS": {
                 "TITLE": "Mes tournois"
             },
             "MY_NIGHTS": {
                 "TITLE": "Mes nuits"
             }
+        }
+    },
+    "TRANSPORTS": {
+        "ADMIN": {
+            "TITLE": "Transports",
+            "CREATE_TEMPLATE": "Créer un modèle",
+            "NO_TEMPLATES": "Aucun modèle de transport trouvé",
+            "EVERY_DAY": "Tous les jours",
+            "OVERBOOK": "SR",
+            "OVERBOOK_ALLOWED": "Surréservation autorisée",
+            "CAPACITY": "Capacité",
+            "TABLE": {
+                "NAME": "Nom",
+                "ROUTE": "Trajet",
+                "SCHEDULE": "Horaire",
+                "CAPACITY": "Capacité",
+                "ACTIVE": "Actif",
+                "ACTIONS": "Actions"
+            },
+            "FILTERS": {
+                "SEARCH": "Rechercher",
+                "SEARCH_PLACEHOLDER": "Rechercher des modèles...",
+                "STATUS": "Statut",
+                "ALL_STATUS": "Tous les statuts"
+            },
+            "ACTIONS": {
+                "MORE": "Plus d'actions",
+                "VIEW_DETAILS": "Voir les détails",
+                "EDIT": "Modifier",
+                "DISABLE": "Désactiver",
+                "GENERATE_OCCURRENCES": "Générer des occurrences"
+            },
+            "INFO": {
+                "TITLE": "Informations du modèle"
+            },
+            "FORM": {
+                "NAME": "Nom du modèle",
+                "NAME_PLACEHOLDER": "ex: Transport scolaire matinal",
+                "NAME_REQUIRED": "Le nom du modèle est requis",
+                "DESCRIPTION": "Description",
+                "DESCRIPTION_PLACEHOLDER": "Description facultative",
+                "FROM": "Départ",
+                "FROM_PLACEHOLDER": "ex: École",
+                "FROM_REQUIRED": "Le lieu de départ est requis",
+                "TO": "Arrivée",
+                "TO_PLACEHOLDER": "ex: Centre sportif",
+                "TO_REQUIRED": "Le lieu d'arrivée est requis",
+                "DAYS_OF_WEEK": "Jours de la semaine",
+                "DAYS_OF_WEEK_REQUIRED": "Veuillez sélectionner au moins un jour",
+                "TIME_OF_DAY": "Heure de départ",
+                "TIME_OF_DAY_REQUIRED": "L'heure de départ est requise",
+                "CAPACITY": "Capacité",
+                "CAPACITY_REQUIRED": "La capacité est requise",
+                "CAPACITY_MIN": "La capacité doit être au moins de 1",
+                "ALLOW_OVERBOOK": "Autoriser la surréservation",
+                "ALLOW_OVERBOOK_HINT": "Autoriser les réservations au-delà de la capacité",
+                "IS_ACTIVE": "Actif",
+                "IS_ACTIVE_HINT": "Seuls les modèles actifs peuvent générer des occurrences",
+                "CANCEL": "Annuler",
+                "SAVE": "Enregistrer",
+                "CREATE": "Créer le modèle"
+            },
+            "PARTICIPANTS": {
+                "TITLE": "Occurrences et participants",
+                "FILTERS": "Filtres de plage de dates",
+                "FROM_DATE": "Date de début",
+                "TO_DATE": "Date de fin",
+                "APPLY": "Appliquer",
+                "RESET": "Réinitialiser",
+                "SELECT_OCCURRENCE": "Sélectionner une occurrence",
+                "NO_OCCURRENCE": "Sélectionner une occurrence...",
+                "NO_OCCURRENCES": "Aucune occurrence trouvée pour cette période",
+                "BOOKED_SEATS": "Places réservées",
+                "CANCEL_OCCURRENCE": "Annuler l'occurrence",
+                "OCCURRENCE_CANCELLED": "Cette occurrence a été annulée",
+                "BOOKINGS_LIST": "Réservations",
+                "PARTICIPANT": "Participant",
+                "EMAIL": "Email",
+                "BOOKED_AT": "Réservé le",
+                "STATUS": "Statut",
+                "ACTIONS": "Actions",
+                "CANCEL_BOOKING": "Annuler la réservation",
+                "NO_BOOKINGS": "Aucune réservation pour cette occurrence"
+            },
+            "TABS": {
+                "INFO": "Informations",
+                "INFO_DESCRIPTION": "Détails et paramètres du modèle",
+                "PARTICIPANTS": "Occurrences",
+                "PARTICIPANTS_DESCRIPTION": "Voir et gérer les occurrences et les réservations"
+            }
+        },
+        "USER": {
+            "TITLE": "Réservations de transport",
+            "SEATS_BOOKED": "places réservées",
+            "OVERBOOK": "SR",
+            "OVERBOOK_ALLOWED": "Surréservation autorisée",
+            "BOOKING_CLOSED": "Réservation fermée",
+            "FULLY_BOOKED": "Complet",
+            "ALREADY_BOOKED": "Vous avez une réservation",
+            "BOOK": "Réserver",
+            "CANCEL": "Annuler la réservation",
+            "NO_OCCURRENCES": "Aucun transport disponible pour cette période",
+            "FILTERS": {
+                "FROM_DATE": "Date de début",
+                "TO_DATE": "Date de fin",
+                "APPLY": "Appliquer",
+                "RESET": "Réinitialiser"
+            }
+        },
+        "VIEW": {
+            "BREADCRUMB": {
+                "BACK": "Retour aux modèles"
+            }
+        },
+        "STATUS": {
+            "ACTIVE": "Actif",
+            "INACTIVE": "Inactif"
+        },
+        "OCCURRENCE_STATUS": {
+            "SCHEDULED": "Programmé",
+            "CANCELLED": "Annulé",
+            "COMPLETED": "Terminé"
+        },
+        "BOOKING_STATUS": {
+            "CONFIRMED": "Confirmé",
+            "CANCELLED": "Annulé"
+        },
+        "DAYS": {
+            "MONDAY": "Lundi",
+            "MONDAY_SHORT": "Lun",
+            "TUESDAY": "Mardi",
+            "TUESDAY_SHORT": "Mar",
+            "WEDNESDAY": "Mercredi",
+            "WEDNESDAY_SHORT": "Mer",
+            "THURSDAY": "Jeudi",
+            "THURSDAY_SHORT": "Jeu",
+            "FRIDAY": "Vendredi",
+            "FRIDAY_SHORT": "Ven",
+            "SATURDAY": "Samedi",
+            "SATURDAY_SHORT": "Sam",
+            "SUNDAY": "Dimanche",
+            "SUNDAY_SHORT": "Dim"
         }
     }
 }
