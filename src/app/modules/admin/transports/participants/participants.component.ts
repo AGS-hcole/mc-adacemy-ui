@@ -37,6 +37,7 @@ import { AdminTransportTemplateComponent } from '../view/view.component';
     selector: 'admin-transport-template-participants',
     templateUrl: './participants.component.html',
     encapsulation: ViewEncapsulation.None,
+    host: { class: 'block w-full h-full' },
     changeDetection: ChangeDetectionStrategy.OnPush,
     imports: [
         NgIf,
@@ -158,7 +159,10 @@ export class AdminTransportTemplateParticipantsComponent
      */
     resetFilter(): void {
         this.fromDate = DateTime.now().startOf('day').toJSDate();
-        this.toDate = DateTime.now().plus({ days: 30 }).startOf('day').toJSDate();
+        this.toDate = DateTime.now()
+            .plus({ days: 30 })
+            .startOf('day')
+            .toJSDate();
         this.applyFilter();
     }
 
