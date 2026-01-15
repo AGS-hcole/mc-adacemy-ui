@@ -21,9 +21,11 @@ import {
     TransportOccurrenceStatus,
 } from 'app/core/transports/transport.types';
 import { TransportsService } from 'app/core/transports/transports.service';
+import { UserService } from 'app/core/user/user.service';
+import { User } from 'app/core/user/user.types';
 import { LocalizedDatePipe } from 'app/shared/pipes/localized-date.pipe';
 import { DateTime } from 'luxon';
-import { Subject, takeUntil } from 'rxjs';
+import { combineLatest, Subject, takeUntil } from 'rxjs';
 
 @Component({
     selector: 'user-transports-list',
@@ -47,6 +49,7 @@ import { Subject, takeUntil } from 'rxjs';
 })
 export class UserTransportsListComponent implements OnInit, OnDestroy {
     occurrences: TransportOccurrence[] = [];
+    user: User;
     loading: boolean = false;
 
     // Date range filters (default: today -> +14 days)
@@ -62,7 +65,8 @@ export class UserTransportsListComponent implements OnInit, OnDestroy {
      */
     constructor(
         private _changeDetectorRef: ChangeDetectorRef,
-        private _transportsService: TransportsService
+        private _transportsService: TransportsService,
+        private _userService: UserService
     ) {}
 
     // -----------------------------------------------------------------------------------------------------
@@ -98,14 +102,18 @@ export class UserTransportsListComponent implements OnInit, OnDestroy {
         const from = DateTime.fromJSDate(this.fromDate).toISODate();
         const to = DateTime.fromJSDate(this.toDate).toISODate();
 
-        this._transportsService
-            .getOccurrences({
+        combineLatest([
+            this._userService.user$,
+            this._transportsService.getOccurrences({
                 from,
                 to,
                 status: TransportOccurrenceStatus.SCHEDULED,
             })
+        ])
+            .pipe(takeUntil(this._unsubscribeAll))
             .subscribe({
-                next: (occurrences) => {
+                next: ([user, occurrences]) => {
+                    this.user = user;
                     this.occurrences = occurrences;
                     this.loading = false;
                     this._changeDetectorRef.markForCheck();
@@ -152,12 +160,13 @@ export class UserTransportsListComponent implements OnInit, OnDestroy {
      * Cancel user's booking
      */
     cancelBooking(occurrence: TransportOccurrence): void {
-        if (!occurrence.myBooking) {
+        const userBooking = this.getUserBooking(occurrence);
+        if (!userBooking) {
             return;
         }
 
         this._transportsService
-            .cancelBooking(occurrence.myBooking.id)
+            .cancelBooking(userBooking.id)
             .subscribe(() => {
                 this.loadOccurrences();
             });
@@ -187,10 +196,22 @@ export class UserTransportsListComponent implements OnInit, OnDestroy {
     }
 
     /**
+     * Get current user's booking for an occurrence
+     */
+    getUserBooking(occurrence: TransportOccurrence) {
+        if (!this.user || !occurrence.bookings) {
+            return null;
+        }
+        return occurrence.bookings.find(
+            booking => booking.userId === this.user.id && booking.status === 'CONFIRMED'
+        );
+    }
+
+    /**
      * Check if user already has a booking
      */
     hasBooking(occurrence: TransportOccurrence): boolean {
-        return !!occurrence.myBooking && occurrence.myBooking.status === 'CONFIRMED';
+        return !!this.getUserBooking(occurrence);
     }
 
     /**

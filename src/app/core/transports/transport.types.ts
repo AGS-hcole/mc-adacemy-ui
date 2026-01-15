@@ -99,7 +99,6 @@ export interface TransportOccurrence {
     capacitySnapshot: number;
     allowOverbookSnapshot: boolean;
     availableSeats: number;
-    myBooking?: TransportBooking | null;
     bookings?: TransportBooking[];
     cancellationReason?: string | null;
     createdAt: Date | string;
