@@ -53,6 +53,13 @@ export default [
         },
     },
     {
+        path: 'new',
+        component: AdminTransportTemplateInfoComponent,
+        resolve: {
+            template: () => inject(TransportsService).resetTemplate(),
+        },
+    },
+    {
         path: ':templateId',
         component: AdminTransportTemplateComponent,
         resolve: {
