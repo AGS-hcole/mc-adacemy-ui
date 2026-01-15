@@ -1,0 +1,234 @@
+<div class="absolute inset-0 flex min-w-0 flex-col overflow-hidden">
+    <!-- Header -->
+    <div
+        class="bg-card relative flex flex-0 flex-col border-b px-6 py-8 sm:flex-row sm:items-center sm:justify-between md:px-8 dark:bg-transparent"
+    >
+        <!-- Title -->
+        <div>
+            <div class="flex items-center">
+                @if (!template) {
+                    <button mat-icon-button [routerLink]="['../']">
+                        <mat-icon
+                            [svgIcon]="'heroicons_outline:arrow-left'"
+                        ></mat-icon>
+                    </button>
+                } @else {
+                    <button
+                        class="-ml-2 lg:hidden"
+                        mat-icon-button
+                        (click)="_transportTemplateViewComponent?.drawer.toggle()"
+                    >
+                        <mat-icon
+                            [svgIcon]="'heroicons_outline:bars-3'"
+                        ></mat-icon>
+                    </button>
+                }
+                <div class="ml-2 text-4xl font-extrabold tracking-tight">
+                    {{
+                        (!template
+                            ? 'TRANSPORTS.ADMIN.CREATE_TEMPLATE'
+                            : 'TRANSPORTS.ADMIN.INFO.TITLE'
+                        ) | transloco
+                    }}
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Main content -->
+    <div class="flex flex-auto overflow-y-auto">
+        <div class="flex w-full max-w-3xl flex-col p-6 md:p-8">
+            <form [formGroup]="templateForm" class="flex flex-col">
+                <!-- Name -->
+                <mat-form-field class="w-full">
+                    <mat-label>{{
+                        'TRANSPORTS.ADMIN.FORM.NAME' | transloco
+                    }}</mat-label>
+                    <input
+                        matInput
+                        formControlName="name"
+                        [placeholder]="'TRANSPORTS.ADMIN.FORM.NAME_PLACEHOLDER' | transloco"
+                    />
+                    <mat-error
+                        *ngIf="templateForm.get('name').hasError('required')"
+                    >
+                        {{ 'TRANSPORTS.ADMIN.FORM.NAME_REQUIRED' | transloco }}
+                    </mat-error>
+                </mat-form-field>
+
+                <!-- Description -->
+                <mat-form-field class="mt-4 w-full">
+                    <mat-label>{{
+                        'TRANSPORTS.ADMIN.FORM.DESCRIPTION' | transloco
+                    }}</mat-label>
+                    <textarea
+                        matInput
+                        formControlName="description"
+                        rows="3"
+                        [placeholder]="'TRANSPORTS.ADMIN.FORM.DESCRIPTION_PLACEHOLDER' | transloco"
+                    ></textarea>
+                </mat-form-field>
+
+                <!-- From / To -->
+                <div class="mt-4 flex gap-4">
+                    <mat-form-field class="flex-1">
+                        <mat-label>{{
+                            'TRANSPORTS.ADMIN.FORM.FROM' | transloco
+                        }}</mat-label>
+                        <input
+                            matInput
+                            formControlName="fromLabel"
+                            [placeholder]="'TRANSPORTS.ADMIN.FORM.FROM_PLACEHOLDER' | transloco"
+                        />
+                        <mat-error
+                            *ngIf="templateForm.get('fromLabel').hasError('required')"
+                        >
+                            {{
+                                'TRANSPORTS.ADMIN.FORM.FROM_REQUIRED' | transloco
+                            }}
+                        </mat-error>
+                    </mat-form-field>
+
+                    <mat-form-field class="flex-1">
+                        <mat-label>{{
+                            'TRANSPORTS.ADMIN.FORM.TO' | transloco
+                        }}</mat-label>
+                        <input
+                            matInput
+                            formControlName="toLabel"
+                            [placeholder]="'TRANSPORTS.ADMIN.FORM.TO_PLACEHOLDER' | transloco"
+                        />
+                        <mat-error
+                            *ngIf="templateForm.get('toLabel').hasError('required')"
+                        >
+                            {{ 'TRANSPORTS.ADMIN.FORM.TO_REQUIRED' | transloco }}
+                        </mat-error>
+                    </mat-form-field>
+                </div>
+
+                <!-- Days of week -->
+                <div class="mt-6">
+                    <div class="mb-2 text-sm font-medium">
+                        {{ 'TRANSPORTS.ADMIN.FORM.DAYS_OF_WEEK' | transloco }}
+                        <span class="text-red-500">*</span>
+                    </div>
+                    <div class="flex flex-wrap gap-2">
+                        @for (day of allDaysOfWeek; track day) {
+                            <button
+                                type="button"
+                                mat-stroked-button
+                                [class.mat-flat-button]="isDaySelected(day)"
+                                [color]="isDaySelected(day) ? 'primary' : ''"
+                                (click)="toggleDay(day)"
+                            >
+                                {{ 'TRANSPORTS.DAYS.' + day + '_SHORT' | transloco }}
+                            </button>
+                        }
+                    </div>
+                    <mat-error
+                        class="mt-1 text-sm"
+                        *ngIf="
+                            templateForm.get('daysOfWeek').touched &&
+                            templateForm.get('daysOfWeek').hasError('required')
+                        "
+                    >
+                        {{
+                            'TRANSPORTS.ADMIN.FORM.DAYS_OF_WEEK_REQUIRED'
+                                | transloco
+                        }}
+                    </mat-error>
+                </div>
+
+                <!-- Time of day -->
+                <mat-form-field class="mt-6 w-full">
+                    <mat-label>{{
+                        'TRANSPORTS.ADMIN.FORM.TIME_OF_DAY' | transloco
+                    }}</mat-label>
+                    <input
+                        matInput
+                        type="time"
+                        formControlName="timeOfDay"
+                    />
+                    <mat-error
+                        *ngIf="templateForm.get('timeOfDay').hasError('required')"
+                    >
+                        {{
+                            'TRANSPORTS.ADMIN.FORM.TIME_OF_DAY_REQUIRED'
+                                | transloco
+                        }}
+                    </mat-error>
+                </mat-form-field>
+
+                <!-- Capacity -->
+                <mat-form-field class="mt-4 w-full">
+                    <mat-label>{{
+                        'TRANSPORTS.ADMIN.FORM.CAPACITY' | transloco
+                    }}</mat-label>
+                    <input
+                        matInput
+                        type="number"
+                        formControlName="capacity"
+                        min="1"
+                    />
+                    <mat-error
+                        *ngIf="templateForm.get('capacity').hasError('required')"
+                    >
+                        {{
+                            'TRANSPORTS.ADMIN.FORM.CAPACITY_REQUIRED' | transloco
+                        }}
+                    </mat-error>
+                    <mat-error
+                        *ngIf="templateForm.get('capacity').hasError('min')"
+                    >
+                        {{ 'TRANSPORTS.ADMIN.FORM.CAPACITY_MIN' | transloco }}
+                    </mat-error>
+                </mat-form-field>
+
+                <!-- Allow overbook -->
+                <div class="mt-4">
+                    <mat-checkbox formControlName="allowOverbook">
+                        {{ 'TRANSPORTS.ADMIN.FORM.ALLOW_OVERBOOK' | transloco }}
+                    </mat-checkbox>
+                    <div class="text-secondary ml-8 mt-1 text-sm">
+                        {{
+                            'TRANSPORTS.ADMIN.FORM.ALLOW_OVERBOOK_HINT'
+                                | transloco
+                        }}
+                    </div>
+                </div>
+
+                <!-- Is active -->
+                <div class="mt-4">
+                    <mat-checkbox formControlName="isActive">
+                        {{ 'TRANSPORTS.ADMIN.FORM.IS_ACTIVE' | transloco }}
+                    </mat-checkbox>
+                    <div class="text-secondary ml-8 mt-1 text-sm">
+                        {{ 'TRANSPORTS.ADMIN.FORM.IS_ACTIVE_HINT' | transloco }}
+                    </div>
+                </div>
+
+                <!-- Actions -->
+                <div
+                    class="mt-8 flex items-center justify-end gap-4 border-t pt-6"
+                >
+                    <button mat-button type="button" (click)="cancel()">
+                        {{ 'TRANSPORTS.ADMIN.FORM.CANCEL' | transloco }}
+                    </button>
+                    <button
+                        mat-flat-button
+                        color="primary"
+                        [disabled]="templateForm.invalid"
+                        (click)="saveTemplate()"
+                    >
+                        {{
+                            (editMode
+                                ? 'TRANSPORTS.ADMIN.FORM.SAVE'
+                                : 'TRANSPORTS.ADMIN.FORM.CREATE'
+                            ) | transloco
+                        }}
+                    </button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>

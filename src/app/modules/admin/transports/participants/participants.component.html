@@ -1,0 +1,460 @@
+<div class="absolute inset-0 flex min-w-0 flex-col overflow-hidden">
+    <!-- Header -->
+    <div
+        class="bg-card relative flex flex-0 flex-col border-b px-6 py-8 sm:flex-row sm:items-center sm:justify-between md:px-8 dark:bg-transparent"
+    >
+        <!-- Title -->
+        <div>
+            <div class="flex items-center">
+                <button
+                    class="-ml-2 lg:hidden"
+                    mat-icon-button
+                    (click)="_transportTemplateViewComponent?.drawer.toggle()"
+                >
+                    <mat-icon [svgIcon]="'heroicons_outline:bars-3'"></mat-icon>
+                </button>
+                <div class="ml-2 text-4xl font-extrabold tracking-tight">
+                    {{ 'TRANSPORTS.ADMIN.PARTICIPANTS.TITLE' | transloco }}
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Main content -->
+    <div class="flex flex-auto flex-col overflow-y-auto">
+        <div class="flex w-full flex-col p-6 md:p-8">
+            <!-- Date range filters -->
+            <div
+                class="mb-6 flex flex-col gap-4 rounded-lg bg-gray-50 p-4 dark:bg-gray-900"
+            >
+                <div class="text-lg font-semibold">
+                    {{ 'TRANSPORTS.ADMIN.PARTICIPANTS.FILTERS' | transloco }}
+                </div>
+
+                <div class="flex flex-wrap items-end gap-4">
+                    <!-- From date -->
+                    <mat-form-field class="w-full sm:w-40">
+                        <mat-label>{{
+                            'TRANSPORTS.ADMIN.PARTICIPANTS.FROM_DATE' | transloco
+                        }}</mat-label>
+                        <input
+                            matInput
+                            [matDatepicker]="fromDatePicker"
+                            [(ngModel)]="fromDate"
+                        />
+                        <mat-datepicker-toggle
+                            matSuffix
+                            [for]="fromDatePicker"
+                        ></mat-datepicker-toggle>
+                        <mat-datepicker #fromDatePicker></mat-datepicker>
+                    </mat-form-field>
+
+                    <!-- To date -->
+                    <mat-form-field class="w-full sm:w-40">
+                        <mat-label>{{
+                            'TRANSPORTS.ADMIN.PARTICIPANTS.TO_DATE' | transloco
+                        }}</mat-label>
+                        <input
+                            matInput
+                            [matDatepicker]="toDatePicker"
+                            [(ngModel)]="toDate"
+                        />
+                        <mat-datepicker-toggle
+                            matSuffix
+                            [for]="toDatePicker"
+                        ></mat-datepicker-toggle>
+                        <mat-datepicker #toDatePicker></mat-datepicker>
+                    </mat-form-field>
+
+                    <!-- Apply button -->
+                    <button
+                        mat-flat-button
+                        color="primary"
+                        (click)="applyFilter()"
+                    >
+                        {{ 'TRANSPORTS.ADMIN.PARTICIPANTS.APPLY' | transloco }}
+                    </button>
+
+                    <!-- Reset button -->
+                    <button mat-button (click)="resetFilter()">
+                        {{ 'TRANSPORTS.ADMIN.PARTICIPANTS.RESET' | transloco }}
+                    </button>
+                </div>
+            </div>
+
+            <!-- Occurrence selector -->
+            <mat-form-field class="w-full">
+                <mat-label>{{
+                    'TRANSPORTS.ADMIN.PARTICIPANTS.SELECT_OCCURRENCE'
+                        | transloco
+                }}</mat-label>
+                <mat-select
+                    [(ngModel)]="selectedOccurrenceId"
+                    (selectionChange)="onOccurrenceSelected()"
+                >
+                    <mat-option [value]="null">{{
+                        'TRANSPORTS.ADMIN.PARTICIPANTS.NO_OCCURRENCE'
+                            | transloco
+                    }}</mat-option>
+                    @for (occurrence of occurrences; track occurrence.id) {
+                        <mat-option [value]="occurrence.id">
+                            <span>{{ getOccurrenceLabel(occurrence) }}</span>
+                            <span
+                                class="ml-2 inline-flex items-center rounded-full px-2 py-0.5 text-xs font-medium"
+                                [ngClass]="{
+                                    'bg-green-100 text-green-800':
+                                        occurrence.status ===
+                                        TransportOccurrenceStatus.SCHEDULED,
+                                    'bg-red-100 text-red-800':
+                                        occurrence.status ===
+                                        TransportOccurrenceStatus.CANCELLED,
+                                    'bg-gray-100 text-gray-800':
+                                        occurrence.status ===
+                                        TransportOccurrenceStatus.COMPLETED,
+                                }"
+                            >
+                                {{
+                                    'TRANSPORTS.OCCURRENCE_STATUS.' +
+                                        occurrence.status | transloco
+                                }}
+                            </span>
+                        </mat-option>
+                    }
+                </mat-select>
+            </mat-form-field>
+
+            <!-- No occurrences message -->
+            <div
+                *ngIf="occurrences.length === 0"
+                class="mt-8 flex flex-col items-center justify-center"
+            >
+                <mat-icon
+                    class="icon-size-24 text-secondary"
+                    [svgIcon]="'heroicons_outline:calendar-days'"
+                ></mat-icon>
+                <div class="text-secondary mt-4 text-xl font-semibold">
+                    {{
+                        'TRANSPORTS.ADMIN.PARTICIPANTS.NO_OCCURRENCES'
+                            | transloco
+                    }}
+                </div>
+            </div>
+
+            <!-- Selected occurrence details -->
+            <div *ngIf="selectedOccurrence" class="mt-6">
+                <!-- Occurrence info header -->
+                <div
+                    class="mb-4 flex flex-col gap-2 rounded-lg bg-blue-50 p-4 dark:bg-blue-900/20"
+                >
+                    <div class="flex items-center justify-between">
+                        <div class="text-lg font-semibold">
+                            {{
+                                selectedOccurrence.departureAt
+                                    | localizedDate: 'fullDateTime'
+                            }}
+                        </div>
+                        <span
+                            class="inline-flex items-center rounded-full px-3 py-1 text-sm font-medium"
+                            [ngClass]="{
+                                'bg-green-100 text-green-800':
+                                    selectedOccurrence.status ===
+                                    TransportOccurrenceStatus.SCHEDULED,
+                                'bg-red-100 text-red-800':
+                                    selectedOccurrence.status ===
+                                    TransportOccurrenceStatus.CANCELLED,
+                                'bg-gray-100 text-gray-800':
+                                    selectedOccurrence.status ===
+                                    TransportOccurrenceStatus.COMPLETED,
+                            }"
+                        >
+                            {{
+                                'TRANSPORTS.OCCURRENCE_STATUS.' +
+                                    selectedOccurrence.status | transloco
+                            }}
+                        </span>
+                    </div>
+
+                    <div class="flex items-center gap-4 text-sm">
+                        <span>
+                            {{
+                                'TRANSPORTS.ADMIN.PARTICIPANTS.BOOKED_SEATS'
+                                    | transloco
+                            }}:
+                            <strong
+                                >{{ selectedOccurrence.bookedSeats }} /
+                                {{ selectedOccurrence.capacitySnapshot }}</strong
+                            >
+                        </span>
+                        <span
+                            *ngIf="selectedOccurrence.allowOverbookSnapshot"
+                            class="inline-flex items-center rounded-full bg-amber-100 px-2 py-0.5 text-xs font-medium text-amber-800 dark:bg-amber-800 dark:text-amber-100"
+                        >
+                            {{ 'TRANSPORTS.ADMIN.OVERBOOK_ALLOWED' | transloco }}
+                        </span>
+                    </div>
+
+                    <!-- Cancel occurrence button -->
+                    <div
+                        class="mt-2"
+                        *ngIf="
+                            selectedOccurrence.status ===
+                            TransportOccurrenceStatus.SCHEDULED
+                        "
+                    >
+                        <button
+                            mat-stroked-button
+                            color="warn"
+                            (click)="cancelOccurrence()"
+                        >
+                            <mat-icon
+                                [svgIcon]="'heroicons_outline:x-circle'"
+                            ></mat-icon>
+                            <span class="ml-2">{{
+                                'TRANSPORTS.ADMIN.PARTICIPANTS.CANCEL_OCCURRENCE'
+                                    | transloco
+                            }}</span>
+                        </button>
+                    </div>
+                </div>
+
+                <!-- Warning for cancelled occurrence -->
+                <div
+                    *ngIf="
+                        selectedOccurrence.status ===
+                        TransportOccurrenceStatus.CANCELLED
+                    "
+                    class="mb-4 rounded-lg bg-red-50 p-4 text-red-800 dark:bg-red-900/20 dark:text-red-200"
+                >
+                    <div class="flex items-start gap-2">
+                        <mat-icon
+                            class="icon-size-5"
+                            [svgIcon]="'heroicons_outline:exclamation-triangle'"
+                        ></mat-icon>
+                        <div>
+                            <div class="font-semibold">
+                                {{
+                                    'TRANSPORTS.ADMIN.PARTICIPANTS.OCCURRENCE_CANCELLED'
+                                        | transloco
+                                }}
+                            </div>
+                            <div
+                                class="mt-1 text-sm"
+                                *ngIf="selectedOccurrence.cancellationReason"
+                            >
+                                {{ selectedOccurrence.cancellationReason }}
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Bookings table -->
+                <div *ngIf="selectedOccurrence.bookings?.length > 0; else noBookings">
+                    <div class="text-lg font-semibold mb-4">
+                        {{
+                            'TRANSPORTS.ADMIN.PARTICIPANTS.BOOKINGS_LIST'
+                                | transloco
+                        }}
+                    </div>
+
+                    <!-- Desktop table -->
+                    <div class="hidden sm:block overflow-x-auto">
+                        <table class="w-full">
+                            <thead>
+                                <tr class="border-b bg-gray-50 dark:bg-gray-900">
+                                    <th class="px-4 py-3 text-left text-sm font-semibold">
+                                        {{
+                                            'TRANSPORTS.ADMIN.PARTICIPANTS.PARTICIPANT'
+                                                | transloco
+                                        }}
+                                    </th>
+                                    <th class="px-4 py-3 text-left text-sm font-semibold">
+                                        {{
+                                            'TRANSPORTS.ADMIN.PARTICIPANTS.EMAIL'
+                                                | transloco
+                                        }}
+                                    </th>
+                                    <th class="px-4 py-3 text-left text-sm font-semibold">
+                                        {{
+                                            'TRANSPORTS.ADMIN.PARTICIPANTS.BOOKED_AT'
+                                                | transloco
+                                        }}
+                                    </th>
+                                    <th class="px-4 py-3 text-left text-sm font-semibold">
+                                        {{
+                                            'TRANSPORTS.ADMIN.PARTICIPANTS.STATUS'
+                                                | transloco
+                                        }}
+                                    </th>
+                                    <th class="px-4 py-3 text-right text-sm font-semibold">
+                                        {{
+                                            'TRANSPORTS.ADMIN.PARTICIPANTS.ACTIONS'
+                                                | transloco
+                                        }}
+                                    </th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                @for (
+                                    booking of selectedOccurrence.bookings;
+                                    track booking.id
+                                ) {
+                                    <tr class="border-b hover:bg-gray-50 dark:hover:bg-gray-900">
+                                        <td class="px-4 py-3">
+                                            {{ getParticipantName(booking) }}
+                                        </td>
+                                        <td class="px-4 py-3 text-sm text-secondary">
+                                            {{ getParticipantEmail(booking) }}
+                                        </td>
+                                        <td class="px-4 py-3 text-sm">
+                                            {{
+                                                booking.createdAt
+                                                    | localizedDate: 'shortDateTime'
+                                            }}
+                                        </td>
+                                        <td class="px-4 py-3">
+                                            <span
+                                                class="inline-flex items-center rounded-full px-2 py-0.5 text-xs font-medium"
+                                                [ngClass]="{
+                                                    'bg-green-100 text-green-800':
+                                                        booking.status === 'CONFIRMED',
+                                                    'bg-gray-100 text-gray-800':
+                                                        booking.status === 'CANCELLED',
+                                                }"
+                                            >
+                                                {{
+                                                    'TRANSPORTS.BOOKING_STATUS.' +
+                                                        booking.status | transloco
+                                                }}
+                                            </span>
+                                        </td>
+                                        <td class="px-4 py-3 text-right">
+                                            <button
+                                                mat-icon-button
+                                                [matMenuTriggerFor]="bookingActionsMenu"
+                                            >
+                                                <mat-icon
+                                                    class="icon-size-5"
+                                                    [svgIcon]="
+                                                        'heroicons_outline:ellipsis-vertical'
+                                                    "
+                                                ></mat-icon>
+                                            </button>
+                                            <mat-menu #bookingActionsMenu="matMenu">
+                                                <button
+                                                    mat-menu-item
+                                                    (click)="cancelBooking(booking)"
+                                                    *ngIf="booking.status === 'CONFIRMED'"
+                                                >
+                                                    <mat-icon
+                                                        [svgIcon]="
+                                                            'heroicons_outline:x-circle'
+                                                        "
+                                                    ></mat-icon>
+                                                    <span>{{
+                                                        'TRANSPORTS.ADMIN.PARTICIPANTS.CANCEL_BOOKING'
+                                                            | transloco
+                                                    }}</span>
+                                                </button>
+                                            </mat-menu>
+                                        </td>
+                                    </tr>
+                                }
+                            </tbody>
+                        </table>
+                    </div>
+
+                    <!-- Mobile cards -->
+                    <div class="grid gap-4 sm:hidden">
+                        @for (
+                            booking of selectedOccurrence.bookings;
+                            track booking.id
+                        ) {
+                            <div
+                                class="flex flex-col gap-2 rounded-lg border p-4 hover:bg-gray-50 dark:hover:bg-gray-900"
+                            >
+                                <div class="flex items-start justify-between">
+                                    <div>
+                                        <div class="font-medium">
+                                            {{ getParticipantName(booking) }}
+                                        </div>
+                                        <div class="text-secondary text-sm">
+                                            {{ getParticipantEmail(booking) }}
+                                        </div>
+                                    </div>
+                                    <button
+                                        mat-icon-button
+                                        [matMenuTriggerFor]="mobileBookingActionsMenu"
+                                    >
+                                        <mat-icon
+                                            class="icon-size-5"
+                                            [svgIcon]="
+                                                'heroicons_outline:ellipsis-vertical'
+                                            "
+                                        ></mat-icon>
+                                    </button>
+                                    <mat-menu #mobileBookingActionsMenu="matMenu">
+                                        <button
+                                            mat-menu-item
+                                            (click)="cancelBooking(booking)"
+                                            *ngIf="booking.status === 'CONFIRMED'"
+                                        >
+                                            <mat-icon
+                                                [svgIcon]="
+                                                    'heroicons_outline:x-circle'
+                                                "
+                                            ></mat-icon>
+                                            <span>{{
+                                                'TRANSPORTS.ADMIN.PARTICIPANTS.CANCEL_BOOKING'
+                                                    | transloco
+                                            }}</span>
+                                        </button>
+                                    </mat-menu>
+                                </div>
+                                <div class="flex items-center gap-2 text-sm">
+                                    <span class="text-secondary">
+                                        {{
+                                            booking.createdAt
+                                                | localizedDate: 'shortDateTime'
+                                        }}
+                                    </span>
+                                    <span
+                                        class="inline-flex items-center rounded-full px-2 py-0.5 text-xs font-medium"
+                                        [ngClass]="{
+                                            'bg-green-100 text-green-800':
+                                                booking.status === 'CONFIRMED',
+                                            'bg-gray-100 text-gray-800':
+                                                booking.status === 'CANCELLED',
+                                        }"
+                                    >
+                                        {{
+                                            'TRANSPORTS.BOOKING_STATUS.' +
+                                                booking.status | transloco
+                                        }}
+                                    </span>
+                                </div>
+                            </div>
+                        }
+                    </div>
+                </div>
+
+                <!-- No bookings -->
+                <ng-template #noBookings>
+                    <div
+                        class="flex flex-col items-center justify-center py-12"
+                    >
+                        <mat-icon
+                            class="icon-size-16 text-secondary"
+                            [svgIcon]="'heroicons_outline:users'"
+                        ></mat-icon>
+                        <div class="text-secondary mt-4 text-lg font-semibold">
+                            {{
+                                'TRANSPORTS.ADMIN.PARTICIPANTS.NO_BOOKINGS'
+                                    | transloco
+                            }}
+                        </div>
+                    </div>
+                </ng-template>
+            </div>
+        </div>
+    </div>
+</div>
