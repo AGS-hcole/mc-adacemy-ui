@@ -283,7 +283,10 @@ export class AdminTransportTemplateParticipantsComponent
      */
     getOccurrenceLabel(occurrence: TransportOccurrence): string {
         const dt = DateTime.fromISO(occurrence.departureAt as string);
-        return dt.toFormat('EEE dd MMM • HH:mm');
+        const formattedDate = dt.toFormat('EEE dd MMM • HH:mm');
+        const participants = occurrence.bookedSeats || 0;
+        const capacity = occurrence.capacitySnapshot || 0;
+        return `${formattedDate} (${participants}/${capacity})`;
     }
 
     /**

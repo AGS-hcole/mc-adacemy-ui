@@ -28,7 +28,19 @@ export class LocalizedDatePipe implements PipeTransform {
         // Create a new DatePipe instance with the current locale
         const datePipe = new DatePipe(locale);
 
+        // Map custom format names to Angular date format strings
+        const formatMap: Record<string, string> = {
+            'fullDateTime': 'EEEE, d MMMM y, HH:mm',
+            'shortDateTime': 'dd/MM/yyyy HH:mm',
+            'fullDate': 'EEEE, d MMMM y',
+            'shortDate': 'dd/MM/yyyy',
+            'timeOnly': 'HH:mm',
+        };
+
+        // Use mapped format or pass through the original format
+        const angularFormat = formatMap[format || ''] || format;
+
         // Transform the date using the localized DatePipe
-        return datePipe.transform(value, format, timezone);
+        return datePipe.transform(value, angularFormat, timezone);
     }
 }
