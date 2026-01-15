@@ -311,6 +311,15 @@
             },
             "REPORTS": {
                 "TITLE": "Reports"
+            },
+            "TRANSPORTS": {
+                "TITLE": "Transports"
+            },
+            "EVENTS": {
+                "TITLE": "Events"
+            },
+            "MANORS": {
+                "TITLE": "Manors"
             }
         },
         "USER": {
@@ -322,8 +331,14 @@
             "SESSIONS": {
                 "TITLE": "My Sessions"
             },
+            "TRANSPORTS": {
+                "TITLE": "My Transports"
+            },
             "TOURNAMENTS": {
                 "TITLE": "My Tournaments"
+            },
+            "MY_NIGHTS": {
+                "TITLE": "My Nights"
             }
         }
     },
