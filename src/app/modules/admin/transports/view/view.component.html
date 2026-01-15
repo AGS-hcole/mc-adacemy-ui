@@ -1,0 +1,108 @@
+<mat-drawer-container class="flex-auto sm:h-full" #drawerContainer>
+    <!-- Drawer -->
+    <mat-drawer
+        class="w-full sm:w-96 dark:bg-gray-900"
+        [autoFocus]="false"
+        [mode]="drawerMode"
+        [opened]="drawerOpened"
+        #drawer
+    >
+        <!-- Header -->
+        <div class="m-8 mr-6 flex-col items-center justify-between">
+            <div class="flex">
+                <a
+                    class="text-secondary -ml-1.5 mb-2 inline-flex items-center font-medium"
+                    [routerLink]="'./..'"
+                >
+                    <mat-icon
+                        class="text-secondary icon-size-5"
+                        [svgIcon]="'heroicons_outline:arrow-left'"
+                    ></mat-icon>
+                    <span class="ml-2">{{
+                        'TRANSPORTS.VIEW.BREADCRUMB.BACK' | transloco
+                    }}</span>
+                </a>
+            </div>
+            <div class="flex items-center justify-between">
+                <!-- Title -->
+                <div class="flex flex-col items-start gap-1">
+                    <div
+                        class="mb-2 text-4xl font-extrabold leading-none tracking-tight text-primary"
+                    >
+                        {{ template?.name }}
+                    </div>
+                    <div class="text-secondary text-md flex items-center gap-1">
+                        <span>{{ template?.fromLabel }}</span>
+                        <mat-icon
+                            class="icon-size-4"
+                            [svgIcon]="'heroicons_solid:arrow-right'"
+                        ></mat-icon>
+                        <span>{{ template?.toLabel }}</span>
+                    </div>
+                    <div class="text-secondary text-md">
+                        {{ template?.timeOfDay }}
+                    </div>
+                </div>
+                <!-- Close button -->
+                <div class="lg:hidden">
+                    <button mat-icon-button (click)="drawer.close()">
+                        <mat-icon
+                            [svgIcon]="'heroicons_outline:x-mark'"
+                        ></mat-icon>
+                    </button>
+                </div>
+            </div>
+        </div>
+
+        <!-- Panel links -->
+        <div class="flex flex-col divide-y border-b border-t">
+            @for (panel of panels; track trackByFn($index, panel)) {
+                <div
+                    class="flex cursor-pointer px-8 py-5 hover:bg-gray-50"
+                    [ngClass]="{
+                        'dark:hover:bg-hover hover:bg-gray-100': !isPanelActive(
+                            panel.id
+                        ),
+                        'bg-primary-50 dark:bg-hover': isPanelActive(panel.id),
+                    }"
+                    (click)="goToPanel(panel.id)"
+                >
+                    <mat-icon
+                        [ngClass]="{
+                            'text-hint': !isPanelActive(panel.id),
+                            'text-primary dark:text-primary-500': isPanelActive(
+                                panel.id
+                            ),
+                        }"
+                        [svgIcon]="panel.icon"
+                    ></mat-icon>
+                    <div class="ml-3">
+                        <div
+                            class="font-medium leading-6"
+                            [ngClass]="{
+                                'text-primary dark:text-primary-500':
+                                    isPanelActive(panel.id),
+                            }"
+                        >
+                            {{ panel.title | transloco }}
+                        </div>
+                        <div class="text-secondary mt-0.5">
+                            {{
+                                panel.description | transloco
+                            }}
+                        </div>
+                    </div>
+                </div>
+            }
+        </div>
+    </mat-drawer>
+
+    <!-- Drawer content -->
+    <mat-drawer-content class="flex flex-col">
+        <!-- Main -->
+        <div class="flex-auto">
+            <!-- Content -->
+            <router-outlet></router-outlet>
+        </div>
+    </mat-drawer-content>
+</mat-drawer-container>
