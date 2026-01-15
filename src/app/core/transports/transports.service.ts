@@ -6,7 +6,10 @@ import {
     BookOccurrenceRequest,
     CancelOccurrenceRequest,
     CreateTransportTemplateRequest,
+    DayOfWeek,
+    DayOfWeekToNumber,
     GenerateOccurrencesRequest,
+    NumberToDayOfWeek,
     TransportOccurrence,
     TransportOccurrenceFilters,
     TransportTemplate,
@@ -94,10 +97,11 @@ export class TransportsService {
         }
 
         return this._httpClient
-            .get<TransportTemplate[]>(`${this.apiUrl}/transports/templates`, {
+            .get<TransportTemplate[]>(`${this.apiUrl}/transport-templates`, {
                 params,
             })
             .pipe(
+                map((templates) => this._convertTemplateDaysFromAPI(templates)),
                 tap((templates) => {
                     this._templates.next(templates);
                 })
@@ -109,8 +113,9 @@ export class TransportsService {
      */
     getTemplateById(id: string): Observable<TransportTemplate> {
         return this._httpClient
-            .get<TransportTemplate>(`${this.apiUrl}/transports/templates/${id}`)
+            .get<any>(`${this.apiUrl}/transport-templates/${id}`)
             .pipe(
+                map((template) => this._convertTemplateDaysFromAPI([template])[0]),
                 tap((template) => {
                     this._template.next(template);
                 })
@@ -127,19 +132,20 @@ export class TransportsService {
             take(1),
             switchMap((templates) =>
                 this._httpClient
-                    .post<TransportTemplate>(
-                        `${this.apiUrl}/transports/templates`,
+                    .post<any>(
+                        `${this.apiUrl}/transport-templates`,
                         request
                     )
                     .pipe(
                         map((newTemplate) => {
+                            const converted = this._convertTemplateDaysFromAPI([newTemplate])[0];
                             // Update the templates with the new template
                             const updatedTemplates = templates || [];
                             this._templates.next([
-                                newTemplate,
+                                converted,
                                 ...updatedTemplates,
                             ]);
-                            return newTemplate;
+                            return converted;
                         })
                     )
             )
@@ -157,12 +163,13 @@ export class TransportsService {
             take(1),
             switchMap((templates) =>
                 this._httpClient
-                    .put<TransportTemplate>(
-                        `${this.apiUrl}/transports/templates/${id}`,
+                    .patch<any>(
+                        `${this.apiUrl}/transport-templates/${id}`,
                         request
                     )
                     .pipe(
                         map((updatedTemplate) => {
+                            const converted = this._convertTemplateDaysFromAPI([updatedTemplate])[0];
                             if (templates) {
                                 // Find the index of the updated template
                                 const index = templates.findIndex(
@@ -171,7 +178,7 @@ export class TransportsService {
 
                                 if (index !== -1) {
                                     // Update the template
-                                    templates[index] = updatedTemplate;
+                                    templates[index] = converted;
                                     this._templates.next([...templates]);
                                 }
                             }
@@ -179,10 +186,10 @@ export class TransportsService {
                             // Update the current template if it matches
                             const currentTemplate = this._template.getValue();
                             if (currentTemplate && currentTemplate.id === id) {
-                                this._template.next(updatedTemplate);
+                                this._template.next(converted);
                             }
 
-                            return updatedTemplate;
+                            return converted;
                         })
                     )
             )
@@ -190,10 +197,21 @@ export class TransportsService {
     }
 
     /**
-     * Disable template (soft delete - set isActive=false)
+     * Disable template (soft delete via DELETE endpoint)
      */
-    disableTemplate(id: string): Observable<TransportTemplate> {
-        return this.updateTemplate(id, { isActive: false });
+    disableTemplate(id: string): Observable<void> {
+        return this._httpClient
+            .delete<void>(`${this.apiUrl}/transport-templates/${id}`)
+            .pipe(
+                tap(() => {
+                    // Remove from local state or mark as inactive
+                    const templates = this._templates.getValue();
+                    if (templates) {
+                        const filtered = templates.filter(t => t.id !== id);
+                        this._templates.next(filtered);
+                    }
+                })
+            );
     }
 
     /**
@@ -204,7 +222,7 @@ export class TransportsService {
         request: GenerateOccurrencesRequest
     ): Observable<TransportOccurrence[]> {
         return this._httpClient.post<TransportOccurrence[]>(
-            `${this.apiUrl}/transports/templates/${templateId}/generate-occurrences`,
+            `${this.apiUrl}/transport-templates/${templateId}/generate`,
             request
         );
     }
@@ -238,7 +256,7 @@ export class TransportsService {
 
         return this._httpClient
             .get<TransportOccurrence[]>(
-                `${this.apiUrl}/transports/occurrences`,
+                `${this.apiUrl}/transport-occurrences`,
                 { params }
             )
             .pipe(
@@ -254,7 +272,7 @@ export class TransportsService {
     getOccurrenceById(id: string): Observable<TransportOccurrence> {
         return this._httpClient
             .get<TransportOccurrence>(
-                `${this.apiUrl}/transports/occurrences/${id}`
+                `${this.apiUrl}/transport-occurrences/${id}`
             )
             .pipe(
                 tap((occurrence) => {
@@ -272,7 +290,7 @@ export class TransportsService {
     ): Observable<TransportOccurrence> {
         return this._httpClient
             .post<TransportOccurrence>(
-                `${this.apiUrl}/transports/occurrences/${id}/cancel`,
+                `${this.apiUrl}/transport-occurrences/${id}/cancel`,
                 request
             )
             .pipe(
@@ -311,7 +329,7 @@ export class TransportsService {
     ): Observable<TransportOccurrence> {
         return this._httpClient
             .post<TransportOccurrence>(
-                `${this.apiUrl}/transports/occurrences/${occurrenceId}/book`,
+                `${this.apiUrl}/transport-occurrences/${occurrenceId}/book`,
                 request
             )
             .pipe(
@@ -345,13 +363,29 @@ export class TransportsService {
      */
     cancelBooking(bookingId: string): Observable<void> {
         return this._httpClient
-            .delete<void>(`${this.apiUrl}/transports/bookings/${bookingId}`)
+            .post<void>(`${this.apiUrl}/transport-bookings/${bookingId}/cancel`, {})
             .pipe(
                 tap(() => {
                     // Note: For proper state management, the occurrence should be refreshed
                     // by the component after this operation completes
                 })
             );
+    }
+
+    // -----------------------------------------------------------------------------------------------------
+    // @ Private helper methods
+    // -----------------------------------------------------------------------------------------------------
+
+    /**
+     * Convert days of week from API format (numbers) to frontend format (enum)
+     */
+    private _convertTemplateDaysFromAPI(templates: any[]): TransportTemplate[] {
+        return templates.map((template) => ({
+            ...template,
+            daysOfWeek: (template.daysOfWeek as number[]).map(
+                (day) => NumberToDayOfWeek[day]
+            ),
+        }));
     }
 
     /**

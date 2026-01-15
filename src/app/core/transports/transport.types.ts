@@ -2,7 +2,7 @@
 export type UUID = string;
 
 /**
- * Days of the week enum
+ * Days of the week enum (frontend display)
  */
 export enum DayOfWeek {
     MONDAY = 'MONDAY',
@@ -13,6 +13,32 @@ export enum DayOfWeek {
     SATURDAY = 'SATURDAY',
     SUNDAY = 'SUNDAY',
 }
+
+/**
+ * Map DayOfWeek enum to ISO 8601 day numbers (1=Monday, 7=Sunday)
+ */
+export const DayOfWeekToNumber: Record<DayOfWeek, number> = {
+    [DayOfWeek.MONDAY]: 1,
+    [DayOfWeek.TUESDAY]: 2,
+    [DayOfWeek.WEDNESDAY]: 3,
+    [DayOfWeek.THURSDAY]: 4,
+    [DayOfWeek.FRIDAY]: 5,
+    [DayOfWeek.SATURDAY]: 6,
+    [DayOfWeek.SUNDAY]: 7,
+};
+
+/**
+ * Map ISO 8601 day numbers to DayOfWeek enum
+ */
+export const NumberToDayOfWeek: Record<number, DayOfWeek> = {
+    1: DayOfWeek.MONDAY,
+    2: DayOfWeek.TUESDAY,
+    3: DayOfWeek.WEDNESDAY,
+    4: DayOfWeek.THURSDAY,
+    5: DayOfWeek.FRIDAY,
+    6: DayOfWeek.SATURDAY,
+    7: DayOfWeek.SUNDAY,
+};
 
 /**
  * Transport occurrence status
@@ -39,9 +65,13 @@ export interface TransportTemplate {
     name: string;
     description?: string | null;
     fromLabel: string;
+    fromAddress?: string | null;
     toLabel: string;
+    toAddress?: string | null;
+    timezone?: string;
     daysOfWeek: DayOfWeek[];
     timeOfDay: string; // HH:mm format
+    recurrenceType?: string;
     capacity: number;
     allowOverbook: boolean;
     isActive: boolean;
@@ -103,9 +133,13 @@ export interface CreateTransportTemplateRequest {
     name: string;
     description?: string | null;
     fromLabel: string;
+    fromAddress?: string | null;
     toLabel: string;
-    daysOfWeek: DayOfWeek[];
+    toAddress?: string | null;
+    timezone?: string;
+    daysOfWeek: number[]; // ISO 8601 day numbers (1=Monday, 7=Sunday)
     timeOfDay: string; // HH:mm format
+    recurrenceType?: string;
     capacity: number;
     allowOverbook?: boolean;
     isActive?: boolean;
@@ -118,9 +152,13 @@ export interface UpdateTransportTemplateRequest {
     name?: string;
     description?: string | null;
     fromLabel?: string;
+    fromAddress?: string | null;
     toLabel?: string;
-    daysOfWeek?: DayOfWeek[];
+    toAddress?: string | null;
+    timezone?: string;
+    daysOfWeek?: number[]; // ISO 8601 day numbers
     timeOfDay?: string;
+    recurrenceType?: string;
     capacity?: number;
     allowOverbook?: boolean;
     isActive?: boolean;

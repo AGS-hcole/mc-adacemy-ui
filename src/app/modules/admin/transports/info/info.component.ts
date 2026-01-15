@@ -28,6 +28,7 @@ import { TranslocoModule } from '@jsverse/transloco';
 import {
     CreateTransportTemplateRequest,
     DayOfWeek,
+    DayOfWeekToNumber,
     TransportTemplate,
     UpdateTransportTemplateRequest,
 } from 'app/core/transports/transport.types';
@@ -153,6 +154,11 @@ export class AdminTransportTemplateInfoComponent implements OnInit, OnDestroy {
         }
 
         const formValue = this.templateForm.value;
+        
+        // Convert days of week from enum to numbers for API
+        const daysOfWeekNumbers = (formValue.daysOfWeek as DayOfWeek[]).map(
+            (day) => DayOfWeekToNumber[day]
+        );
 
         if (this.editMode && this.template) {
             // Update existing template
@@ -161,7 +167,7 @@ export class AdminTransportTemplateInfoComponent implements OnInit, OnDestroy {
                 description: formValue.description || null,
                 fromLabel: formValue.fromLabel,
                 toLabel: formValue.toLabel,
-                daysOfWeek: formValue.daysOfWeek,
+                daysOfWeek: daysOfWeekNumbers,
                 timeOfDay: formValue.timeOfDay,
                 capacity: formValue.capacity,
                 allowOverbook: formValue.allowOverbook,
@@ -181,11 +187,12 @@ export class AdminTransportTemplateInfoComponent implements OnInit, OnDestroy {
                 description: formValue.description || null,
                 fromLabel: formValue.fromLabel,
                 toLabel: formValue.toLabel,
-                daysOfWeek: formValue.daysOfWeek,
+                daysOfWeek: daysOfWeekNumbers,
                 timeOfDay: formValue.timeOfDay,
                 capacity: formValue.capacity,
                 allowOverbook: formValue.allowOverbook,
                 isActive: formValue.isActive,
+                recurrenceType: 'WEEKLY', // Default to WEEKLY as per backend docs
             };
 
             this._transportsService
