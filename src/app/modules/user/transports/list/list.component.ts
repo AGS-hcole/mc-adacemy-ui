@@ -165,7 +165,8 @@ export class UserTransportsListComponent implements OnInit, OnDestroy {
 
     /**
      * Check if booking is closed (cutoff logic)
-     * Booking closes at start of day (00:00) Europe/Paris
+     * Booking closes at start of day (00:00) in Europe/Paris timezone
+     * Note: Timezone is hardcoded as per business requirement for France-based operations
      */
     isBookingClosed(occurrence: TransportOccurrence): boolean {
         const now = DateTime.now().setZone('Europe/Paris');

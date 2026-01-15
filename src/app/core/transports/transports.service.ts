@@ -348,12 +348,8 @@ export class TransportsService {
             .delete<void>(`${this.apiUrl}/transports/bookings/${bookingId}`)
             .pipe(
                 tap(() => {
-                    // Refresh occurrences to update booking status
-                    const occurrences = this._occurrences.getValue();
-                    if (occurrences) {
-                        // Trigger a refresh by re-emitting (actual data will be updated on next fetch)
-                        this._occurrences.next([...occurrences]);
-                    }
+                    // Note: For proper state management, the occurrence should be refreshed
+                    // by the component after this operation completes
                 })
             );
     }

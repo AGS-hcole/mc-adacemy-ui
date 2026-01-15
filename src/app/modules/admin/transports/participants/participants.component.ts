@@ -262,9 +262,10 @@ export class AdminTransportTemplateParticipantsComponent
             return `${booking.user.firstname} ${booking.user.lastname}`;
         }
         if (booking.userId) {
-            return `User ${booking.userId} (TODO)`;
+            // Fallback when user details are not populated
+            return `User ID: ${booking.userId.substring(0, 8)}...`;
         }
-        return 'Unknown';
+        return 'Unknown User';
     }
 
     /**
