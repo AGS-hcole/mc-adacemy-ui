@@ -13,13 +13,14 @@ import { MatIconModule } from '@angular/material/icon';
 import { MatSnackBar, MatSnackBarModule } from '@angular/material/snack-bar';
 import { TranslocoModule, TranslocoService } from '@jsverse/transloco';
 import { RatingsService } from 'app/core/session/ratings.service';
-import {
-    RatingCommentDialogComponent,
-    RatingCommentDialogData,
-} from 'app/shared/components/rating-comment-dialog/rating-comment-dialog.component';
 import { Subject, takeUntil } from 'rxjs';
 import { DashboardDateToolbarComponent } from './components/dashboard-date-toolbar.component';
 import { ManorsDayCardComponent } from './components/manors-day-card.component';
+import {
+    RatingEditDialogComponent,
+    RatingEditDialogData,
+    RatingEditDialogResult,
+} from './components/rating-edit-dialog.component';
 import { SessionsDayCardComponent } from './components/sessions-day-card.component';
 import { TransportsDayCardComponent } from './components/transports-day-card.component';
 import {
@@ -153,22 +154,26 @@ export class AdminDashboardPageComponent implements OnInit, OnDestroy {
         const currentRating = participant.rating;
 
         const dialogRef = this._dialog.open<
-            RatingCommentDialogComponent,
-            RatingCommentDialogData,
-            string
-        >(RatingCommentDialogComponent, {
+            RatingEditDialogComponent,
+            RatingEditDialogData,
+            RatingEditDialogResult
+        >(RatingEditDialogComponent, {
             width: '600px',
             data: {
                 participantName,
+                score: currentRating?.score ?? 0,
                 comment: currentRating?.comment || '',
             },
         });
 
-        dialogRef.afterClosed().subscribe((comment) => {
-            if (comment !== undefined) {
-                // Use current score or default to 0
-                const score = currentRating?.score ?? 0;
-                this.saveRating(sessionId, participant, score, comment);
+        dialogRef.afterClosed().subscribe((result) => {
+            if (result !== undefined) {
+                this.saveRating(
+                    sessionId,
+                    participant,
+                    result.score,
+                    result.comment
+                );
             }
         });
     }
