@@ -65,7 +65,7 @@
                 <!-- Sites within slot -->
                 <div
                     *ngFor="let siteGroup of slotGroup.sites"
-                    class="ml-4 space-y-3"
+                    class="space-y-3 md:ml-4"
                 >
                     <!-- Site header -->
                     <div
@@ -80,7 +80,7 @@
                             let session of siteGroup.sessions;
                             trackBy: trackBySessionId
                         "
-                        class="bg-default ml-4 rounded-lg border p-4"
+                        class="bg-default rounded-lg border p-4 md:ml-4"
                     >
                         <!-- Session header -->
                         <div class="mb-3 flex items-center justify-between">
@@ -109,7 +109,7 @@
                                     );
                                     trackBy: trackByParticipantId
                                 "
-                                class="flex items-center justify-between rounded border-l-4 border-green-500 bg-gray-50 p-3 dark:bg-gray-800"
+                                class="flex flex-col items-start justify-between rounded border-l-4 border-green-500 bg-gray-50 p-3 md:flex-row md:items-center dark:bg-gray-800"
                             >
                                 <div class="flex-auto">
                                     <div class="font-medium">
