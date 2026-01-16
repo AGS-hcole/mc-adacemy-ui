@@ -195,6 +195,30 @@ export class SessionsDayCardComponent {
     }
 
     /**
+     * Track by slot group
+     */
+    trackBySlot(
+        index: number,
+        slotGroup: {
+            slot: SessionSlot;
+            slotLabel: string;
+            sites: { siteName: string; sessions: DashboardSessionDto[] }[];
+        }
+    ): string {
+        return slotGroup.slot;
+    }
+
+    /**
+     * Track by site group
+     */
+    trackBySite(
+        index: number,
+        siteGroup: { siteName: string; sessions: DashboardSessionDto[] }
+    ): string {
+        return siteGroup.siteName;
+    }
+
+    /**
      * Track by function for ngFor
      */
     trackBySessionId(index: number, session: DashboardSessionDto): string {

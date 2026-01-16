@@ -40,7 +40,7 @@
         <!-- Sessions grouped by slot and site -->
         <div *ngIf="!loading && sessions.length > 0" class="space-y-6">
             <div
-                *ngFor="let slotGroup of getGroupedSessions()"
+                *ngFor="let slotGroup of getGroupedSessions(); trackBy: trackBySlot"
                 class="space-y-4"
             >
                 <!-- Slot header -->
@@ -64,7 +64,7 @@
 
                 <!-- Sites within slot -->
                 <div
-                    *ngFor="let siteGroup of slotGroup.sites"
+                    *ngFor="let siteGroup of slotGroup.sites; trackBy: trackBySite"
                     class="space-y-3 md:ml-4"
                 >
                     <!-- Site header -->
