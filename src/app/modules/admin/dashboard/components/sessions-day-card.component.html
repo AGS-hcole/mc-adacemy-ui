@@ -1,0 +1,127 @@
+<mat-card class="flex flex-col">
+    <mat-card-header class="border-b px-6 py-4">
+        <mat-card-title class="text-lg font-medium">
+            <mat-icon [svgIcon]="'heroicons_solid:calendar'" class="icon-size-5 mr-2"></mat-icon>
+            {{ 'DASHBOARD.SESSIONS.TITLE' | transloco: { defaultValue: 'Training Sessions' } }}
+        </mat-card-title>
+    </mat-card-header>
+
+    <mat-card-content class="flex-auto p-6">
+        <!-- Loading state -->
+        <div *ngIf="loading" class="flex items-center justify-center py-12">
+            <div class="text-secondary text-center">
+                <mat-icon [svgIcon]="'heroicons_outline:arrow-path'" class="icon-size-8 animate-spin"></mat-icon>
+                <div class="mt-2">{{ 'DASHBOARD.LOADING' | transloco: { defaultValue: 'Loading...' } }}</div>
+            </div>
+        </div>
+
+        <!-- Empty state -->
+        <div *ngIf="!loading && sessions.length === 0" class="flex flex-col items-center justify-center py-12 text-secondary">
+            <mat-icon [svgIcon]="'heroicons_outline:calendar-days'" class="icon-size-12 opacity-50"></mat-icon>
+            <div class="mt-4 text-center">
+                {{ 'DASHBOARD.SESSIONS.EMPTY' | transloco: { defaultValue: 'No sessions scheduled for this day' } }}
+            </div>
+        </div>
+
+        <!-- Sessions grouped by slot and site -->
+        <div *ngIf="!loading && sessions.length > 0" class="space-y-6">
+            <div *ngFor="let slotGroup of getGroupedSessions(); trackBy: trackBySessionId" class="space-y-4">
+                <!-- Slot header -->
+                <div class="flex items-center gap-2">
+                    <span
+                        class="rounded-full px-3 py-1 text-sm font-medium"
+                        [class.bg-blue-100]="slotGroup.slot === SessionSlot.AM"
+                        [class.text-blue-800]="slotGroup.slot === SessionSlot.AM"
+                        [class.bg-orange-100]="slotGroup.slot === SessionSlot.PM"
+                        [class.text-orange-800]="slotGroup.slot === SessionSlot.PM"
+                    >
+                        {{ slotGroup.slot }}
+                    </span>
+                </div>
+
+                <!-- Sites within slot -->
+                <div *ngFor="let siteGroup of slotGroup.sites" class="ml-4 space-y-3">
+                    <!-- Site header -->
+                    <div class="text-base font-medium text-gray-700 dark:text-gray-300">
+                        {{ siteGroup.siteName }}
+                    </div>
+
+                    <!-- Sessions at this site -->
+                    <div *ngFor="let session of siteGroup.sessions; trackBy: trackBySessionId" class="bg-default ml-4 rounded-lg border p-4">
+                        <!-- Session header -->
+                        <div class="mb-3 flex items-center justify-between">
+                            <div class="flex items-center gap-2">
+                                <mat-icon [svgIcon]="'heroicons_solid:clock'" class="icon-size-4 text-secondary"></mat-icon>
+                                <span class="text-sm text-secondary">{{ getTimeRange(session) }}</span>
+                                <span
+                                    *ngIf="session.isCanceled"
+                                    class="ml-2 rounded-full bg-red-100 px-2 py-1 text-xs font-medium text-red-800"
+                                >
+                                    {{ 'DASHBOARD.SESSIONS.CANCELED' | transloco: { defaultValue: 'Canceled' } }}
+                                </span>
+                            </div>
+                            <div class="text-sm text-secondary">
+                                <span class="font-medium text-green-600">{{ getConfirmedParticipants(session).length }}</span>
+                                /
+                                <span class="font-medium text-red-600">{{ getDeclinedParticipants(session).length }}</span>
+                            </div>
+                        </div>
+
+                        <!-- Participants list -->
+                        <div class="space-y-2">
+                            <div
+                                *ngFor="let participant of getConfirmedParticipants(session); trackBy: trackByParticipantId"
+                                class="flex items-center justify-between rounded border-l-4 border-green-500 bg-gray-50 p-3 dark:bg-gray-800"
+                            >
+                                <div class="flex-auto">
+                                    <div class="font-medium">
+                                        {{ participant.lastname }} {{ participant.firstname }}
+                                    </div>
+                                    <div class="mt-1 flex items-center gap-2 text-sm">
+                                        <span class="rounded bg-green-100 px-2 py-0.5 text-xs font-medium text-green-800">
+                                            {{ participant.status }}
+                                        </span>
+                                        <span
+                                            *ngIf="participant.outOfContract"
+                                            class="rounded bg-orange-100 px-2 py-0.5 text-xs font-medium text-orange-800"
+                                        >
+                                            {{ 'DASHBOARD.SESSIONS.OUT_OF_CONTRACT' | transloco: { defaultValue: 'Out of contract' } }}
+                                        </span>
+                                    </div>
+                                    <div *ngIf="participant.attendanceComment" class="mt-1 text-sm text-secondary">
+                                        {{ participant.attendanceComment }}
+                                    </div>
+                                </div>
+                                <div class="flex items-center gap-2">
+                                    <div class="text-right">
+                                        <div
+                                            class="text-sm font-medium"
+                                            [class.text-green-600]="participant.rating && participant.rating.score >= 7"
+                                            [class.text-orange-600]="participant.rating && participant.rating.score >= 4 && participant.rating.score < 7"
+                                            [class.text-red-600]="participant.rating && participant.rating.score < 4"
+                                            [class.text-gray-400]="!participant.rating"
+                                        >
+                                            {{ getRatingDisplay(participant) }}
+                                        </div>
+                                        <div *ngIf="participant.rating?.comment" class="mt-1 flex items-center gap-1 text-xs text-secondary">
+                                            <mat-icon [svgIcon]="'heroicons_solid:chat-bubble-left-ellipsis'" class="icon-size-3"></mat-icon>
+                                            <span>{{ 'DASHBOARD.SESSIONS.HAS_COMMENT' | transloco: { defaultValue: 'Has comment' } }}</span>
+                                        </div>
+                                    </div>
+                                    <button
+                                        mat-icon-button
+                                        color="primary"
+                                        (click)="onEditRating(session.id, participant)"
+                                        [matTooltip]="'DASHBOARD.SESSIONS.EDIT_RATING' | transloco: { defaultValue: 'Edit rating' }"
+                                    >
+                                        <mat-icon [svgIcon]="'heroicons_solid:pencil'"></mat-icon>
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </mat-card-content>
+</mat-card>

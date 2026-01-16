@@ -21,8 +21,8 @@ import { DashboardStats } from 'app/core/dashboard/dashboard.types';
 import { Subject, takeUntil } from 'rxjs';
 
 @Component({
-    selector: 'dashboard',
-    templateUrl: './dashboard.component.html',
+    selector: 'dashboard-legacy',
+    templateUrl: './dashboard-legacy.component.html',
     encapsulation: ViewEncapsulation.None,
     changeDetection: ChangeDetectionStrategy.OnPush,
     imports: [
@@ -37,7 +37,7 @@ import { Subject, takeUntil } from 'rxjs';
         MatTooltipModule,
     ],
 })
-export class DashboardComponent implements OnInit, OnDestroy {
+export class DashboardLegacyComponent implements OnInit, OnDestroy {
     private _unsubscribeAll: Subject<any> = new Subject<any>();
     stats: DashboardStats | null = null;
 

@@ -8,9 +8,9 @@ import {
 import { DashboardService } from 'app/core/dashboard/dashboard.service';
 import { handleResolverError } from 'app/shared/helpers/router-error-handler';
 import { catchError } from 'rxjs';
-import { DashboardComponent } from './dashboard/dashboard.component';
+import { AdminDashboardPageComponent } from './dashboard/admin-dashboard-page.component';
 
-/** Stats resolver
+/** Stats resolver (kept for backward compatibility but not used by new dashboard)
  */
 const statsResolver = (
     route: ActivatedRouteSnapshot,
@@ -35,10 +35,7 @@ export default [
     },
     {
         path: 'dashboard',
-        component: DashboardComponent,
-        resolve: {
-            stats: statsResolver,
-        },
+        component: AdminDashboardPageComponent,
     },
     {
         path: 'users',

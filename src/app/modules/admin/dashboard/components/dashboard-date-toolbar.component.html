@@ -1,0 +1,48 @@
+<div class="flex flex-col gap-4 sm:flex-row sm:items-center sm:justify-between">
+    <!-- Date display and navigation -->
+    <div class="flex items-center gap-2">
+        <button
+            mat-icon-button
+            (click)="previousDay()"
+            [matTooltip]="'DASHBOARD.PREVIOUS_DAY' | transloco: { defaultValue: 'Previous day' }"
+        >
+            <mat-icon [svgIcon]="'heroicons_solid:chevron-left'"></mat-icon>
+        </button>
+
+        <mat-form-field class="flex-auto sm:w-64" subscriptSizing="dynamic">
+            <mat-label>{{ 'DASHBOARD.SELECT_DATE' | transloco: { defaultValue: 'Select date' } }}</mat-label>
+            <input
+                matInput
+                [matDatepicker]="picker"
+                [value]="selectedDate"
+                (dateChange)="onDatePickerChange($event.value)"
+                readonly
+            />
+            <mat-datepicker-toggle matIconSuffix [for]="picker"></mat-datepicker-toggle>
+            <mat-datepicker #picker></mat-datepicker>
+        </mat-form-field>
+
+        <button
+            mat-icon-button
+            (click)="nextDay()"
+            [matTooltip]="'DASHBOARD.NEXT_DAY' | transloco: { defaultValue: 'Next day' }"
+        >
+            <mat-icon [svgIcon]="'heroicons_solid:chevron-right'"></mat-icon>
+        </button>
+    </div>
+
+    <!-- Today button -->
+    <button
+        mat-flat-button
+        color="primary"
+        (click)="goToToday()"
+    >
+        <mat-icon [svgIcon]="'heroicons_solid:calendar'" class="icon-size-5"></mat-icon>
+        <span class="ml-2">{{ 'DASHBOARD.TODAY' | transloco: { defaultValue: 'Today' } }}</span>
+    </button>
+</div>
+
+<!-- Formatted date display -->
+<div class="mt-2 text-lg font-medium capitalize text-secondary">
+    {{ getFormattedDate() }}
+</div>
