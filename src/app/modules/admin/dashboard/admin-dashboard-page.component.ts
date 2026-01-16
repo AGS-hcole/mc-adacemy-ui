@@ -95,6 +95,7 @@ export class AdminDashboardPageComponent implements OnInit, OnDestroy {
         this._dashboardService.data$
             .pipe(takeUntil(this._unsubscribeAll))
             .subscribe((data) => {
+                console.log(data);
                 this.dashboardData = data;
                 this._changeDetectorRef.markForCheck();
             });
