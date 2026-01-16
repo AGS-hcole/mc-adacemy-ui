@@ -55,11 +55,7 @@
                 ></mat-icon>
                 <div class="mt-4 text-center">
                     <div class="text-lg font-medium text-red-600">
-                        {{
-                            'DASHBOARD.ERROR_TITLE'
-                                | transloco
-                                    : { defaultValue: 'Error loading data' }
-                        }}
+                        {{ 'DASHBOARD.ERROR_TITLE' | transloco }}
                     </div>
                     <div class="text-secondary mt-2">{{ error }}</div>
                     <button
@@ -68,10 +64,7 @@
                         class="mt-4"
                         (click)="retry()"
                     >
-                        {{
-                            'DASHBOARD.RETRY'
-                                | transloco: { defaultValue: 'Retry' }
-                        }}
+                        {{ 'DASHBOARD.RETRY' | transloco }}
                     </button>
                 </div>
             </div>
