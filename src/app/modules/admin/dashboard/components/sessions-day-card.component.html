@@ -5,10 +5,7 @@
                 [svgIcon]="'heroicons_solid:calendar'"
                 class="mr-2 icon-size-5"
             ></mat-icon>
-            {{
-                'DASHBOARD.SESSIONS.TITLE'
-                    | transloco: { defaultValue: 'Training Sessions' }
-            }}
+            {{ 'DASHBOARD.SESSIONS.TITLE' | transloco }}
         </mat-card-title>
     </mat-card-header>
 
@@ -21,10 +18,7 @@
                     class="animate-spin icon-size-8"
                 ></mat-icon>
                 <div class="mt-2">
-                    {{
-                        'DASHBOARD.LOADING'
-                            | transloco: { defaultValue: 'Loading...' }
-                    }}
+                    {{ 'DASHBOARD.LOADING' | transloco }}
                 </div>
             </div>
         </div>
@@ -39,14 +33,7 @@
                 class="opacity-50 icon-size-12"
             ></mat-icon>
             <div class="mt-4 text-center">
-                {{
-                    'DASHBOARD.SESSIONS.EMPTY'
-                        | transloco
-                            : {
-                                  defaultValue:
-                                      'No sessions scheduled for this day',
-                              }
-                }}
+                {{ 'DASHBOARD.SESSIONS.EMPTY' | transloco }}
             </div>
         </div>
 
@@ -105,16 +92,6 @@
                                 <span class="text-secondary text-sm">{{
                                     getTimeRange(session)
                                 }}</span>
-                                <span
-                                    *ngIf="session.isCanceled"
-                                    class="ml-2 rounded-full bg-red-100 px-2 py-1 text-xs font-medium text-red-800"
-                                >
-                                    {{
-                                        'DASHBOARD.SESSIONS.CANCELED'
-                                            | transloco
-                                                : { defaultValue: 'Canceled' }
-                                    }}
-                                </span>
                             </div>
                             <div class="text-secondary text-sm">
                                 <span class="font-medium text-green-600">{{
@@ -136,8 +113,8 @@
                             >
                                 <div class="flex-auto">
                                     <div class="font-medium">
-                                        {{ participant.lastname }}
-                                        {{ participant.firstname }}
+                                        {{ participant.user.lastname }}
+                                        {{ participant.user.firstname }}
                                     </div>
                                     <div
                                         class="mt-1 flex items-center gap-2 text-sm"
@@ -149,25 +126,19 @@
                                             {{
                                                 'DASHBOARD.SESSIONS.OUT_OF_CONTRACT'
                                                     | transloco
-                                                        : {
-                                                              defaultValue:
-                                                                  'Out of contract',
-                                                          }
                                             }}
                                         </span>
                                     </div>
-                                    <div
-                                        *ngIf="participant.attendanceComment"
-                                        class="text-secondary mt-1 text-sm"
-                                    >
-                                        {{ participant.attendanceComment }}
-                                    </div>
                                 </div>
                                 <div class="flex items-center gap-2">
-                                    <div class="flex flex-auto items-center gap-2">
+                                    <div
+                                        class="flex flex-auto items-center gap-2"
+                                    >
                                         <!-- Star rating -->
                                         <star-rating
-                                            [value]="getRatingScore(participant)"
+                                            [value]="
+                                                getRatingScore(participant)
+                                            "
                                             [max]="10"
                                             [readonly]="false"
                                             (change)="
@@ -181,14 +152,6 @@
                                         <!-- Comment button -->
                                         <button
                                             mat-icon-button
-                                            [matTooltip]="
-                                                'DASHBOARD.SESSIONS.EDIT_COMMENT'
-                                                    | transloco
-                                                        : {
-                                                              defaultValue:
-                                                                  'Edit comment',
-                                                          }
-                                            "
                                             (click)="
                                                 onCommentClick(
                                                     session.id,

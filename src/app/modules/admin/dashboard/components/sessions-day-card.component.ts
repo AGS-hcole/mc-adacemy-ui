@@ -25,7 +25,6 @@ import {
     templateUrl: './sessions-day-card.component.html',
     encapsulation: ViewEncapsulation.None,
     changeDetection: ChangeDetectionStrategy.OnPush,
-    standalone: true,
     imports: [
         CommonModule,
         MatCardModule,
@@ -157,6 +156,7 @@ export class SessionsDayCardComponent {
         participant: DashboardParticipantDto,
         score: number
     ): void {
+        console.log('Rating changed:', { sessionId, participant, score });
         this.ratingChange.emit({ sessionId, participant, score });
     }
 
