@@ -37,149 +37,111 @@
             </div>
         </div>
 
-        <!-- Sessions grouped by slot and site -->
-        <div *ngIf="!loading && sessions.length > 0" class="space-y-6">
+        <!-- Sessions list sorted by time -->
+        <div *ngIf="!loading && sessions.length > 0" class="space-y-4">
             <div
-                *ngFor="let slotGroup of getGroupedSessions(); trackBy: trackBySlot"
-                class="space-y-4"
+                *ngFor="let session of getSortedSessions(); trackBy: trackBySessionId"
+                class="bg-default rounded-lg border p-4"
             >
-                <!-- Slot header -->
-                <div class="flex items-center gap-2">
-                    <span
-                        class="rounded-full px-3 py-1 text-sm font-medium"
-                        [class.bg-blue-100]="slotGroup.slot === SessionSlot.AM"
-                        [class.text-blue-800]="
-                            slotGroup.slot === SessionSlot.AM
-                        "
-                        [class.bg-orange-100]="
-                            slotGroup.slot === SessionSlot.PM
-                        "
-                        [class.text-orange-800]="
-                            slotGroup.slot === SessionSlot.PM
-                        "
-                    >
-                        {{ slotGroup.slot }}
-                    </span>
+                <!-- Session header -->
+                <div class="mb-3 flex items-center justify-between">
+                    <div class="flex items-center gap-2">
+                        <mat-icon
+                            [svgIcon]="'heroicons_solid:clock'"
+                            class="text-secondary icon-size-4"
+                        ></mat-icon>
+                        <span class="text-secondary text-sm font-medium">
+                            {{ getTimeRange(session) }}
+                        </span>
+                        <span class="text-secondary mx-2">•</span>
+                        <span class="text-sm font-medium">
+                            {{ session.site.name }}
+                        </span>
+                        <span
+                            class="rounded-full px-2 py-0.5 text-xs font-medium"
+                            [class.bg-blue-100]="session.slot === SessionSlot.AM"
+                            [class.text-blue-800]="session.slot === SessionSlot.AM"
+                            [class.bg-orange-100]="session.slot === SessionSlot.PM"
+                            [class.text-orange-800]="session.slot === SessionSlot.PM"
+                        >
+                            {{ session.slot }}
+                        </span>
+                        <span
+                            *ngIf="session.isCanceled"
+                            class="rounded-full bg-red-100 px-2 py-0.5 text-xs font-medium text-red-800"
+                        >
+                            {{ 'DASHBOARD.SESSIONS.CANCELED' | transloco }}
+                        </span>
+                    </div>
+                    <div class="text-secondary text-sm">
+                        <span class="font-medium text-green-600">
+                            {{ getConfirmedParticipants(session).length }}
+                        </span>
+                    </div>
                 </div>
 
-                <!-- Sites within slot -->
-                <div
-                    *ngFor="let siteGroup of slotGroup.sites; trackBy: trackBySite"
-                    class="space-y-3 md:ml-4"
-                >
-                    <!-- Site header -->
-                    <div
-                        class="text-base font-medium text-gray-700 dark:text-gray-300"
-                    >
-                        {{ siteGroup.siteName }}
-                    </div>
-
-                    <!-- Sessions at this site -->
+                <!-- Participants list -->
+                <div class="space-y-2">
                     <div
                         *ngFor="
-                            let session of siteGroup.sessions;
-                            trackBy: trackBySessionId
+                            let participant of getConfirmedParticipants(session);
+                            trackBy: trackByParticipantId
                         "
-                        class="bg-default rounded-lg border p-4 md:ml-4"
+                        class="flex flex-col items-start justify-between rounded border-l-4 border-green-500 bg-gray-50 p-3 md:flex-row md:items-center dark:bg-gray-800"
                     >
-                        <!-- Session header -->
-                        <div class="mb-3 flex items-center justify-between">
-                            <div class="flex items-center gap-2">
-                                <mat-icon
-                                    [svgIcon]="'heroicons_solid:clock'"
-                                    class="text-secondary icon-size-4"
-                                ></mat-icon>
-                                <span class="text-secondary text-sm">{{
-                                    getTimeRange(session)
-                                }}</span>
+                        <div class="flex-auto">
+                            <div class="font-medium">
+                                {{ participant.user.lastname }}
+                                {{ participant.user.firstname }}
                             </div>
-                            <div class="text-secondary text-sm">
-                                <span class="font-medium text-green-600">{{
-                                    getConfirmedParticipants(session).length
-                                }}</span>
+                            <div class="mt-1 flex items-center gap-2 text-sm">
+                                <span
+                                    *ngIf="participant.outOfContract"
+                                    class="rounded bg-orange-100 px-2 py-0.5 text-xs font-medium text-orange-800"
+                                >
+                                    {{ 'DASHBOARD.SESSIONS.OUT_OF_CONTRACT' | transloco }}
+                                </span>
                             </div>
                         </div>
-
-                        <!-- Participants list -->
-                        <div class="space-y-2">
-                            <div
-                                *ngFor="
-                                    let participant of getConfirmedParticipants(
-                                        session
-                                    );
-                                    trackBy: trackByParticipantId
-                                "
-                                class="flex flex-col items-start justify-between rounded border-l-4 border-green-500 bg-gray-50 p-3 md:flex-row md:items-center dark:bg-gray-800"
-                            >
-                                <div class="flex-auto">
-                                    <div class="font-medium">
-                                        {{ participant.user.lastname }}
-                                        {{ participant.user.firstname }}
-                                    </div>
-                                    <div
-                                        class="mt-1 flex items-center gap-2 text-sm"
-                                    >
-                                        <span
-                                            *ngIf="participant.outOfContract"
-                                            class="rounded bg-orange-100 px-2 py-0.5 text-xs font-medium text-orange-800"
-                                        >
-                                            {{
-                                                'DASHBOARD.SESSIONS.OUT_OF_CONTRACT'
-                                                    | transloco
-                                            }}
-                                        </span>
-                                    </div>
-                                </div>
-                                <div class="flex items-center gap-2">
-                                    <div
-                                        class="flex flex-auto items-center gap-2"
-                                    >
-                                        <!-- Star rating -->
-                                        <star-rating
-                                            [value]="
-                                                getRatingScore(participant)
-                                            "
-                                            [max]="10"
-                                            [readonly]="false"
-                                            (change)="
-                                                onRatingChange(
-                                                    session.id,
-                                                    participant,
-                                                    $event
-                                                )
-                                            "
-                                        ></star-rating>
-                                        <!-- Comment button -->
-                                        <button
-                                            mat-icon-button
-                                            (click)="
-                                                onCommentClick(
-                                                    session.id,
-                                                    participant
-                                                )
-                                            "
-                                            [color]="
-                                                hasComment(participant)
-                                                    ? 'primary'
-                                                    : ''
-                                            "
-                                        >
-                                            <mat-icon
-                                                class="icon-size-5"
-                                                [svgIcon]="
-                                                    hasComment(participant)
-                                                        ? 'heroicons_solid:chat-bubble-left-right'
-                                                        : 'heroicons_outline:chat-bubble-left-right'
-                                                "
-                                            ></mat-icon>
-                                        </button>
-                                        <!-- Loading spinner -->
-                                        <mat-spinner
-                                            *ngIf="isRatingPending(participant)"
-                                            [diameter]="20"
-                                        ></mat-spinner>
-                                    </div>
-                                </div>
+                        <div class="flex items-center gap-2">
+                            <div class="flex flex-auto items-center gap-2">
+                                <!-- Star rating -->
+                                <star-rating
+                                    [value]="getRatingScore(participant)"
+                                    [max]="10"
+                                    [readonly]="false"
+                                    (change)="
+                                        onRatingChange(
+                                            session.id,
+                                            participant,
+                                            $event
+                                        )
+                                    "
+                                ></star-rating>
+                                <!-- Comment button -->
+                                <button
+                                    mat-icon-button
+                                    (click)="
+                                        onCommentClick(session.id, participant)
+                                    "
+                                    [color]="
+                                        hasComment(participant) ? 'primary' : ''
+                                    "
+                                >
+                                    <mat-icon
+                                        class="icon-size-5"
+                                        [svgIcon]="
+                                            hasComment(participant)
+                                                ? 'heroicons_solid:chat-bubble-left-right'
+                                                : 'heroicons_outline:chat-bubble-left-right'
+                                        "
+                                    ></mat-icon>
+                                </button>
+                                <!-- Loading spinner -->
+                                <mat-spinner
+                                    *ngIf="isRatingPending(participant)"
+                                    [diameter]="20"
+                                ></mat-spinner>
                             </div>
                         </div>
                     </div>

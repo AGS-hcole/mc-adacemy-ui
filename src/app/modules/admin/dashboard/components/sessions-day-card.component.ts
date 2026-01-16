@@ -53,64 +53,26 @@ export class SessionsDayCardComponent {
     readonly SessionSlot = SessionSlot;
 
     /**
-     * Group sessions by slot and site
+     * Get sessions sorted by start time
      */
-    getGroupedSessions(): {
-        slot: SessionSlot;
-        slotLabel: string;
-        sites: { siteName: string; sessions: DashboardSessionDto[] }[];
-    }[] {
-        const groups = new Map<
-            SessionSlot,
-            Map<string, DashboardSessionDto[]>
-        >();
+    getSortedSessions(): DashboardSessionDto[] {
+        return [...this.sessions].sort((a, b) => {
+            // Parse start times or use defaults based on slot
+            const getTime = (session: DashboardSessionDto): number => {
+                if (session.startTime) {
+                    const date = new Date(session.startTime);
+                    if (!isNaN(date.getTime())) {
+                        return date.getTime();
+                    }
+                }
+                // Fallback: AM = 9:00, PM = 14:00
+                const today = new Date();
+                today.setHours(session.slot === SessionSlot.AM ? 9 : 14, 0, 0, 0);
+                return today.getTime();
+            };
 
-        // Group by slot, then by site
-        this.sessions.forEach((session) => {
-            if (!groups.has(session.slot)) {
-                groups.set(session.slot, new Map());
-            }
-            const siteGroups = groups.get(session.slot)!;
-            const siteName = session.site.name;
-            if (!siteGroups.has(siteName)) {
-                siteGroups.set(siteName, []);
-            }
-            siteGroups.get(siteName)!.push(session);
+            return getTime(a) - getTime(b);
         });
-
-        // Convert to array format
-        const result: {
-            slot: SessionSlot;
-            slotLabel: string;
-            sites: { siteName: string; sessions: DashboardSessionDto[] }[];
-        }[] = [];
-
-        // Sort by slot (AM first, then PM)
-        const sortedSlots = Array.from(groups.keys()).sort((a, b) => {
-            if (a === SessionSlot.AM) return -1;
-            if (b === SessionSlot.AM) return 1;
-            return 0;
-        });
-
-        sortedSlots.forEach((slot) => {
-            const siteGroups = groups.get(slot)!;
-            const sites: {
-                siteName: string;
-                sessions: DashboardSessionDto[];
-            }[] = [];
-
-            siteGroups.forEach((sessions, siteName) => {
-                sites.push({ siteName, sessions });
-            });
-
-            result.push({
-                slot,
-                slotLabel: slot === SessionSlot.AM ? 'Morning' : 'Afternoon',
-                sites,
-            });
-        });
-
-        return result;
     }
 
     /**
@@ -192,30 +154,6 @@ export class SessionsDayCardComponent {
      */
     isRatingPending(participant: DashboardParticipantDto): boolean {
         return this.pendingRatings.has(participant.userId);
-    }
-
-    /**
-     * Track by slot group
-     */
-    trackBySlot(
-        index: number,
-        slotGroup: {
-            slot: SessionSlot;
-            slotLabel: string;
-            sites: { siteName: string; sessions: DashboardSessionDto[] }[];
-        }
-    ): string {
-        return slotGroup.slot;
-    }
-
-    /**
-     * Track by site group
-     */
-    trackBySite(
-        index: number,
-        siteGroup: { siteName: string; sessions: DashboardSessionDto[] }
-    ): string {
-        return siteGroup.siteName;
     }
 
     /**
