@@ -12,6 +12,7 @@ import { MatDatepickerModule } from '@angular/material/datepicker';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatIconModule } from '@angular/material/icon';
 import { MatInputModule } from '@angular/material/input';
+import { MatTooltipModule } from '@angular/material/tooltip';
 import { TranslocoModule } from '@jsverse/transloco';
 
 @Component({
@@ -27,6 +28,7 @@ import { TranslocoModule } from '@jsverse/transloco';
         MatFormFieldModule,
         MatInputModule,
         MatDatepickerModule,
+        MatTooltipModule,
         TranslocoModule,
     ],
 })

@@ -209,10 +209,8 @@ export class AdminDashboardPageComponent implements OnInit, OnDestroy {
 
                     this._snackBar.open(
                         this._translocoService.translate(
-                            'DASHBOARD.RATING_SAVED',
-                            {},
-                            { defaultValue: 'Rating saved successfully' }
-                        ),
+                            'DASHBOARD.RATING_SAVED'
+                        ) || 'Rating saved successfully',
                         '',
                         { duration: 3000 }
                     );
@@ -233,10 +231,8 @@ export class AdminDashboardPageComponent implements OnInit, OnDestroy {
 
                     this._snackBar.open(
                         this._translocoService.translate(
-                            'DASHBOARD.RATING_ERROR',
-                            {},
-                            { defaultValue: 'Failed to save rating' }
-                        ),
+                            'DASHBOARD.RATING_ERROR'
+                        ) || 'Failed to save rating',
                         '',
                         { duration: 3000 }
                     );
