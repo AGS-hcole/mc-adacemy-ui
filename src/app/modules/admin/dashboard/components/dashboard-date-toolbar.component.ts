@@ -20,7 +20,6 @@ import { TranslocoModule } from '@jsverse/transloco';
     templateUrl: './dashboard-date-toolbar.component.html',
     encapsulation: ViewEncapsulation.None,
     changeDetection: ChangeDetectionStrategy.OnPush,
-    standalone: true,
     imports: [
         CommonModule,
         MatButtonModule,

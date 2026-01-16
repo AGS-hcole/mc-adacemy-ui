@@ -20,7 +20,6 @@ import {
     templateUrl: './transports-day-card.component.html',
     encapsulation: ViewEncapsulation.None,
     changeDetection: ChangeDetectionStrategy.OnPush,
-    standalone: true,
     imports: [
         CommonModule,
         MatCardModule,
@@ -38,7 +37,9 @@ export class TransportsDayCardComponent {
     /**
      * Get confirmed bookings for an occurrence
      */
-    getConfirmedBookings(occurrence: DashboardTransportOccurrenceDto): DashboardBookingDto[] {
+    getConfirmedBookings(
+        occurrence: DashboardTransportOccurrenceDto
+    ): DashboardBookingDto[] {
         return occurrence.bookings.filter(
             (b) => b.status === TransportBookingStatus.CONFIRMED
         );
@@ -57,7 +58,10 @@ export class TransportsDayCardComponent {
     /**
      * Track by occurrence ID
      */
-    trackByOccurrenceId(index: number, occurrence: DashboardTransportOccurrenceDto): string {
+    trackByOccurrenceId(
+        index: number,
+        occurrence: DashboardTransportOccurrenceDto
+    ): string {
         return occurrence.id;
     }
 

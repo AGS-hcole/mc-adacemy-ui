@@ -41,12 +41,22 @@ export interface DashboardSessionDto {
 export interface DashboardParticipantDto {
     userId: UUID;
     attendanceId: UUID;
-    firstname: string;
-    lastname: string;
+    user: DashboardParticipantUserDto;
     status: 'YES' | 'NO';
     outOfContract: boolean;
-    attendanceComment?: string | null;
+    comment?: string | null;
+    createdByAdmin: boolean;
+    respondedAt: string;
     rating?: DashboardRatingDto | null;
+}
+
+/**
+ * Participant User info
+ */
+export interface DashboardParticipantUserDto {
+    id: UUID;
+    firstname: string;
+    lastname: string;
 }
 
 /**

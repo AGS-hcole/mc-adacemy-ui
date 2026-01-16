@@ -33,7 +33,6 @@ import { AdminDashboardService } from './services/admin-dashboard.service';
     templateUrl: './admin-dashboard-page.component.html',
     encapsulation: ViewEncapsulation.None,
     changeDetection: ChangeDetectionStrategy.OnPush,
-    standalone: true,
     imports: [
         CommonModule,
         MatButtonModule,
@@ -164,7 +163,7 @@ export class AdminDashboardPageComponent implements OnInit, OnDestroy {
         participant: DashboardParticipantDto;
     }): void {
         const { sessionId, participant } = event;
-        const participantName = `${participant.firstname} ${participant.lastname}`;
+        const participantName = `${participant.user.firstname} ${participant.user.lastname}`;
         const currentRating = participant.rating;
 
         const dialogRef = this._dialog.open<

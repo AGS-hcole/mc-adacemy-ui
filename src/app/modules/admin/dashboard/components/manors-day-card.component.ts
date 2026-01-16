@@ -10,14 +10,16 @@ import { MatCardModule } from '@angular/material/card';
 import { MatIconModule } from '@angular/material/icon';
 import { MatTooltipModule } from '@angular/material/tooltip';
 import { TranslocoModule } from '@jsverse/transloco';
-import { DashboardManorDto, DashboardStayDto } from '../models/admin-dashboard.models';
+import {
+    DashboardManorDto,
+    DashboardStayDto,
+} from '../models/admin-dashboard.models';
 
 @Component({
     selector: 'manors-day-card',
     templateUrl: './manors-day-card.component.html',
     encapsulation: ViewEncapsulation.None,
     changeDetection: ChangeDetectionStrategy.OnPush,
-    standalone: true,
     imports: [
         CommonModule,
         MatCardModule,
