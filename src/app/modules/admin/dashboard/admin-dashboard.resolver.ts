@@ -10,7 +10,7 @@ import { AdminDashboardService } from './services/admin-dashboard.service';
 
 /**
  * Admin dashboard resolver
- * Loads dashboard data for the current date or specified date
+ * Loads dashboard data for today's date on initial navigation
  */
 export const adminDashboardResolver = (
     route: ActivatedRouteSnapshot,
@@ -19,9 +19,8 @@ export const adminDashboardResolver = (
     const dashboardService = inject(AdminDashboardService);
     const router = inject(Router);
 
-    // Get date from query params or use today
-    const dateParam = route.queryParamMap.get('date');
-    const date = dateParam || formatDateToYYYYMMDD(new Date());
+    // Always load today's date on initial navigation
+    const date = formatDateToYYYYMMDD(new Date());
 
     return dashboardService
         .getDashboard(date)

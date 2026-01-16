@@ -11,7 +11,7 @@ import { MatButtonModule } from '@angular/material/button';
 import { MatDialog } from '@angular/material/dialog';
 import { MatIconModule } from '@angular/material/icon';
 import { MatSnackBar, MatSnackBarModule } from '@angular/material/snack-bar';
-import { ActivatedRoute, Router } from '@angular/router';
+import { ActivatedRoute } from '@angular/router';
 import { TranslocoModule, TranslocoService } from '@jsverse/transloco';
 import { RatingsService } from 'app/core/session/ratings.service';
 import {
@@ -65,8 +65,7 @@ export class AdminDashboardPageComponent implements OnInit, OnDestroy {
         private _dialog: MatDialog,
         private _snackBar: MatSnackBar,
         private _translocoService: TranslocoService,
-        private _route: ActivatedRoute,
-        private _router: Router
+        private _route: ActivatedRoute
     ) {}
 
     // -----------------------------------------------------------------------------------------------------
@@ -77,13 +76,7 @@ export class AdminDashboardPageComponent implements OnInit, OnDestroy {
      * On init
      */
     ngOnInit(): void {
-        // Get initial date from query params or use today
-        const dateParam = this._route.snapshot.queryParamMap.get('date');
-        if (dateParam) {
-            this.selectedDate = this.parseDateFromYYYYMMDD(dateParam);
-        }
-
-        // Subscribe to route data for resolved dashboard data
+        // Subscribe to route data for resolved dashboard data (initial load)
         this._route.data.pipe(takeUntil(this._unsubscribeAll)).subscribe({
             next: (data) => {
                 if (data['dashboardData']) {
@@ -145,13 +138,18 @@ export class AdminDashboardPageComponent implements OnInit, OnDestroy {
      */
     onDateChange(date: Date): void {
         this.selectedDate = date;
-        const dateString = this.formatDateToYYYYMMDD(date);
-        
-        // Navigate with query params to trigger resolver
-        this._router.navigate([], {
-            relativeTo: this._route,
-            queryParams: { date: dateString },
-            queryParamsHandling: 'merge',
+        this.loadDashboard();
+    }
+
+    /**
+     * Load dashboard data for selected date
+     */
+    loadDashboard(): void {
+        const dateString = this.formatDateToYYYYMMDD(this.selectedDate);
+        this._dashboardService.getDashboard(dateString).subscribe({
+            error: (error) => {
+                console.error('Failed to load dashboard:', error);
+            },
         });
     }
 
@@ -159,13 +157,7 @@ export class AdminDashboardPageComponent implements OnInit, OnDestroy {
      * Retry loading on error
      */
     retry(): void {
-        // Navigate to current route to trigger resolver reload
-        const dateString = this.formatDateToYYYYMMDD(this.selectedDate);
-        this._router.navigate([], {
-            relativeTo: this._route,
-            queryParams: { date: dateString },
-            queryParamsHandling: 'merge',
-        });
+        this.loadDashboard();
     }
 
     /**
@@ -366,13 +358,5 @@ export class AdminDashboardPageComponent implements OnInit, OnDestroy {
         const month = String(date.getMonth() + 1).padStart(2, '0');
         const day = String(date.getDate()).padStart(2, '0');
         return `${year}-${month}-${day}`;
-    }
-
-    /**
-     * Parse date from YYYY-MM-DD string
-     */
-    private parseDateFromYYYYMMDD(dateString: string): Date {
-        const [year, month, day] = dateString.split('-').map(Number);
-        return new Date(year, month - 1, day);
     }
 }
