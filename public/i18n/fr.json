@@ -194,7 +194,17 @@
         }
     },
     "DASHBOARD": {
+        "TITLE": "Tableau de bord admin",
+        "SUBTITLE": "Vue journalière",
         "LOADING": "Chargement...",
+        "TODAY": "Aujourd'hui",
+        "SELECT_DATE": "Sélectionner une date",
+        "PREVIOUS_DAY": "Jour précédent",
+        "NEXT_DAY": "Jour suivant",
+        "ERROR_TITLE": "Erreur de chargement des données",
+        "RETRY": "Réessayer",
+        "RATING_SAVED": "Évaluation enregistrée avec succès",
+        "RATING_ERROR": "Échec de l'enregistrement de l'évaluation",
         "SECTIONS": {
             "GENERAL": "Informations générales",
             "ACTIVITIES": "Activités"
@@ -211,6 +221,41 @@
             "UPCOMING_TOURNAMENTS": "Tournois à venir",
             "COMING_SOON": "Bientôt disponible",
             "REGULAR_USERS_HINT": "Académiciens (rôle : utilisateur)"
+        },
+        "SESSIONS": {
+            "TITLE": "Sessions d'entraînement",
+            "EMPTY": "Aucune session programmée pour ce jour",
+            "CANCELED": "Annulée",
+            "OUT_OF_CONTRACT": "Hors contrat",
+            "EDIT_RATING": "Modifier l'évaluation",
+            "HAS_COMMENT": "A un commentaire"
+        },
+        "MANORS": {
+            "TITLE": "Hébergements",
+            "EMPTY": "Aucun hébergement pour ce jour",
+            "CAPACITY": "Capacité",
+            "ENFORCE_CAPACITY": "Capacité stricte",
+            "OVER_CAPACITY": "Capacité dépassée",
+            "ADMIN_CREATED": "Admin",
+            "SHOW_MORE": "Afficher plus",
+            "SHOW_LESS": "Afficher moins",
+            "MORE": "de plus"
+        },
+        "TRANSPORTS": {
+            "TITLE": "Transports",
+            "EMPTY": "Aucun transport programmé pour ce jour",
+            "CAPACITY": "Réservés / Capacité",
+            "NO_BOOKINGS": "Aucune réservation pour le moment",
+            "SEAT": "place",
+            "SEATS": "places"
+        },
+        "RATING_EDIT": {
+            "TITLE": "Modifier l'évaluation",
+            "SCORE": "Note",
+            "COMMENT": "Commentaire",
+            "COMMENT_PLACEHOLDER": "Ajouter un commentaire...",
+            "SAVE": "Enregistrer",
+            "CANCEL": "Annuler"
         }
     },
     "HOME": {
