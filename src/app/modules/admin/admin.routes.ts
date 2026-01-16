@@ -50,6 +50,11 @@ export default [
             import('app/modules/admin/sessions/sessions.routes'),
     },
     {
+        path: 'transports',
+        loadChildren: () =>
+            import('app/modules/admin/transports/transports.routes'),
+    },
+    {
         path: 'sites',
         loadChildren: () => import('app/modules/admin/sites/sites.routes'),
     },

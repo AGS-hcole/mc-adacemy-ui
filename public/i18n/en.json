@@ -66,6 +66,21 @@
             "TITLE": "Delete user",
             "MESSAGE": "Are you sure you want to delete this user? This action cannot be undone!",
             "CONFIRM": "Delete"
+        },
+        "DISABLE_TEMPLATE": {
+            "TITLE": "Disable Transport Template",
+            "MESSAGE": "Are you sure you want to disable this transport template? It will no longer generate occurrences.",
+            "CONFIRM": "Disable"
+        },
+        "CANCEL_OCCURRENCE": {
+            "TITLE": "Cancel Transport Occurrence",
+            "MESSAGE": "Are you sure you want to cancel this transport occurrence? All bookings will be affected.",
+            "CONFIRM": "Cancel Occurrence"
+        },
+        "CANCEL_BOOKING": {
+            "TITLE": "Cancel Booking",
+            "MESSAGE": "Are you sure you want to cancel this booking?",
+            "CONFIRM": "Cancel Booking"
         }
     },
     "AUTH": {
@@ -296,6 +311,15 @@
             },
             "REPORTS": {
                 "TITLE": "Reports"
+            },
+            "TRANSPORTS": {
+                "TITLE": "Transports"
+            },
+            "EVENTS": {
+                "TITLE": "Events"
+            },
+            "MANORS": {
+                "TITLE": "Manors"
             }
         },
         "USER": {
@@ -307,8 +331,14 @@
             "SESSIONS": {
                 "TITLE": "My Sessions"
             },
+            "TRANSPORTS": {
+                "TITLE": "My Transports"
+            },
             "TOURNAMENTS": {
                 "TITLE": "My Tournaments"
+            },
+            "MY_NIGHTS": {
+                "TITLE": "My Nights"
             }
         }
     },
@@ -746,6 +776,148 @@
             "CONTRACT": "Contract",
             "ATTENDEES": "Attendees",
             "STATUS": "Status"
+        }
+    },
+    "TRANSPORTS": {
+        "ADMIN": {
+            "TITLE": "Transports",
+            "CREATE_TEMPLATE": "Create Template",
+            "NO_TEMPLATES": "No transport templates found",
+            "EVERY_DAY": "Every day",
+            "OVERBOOK": "OB",
+            "OVERBOOK_ALLOWED": "Overbooking allowed",
+            "CAPACITY": "Capacity",
+            "TABLE": {
+                "NAME": "Name",
+                "ROUTE": "Route",
+                "SCHEDULE": "Schedule",
+                "CAPACITY": "Capacity",
+                "ACTIVE": "Active",
+                "ACTIONS": "Actions"
+            },
+            "FILTERS": {
+                "SEARCH": "Search",
+                "SEARCH_PLACEHOLDER": "Search templates...",
+                "STATUS": "Status",
+                "ALL_STATUS": "All Status"
+            },
+            "ACTIONS": {
+                "MORE": "More actions",
+                "VIEW_DETAILS": "View Details",
+                "EDIT": "Edit",
+                "DISABLE": "Disable",
+                "GENERATE_OCCURRENCES": "Generate Occurrences"
+            },
+            "INFO": {
+                "TITLE": "Template Information"
+            },
+            "FORM": {
+                "NAME": "Template Name",
+                "NAME_PLACEHOLDER": "e.g., Morning School Transport",
+                "NAME_REQUIRED": "Template name is required",
+                "DESCRIPTION": "Description",
+                "DESCRIPTION_PLACEHOLDER": "Optional description",
+                "FROM": "From",
+                "FROM_PLACEHOLDER": "e.g., School",
+                "FROM_REQUIRED": "Departure location is required",
+                "TO": "To",
+                "TO_PLACEHOLDER": "e.g., Sports Center",
+                "TO_REQUIRED": "Arrival location is required",
+                "DAYS_OF_WEEK": "Days of Week",
+                "DAYS_OF_WEEK_REQUIRED": "Please select at least one day",
+                "TIME_OF_DAY": "Departure Time",
+                "TIME_OF_DAY_REQUIRED": "Departure time is required",
+                "CAPACITY": "Capacity",
+                "CAPACITY_REQUIRED": "Capacity is required",
+                "CAPACITY_MIN": "Capacity must be at least 1",
+                "ALLOW_OVERBOOK": "Allow Overbooking",
+                "ALLOW_OVERBOOK_HINT": "Allow bookings beyond capacity",
+                "IS_ACTIVE": "Active",
+                "IS_ACTIVE_HINT": "Only active templates can generate occurrences",
+                "CANCEL": "Cancel",
+                "SAVE": "Save",
+                "CREATE": "Create Template"
+            },
+            "PARTICIPANTS": {
+                "TITLE": "Occurrences & Participants",
+                "FILTERS": "Date Range Filters",
+                "FROM_DATE": "From Date",
+                "TO_DATE": "To Date",
+                "APPLY": "Apply",
+                "RESET": "Reset",
+                "SELECT_OCCURRENCE": "Select Occurrence",
+                "NO_OCCURRENCE": "Select an occurrence...",
+                "NO_OCCURRENCES": "No occurrences found for this period",
+                "BOOKED_SEATS": "Booked Seats",
+                "CANCEL_OCCURRENCE": "Cancel Occurrence",
+                "OCCURRENCE_CANCELLED": "This occurrence has been cancelled",
+                "BOOKINGS_LIST": "Bookings",
+                "PARTICIPANT": "Participant",
+                "EMAIL": "Email",
+                "BOOKED_AT": "Booked At",
+                "STATUS": "Status",
+                "ACTIONS": "Actions",
+                "CANCEL_BOOKING": "Cancel Booking",
+                "NO_BOOKINGS": "No bookings for this occurrence"
+            },
+            "TABS": {
+                "INFO": "Information",
+                "INFO_DESCRIPTION": "Template details and settings",
+                "PARTICIPANTS": "Occurrences",
+                "PARTICIPANTS_DESCRIPTION": "View and manage occurrences and bookings"
+            }
+        },
+        "USER": {
+            "TITLE": "Transport Bookings",
+            "SEATS_BOOKED": "seats booked",
+            "OVERBOOK": "OB",
+            "OVERBOOK_ALLOWED": "Overbooking allowed",
+            "BOOKING_CLOSED": "Booking Closed",
+            "FULLY_BOOKED": "Fully Booked",
+            "ALREADY_BOOKED": "You have a booking",
+            "BOOK": "Book",
+            "CANCEL": "Cancel Booking",
+            "NO_OCCURRENCES": "No transport available for this period",
+            "FILTERS": {
+                "FROM_DATE": "From Date",
+                "TO_DATE": "To Date",
+                "APPLY": "Apply",
+                "RESET": "Reset"
+            }
+        },
+        "VIEW": {
+            "BREADCRUMB": {
+                "BACK": "Back to Templates"
+            }
+        },
+        "STATUS": {
+            "ACTIVE": "Active",
+            "INACTIVE": "Inactive"
+        },
+        "OCCURRENCE_STATUS": {
+            "SCHEDULED": "Scheduled",
+            "CANCELLED": "Cancelled",
+            "COMPLETED": "Completed"
+        },
+        "BOOKING_STATUS": {
+            "CONFIRMED": "Confirmed",
+            "CANCELLED": "Cancelled"
+        },
+        "DAYS": {
+            "MONDAY": "Monday",
+            "MONDAY_SHORT": "Mon",
+            "TUESDAY": "Tuesday",
+            "TUESDAY_SHORT": "Tue",
+            "WEDNESDAY": "Wednesday",
+            "WEDNESDAY_SHORT": "Wed",
+            "THURSDAY": "Thursday",
+            "THURSDAY_SHORT": "Thu",
+            "FRIDAY": "Friday",
+            "FRIDAY_SHORT": "Fri",
+            "SATURDAY": "Saturday",
+            "SATURDAY_SHORT": "Sat",
+            "SUNDAY": "Sunday",
+            "SUNDAY_SHORT": "Sun"
         }
     }
 }

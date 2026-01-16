@@ -53,6 +53,13 @@ export const adminNavigation: FuseNavigationItem[] = [
                 link: '/admin/sessions',
             },
             {
+                id: 'transports',
+                title: 'NAVIGATION.ADMIN.TRANSPORTS.TITLE',
+                type: 'basic',
+                icon: 'heroicons_outline:truck',
+                link: '/admin/transports',
+            },
+            {
                 id: 'tournaments',
                 title: 'NAVIGATION.ADMIN.TOURNAMENTS.TITLE',
                 type: 'basic',
@@ -100,6 +107,13 @@ export const userNavigation: FuseNavigationItem[] = [
                 type: 'basic',
                 icon: 'heroicons_outline:calendar',
                 link: '/user/sessions',
+            },
+            {
+                id: 'transports',
+                title: 'NAVIGATION.USER.TRANSPORTS.TITLE',
+                type: 'basic',
+                icon: 'heroicons_outline:truck',
+                link: '/user/transports',
             },
             {
                 id: 'tournaments',

@@ -1,0 +1,407 @@
+<div
+    class="absolute inset-0 flex min-w-0 flex-col overflow-y-auto sm:overflow-hidden"
+>
+    <!-- Header -->
+    <div
+        class="bg-card relative flex flex-0 flex-col border-b px-6 py-8 sm:flex-row sm:items-center sm:justify-between md:px-8 dark:bg-transparent"
+    >
+        <!-- Title -->
+        <div class="text-4xl font-extrabold tracking-tight">
+            {{ 'TRANSPORTS.ADMIN.TITLE' | transloco }}
+        </div>
+        <!-- Actions -->
+        <div class="mt-6 flex shrink-0 items-center sm:ml-4 sm:mt-0">
+            <button
+                class="ml-4"
+                mat-flat-button
+                [color]="'primary'"
+                (click)="createTemplate()"
+            >
+                <mat-icon [svgIcon]="'heroicons_outline:plus'"></mat-icon>
+                <span class="ml-2">{{
+                    'TRANSPORTS.ADMIN.CREATE_TEMPLATE' | transloco
+                }}</span>
+            </button>
+        </div>
+    </div>
+
+    <!-- Filters -->
+    <div
+        class="flex flex-0 flex-col flex-wrap items-start gap-0 bg-gray-50 p-6 pb-0 sm:flex-row sm:items-center sm:gap-4 dark:bg-gray-900"
+    >
+        <!-- Search -->
+        <mat-form-field class="w-full sm:w-64">
+            <mat-label>{{
+                'TRANSPORTS.ADMIN.FILTERS.SEARCH' | transloco
+            }}</mat-label>
+            <input
+                matInput
+                [formControl]="searchInputControl"
+                [placeholder]="'TRANSPORTS.ADMIN.FILTERS.SEARCH_PLACEHOLDER' | transloco"
+            />
+            <mat-icon
+                class="icon-size-5"
+                matPrefix
+                [svgIcon]="'heroicons_solid:magnifying-glass'"
+            ></mat-icon>
+        </mat-form-field>
+
+        <!-- Active filter -->
+        <mat-form-field class="w-full sm:w-40">
+            <mat-label>{{
+                'TRANSPORTS.ADMIN.FILTERS.STATUS' | transloco
+            }}</mat-label>
+            <mat-select
+                [(ngModel)]="selectedIsActive"
+                (selectionChange)="onFilterChange()"
+            >
+                <mat-option [value]="null">{{
+                    'TRANSPORTS.ADMIN.FILTERS.ALL_STATUS' | transloco
+                }}</mat-option>
+                <mat-option [value]="true">{{
+                    'TRANSPORTS.STATUS.ACTIVE' | transloco
+                }}</mat-option>
+                <mat-option [value]="false">{{
+                    'TRANSPORTS.STATUS.INACTIVE' | transloco
+                }}</mat-option>
+            </mat-select>
+        </mat-form-field>
+    </div>
+
+    <!-- Templates list -->
+    <div class="flex flex-auto border-t sm:overflow-hidden">
+        <div class="flex flex-auto flex-col sm:overflow-y-auto">
+            <ng-container *ngIf="templates as templates">
+                <!-- Templates table -->
+                <ng-container *ngIf="templates.length > 0; else noTemplates">
+                    <!-- Desktop table (lg and up) -->
+                    <div class="hidden lg:grid">
+                        <!-- Header -->
+                        <div
+                            class="text-secondary sticky top-0 z-10 grid gap-4 bg-gray-50 px-6 py-4 text-md font-semibold shadow md:px-8 dark:bg-gray-900"
+                            style="
+                                grid-template-columns: 48px auto 200px 180px 100px 100px 200px;
+                            "
+                        >
+                            <div></div>
+                            <div>
+                                {{ 'TRANSPORTS.ADMIN.TABLE.NAME' | transloco }}
+                            </div>
+                            <div>
+                                {{ 'TRANSPORTS.ADMIN.TABLE.ROUTE' | transloco }}
+                            </div>
+                            <div>
+                                {{ 'TRANSPORTS.ADMIN.TABLE.SCHEDULE' | transloco }}
+                            </div>
+                            <div>
+                                {{ 'TRANSPORTS.ADMIN.TABLE.CAPACITY' | transloco }}
+                            </div>
+                            <div>
+                                {{ 'TRANSPORTS.ADMIN.TABLE.ACTIVE' | transloco }}
+                            </div>
+                            <div class="text-right">
+                                {{ 'TRANSPORTS.ADMIN.TABLE.ACTIONS' | transloco }}
+                            </div>
+                        </div>
+
+                        <!-- Rows -->
+                        <ng-container
+                            *ngFor="let template of templates; trackBy: trackByFn"
+                        >
+                            <div
+                                class="grid cursor-pointer items-center gap-4 border-b px-6 py-3 hover:bg-gray-50 md:px-8 dark:hover:bg-gray-900"
+                                style="
+                                    grid-template-columns: 48px auto 200px 180px 100px 100px 200px;
+                                "
+                                (click)="viewTemplate(template.id)"
+                            >
+                                <!-- Icon -->
+                                <div>
+                                    <mat-icon
+                                        class="icon-size-5"
+                                        [svgIcon]="'heroicons_outline:truck'"
+                                    >
+                                    </mat-icon>
+                                </div>
+
+                                <!-- Name -->
+                                <div class="flex flex-col">
+                                    <span class="font-medium">{{
+                                        template.name
+                                    }}</span>
+                                    <span
+                                        class="text-secondary text-sm"
+                                        *ngIf="template.description"
+                                        >{{ template.description }}</span
+                                    >
+                                </div>
+
+                                <!-- Route -->
+                                <div class="text-sm">
+                                    <div class="flex items-center gap-1">
+                                        <span>{{ template.fromLabel }}</span>
+                                        <mat-icon
+                                            class="icon-size-4"
+                                            [svgIcon]="'heroicons_solid:arrow-right'"
+                                        ></mat-icon>
+                                        <span>{{ template.toLabel }}</span>
+                                    </div>
+                                </div>
+
+                                <!-- Schedule -->
+                                <div class="flex flex-col gap-1">
+                                    <div class="flex flex-wrap gap-1">
+                                        <span
+                                            *ngFor="let day of template.daysOfWeek"
+                                            class="inline-flex items-center rounded-full bg-blue-100 px-2 py-0.5 text-xs font-medium text-blue-800 dark:bg-blue-800 dark:text-blue-100"
+                                        >
+                                            {{ 'TRANSPORTS.DAYS.' + day + '_SHORT' | transloco }}
+                                        </span>
+                                    </div>
+                                    <span class="text-xs text-secondary">
+                                        {{ template.timeOfDay }}
+                                    </span>
+                                </div>
+
+                                <!-- Capacity -->
+                                <div class="flex items-center gap-1">
+                                    <span class="text-sm">{{ template.capacity }}</span>
+                                    <span
+                                        *ngIf="template.allowOverbook"
+                                        class="inline-flex items-center rounded-full bg-amber-100 px-2 py-0.5 text-xs font-medium text-amber-800 dark:bg-amber-800 dark:text-amber-100"
+                                        [matTooltip]="'TRANSPORTS.ADMIN.OVERBOOK_ALLOWED' | transloco"
+                                    >
+                                        {{ 'TRANSPORTS.ADMIN.OVERBOOK' | transloco }}
+                                    </span>
+                                </div>
+
+                                <!-- Active status -->
+                                <div>
+                                    <span
+                                        class="inline-flex items-center rounded-full px-2.5 py-0.5 text-xs font-bold uppercase tracking-wide"
+                                        [ngClass]="{
+                                            'bg-green-200 text-green-800 dark:bg-green-600 dark:text-green-50':
+                                                template.isActive,
+                                            'bg-gray-200 text-gray-800 dark:bg-gray-600 dark:text-gray-50':
+                                                !template.isActive,
+                                        }"
+                                    >
+                                        {{
+                                            template.isActive
+                                                ? ('TRANSPORTS.STATUS.ACTIVE'
+                                                  | transloco)
+                                                : ('TRANSPORTS.STATUS.INACTIVE'
+                                                  | transloco)
+                                        }}
+                                    </span>
+                                </div>
+
+                                <!-- Actions -->
+                                <div
+                                    class="flex items-center justify-end gap-2"
+                                    (click)="$event.stopPropagation()"
+                                >
+                                    <button
+                                        mat-icon-button
+                                        [matMenuTriggerFor]="actionsMenu"
+                                        [matTooltip]="
+                                            'TRANSPORTS.ADMIN.ACTIONS.MORE'
+                                                | transloco
+                                        "
+                                    >
+                                        <mat-icon
+                                            class="icon-size-5"
+                                            [svgIcon]="
+                                                'heroicons_outline:ellipsis-vertical'
+                                            "
+                                        >
+                                        </mat-icon>
+                                    </button>
+
+                                    <mat-menu #actionsMenu="matMenu">
+                                        <button
+                                            mat-menu-item
+                                            (click)="viewTemplate(template.id)"
+                                        >
+                                            <mat-icon
+                                                [svgIcon]="
+                                                    'heroicons_outline:eye'
+                                                "
+                                            ></mat-icon>
+                                            <span>{{
+                                                'TRANSPORTS.ADMIN.ACTIONS.VIEW_DETAILS'
+                                                    | transloco
+                                            }}</span>
+                                        </button>
+
+                                        <button
+                                            mat-menu-item
+                                            *ngIf="template.isActive"
+                                            (click)="disableTemplate(template)"
+                                        >
+                                            <mat-icon
+                                                [svgIcon]="
+                                                    'heroicons_outline:no-symbol'
+                                                "
+                                            ></mat-icon>
+                                            <span>{{
+                                                'TRANSPORTS.ADMIN.ACTIONS.DISABLE'
+                                                    | transloco
+                                            }}</span>
+                                        </button>
+                                    </mat-menu>
+                                </div>
+                            </div>
+                        </ng-container>
+                    </div>
+
+                    <!-- Mobile & Tablet list (below lg) -->
+                    <div class="grid lg:hidden">
+                        <ng-container
+                            *ngFor="let template of templates; trackBy: trackByFn"
+                        >
+                            <div
+                                class="flex cursor-pointer flex-col border-b p-6 hover:bg-gray-50 dark:hover:bg-gray-900"
+                                (click)="viewTemplate(template.id)"
+                            >
+                                <!-- Header -->
+                                <div class="mb-3 flex items-start justify-between">
+                                    <div class="flex items-center gap-3">
+                                        <mat-icon
+                                            class="icon-size-6"
+                                            [svgIcon]="'heroicons_outline:truck'"
+                                        ></mat-icon>
+                                        <div>
+                                            <div class="font-medium">
+                                                {{ template.name }}
+                                            </div>
+                                            <div
+                                                class="text-secondary text-sm"
+                                                *ngIf="template.description"
+                                            >
+                                                {{ template.description }}
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <button
+                                        mat-icon-button
+                                        [matMenuTriggerFor]="mobileActionsMenu"
+                                        (click)="$event.stopPropagation()"
+                                    >
+                                        <mat-icon
+                                            class="icon-size-5"
+                                            [svgIcon]="
+                                                'heroicons_outline:ellipsis-vertical'
+                                            "
+                                        ></mat-icon>
+                                    </button>
+
+                                    <mat-menu #mobileActionsMenu="matMenu">
+                                        <button
+                                            mat-menu-item
+                                            (click)="viewTemplate(template.id)"
+                                        >
+                                            <mat-icon
+                                                [svgIcon]="
+                                                    'heroicons_outline:eye'
+                                                "
+                                            ></mat-icon>
+                                            <span>{{
+                                                'TRANSPORTS.ADMIN.ACTIONS.VIEW_DETAILS'
+                                                    | transloco
+                                            }}</span>
+                                        </button>
+                                        <button
+                                            mat-menu-item
+                                            *ngIf="template.isActive"
+                                            (click)="disableTemplate(template)"
+                                        >
+                                            <mat-icon
+                                                [svgIcon]="
+                                                    'heroicons_outline:no-symbol'
+                                                "
+                                            ></mat-icon>
+                                            <span>{{
+                                                'TRANSPORTS.ADMIN.ACTIONS.DISABLE'
+                                                    | transloco
+                                            }}</span>
+                                        </button>
+                                    </mat-menu>
+                                </div>
+
+                                <!-- Route -->
+                                <div class="mb-2 flex items-center gap-1 text-sm">
+                                    <span>{{ template.fromLabel }}</span>
+                                    <mat-icon
+                                        class="icon-size-4"
+                                        [svgIcon]="'heroicons_solid:arrow-right'"
+                                    ></mat-icon>
+                                    <span>{{ template.toLabel }}</span>
+                                </div>
+
+                                <!-- Schedule & capacity -->
+                                <div class="flex flex-wrap items-center gap-2">
+                                    <span
+                                        *ngFor="let day of template.daysOfWeek"
+                                        class="inline-flex items-center rounded-full bg-blue-100 px-2 py-0.5 text-xs font-medium text-blue-800 dark:bg-blue-800 dark:text-blue-100"
+                                    >
+                                        {{ 'TRANSPORTS.DAYS.' + day + '_SHORT' | transloco }}
+                                    </span>
+                                    <span class="text-xs text-secondary">
+                                        {{ template.timeOfDay }}
+                                    </span>
+                                    <span class="text-xs text-secondary">
+                                        •
+                                    </span>
+                                    <span class="text-xs">
+                                        {{ 'TRANSPORTS.ADMIN.CAPACITY' | transloco }}: {{ template.capacity }}
+                                    </span>
+                                    <span
+                                        *ngIf="template.allowOverbook"
+                                        class="inline-flex items-center rounded-full bg-amber-100 px-2 py-0.5 text-xs font-medium text-amber-800 dark:bg-amber-800 dark:text-amber-100"
+                                    >
+                                        {{ 'TRANSPORTS.ADMIN.OVERBOOK' | transloco }}
+                                    </span>
+                                    <span
+                                        class="inline-flex items-center rounded-full px-2 py-0.5 text-xs font-bold uppercase tracking-wide"
+                                        [ngClass]="{
+                                            'bg-green-200 text-green-800 dark:bg-green-600 dark:text-green-50':
+                                                template.isActive,
+                                            'bg-gray-200 text-gray-800 dark:bg-gray-600 dark:text-gray-50':
+                                                !template.isActive,
+                                        }"
+                                    >
+                                        {{
+                                            template.isActive
+                                                ? ('TRANSPORTS.STATUS.ACTIVE'
+                                                  | transloco)
+                                                : ('TRANSPORTS.STATUS.INACTIVE'
+                                                  | transloco)
+                                        }}
+                                    </span>
+                                </div>
+                            </div>
+                        </ng-container>
+                    </div>
+                </ng-container>
+
+                <!-- No templates -->
+                <ng-template #noTemplates>
+                    <div
+                        class="flex flex-auto flex-col items-center justify-center bg-gray-100 dark:bg-transparent"
+                    >
+                        <mat-icon
+                            class="icon-size-24"
+                            [svgIcon]="'heroicons_outline:truck'"
+                        ></mat-icon>
+                        <div
+                            class="text-secondary mt-4 text-2xl font-semibold tracking-tight"
+                        >
+                            {{ 'TRANSPORTS.ADMIN.NO_TEMPLATES' | transloco }}
+                        </div>
+                    </div>
+                </ng-template>
+            </ng-container>
+        </div>
+    </div>
+</div>
