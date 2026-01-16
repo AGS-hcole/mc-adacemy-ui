@@ -83,7 +83,9 @@
                     <sessions-day-card
                         [sessions]="dashboardData?.sessions || []"
                         [loading]="loading"
-                        (editRating)="onEditRating($event)"
+                        [pendingRatings]="pendingRatings"
+                        (ratingChange)="onRatingChange($event)"
+                        (openCommentDialog)="onOpenCommentDialog($event)"
                     ></sessions-day-card>
                 </div>
 

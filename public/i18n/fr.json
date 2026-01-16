@@ -228,6 +228,7 @@
             "CANCELED": "Annulée",
             "OUT_OF_CONTRACT": "Hors contrat",
             "EDIT_RATING": "Modifier l'évaluation",
+            "EDIT_COMMENT": "Modifier le commentaire",
             "HAS_COMMENT": "A un commentaire"
         },
         "MANORS": {

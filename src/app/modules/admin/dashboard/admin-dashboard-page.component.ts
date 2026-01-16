@@ -13,14 +13,13 @@ import { MatIconModule } from '@angular/material/icon';
 import { MatSnackBar, MatSnackBarModule } from '@angular/material/snack-bar';
 import { TranslocoModule, TranslocoService } from '@jsverse/transloco';
 import { RatingsService } from 'app/core/session/ratings.service';
+import {
+    RatingCommentDialogComponent,
+    RatingCommentDialogData,
+} from 'app/shared/components/rating-comment-dialog/rating-comment-dialog.component';
 import { Subject, takeUntil } from 'rxjs';
 import { DashboardDateToolbarComponent } from './components/dashboard-date-toolbar.component';
 import { ManorsDayCardComponent } from './components/manors-day-card.component';
-import {
-    RatingEditDialogComponent,
-    RatingEditDialogData,
-    RatingEditDialogResult,
-} from './components/rating-edit-dialog.component';
 import { SessionsDayCardComponent } from './components/sessions-day-card.component';
 import { TransportsDayCardComponent } from './components/transports-day-card.component';
 import {
@@ -52,6 +51,7 @@ export class AdminDashboardPageComponent implements OnInit, OnDestroy {
     dashboardData: AdminDashboardDto | null = null;
     loading = false;
     error: string | null = null;
+    pendingRatings = new Set<string>();
 
     private _unsubscribeAll = new Subject<void>();
 
@@ -144,38 +144,46 @@ export class AdminDashboardPageComponent implements OnInit, OnDestroy {
     }
 
     /**
-     * Handle edit rating request
+     * Handle rating change from star rating
      */
-    onEditRating(event: {
+    onRatingChange(event: {
+        sessionId: string;
+        participant: DashboardParticipantDto;
+        score: number;
+    }): void {
+        const { sessionId, participant, score } = event;
+        const currentComment = participant.rating?.comment || '';
+        this.saveRating(sessionId, participant, score, currentComment);
+    }
+
+    /**
+     * Handle comment dialog request
+     */
+    onOpenCommentDialog(event: {
         sessionId: string;
         participant: DashboardParticipantDto;
     }): void {
-        console.log('Edit rating requested:', event);
         const { sessionId, participant } = event;
         const participantName = `${participant.firstname} ${participant.lastname}`;
         const currentRating = participant.rating;
 
         const dialogRef = this._dialog.open<
-            RatingEditDialogComponent,
-            RatingEditDialogData,
-            RatingEditDialogResult
-        >(RatingEditDialogComponent, {
+            RatingCommentDialogComponent,
+            RatingCommentDialogData,
+            string
+        >(RatingCommentDialogComponent, {
             width: '600px',
             data: {
                 participantName,
-                score: currentRating?.score ?? 0,
                 comment: currentRating?.comment || '',
             },
         });
 
-        dialogRef.afterClosed().subscribe((result) => {
-            if (result !== undefined) {
-                this.saveRating(
-                    sessionId,
-                    participant,
-                    result.score,
-                    result.comment
-                );
+        dialogRef.afterClosed().subscribe((comment) => {
+            if (comment !== undefined) {
+                // Keep the current score, only update comment
+                const score = currentRating?.score ?? 0;
+                this.saveRating(sessionId, participant, score, comment);
             }
         });
     }
@@ -201,6 +209,9 @@ export class AdminDashboardPageComponent implements OnInit, OnDestroy {
             comment
         );
 
+        this.pendingRatings.add(participant.userId);
+        this._changeDetectorRef.markForCheck();
+
         this._ratingsService
             .upsert(sessionId, participant.userId, { score, comment })
             .pipe(takeUntil(this._unsubscribeAll))
@@ -214,6 +225,9 @@ export class AdminDashboardPageComponent implements OnInit, OnDestroy {
                         rating.comment || null
                     );
 
+                    this.pendingRatings.delete(participant.userId);
+                    this._changeDetectorRef.markForCheck();
+
                     this._snackBar.open(
                         this._translocoService.translate(
                             'DASHBOARD.RATING_SAVED'
@@ -224,6 +238,7 @@ export class AdminDashboardPageComponent implements OnInit, OnDestroy {
                 },
                 error: (error) => {
                     console.error('Failed to save rating:', error);
+                    this.pendingRatings.delete(participant.userId);
                     // Rollback optimistic update
                     if (optimisticData) {
                         this.dashboardData = optimisticData.original;

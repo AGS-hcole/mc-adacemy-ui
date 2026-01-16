@@ -10,9 +10,11 @@ import {
 import { MatButtonModule } from '@angular/material/button';
 import { MatCardModule } from '@angular/material/card';
 import { MatIconModule } from '@angular/material/icon';
+import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 import { MatTooltipModule } from '@angular/material/tooltip';
 import { TranslocoModule } from '@jsverse/transloco';
 import { SessionSlot } from 'app/core/session/session.types';
+import { StarRatingComponent } from 'app/shared/components/star-rating/star-rating.component';
 import {
     DashboardParticipantDto,
     DashboardSessionDto,
@@ -30,13 +32,21 @@ import {
         MatButtonModule,
         MatIconModule,
         MatTooltipModule,
+        MatProgressSpinnerModule,
         TranslocoModule,
+        StarRatingComponent,
     ],
 })
 export class SessionsDayCardComponent {
     @Input() sessions: DashboardSessionDto[] = [];
     @Input() loading = false;
-    @Output() editRating = new EventEmitter<{
+    @Input() pendingRatings = new Set<string>();
+    @Output() ratingChange = new EventEmitter<{
+        sessionId: string;
+        participant: DashboardParticipantDto;
+        score: number;
+    }>();
+    @Output() openCommentDialog = new EventEmitter<{
         sessionId: string;
         participant: DashboardParticipantDto;
     }>();
@@ -140,24 +150,48 @@ export class SessionsDayCardComponent {
     }
 
     /**
-     * Handle edit rating click
+     * Handle rating change
      */
-    onEditRating(
+    onRatingChange(
         sessionId: string,
-        participant: DashboardParticipantDto
+        participant: DashboardParticipantDto,
+        score: number
     ): void {
-        console.log('Emitting edit rating for participant:', participant);
-        this.editRating.emit({ sessionId, participant });
+        this.ratingChange.emit({ sessionId, participant, score });
     }
 
     /**
-     * Get rating score display
+     * Handle comment button click
      */
-    getRatingDisplay(participant: DashboardParticipantDto): string {
-        if (participant.rating) {
-            return `${participant.rating.score}/10`;
-        }
-        return 'Not rated';
+    onCommentClick(
+        sessionId: string,
+        participant: DashboardParticipantDto
+    ): void {
+        this.openCommentDialog.emit({ sessionId, participant });
+    }
+
+    /**
+     * Get rating score for participant
+     */
+    getRatingScore(participant: DashboardParticipantDto): number {
+        return participant.rating?.score ?? 0;
+    }
+
+    /**
+     * Check if participant has a comment
+     */
+    hasComment(participant: DashboardParticipantDto): boolean {
+        return !!(
+            participant.rating?.comment &&
+            participant.rating.comment.trim().length > 0
+        );
+    }
+
+    /**
+     * Check if rating is pending for participant
+     */
+    isRatingPending(participant: DashboardParticipantDto): boolean {
+        return this.pendingRatings.has(participant.userId);
     }
 
     /**

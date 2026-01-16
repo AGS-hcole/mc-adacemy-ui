@@ -136,8 +136,8 @@
                             >
                                 <div class="flex-auto">
                                     <div class="font-medium">
-                                        {{ participant.user.lastname }}
-                                        {{ participant.user.firstname }}
+                                        {{ participant.lastname }}
+                                        {{ participant.firstname }}
                                     </div>
                                     <div
                                         class="mt-1 flex items-center gap-2 text-sm"
@@ -157,69 +157,65 @@
                                         </span>
                                     </div>
                                     <div
-                                        *ngIf="participant.comment"
+                                        *ngIf="participant.attendanceComment"
                                         class="text-secondary mt-1 text-sm"
                                     >
-                                        {{ participant.comment }}
+                                        {{ participant.attendanceComment }}
                                     </div>
                                 </div>
                                 <div class="flex items-center gap-2">
-                                    <div class="text-right">
-                                        <div
-                                            class="text-sm font-medium"
-                                            [class.text-green-600]="
-                                                participant.rating &&
-                                                participant.rating.score >= 7
+                                    <div class="flex flex-auto items-center gap-2">
+                                        <!-- Star rating -->
+                                        <star-rating
+                                            [value]="getRatingScore(participant)"
+                                            [max]="10"
+                                            [readonly]="false"
+                                            (change)="
+                                                onRatingChange(
+                                                    session.id,
+                                                    participant,
+                                                    $event
+                                                )
                                             "
-                                            [class.text-orange-600]="
-                                                participant.rating &&
-                                                participant.rating.score >= 4 &&
-                                                participant.rating.score < 7
-                                            "
-                                            [class.text-red-600]="
-                                                participant.rating &&
-                                                participant.rating.score < 4
-                                            "
-                                            [class.text-gray-400]="
-                                                !participant.rating
-                                            "
-                                        >
-                                            {{ getRatingDisplay(participant) }}
-                                        </div>
-                                        <div
-                                            *ngIf="participant.comment"
-                                            class="text-secondary mt-1 flex items-center gap-1 text-xs"
-                                        >
-                                            <mat-icon
-                                                [svgIcon]="
-                                                    'heroicons_solid:chat-bubble-left-ellipsis'
-                                                "
-                                                class="icon-size-3"
-                                            ></mat-icon>
-                                            <span>{{
-                                                'DASHBOARD.SESSIONS.HAS_COMMENT'
+                                        ></star-rating>
+                                        <!-- Comment button -->
+                                        <button
+                                            mat-icon-button
+                                            [matTooltip]="
+                                                'DASHBOARD.SESSIONS.EDIT_COMMENT'
                                                     | transloco
                                                         : {
                                                               defaultValue:
-                                                                  'Has comment',
+                                                                  'Edit comment',
                                                           }
-                                            }}</span>
-                                        </div>
+                                            "
+                                            (click)="
+                                                onCommentClick(
+                                                    session.id,
+                                                    participant
+                                                )
+                                            "
+                                            [color]="
+                                                hasComment(participant)
+                                                    ? 'primary'
+                                                    : ''
+                                            "
+                                        >
+                                            <mat-icon
+                                                class="icon-size-5"
+                                                [svgIcon]="
+                                                    hasComment(participant)
+                                                        ? 'heroicons_solid:chat-bubble-left-right'
+                                                        : 'heroicons_outline:chat-bubble-left-right'
+                                                "
+                                            ></mat-icon>
+                                        </button>
+                                        <!-- Loading spinner -->
+                                        <mat-spinner
+                                            *ngIf="isRatingPending(participant)"
+                                            [diameter]="20"
+                                        ></mat-spinner>
                                     </div>
-                                    <button
-                                        mat-icon-button
-                                        color="primary"
-                                        (click)="
-                                            onEditRating(
-                                                session.id,
-                                                participant
-                                            )
-                                        "
-                                    >
-                                        <mat-icon
-                                            [svgIcon]="'heroicons_solid:pencil'"
-                                        ></mat-icon>
-                                    </button>
                                 </div>
                             </div>
                         </div>
