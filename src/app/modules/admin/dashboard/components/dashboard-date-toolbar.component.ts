@@ -72,12 +72,13 @@ export class DashboardDateToolbarComponent {
     }
 
     /**
-     * Format date for display
+     * Format date for display using user's locale
      */
     getFormattedDate(): string {
         if (!this.selectedDate) {
             return '';
         }
+        // TODO: Use application's i18n locale setting instead of hardcoded 'fr-FR'
         return this.selectedDate.toLocaleDateString('fr-FR', {
             weekday: 'long',
             year: 'numeric',

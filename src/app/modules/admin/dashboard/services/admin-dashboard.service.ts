@@ -120,7 +120,8 @@ export class AdminDashboardService {
     }
 
     /**
-     * Get today's date in YYYY-MM-DD format (Europe/Paris timezone)
+     * Get today's date in YYYY-MM-DD format
+     * Note: Uses browser's local date, not timezone-specific
      */
     private getTodayString(): string {
         const now = new Date();

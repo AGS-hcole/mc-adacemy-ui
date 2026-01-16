@@ -25,7 +25,7 @@
 
         <!-- Sessions grouped by slot and site -->
         <div *ngIf="!loading && sessions.length > 0" class="space-y-6">
-            <div *ngFor="let slotGroup of getGroupedSessions(); trackBy: trackBySessionId" class="space-y-4">
+            <div *ngFor="let slotGroup of getGroupedSessions()" class="space-y-4">
                 <!-- Slot header -->
                 <div class="flex items-center gap-2">
                     <span

@@ -259,12 +259,10 @@ export class AdminDashboardPageComponent implements OnInit, OnDestroy {
             return null;
         }
 
-        const original = JSON.parse(
-            JSON.stringify(this.dashboardData)
-        ) as AdminDashboardDto;
-        const updated = JSON.parse(
-            JSON.stringify(this.dashboardData)
-        ) as AdminDashboardDto;
+        // Simple shallow clone for rollback (only used if API call fails)
+        const original = { ...this.dashboardData };
+        // Create updated version by modifying current data
+        const updated = this.dashboardData;
 
         // Find and update the participant
         const session = updated.sessions.find((s) => s.id === sessionId);
@@ -278,7 +276,7 @@ export class AdminDashboardPageComponent implements OnInit, OnDestroy {
                     participant.rating.comment = comment || null;
                 } else {
                     participant.rating = {
-                        id: 'temp',
+                        id: `temp-${Date.now()}-${userId}`,
                         score,
                         comment: comment || null,
                     };
@@ -286,7 +284,6 @@ export class AdminDashboardPageComponent implements OnInit, OnDestroy {
             }
         }
 
-        this.dashboardData = updated;
         const dateString = this.formatDateToYYYYMMDD(this.selectedDate);
         this._dashboardService.updateCache(dateString, updated);
         this._changeDetectorRef.markForCheck();
