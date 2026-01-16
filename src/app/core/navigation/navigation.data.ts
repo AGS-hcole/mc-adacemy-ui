@@ -46,11 +46,11 @@ export const adminNavigation: FuseNavigationItem[] = [
                 link: '/admin/sites',
             },
             {
-                id: 'sessions',
-                title: 'NAVIGATION.ADMIN.SESSIONS.TITLE',
+                id: 'manors',
+                title: 'NAVIGATION.ADMIN.MANORS.TITLE',
                 type: 'basic',
-                icon: 'heroicons_outline:calendar',
-                link: '/admin/sessions',
+                icon: 'heroicons_outline:building-office-2',
+                link: '/admin/manors',
             },
             {
                 id: 'transports',
@@ -58,6 +58,13 @@ export const adminNavigation: FuseNavigationItem[] = [
                 type: 'basic',
                 icon: 'heroicons_outline:truck',
                 link: '/admin/transports',
+            },
+            {
+                id: 'sessions',
+                title: 'NAVIGATION.ADMIN.SESSIONS.TITLE',
+                type: 'basic',
+                icon: 'heroicons_outline:calendar',
+                link: '/admin/sessions',
             },
             {
                 id: 'tournaments',
@@ -80,13 +87,6 @@ export const adminNavigation: FuseNavigationItem[] = [
                 icon: 'heroicons_outline:chart-bar',
                 link: '/admin/reports',
             },
-            {
-                id: 'manors',
-                title: 'NAVIGATION.ADMIN.MANORS.TITLE',
-                type: 'basic',
-                icon: 'heroicons_outline:building-office-2',
-                link: '/admin/manors',
-            },
         ],
     },
 ];
@@ -102,11 +102,11 @@ export const userNavigation: FuseNavigationItem[] = [
         subtitle: 'NAVIGATION.USER.SUBTITLE',
         children: [
             {
-                id: 'sessions',
-                title: 'NAVIGATION.USER.SESSIONS.TITLE',
+                id: 'my-nights',
+                title: 'NAVIGATION.USER.MY_NIGHTS.TITLE',
                 type: 'basic',
-                icon: 'heroicons_outline:calendar',
-                link: '/user/sessions',
+                icon: 'heroicons_outline:moon',
+                link: '/user/my-nights',
             },
             {
                 id: 'transports',
@@ -116,18 +116,18 @@ export const userNavigation: FuseNavigationItem[] = [
                 link: '/user/transports',
             },
             {
+                id: 'sessions',
+                title: 'NAVIGATION.USER.SESSIONS.TITLE',
+                type: 'basic',
+                icon: 'heroicons_outline:calendar',
+                link: '/user/sessions',
+            },
+            {
                 id: 'tournaments',
                 title: 'NAVIGATION.USER.TOURNAMENTS.TITLE',
                 type: 'basic',
                 icon: 'heroicons_outline:trophy',
                 link: '/user/tournaments',
-            },
-            {
-                id: 'my-nights',
-                title: 'NAVIGATION.USER.MY_NIGHTS.TITLE',
-                type: 'basic',
-                icon: 'heroicons_outline:moon',
-                link: '/user/my-nights',
             },
         ],
     },

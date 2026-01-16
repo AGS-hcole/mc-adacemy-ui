@@ -150,6 +150,7 @@ export class AdminDashboardPageComponent implements OnInit, OnDestroy {
         sessionId: string;
         participant: DashboardParticipantDto;
     }): void {
+        console.log('Edit rating requested:', event);
         const { sessionId, participant } = event;
         const participantName = `${participant.firstname} ${participant.lastname}`;
         const currentRating = participant.rating;

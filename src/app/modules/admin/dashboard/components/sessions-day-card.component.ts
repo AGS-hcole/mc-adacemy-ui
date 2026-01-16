@@ -85,8 +85,10 @@ export class SessionsDayCardComponent {
 
         sortedSlots.forEach((slot) => {
             const siteGroups = groups.get(slot)!;
-            const sites: { siteName: string; sessions: DashboardSessionDto[] }[] =
-                [];
+            const sites: {
+                siteName: string;
+                sessions: DashboardSessionDto[];
+            }[] = [];
 
             siteGroups.forEach((sessions, siteName) => {
                 sites.push({ siteName, sessions });
@@ -106,29 +108,45 @@ export class SessionsDayCardComponent {
      * Get time range display for session
      */
     getTimeRange(session: DashboardSessionDto): string {
-        const start = session.startTime || (session.slot === SessionSlot.AM ? '09:00' : '14:00');
-        const end = session.endTime || (session.slot === SessionSlot.AM ? '12:00' : '17:00');
+        // Helper to parse ISO date string and return local time string in HH:mm
+        const toLocalTime = (
+            isoString: string | undefined,
+            fallback: string
+        ): string => {
+            if (!isoString) return fallback;
+            const date = new Date(isoString);
+            if (isNaN(date.getTime())) return fallback;
+            const pad = (n: number) => n.toString().padStart(2, '0');
+            return `${pad(date.getHours())}:${pad(date.getMinutes())}`;
+        };
+
+        const defaultStart =
+            session.slot === SessionSlot.AM ? '09:00' : '14:00';
+        const defaultEnd = session.slot === SessionSlot.AM ? '12:00' : '17:00';
+
+        const start = toLocalTime(session.startTime, defaultStart);
+        const end = toLocalTime(session.endTime, defaultEnd);
+
         return `${start} - ${end}`;
     }
 
     /**
      * Get participants with YES status
      */
-    getConfirmedParticipants(session: DashboardSessionDto): DashboardParticipantDto[] {
+    getConfirmedParticipants(
+        session: DashboardSessionDto
+    ): DashboardParticipantDto[] {
         return session.participants.filter((p) => p.status === 'YES');
-    }
-
-    /**
-     * Get participants with NO status
-     */
-    getDeclinedParticipants(session: DashboardSessionDto): DashboardParticipantDto[] {
-        return session.participants.filter((p) => p.status === 'NO');
     }
 
     /**
      * Handle edit rating click
      */
-    onEditRating(sessionId: string, participant: DashboardParticipantDto): void {
+    onEditRating(
+        sessionId: string,
+        participant: DashboardParticipantDto
+    ): void {
+        console.log('Emitting edit rating for participant:', participant);
         this.editRating.emit({ sessionId, participant });
     }
 
@@ -152,7 +170,10 @@ export class SessionsDayCardComponent {
     /**
      * Track by participant
      */
-    trackByParticipantId(index: number, participant: DashboardParticipantDto): string {
+    trackByParticipantId(
+        index: number,
+        participant: DashboardParticipantDto
+    ): string {
         return participant.userId;
     }
 }
