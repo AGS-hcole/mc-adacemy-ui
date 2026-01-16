@@ -13,7 +13,6 @@ import { AdminDashboardDto } from '../models/admin-dashboard.models';
 @Injectable({ providedIn: 'root' })
 export class AdminDashboardService {
     private apiUrl = environment.apiUrl;
-    private cache = new Map<string, AdminDashboardDto>();
     private _loading = new BehaviorSubject<boolean>(false);
     private _error = new BehaviorSubject<string | null>(null);
     private _currentData = new BehaviorSubject<AdminDashboardDto | null>(null);
@@ -54,24 +53,9 @@ export class AdminDashboardService {
 
     /**
      * Get dashboard data for a specific date
-     * Uses cache if available, unless forceRefresh is true
+     * Always fetches fresh data from the server
      */
-    getDashboard(
-        date?: string,
-        forceRefresh = false
-    ): Observable<AdminDashboardDto> {
-        const dateKey = date || this.getTodayString();
-
-        // Check cache
-        if (!forceRefresh && this.cache.has(dateKey)) {
-            const cached = this.cache.get(dateKey)!;
-            this._currentData.next(cached);
-            return new Observable((observer) => {
-                observer.next(cached);
-                observer.complete();
-            });
-        }
-
+    getDashboard(date?: string): Observable<AdminDashboardDto> {
         // Build URL
         const url = date
             ? `${this.apiUrl}/admin/dashboard?date=${encodeURIComponent(date)}`
@@ -82,7 +66,6 @@ export class AdminDashboardService {
 
         return this._httpClient.get<AdminDashboardDto>(url).pipe(
             tap((data) => {
-                this.cache.set(dateKey, data);
                 this._currentData.next(data);
                 this._loading.next(false);
             }),
@@ -96,26 +79,9 @@ export class AdminDashboardService {
     }
 
     /**
-     * Refresh dashboard data for a specific date (force reload from API)
+     * Update local data state (for optimistic updates)
      */
-    refresh(date?: string): Observable<AdminDashboardDto> {
-        const dateKey = date || this.getTodayString();
-        this.cache.delete(dateKey);
-        return this.getDashboard(date, true);
-    }
-
-    /**
-     * Clear all cached data
-     */
-    clearCache(): void {
-        this.cache.clear();
-    }
-
-    /**
-     * Update local cache with modified data (for optimistic updates)
-     */
-    updateCache(date: string, data: AdminDashboardDto): void {
-        this.cache.set(date, data);
+    updateData(data: AdminDashboardDto): void {
         this._currentData.next(data);
     }
 

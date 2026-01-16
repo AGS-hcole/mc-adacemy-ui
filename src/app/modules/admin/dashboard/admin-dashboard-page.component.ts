@@ -267,11 +267,7 @@ export class AdminDashboardPageComponent implements OnInit, OnDestroy {
                     // Rollback optimistic update
                     if (optimisticData) {
                         this.dashboardData = optimisticData.original;
-                        const dateString = this.formatDateToYYYYMMDD(
-                            this.selectedDate
-                        );
-                        this._dashboardService.updateCache(
-                            dateString,
+                        this._dashboardService.updateData(
                             optimisticData.original
                         );
                     }
@@ -326,15 +322,14 @@ export class AdminDashboardPageComponent implements OnInit, OnDestroy {
             }
         }
 
-        const dateString = this.formatDateToYYYYMMDD(this.selectedDate);
-        this._dashboardService.updateCache(dateString, updated);
+        this._dashboardService.updateData(updated);
         this._changeDetectorRef.markForCheck();
 
         return { original, updated };
     }
 
     /**
-     * Update rating in cache with server data
+     * Update rating in local data with server data
      */
     private updateRatingInCache(
         sessionId: string,
@@ -359,8 +354,7 @@ export class AdminDashboardPageComponent implements OnInit, OnDestroy {
             }
         }
 
-        const dateString = this.formatDateToYYYYMMDD(this.selectedDate);
-        this._dashboardService.updateCache(dateString, this.dashboardData);
+        this._dashboardService.updateData(this.dashboardData);
         this._changeDetectorRef.markForCheck();
     }
 
