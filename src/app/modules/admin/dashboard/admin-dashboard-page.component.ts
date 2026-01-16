@@ -11,6 +11,7 @@ import { MatButtonModule } from '@angular/material/button';
 import { MatDialog } from '@angular/material/dialog';
 import { MatIconModule } from '@angular/material/icon';
 import { MatSnackBar, MatSnackBarModule } from '@angular/material/snack-bar';
+import { ActivatedRoute, Router } from '@angular/router';
 import { TranslocoModule, TranslocoService } from '@jsverse/transloco';
 import { RatingsService } from 'app/core/session/ratings.service';
 import {
@@ -63,7 +64,9 @@ export class AdminDashboardPageComponent implements OnInit, OnDestroy {
         private _changeDetectorRef: ChangeDetectorRef,
         private _dialog: MatDialog,
         private _snackBar: MatSnackBar,
-        private _translocoService: TranslocoService
+        private _translocoService: TranslocoService,
+        private _route: ActivatedRoute,
+        private _router: Router
     ) {}
 
     // -----------------------------------------------------------------------------------------------------
@@ -74,6 +77,30 @@ export class AdminDashboardPageComponent implements OnInit, OnDestroy {
      * On init
      */
     ngOnInit(): void {
+        // Get initial date from query params or use today
+        const dateParam = this._route.snapshot.queryParamMap.get('date');
+        if (dateParam) {
+            this.selectedDate = this.parseDateFromYYYYMMDD(dateParam);
+        }
+
+        // Subscribe to route data for resolved dashboard data
+        this._route.data.pipe(takeUntil(this._unsubscribeAll)).subscribe({
+            next: (data) => {
+                if (data['dashboardData']) {
+                    this.dashboardData = data['dashboardData'];
+                    this.loading = false;
+                    this.error = null;
+                    this._changeDetectorRef.markForCheck();
+                }
+            },
+            error: (error) => {
+                console.error('Failed to load dashboard from resolver:', error);
+                this.loading = false;
+                this.error = error?.message || 'Failed to load dashboard';
+                this._changeDetectorRef.markForCheck();
+            },
+        });
+
         // Subscribe to loading state
         this._dashboardService.loading$
             .pipe(takeUntil(this._unsubscribeAll))
@@ -90,17 +117,15 @@ export class AdminDashboardPageComponent implements OnInit, OnDestroy {
                 this._changeDetectorRef.markForCheck();
             });
 
-        // Subscribe to data
+        // Subscribe to data changes (for updates after initial load)
         this._dashboardService.data$
             .pipe(takeUntil(this._unsubscribeAll))
             .subscribe((data) => {
-                console.log(data);
-                this.dashboardData = data;
-                this._changeDetectorRef.markForCheck();
+                if (data) {
+                    this.dashboardData = data;
+                    this._changeDetectorRef.markForCheck();
+                }
             });
-
-        // Load initial data
-        this.loadDashboard();
     }
 
     /**
@@ -116,30 +141,31 @@ export class AdminDashboardPageComponent implements OnInit, OnDestroy {
     // -----------------------------------------------------------------------------------------------------
 
     /**
-     * Load dashboard data for selected date
-     */
-    loadDashboard(): void {
-        const dateString = this.formatDateToYYYYMMDD(this.selectedDate);
-        this._dashboardService.getDashboard(dateString).subscribe({
-            error: (error) => {
-                console.error('Failed to load dashboard:', error);
-            },
-        });
-    }
-
-    /**
      * Handle date change
      */
     onDateChange(date: Date): void {
         this.selectedDate = date;
-        this.loadDashboard();
+        const dateString = this.formatDateToYYYYMMDD(date);
+        
+        // Navigate with query params to trigger resolver
+        this._router.navigate([], {
+            relativeTo: this._route,
+            queryParams: { date: dateString },
+            queryParamsHandling: 'merge',
+        });
     }
 
     /**
      * Retry loading on error
      */
     retry(): void {
-        this.loadDashboard();
+        // Navigate to current route to trigger resolver reload
+        const dateString = this.formatDateToYYYYMMDD(this.selectedDate);
+        this._router.navigate([], {
+            relativeTo: this._route,
+            queryParams: { date: dateString },
+            queryParamsHandling: 'merge',
+        });
     }
 
     /**
@@ -346,5 +372,13 @@ export class AdminDashboardPageComponent implements OnInit, OnDestroy {
         const month = String(date.getMonth() + 1).padStart(2, '0');
         const day = String(date.getDate()).padStart(2, '0');
         return `${year}-${month}-${day}`;
+    }
+
+    /**
+     * Parse date from YYYY-MM-DD string
+     */
+    private parseDateFromYYYYMMDD(dateString: string): Date {
+        const [year, month, day] = dateString.split('-').map(Number);
+        return new Date(year, month - 1, day);
     }
 }
