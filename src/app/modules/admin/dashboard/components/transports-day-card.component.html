@@ -1,0 +1,176 @@
+<mat-card class="flex flex-col">
+    <mat-card-header class="border-b px-6 py-4">
+        <mat-card-title class="text-lg font-medium">
+            <mat-icon
+                [svgIcon]="'heroicons_solid:truck'"
+                class="mr-2 icon-size-5"
+            ></mat-icon>
+            {{
+                'DASHBOARD.TRANSPORTS.TITLE'
+                    | transloco: { defaultValue: 'Transports' }
+            }}
+        </mat-card-title>
+    </mat-card-header>
+
+    <mat-card-content class="flex-auto p-6">
+        <!-- Loading state -->
+        <div *ngIf="loading" class="flex items-center justify-center py-12">
+            <div class="text-secondary text-center">
+                <mat-icon
+                    [svgIcon]="'heroicons_outline:arrow-path'"
+                    class="animate-spin icon-size-8"
+                ></mat-icon>
+                <div class="mt-2">
+                    {{
+                        'DASHBOARD.LOADING'
+                            | transloco: { defaultValue: 'Loading...' }
+                    }}
+                </div>
+            </div>
+        </div>
+
+        <!-- Empty state -->
+        <div
+            *ngIf="!loading && transports.length === 0"
+            class="text-secondary flex flex-col items-center justify-center py-12"
+        >
+            <mat-icon
+                [svgIcon]="'heroicons_outline:truck'"
+                class="opacity-50 icon-size-12"
+            ></mat-icon>
+            <div class="mt-4 text-center">
+                {{
+                    'DASHBOARD.TRANSPORTS.EMPTY'
+                        | transloco
+                            : {
+                                  defaultValue:
+                                      'No transports scheduled for this day',
+                              }
+                }}
+            </div>
+        </div>
+
+        <!-- Transports list -->
+        <div *ngIf="!loading && transports.length > 0" class="space-y-4">
+            <div
+                *ngFor="
+                    let occurrence of transports;
+                    trackBy: trackByOccurrenceId
+                "
+                class="bg-default rounded-lg border p-4"
+            >
+                <!-- Occurrence header -->
+                <div class="mb-3 flex items-center justify-between">
+                    <div class="flex-auto">
+                        <div class="font-medium">
+                            {{ occurrence.templateName }}
+                        </div>
+                        <div
+                            class="text-secondary mt-1 flex items-center gap-2 text-sm"
+                        >
+                            <mat-icon
+                                [svgIcon]="'heroicons_solid:clock'"
+                                class="icon-size-4"
+                            ></mat-icon>
+                            <span>{{
+                                occurrence.departureAt | date: 'HH:mm'
+                            }}</span>
+                            <span class="mx-1">•</span>
+                            <span
+                                >{{ occurrence.template.fromLabel }} →
+                                {{ occurrence.template.toLabel }}</span
+                            >
+                        </div>
+                    </div>
+                    <div class="flex items-center gap-2">
+                        <!-- <span
+                            class="rounded px-2 py-1 text-xs font-medium"
+                            [class.bg-green-100]="
+                                occurrence.status === 'SCHEDULED'
+                            "
+                            [class.text-green-800]="
+                                occurrence.status === 'SCHEDULED'
+                            "
+                            [class.bg-red-100]="
+                                occurrence.status === 'CANCELLED'
+                            "
+                            [class.text-red-800]="
+                                occurrence.status === 'CANCELLED'
+                            "
+                            [class.bg-gray-100]="
+                                occurrence.status === 'COMPLETED'
+                            "
+                            [class.text-gray-800]="
+                                occurrence.status === 'COMPLETED'
+                            "
+                        >
+                            {{ occurrence.status }}
+                        </span> -->
+                        <span
+                            class="rounded bg-blue-100 px-2 py-1 text-xs font-medium text-blue-800"
+                            [matTooltip]="
+                                'DASHBOARD.TRANSPORTS.CAPACITY'
+                                    | transloco
+                                        : { defaultValue: 'Booked / Capacity' }
+                            "
+                        >
+                            {{ getTotalBookedSeats(occurrence) }} /
+                            {{ occurrence.capacity }}
+                        </span>
+                    </div>
+                </div>
+
+                <!-- Bookings list -->
+                <div
+                    *ngIf="getConfirmedBookings(occurrence).length > 0"
+                    class="space-y-2"
+                >
+                    <div
+                        *ngFor="
+                            let booking of getConfirmedBookings(occurrence);
+                            trackBy: trackByBookingId
+                        "
+                        class="flex items-center justify-between rounded border-l-4 border-blue-500 bg-gray-50 p-3 dark:bg-gray-800"
+                    >
+                        <div class="flex-auto">
+                            <div class="font-medium">
+                                {{ booking.user.lastname }}
+                                {{ booking.user.firstname }}
+                            </div>
+                            <div class="mt-1 flex items-center gap-2 text-sm">
+                                <span
+                                    class="rounded bg-blue-100 px-2 py-0.5 text-xs font-medium text-blue-800"
+                                >
+                                    {{ booking.status }}
+                                </span>
+                                <span class="text-secondary">
+                                    {{ booking.seats }}
+                                    {{
+                                        booking.seats === 1
+                                            ? ('DASHBOARD.TRANSPORTS.SEAT'
+                                              | transloco
+                                                  : { defaultValue: 'seat' })
+                                            : ('DASHBOARD.TRANSPORTS.SEATS'
+                                              | transloco
+                                                  : { defaultValue: 'seats' })
+                                    }}
+                                </span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- No bookings message -->
+                <div
+                    *ngIf="getConfirmedBookings(occurrence).length === 0"
+                    class="text-secondary text-center text-sm"
+                >
+                    {{
+                        'DASHBOARD.TRANSPORTS.NO_BOOKINGS'
+                            | transloco: { defaultValue: 'No bookings yet' }
+                    }}
+                </div>
+            </div>
+        </div>
+    </mat-card-content>
+</mat-card>

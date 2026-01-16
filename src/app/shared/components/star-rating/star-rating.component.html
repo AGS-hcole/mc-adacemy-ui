@@ -14,7 +14,7 @@
         <button
             *ngFor="let star of stars; let i = index"
             type="button"
-            class="star-button focus:outline-none focus:ring-2 focus:ring-amber-500 focus:ring-offset-2 rounded transition-all duration-150"
+            class="star-button rounded transition-all duration-150 focus:outline-none focus:ring-2 focus:ring-amber-500 focus:ring-offset-2"
             [class.cursor-pointer]="!readonly"
             [class.cursor-default]="readonly"
             [disabled]="readonly"
