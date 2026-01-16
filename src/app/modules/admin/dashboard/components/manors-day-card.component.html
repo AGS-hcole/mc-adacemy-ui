@@ -1,8 +1,11 @@
 <mat-card class="flex flex-col">
     <mat-card-header class="border-b px-6 py-4">
         <mat-card-title class="text-lg font-medium">
-            <mat-icon [svgIcon]="'heroicons_solid:home'" class="icon-size-5 mr-2"></mat-icon>
-            {{ 'DASHBOARD.MANORS.TITLE' | transloco: { defaultValue: 'Manor Stays' } }}
+            <mat-icon
+                [svgIcon]="'heroicons_solid:home'"
+                class="mr-2 icon-size-5"
+            ></mat-icon>
+            {{ 'DASHBOARD.MANORS.TITLE' | transloco }}
         </mat-card-title>
     </mat-card-header>
 
@@ -10,16 +13,27 @@
         <!-- Loading state -->
         <div *ngIf="loading" class="flex items-center justify-center py-12">
             <div class="text-secondary text-center">
-                <mat-icon [svgIcon]="'heroicons_outline:arrow-path'" class="icon-size-8 animate-spin"></mat-icon>
-                <div class="mt-2">{{ 'DASHBOARD.LOADING' | transloco: { defaultValue: 'Loading...' } }}</div>
+                <mat-icon
+                    [svgIcon]="'heroicons_outline:arrow-path'"
+                    class="animate-spin icon-size-8"
+                ></mat-icon>
+                <div class="mt-2">
+                    {{ 'DASHBOARD.LOADING' | transloco }}
+                </div>
             </div>
         </div>
 
         <!-- Empty state -->
-        <div *ngIf="!loading && manors.length === 0" class="flex flex-col items-center justify-center py-12 text-secondary">
-            <mat-icon [svgIcon]="'heroicons_outline:home'" class="icon-size-12 opacity-50"></mat-icon>
+        <div
+            *ngIf="!loading && manors.length === 0"
+            class="text-secondary flex flex-col items-center justify-center py-12"
+        >
+            <mat-icon
+                [svgIcon]="'heroicons_outline:home'"
+                class="opacity-50 icon-size-12"
+            ></mat-icon>
             <div class="mt-4 text-center">
-                {{ 'DASHBOARD.MANORS.EMPTY' | transloco: { defaultValue: 'No manor stays for this day' } }}
+                {{ 'DASHBOARD.MANORS.EMPTY' | transloco }}
             </div>
         </div>
 
@@ -33,26 +47,33 @@
                 <div class="mb-3 flex items-center justify-between">
                     <div>
                         <div class="font-medium">{{ manor.name }}</div>
-                        <div class="text-sm text-secondary">{{ manor.city }}</div>
+                        <div class="text-secondary text-sm">
+                            {{ manor.city }}
+                        </div>
                     </div>
                     <div class="flex items-center gap-2">
                         <span
                             class="rounded bg-gray-100 px-2 py-1 text-xs font-medium text-gray-700 dark:bg-gray-700 dark:text-gray-300"
-                            [matTooltip]="'DASHBOARD.MANORS.CAPACITY' | transloco: { defaultValue: 'Capacity' }"
+                            [matTooltip]="
+                                'DASHBOARD.MANORS.CAPACITY' | transloco
+                            "
                         >
-                            {{ getActiveStaysCount(manor) }} / {{ manor.capacity }}
+                            {{ getActiveStaysCount(manor) }} /
+                            {{ manor.capacity }}
                         </span>
                         <span
                             *ngIf="hasOverCapacity(manor)"
                             class="rounded bg-red-100 px-2 py-1 text-xs font-medium text-red-800"
                         >
-                            {{ 'DASHBOARD.MANORS.OVER_CAPACITY' | transloco: { defaultValue: 'Over capacity' } }}
+                            {{ 'DASHBOARD.MANORS.OVER_CAPACITY' | transloco }}
                         </span>
                         <mat-icon
                             *ngIf="manor.enforceCapacity"
                             [svgIcon]="'heroicons_solid:shield-check'"
-                            class="icon-size-4 text-blue-600"
-                            [matTooltip]="'DASHBOARD.MANORS.ENFORCE_CAPACITY' | transloco: { defaultValue: 'Capacity enforced' }"
+                            class="text-blue-600 icon-size-4"
+                            [matTooltip]="
+                                'DASHBOARD.MANORS.ENFORCE_CAPACITY' | transloco
+                            "
                         ></mat-icon>
                     </div>
                 </div>
@@ -60,22 +81,34 @@
                 <!-- Stays list -->
                 <div class="space-y-2">
                     <div
-                        *ngFor="let stay of getVisibleStays(manor); trackBy: trackByStayId"
+                        *ngFor="
+                            let stay of getVisibleStays(manor);
+                            trackBy: trackByStayId
+                        "
                         class="flex items-center justify-between rounded border-l-4 bg-gray-50 p-3 dark:bg-gray-800"
                         [class.border-blue-500]="!stay.overCapacity"
                         [class.border-red-500]="stay.overCapacity"
                     >
                         <div class="flex-auto">
                             <div class="font-medium">
-                                {{ stay.lastname }} {{ stay.firstname }}
+                                {{ stay.user.lastname }}
+                                {{ stay.user.firstname }}
                             </div>
                             <div class="mt-1 flex items-center gap-2 text-sm">
                                 <span
                                     class="rounded px-2 py-0.5 text-xs font-medium"
-                                    [class.bg-blue-100]="stay.status === 'PLANNED'"
-                                    [class.text-blue-800]="stay.status === 'PLANNED'"
-                                    [class.bg-gray-100]="stay.status === 'CANCELED'"
-                                    [class.text-gray-800]="stay.status === 'CANCELED'"
+                                    [class.bg-blue-100]="
+                                        stay.status === 'PLANNED'
+                                    "
+                                    [class.text-blue-800]="
+                                        stay.status === 'PLANNED'
+                                    "
+                                    [class.bg-gray-100]="
+                                        stay.status === 'CANCELED'
+                                    "
+                                    [class.text-gray-800]="
+                                        stay.status === 'CANCELED'
+                                    "
                                 >
                                     {{ stay.status }}
                                 </span>
@@ -83,13 +116,19 @@
                                     *ngIf="stay.createdByAdmin"
                                     class="rounded bg-purple-100 px-2 py-0.5 text-xs font-medium text-purple-800"
                                 >
-                                    {{ 'DASHBOARD.MANORS.ADMIN_CREATED' | transloco: { defaultValue: 'Admin' } }}
+                                    {{
+                                        'DASHBOARD.MANORS.ADMIN_CREATED'
+                                            | transloco
+                                    }}
                                 </span>
                                 <span
                                     *ngIf="stay.overCapacity"
                                     class="rounded bg-red-100 px-2 py-0.5 text-xs font-medium text-red-800"
                                 >
-                                    {{ 'DASHBOARD.MANORS.OVER_CAPACITY' | transloco: { defaultValue: 'Over capacity' } }}
+                                    {{
+                                        'DASHBOARD.MANORS.OVER_CAPACITY'
+                                            | transloco
+                                    }}
                                 </span>
                             </div>
                         </div>
@@ -105,11 +144,12 @@
                     (click)="toggleManor(manor.id)"
                 >
                     <span *ngIf="!isExpanded(manor.id)">
-                        {{ 'DASHBOARD.MANORS.SHOW_MORE' | transloco: { defaultValue: 'Show more' } }}
-                        ({{ getActiveStaysCount(manor) - 5 }} {{ 'DASHBOARD.MANORS.MORE' | transloco: { defaultValue: 'more' } }})
+                        {{ 'DASHBOARD.MANORS.SHOW_MORE' | transloco }}
+                        ({{ getActiveStaysCount(manor) - 5 }}
+                        {{ 'DASHBOARD.MANORS.MORE' | transloco }})
                     </span>
                     <span *ngIf="isExpanded(manor.id)">
-                        {{ 'DASHBOARD.MANORS.SHOW_LESS' | transloco: { defaultValue: 'Show less' } }}
+                        {{ 'DASHBOARD.MANORS.SHOW_LESS' | transloco }}
                     </span>
                 </button>
             </div>
