@@ -130,6 +130,7 @@ export class SessionsDayCardComponent {
      * Get rating score for participant
      */
     getRatingScore(participant: DashboardParticipantDto): number {
+        console.log(participant);
         return participant.rating?.score ?? 0;
     }
 

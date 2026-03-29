@@ -222,28 +222,28 @@ export class AdminDashboardPageComponent implements OnInit, OnDestroy {
         // Optimistic update
         const optimisticData = this.optimisticallyUpdateRating(
             sessionId,
-            participant.userId,
+            participant.user.id,
             score,
             comment
         );
 
-        this.pendingRatings.add(participant.userId);
+        this.pendingRatings.add(participant.user.id);
         this._changeDetectorRef.markForCheck();
 
         this._ratingsService
-            .upsert(sessionId, participant.userId, { score, comment })
+            .upsert(sessionId, participant.user.id, { score, comment })
             .pipe(takeUntil(this._unsubscribeAll))
             .subscribe({
                 next: (rating) => {
                     // Update with actual rating from server
                     this.updateRatingInCache(
                         sessionId,
-                        participant.userId,
+                        participant.user.id,
                         rating.score,
                         rating.comment || null
                     );
 
-                    this.pendingRatings.delete(participant.userId);
+                    this.pendingRatings.delete(participant.user.id);
                     this._changeDetectorRef.markForCheck();
 
                     this._snackBar.open(
@@ -256,7 +256,7 @@ export class AdminDashboardPageComponent implements OnInit, OnDestroy {
                 },
                 error: (error) => {
                     console.error('Failed to save rating:', error);
-                    this.pendingRatings.delete(participant.userId);
+                    this.pendingRatings.delete(participant.user.id);
                     // Rollback optimistic update
                     if (optimisticData) {
                         this.dashboardData = optimisticData.original;
