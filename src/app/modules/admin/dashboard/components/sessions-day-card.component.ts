@@ -15,6 +15,7 @@ import { MatTooltipModule } from '@angular/material/tooltip';
 import { TranslocoModule } from '@jsverse/transloco';
 import { SessionSlot } from 'app/core/session/session.types';
 import { StarRatingComponent } from 'app/shared/components/star-rating/star-rating.component';
+import { formatStoredSessionTime } from 'app/shared/helpers/date.helper';
 import {
     DashboardParticipantDto,
     DashboardSessionDto,
@@ -67,7 +68,12 @@ export class SessionsDayCardComponent {
                 }
                 // Fallback: AM = 9:00, PM = 14:00
                 const today = new Date();
-                today.setHours(session.slot === SessionSlot.AM ? 9 : 14, 0, 0, 0);
+                today.setHours(
+                    session.slot === SessionSlot.AM ? 9 : 14,
+                    0,
+                    0,
+                    0
+                );
                 return today.getTime();
             };
 
@@ -76,27 +82,15 @@ export class SessionsDayCardComponent {
     }
 
     /**
-     * Get time range display for session
+     * Get display time for session
      */
-    getTimeRange(session: DashboardSessionDto): string {
-        // Helper to parse ISO date string and return local time string in HH:mm
-        const toLocalTime = (
-            isoString: string | undefined,
-            fallback: string
-        ): string => {
-            if (!isoString) return fallback;
-            const date = new Date(isoString);
-            if (isNaN(date.getTime())) return fallback;
-            const pad = (n: number) => n.toString().padStart(2, '0');
-            return `${pad(date.getHours())}:${pad(date.getMinutes())}`;
-        };
+    getDisplayTime(session: DashboardSessionDto): string {
+        const start = formatStoredSessionTime(session.startTime);
+        const end = formatStoredSessionTime(session.endTime);
 
-        const defaultStart =
-            session.slot === SessionSlot.AM ? '09:00' : '14:00';
-        const defaultEnd = session.slot === SessionSlot.AM ? '12:00' : '17:00';
-
-        const start = toLocalTime(session.startTime, defaultStart);
-        const end = toLocalTime(session.endTime, defaultEnd);
+        if (!start && !end) {
+            return '';
+        }
 
         return `${start} - ${end}`;
     }

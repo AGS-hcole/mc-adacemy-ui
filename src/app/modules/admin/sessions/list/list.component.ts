@@ -31,6 +31,7 @@ import {
     Site,
 } from 'app/core/session/session.types';
 import { SessionsService } from 'app/core/session/sessions.service';
+import { formatStoredSessionTime } from 'app/shared/helpers/date.helper';
 import { LocalizedDatePipe } from 'app/shared/pipes/localized-date.pipe';
 import { DateTime } from 'luxon';
 import { Subject, combineLatest, debounceTime, takeUntil } from 'rxjs';
@@ -280,24 +281,12 @@ export class AdminSessionsListComponent implements OnInit, OnDestroy {
      * Get display time for session
      */
     getDisplayTime(session: Session): string {
-        // Helper to parse ISO date string and return local time string in HH:mm
-        const toLocalTime = (
-            isoString: string | undefined,
-            fallback: string
-        ): string => {
-            if (!isoString) return fallback;
-            const date = new Date(isoString);
-            if (isNaN(date.getTime())) return fallback;
-            const pad = (n: number) => n.toString().padStart(2, '0');
-            return `${pad(date.getHours())}:${pad(date.getMinutes())}`;
-        };
+        const start = formatStoredSessionTime(session.startTime);
+        const end = formatStoredSessionTime(session.endTime);
 
-        const defaultStart =
-            session.slot === SessionSlot.AM ? '09:00' : '14:00';
-        const defaultEnd = session.slot === SessionSlot.AM ? '12:00' : '17:00';
-
-        const start = toLocalTime(session.startTime, defaultStart);
-        const end = toLocalTime(session.endTime, defaultEnd);
+        if (!start && !end) {
+            return '';
+        }
 
         return `${start} - ${end}`;
     }

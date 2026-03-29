@@ -21,6 +21,7 @@ import { Session, SessionSlot } from 'app/core/session/session.types';
 import { SessionsService } from 'app/core/session/sessions.service';
 import { UserService } from 'app/core/user/user.service';
 import { User } from 'app/core/user/user.types';
+import { formatStoredSessionTime } from 'app/shared/helpers/date.helper';
 import { LocalizedDatePipe } from 'app/shared/pipes/localized-date.pipe';
 import { combineLatest, Subject, takeUntil } from 'rxjs';
 
@@ -201,27 +202,15 @@ export class UserSessionsListComponent implements OnInit, OnDestroy {
     }
 
     /**
-     * Get display time for a session
+     * Get display time for session
      */
     getDisplayTime(session: Session): string {
-        // Helper to parse ISO date string and return local time string in HH:mm
-        const toLocalTime = (
-            isoString: string | undefined,
-            fallback: string
-        ): string => {
-            if (!isoString) return fallback;
-            const date = new Date(isoString);
-            if (isNaN(date.getTime())) return fallback;
-            const pad = (n: number) => n.toString().padStart(2, '0');
-            return `${pad(date.getHours())}:${pad(date.getMinutes())}`;
-        };
+        const start = formatStoredSessionTime(session.startTime);
+        const end = formatStoredSessionTime(session.endTime);
 
-        const defaultStart =
-            session.slot === SessionSlot.AM ? '09:00' : '14:00';
-        const defaultEnd = session.slot === SessionSlot.AM ? '12:00' : '17:00';
-
-        const start = toLocalTime(session.startTime, defaultStart);
-        const end = toLocalTime(session.endTime, defaultEnd);
+        if (!start && !end) {
+            return '';
+        }
 
         return `${start} - ${end}`;
     }

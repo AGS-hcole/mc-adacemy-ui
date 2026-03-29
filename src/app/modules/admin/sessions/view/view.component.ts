@@ -1,4 +1,4 @@
-import { DatePipe, NgClass } from '@angular/common';
+import { NgClass } from '@angular/common';
 import {
     AfterViewInit,
     ChangeDetectorRef,
@@ -26,6 +26,7 @@ import { FuseMediaWatcherService } from '@fuse/services/media-watcher';
 import { TranslocoModule } from '@jsverse/transloco';
 import { Session } from 'app/core/session/session.types';
 import { SessionsService } from 'app/core/session/sessions.service';
+import { SessionTimePipe } from 'app/shared/helpers/date.helper';
 import { LocalizedDatePipe } from 'app/shared/pipes/localized-date.pipe';
 import { Subject, take, takeUntil } from 'rxjs';
 import { panels } from './view.data';
@@ -38,7 +39,7 @@ import { panels } from './view.data';
         RouterOutlet,
         MatSidenavModule,
         MatIconModule,
-        DatePipe,
+        SessionTimePipe,
         MatButtonModule,
         LocalizedDatePipe,
         TranslocoModule,

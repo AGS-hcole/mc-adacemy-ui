@@ -36,17 +36,8 @@
                     </div>
                     <div class="text-secondary text-md">
                         {{ session?.date | localizedDate: 'shortDate' }}
-                        {{
-                            session?.startTime
-                                ? (session?.startTime | date: 'HH:mm')
-                                : ''
-                        }}
-                        -
-                        {{
-                            session?.endTime
-                                ? (session?.endTime | date: 'HH:mm')
-                                : ''
-                        }}
+                        {{ session?.startTime | sessionTime }} -
+                        {{ session?.endTime | sessionTime }}
                     </div>
                 </div>
                 <!-- Close button -->

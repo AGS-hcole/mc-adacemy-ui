@@ -40,7 +40,10 @@
         <!-- Sessions list sorted by time -->
         <div *ngIf="!loading && sessions.length > 0" class="space-y-4">
             <div
-                *ngFor="let session of getSortedSessions(); trackBy: trackBySessionId"
+                *ngFor="
+                    let session of getSortedSessions();
+                    trackBy: trackBySessionId
+                "
                 class="bg-default rounded-lg border p-4"
             >
                 <!-- Session header -->
@@ -51,7 +54,7 @@
                             class="text-secondary icon-size-4"
                         ></mat-icon>
                         <span class="text-secondary text-sm font-medium">
-                            {{ getTimeRange(session) }}
+                            {{ getDisplayTime(session) }}
                         </span>
                         <span class="text-secondary mx-2">•</span>
                         <span class="text-sm font-medium">
@@ -59,10 +62,18 @@
                         </span>
                         <span
                             class="rounded-full px-2 py-0.5 text-xs font-medium"
-                            [class.bg-blue-100]="session.slot === SessionSlot.AM"
-                            [class.text-blue-800]="session.slot === SessionSlot.AM"
-                            [class.bg-orange-100]="session.slot === SessionSlot.PM"
-                            [class.text-orange-800]="session.slot === SessionSlot.PM"
+                            [class.bg-blue-100]="
+                                session.slot === SessionSlot.AM
+                            "
+                            [class.text-blue-800]="
+                                session.slot === SessionSlot.AM
+                            "
+                            [class.bg-orange-100]="
+                                session.slot === SessionSlot.PM
+                            "
+                            [class.text-orange-800]="
+                                session.slot === SessionSlot.PM
+                            "
                         >
                             {{ session.slot }}
                         </span>
@@ -84,7 +95,9 @@
                 <div class="space-y-2">
                     <div
                         *ngFor="
-                            let participant of getConfirmedParticipants(session);
+                            let participant of getConfirmedParticipants(
+                                session
+                            );
                             trackBy: trackByParticipantId
                         "
                         class="flex flex-col items-start justify-between rounded border-l-4 border-green-500 bg-gray-50 p-3 md:flex-row md:items-center dark:bg-gray-800"
@@ -99,7 +112,10 @@
                                     *ngIf="participant.outOfContract"
                                     class="rounded bg-orange-100 px-2 py-0.5 text-xs font-medium text-orange-800"
                                 >
-                                    {{ 'DASHBOARD.SESSIONS.OUT_OF_CONTRACT' | transloco }}
+                                    {{
+                                        'DASHBOARD.SESSIONS.OUT_OF_CONTRACT'
+                                            | transloco
+                                    }}
                                 </span>
                             </div>
                         </div>

@@ -205,14 +205,8 @@ export class SessionInfoComponent implements OnInit, OnDestroy {
 
         if (this.editMode && this.session) {
             // Update existing session
-            const startISO = this._combineDateAndTimeISO(
-                formValue.date,
-                formValue.startTime
-            );
-            const endISO = this._combineDateAndTimeISO(
-                formValue.date,
-                formValue.endTime
-            );
+            const startISO = this._timeToStoredUtcIso(formValue.startTime);
+            const endISO = this._timeToStoredUtcIso(formValue.endTime);
 
             const updateRequest: UpdateSessionRequest = {
                 siteId: formValue.siteId,
@@ -234,14 +228,8 @@ export class SessionInfoComponent implements OnInit, OnDestroy {
         } else {
             // Create new sessions - one per selected date
             const createRequests = this.selectedDates.map((date) => {
-                const startISO = this._combineDateAndTimeISO(
-                    date,
-                    formValue.startTime
-                );
-                const endISO = this._combineDateAndTimeISO(
-                    date,
-                    formValue.endTime
-                );
+                const startISO = this._timeToStoredUtcIso(formValue.startTime);
+                const endISO = this._timeToStoredUtcIso(formValue.endTime);
 
                 const createRequest: CreateSessionRequest = {
                     siteId: formValue.siteId,
@@ -344,10 +332,10 @@ export class SessionInfoComponent implements OnInit, OnDestroy {
             date: new Date(session.date),
             slot: session.slot,
             startTime: session.startTime
-                ? this._extractLocalTime(session.startTime)
+                ? this._extractStoredTime(session.startTime)
                 : '',
             endTime: session.endTime
-                ? this._extractLocalTime(session.endTime)
+                ? this._extractStoredTime(session.endTime)
                 : '',
             notes: session.notes || '',
             isPublished: session.isPublished,
@@ -355,22 +343,27 @@ export class SessionInfoComponent implements OnInit, OnDestroy {
     }
 
     /**
-     * Extracts "HH:mm" in local time from an ISO UTC date string or "HH:mm:ss" string.
+     * Extract HH:mm from a stored UTC-based session time.
+     * The value is treated as a UTC time container, not as a local datetime.
      */
-    private _extractLocalTime(dateTime: string): string {
-        if (!dateTime) return '';
-        // If ISO string, parse as UTC and convert to local time
+    private _extractStoredTime(dateTime: string): string {
+        if (!dateTime) {
+            return '';
+        }
+
         const date = new Date(dateTime);
+
         if (!isNaN(date.getTime())) {
-            const hh = String(date.getHours()).padStart(2, '0');
-            const mm = String(date.getMinutes()).padStart(2, '0');
+            const hh = String(date.getUTCHours()).padStart(2, '0');
+            const mm = String(date.getUTCMinutes()).padStart(2, '0');
             return `${hh}:${mm}`;
         }
-        // If already "HH:mm" or "HH:mm:ss"
+
         const timeMatch = dateTime.match(/^(\d{2}):(\d{2})/);
         if (timeMatch) {
             return `${timeMatch[1]}:${timeMatch[2]}`;
         }
+
         return '';
     }
 
@@ -391,30 +384,36 @@ export class SessionInfoComponent implements OnInit, OnDestroy {
     }
 
     /**
-     * Combine a date and "HH:mm" time to an ISO 8601 string (UTC).
-     * Returns null if no time is provided.
+     * Convert HH:mm to a fixed UTC ISO datetime used only as a time container.
+     * Example: 08:30 -> 1970-01-01T08:30:00.000Z
      */
-    private _combineDateAndTimeISO(
-        date: any,
-        time?: string | null
-    ): string | null {
-        if (!time) return null;
+    private _timeToStoredUtcIso(time?: string | null): string | null {
+        if (!time) {
+            return null;
+        }
 
-        const d = date instanceof Date ? date : new Date(date);
-        const [hh, mm] = time.split(':').map(Number);
+        const match = /^(\d{2}):(\d{2})$/.exec(time);
 
-        // Crée un Date en heure locale, puis convertit en ISO (UTC)
-        const combined = new Date(
-            d.getFullYear(),
-            d.getMonth(),
-            d.getDate(),
-            hh ?? 0,
-            mm ?? 0,
-            0,
-            0
-        );
+        if (!match) {
+            return null;
+        }
 
-        // Si tu veux éviter le décalage lié au fuseau, vois la NOTE plus bas.
-        return combined.toISOString();
+        const hours = Number(match[1]);
+        const minutes = Number(match[2]);
+
+        if (
+            Number.isNaN(hours) ||
+            Number.isNaN(minutes) ||
+            hours < 0 ||
+            hours > 23 ||
+            minutes < 0 ||
+            minutes > 59
+        ) {
+            return null;
+        }
+
+        return new Date(
+            Date.UTC(1970, 0, 1, hours, minutes, 0, 0)
+        ).toISOString();
     }
 }
