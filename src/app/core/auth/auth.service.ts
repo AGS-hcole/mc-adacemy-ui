@@ -84,10 +84,9 @@ export class AuthService {
      * @param email
      */
     forgotPassword(email: string): Observable<any> {
-        return this._http.post(
-            `${this.apiUrl}/auth/request-reset-password`,
-            email
-        );
+        return this._http.post(`${this.apiUrl}/auth/forgot-password`, {
+            email,
+        });
     }
 
     /**
@@ -97,8 +96,8 @@ export class AuthService {
      */
     resetPassword(token: string, password: string): Observable<any> {
         return this._http.post(`${this.apiUrl}/auth/reset-password`, {
-            token: token,
-            password: password,
+            token,
+            password,
         });
     }
 
@@ -110,7 +109,7 @@ export class AuthService {
     signIn(credentials: { email: string; password: string }): Observable<any> {
         // Throw error, if the user is already logged in
         if (this._authenticated) {
-            return throwError('User is already logged in.');
+            return throwError(() => new Error('User is already logged in.'));
         }
 
         return this._http
@@ -269,7 +268,7 @@ export class AuthService {
                 catchError((err) => {
                     // Hard sign out on refresh failure
                     this.signOut().subscribe();
-                    return throwError(() => err);
+                    return throwError(() => new Error(err));
                 }),
                 finalize(() => {
                     this._refreshInProgress = false;
