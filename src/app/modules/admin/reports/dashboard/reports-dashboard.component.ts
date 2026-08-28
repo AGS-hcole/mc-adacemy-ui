@@ -1,5 +1,5 @@
 import { CommonModule } from '@angular/common';
-import { Component, OnDestroy, OnInit } from '@angular/core';
+import { Component, Input, OnDestroy, OnInit } from '@angular/core';
 import { MatButtonModule } from '@angular/material/button';
 import { MatIconModule } from '@angular/material/icon';
 import { PageEvent } from '@angular/material/paginator';
@@ -40,6 +40,8 @@ import { ReportsTimeseriesChartComponent } from './reports-timeseries-chart.comp
     ],
 })
 export class ReportsDashboardComponent implements OnInit, OnDestroy {
+    @Input() lockedUserId?: string;
+
     filters!: ReportsFilters;
     summary: SessionsSummaryDto | null = null;
     timeseries: SessionsTimeseriesDto | null = null;
@@ -62,7 +64,11 @@ export class ReportsDashboardComponent implements OnInit, OnDestroy {
         this._route.queryParams
             .pipe(takeUntil(this._unsubscribeAll))
             .subscribe((queryParams) => {
-                this._state.initializeFromQueryParams(queryParams);
+                // Merge locked userId into params before initialization
+                const effectiveParams = this.lockedUserId
+                    ? { ...queryParams, userId: this.lockedUserId }
+                    : queryParams;
+                this._state.initializeFromQueryParams(effectiveParams);
             });
 
         // Subscribe to state changes
@@ -118,6 +124,10 @@ export class ReportsDashboardComponent implements OnInit, OnDestroy {
      * Handle filters change
      */
     onFiltersChange(partial: Partial<ReportsFilters>): void {
+        // Prevent overriding a locked userId
+        if (this.lockedUserId) {
+            partial = { ...partial, userId: this.lockedUserId };
+        }
         this._state.updateFilters(partial);
     }
 
