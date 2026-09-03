@@ -1,5 +1,12 @@
 import { CommonModule } from '@angular/common';
-import { Component, Input, OnDestroy, OnInit } from '@angular/core';
+import {
+    Component,
+    Input,
+    OnChanges,
+    OnDestroy,
+    OnInit,
+    SimpleChanges,
+} from '@angular/core';
 import { MatButtonModule } from '@angular/material/button';
 import { MatIconModule } from '@angular/material/icon';
 import { PageEvent } from '@angular/material/paginator';
@@ -39,7 +46,7 @@ import { ReportsTimeseriesChartComponent } from './reports-timeseries-chart.comp
         ReportsTableComponent,
     ],
 })
-export class ReportsDashboardComponent implements OnInit, OnDestroy {
+export class ReportsDashboardComponent implements OnInit, OnChanges, OnDestroy {
     @Input() lockedUserId?: string;
 
     filters!: ReportsFilters;
@@ -118,6 +125,29 @@ export class ReportsDashboardComponent implements OnInit, OnDestroy {
     ngOnDestroy(): void {
         this._unsubscribeAll.next();
         this._unsubscribeAll.complete();
+    }
+
+    /**
+     * React to a change of the locked user id (e.g. parent switching between children)
+     */
+    ngOnChanges(changes: SimpleChanges): void {
+        const change = changes.lockedUserId;
+
+        // Skip the first change, which is already handled by the query params
+        // initialization in ngOnInit
+        if (!change || change.firstChange) {
+            return;
+        }
+
+        if (change.currentValue === change.previousValue) {
+            return;
+        }
+
+        this._state.updateFilters({
+            userId: this.lockedUserId,
+            page: 1,
+        });
+        this._state.loadData();
     }
 
     /**
