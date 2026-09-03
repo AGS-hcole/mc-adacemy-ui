@@ -77,6 +77,7 @@ export class UsersDetailsComponent implements OnInit, OnDestroy {
     userForm: UntypedFormGroup;
     users: User[];
     roles: Role[] = Object.values(Role);
+    selectedPlayerId: string | null = null;
     formulaTypes: FormulaType[] = Object.values(FormulaType);
     private _rolesPanelOverlayRef: OverlayRef;
     private _unsubscribeAll: Subject<any> = new Subject<any>();
@@ -382,5 +383,59 @@ export class UsersDetailsComponent implements OnInit, OnDestroy {
      */
     trackByFn(index: number, item: any): any {
         return item.id || index;
+    }
+
+    // -----------------------------------------------------------------------------------------------------
+    // @ Players (parent/child association)
+    // -----------------------------------------------------------------------------------------------------
+
+    /**
+     * Users that can be linked as a player to the current parent user
+     */
+    get availablePlayers(): User[] {
+        if (!this.users || !this.user) {
+            return [];
+        }
+
+        const linkedIds = (this.user.players || []).map((player) => player.id);
+
+        return this.users.filter(
+            (item) =>
+                item.role !== Role.parent &&
+                item.id !== this.user.id &&
+                !linkedIds.includes(item.id)
+        );
+    }
+
+    /**
+     * Link the selected player to the current parent user
+     */
+    linkPlayer(): void {
+        if (!this.selectedPlayerId) {
+            return;
+        }
+
+        this._usersService
+            .addPlayer(this.user.id, this.selectedPlayerId)
+            .subscribe(() => {
+                this.selectedPlayerId = null;
+
+                // Mark for check
+                this._changeDetectorRef.markForCheck();
+            });
+    }
+
+    /**
+     * Unlink a player from the current parent user
+     *
+     * @param playerId
+     */
+    unlinkPlayer(playerId: string): void {
+        this._usersService
+            .removePlayer(this.user.id, playerId)
+            .subscribe(() => {
+                // Mark for check
+                this._changeDetectorRef.markForCheck();
+            });
     }
 }
