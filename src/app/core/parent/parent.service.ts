@@ -39,8 +39,7 @@ export class ParentService {
 
     getDashboard(childId: string): Observable<ParentDashboardDto> {
         return this._httpClient.get<ParentDashboardDto>(
-            `${this.apiUrl}/parent/dashboard`,
-            { params: { childId } }
+            `${this.apiUrl}/parent/dashboard`
         );
     }
 }
