@@ -55,4 +55,7 @@ export interface User {
     displayName: string; // `${firstname} ${lastname}`
     isAdmin: boolean; // role === 'admin'
     avatarUrl?: string | null; // `data:${avatarMime};base64,${avatarData}`
+
+    // Players associated to a parent account
+    players?: User[];
 }

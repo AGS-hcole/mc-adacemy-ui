@@ -195,6 +195,103 @@ export class UsersService {
     }
 
     /**
+     * Associate a player to a parent user
+     *
+     * @param parentId
+     * @param playerId
+     */
+    addPlayer(parentId: string, playerId: string): Observable<User> {
+        return this.users$.pipe(
+            take(1),
+            switchMap((users) =>
+                this._httpClient
+                    .post<User>(
+                        `${this.apiUrl}/users/${parentId}/players/${playerId}`,
+                        null
+                    )
+                    .pipe(
+                        map((updatedUser) => {
+                            // Find the index of the updated user
+                            const index = users.findIndex(
+                                (item) => item.id === parentId
+                            );
+
+                            // Update the user
+                            if (index !== -1) {
+                                users[index] = updatedUser;
+                                this._users.next(users);
+                            }
+
+                            // Return the updated user
+                            return updatedUser;
+                        }),
+                        switchMap((updatedUser) =>
+                            this.user$.pipe(
+                                take(1),
+                                filter((item) => item && item.id === parentId),
+                                tap(() => {
+                                    // Update the user if it's selected
+                                    this._user.next(updatedUser);
+
+                                    // Return the updated user
+                                    return updatedUser;
+                                })
+                            )
+                        )
+                    )
+            )
+        );
+    }
+
+    /**
+     * Remove a player association from a parent user
+     *
+     * @param parentId
+     * @param playerId
+     */
+    removePlayer(parentId: string, playerId: string): Observable<User> {
+        return this.users$.pipe(
+            take(1),
+            switchMap((users) =>
+                this._httpClient
+                    .delete<User>(
+                        `${this.apiUrl}/users/${parentId}/players/${playerId}`
+                    )
+                    .pipe(
+                        map((updatedUser) => {
+                            // Find the index of the updated user
+                            const index = users.findIndex(
+                                (item) => item.id === parentId
+                            );
+
+                            // Update the user
+                            if (index !== -1) {
+                                users[index] = updatedUser;
+                                this._users.next(users);
+                            }
+
+                            // Return the updated user
+                            return updatedUser;
+                        }),
+                        switchMap((updatedUser) =>
+                            this.user$.pipe(
+                                take(1),
+                                filter((item) => item && item.id === parentId),
+                                tap(() => {
+                                    // Update the user if it's selected
+                                    this._user.next(updatedUser);
+
+                                    // Return the updated user
+                                    return updatedUser;
+                                })
+                            )
+                        )
+                    )
+            )
+        );
+    }
+
+    /**
      * Get roles
      */
     getRoles(): Observable<Role[]> {

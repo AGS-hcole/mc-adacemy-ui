@@ -211,6 +211,84 @@
                     }
                 </div>
 
+                <!-- Players Section (Parent only) -->
+                @if (user.role === 'parent') {
+                    <div class="mt-8 border-t pt-6">
+                        <div class="mb-4 text-lg font-semibold">
+                            {{ 'HOME.USERS.DETAILS.PLAYERS' | transloco }}
+                        </div>
+
+                        @if (user.players && user.players.length) {
+                            <div class="flex flex-col space-y-2">
+                                @for (
+                                    player of user.players;
+                                    track player.id
+                                ) {
+                                    <div
+                                        class="flex items-center justify-between rounded-md border px-4 py-2"
+                                    >
+                                        <div class="text-sm">
+                                            {{ player.displayName }}
+                                        </div>
+                                        <button
+                                            mat-icon-button
+                                            [matTooltip]="
+                                                'HOME.USERS.DETAILS.UNLINK_PLAYER'
+                                                    | transloco
+                                            "
+                                            (click)="unlinkPlayer(player.id)"
+                                        >
+                                            <mat-icon
+                                                class="text-warn"
+                                                [svgIcon]="
+                                                    'heroicons_outline:x-mark'
+                                                "
+                                            ></mat-icon>
+                                        </button>
+                                    </div>
+                                }
+                            </div>
+                        } @else {
+                            <div class="text-secondary text-sm">
+                                {{ 'HOME.USERS.DETAILS.NO_PLAYERS' | transloco }}
+                            </div>
+                        }
+
+                        <div class="mt-4 flex items-end gap-2">
+                            <mat-form-field
+                                class="flex-auto"
+                                [subscriptSizing]="'dynamic'"
+                            >
+                                <mat-label>{{
+                                    'HOME.USERS.DETAILS.SELECT_PLAYER'
+                                        | transloco
+                                }}</mat-label>
+                                <mat-select [(ngModel)]="selectedPlayerId">
+                                    @for (
+                                        player of availablePlayers;
+                                        track player.id
+                                    ) {
+                                        <mat-option [value]="player.id">
+                                            {{ player.displayName }}
+                                        </mat-option>
+                                    }
+                                </mat-select>
+                            </mat-form-field>
+                            <button
+                                mat-flat-button
+                                [color]="'primary'"
+                                [disabled]="!selectedPlayerId"
+                                (click)="linkPlayer()"
+                            >
+                                {{
+                                    'HOME.USERS.DETAILS.LINK_PLAYER'
+                                        | transloco
+                                }}
+                            </button>
+                        </div>
+                    </div>
+                }
+
                 <!-- Consents Section -->
                 <div class="mt-8 border-t pt-6">
                     <div class="mb-4 text-lg font-semibold">
