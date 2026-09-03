@@ -7,11 +7,9 @@ import {
     Observable,
     filter,
     map,
-    of,
     switchMap,
     take,
     tap,
-    throwError,
 } from 'rxjs';
 
 @Injectable({ providedIn: 'root' })
@@ -71,26 +69,10 @@ export class UsersService {
      * Get user by id
      */
     getUserById(id: string): Observable<User> {
-        return this._users.pipe(
-            take(1),
-            map((users) => {
-                // Find the user
-                const user = users.find((item) => item.id === id) || null;
-
+        return this._httpClient.get<User>(`${this.apiUrl}/users/${id}`).pipe(
+            tap((user) => {
                 // Update the user
                 this._user.next(user);
-
-                // Return the user
-                return user;
-            }),
-            switchMap((user) => {
-                if (!user) {
-                    return throwError(
-                        'Could not found user with id of ' + id + '!'
-                    );
-                }
-
-                return of(user);
             })
         );
     }
@@ -201,46 +183,9 @@ export class UsersService {
      * @param playerId
      */
     addPlayer(parentId: string, playerId: string): Observable<User> {
-        return this.users$.pipe(
-            take(1),
-            switchMap((users) =>
-                this._httpClient
-                    .post<User>(
-                        `${this.apiUrl}/users/${parentId}/players/${playerId}`,
-                        null
-                    )
-                    .pipe(
-                        map((updatedUser) => {
-                            // Find the index of the updated user
-                            const index = users.findIndex(
-                                (item) => item.id === parentId
-                            );
-
-                            // Update the user
-                            if (index !== -1) {
-                                users[index] = updatedUser;
-                                this._users.next(users);
-                            }
-
-                            // Return the updated user
-                            return updatedUser;
-                        }),
-                        switchMap((updatedUser) =>
-                            this.user$.pipe(
-                                take(1),
-                                filter((item) => item && item.id === parentId),
-                                tap(() => {
-                                    // Update the user if it's selected
-                                    this._user.next(updatedUser);
-
-                                    // Return the updated user
-                                    return updatedUser;
-                                })
-                            )
-                        )
-                    )
-            )
-        );
+        return this._httpClient
+            .post(`${this.apiUrl}/users/${parentId}/players/${playerId}`, null)
+            .pipe(switchMap(() => this.getUserById(parentId)));
     }
 
     /**
@@ -250,45 +195,9 @@ export class UsersService {
      * @param playerId
      */
     removePlayer(parentId: string, playerId: string): Observable<User> {
-        return this.users$.pipe(
-            take(1),
-            switchMap((users) =>
-                this._httpClient
-                    .delete<User>(
-                        `${this.apiUrl}/users/${parentId}/players/${playerId}`
-                    )
-                    .pipe(
-                        map((updatedUser) => {
-                            // Find the index of the updated user
-                            const index = users.findIndex(
-                                (item) => item.id === parentId
-                            );
-
-                            // Update the user
-                            if (index !== -1) {
-                                users[index] = updatedUser;
-                                this._users.next(users);
-                            }
-
-                            // Return the updated user
-                            return updatedUser;
-                        }),
-                        switchMap((updatedUser) =>
-                            this.user$.pipe(
-                                take(1),
-                                filter((item) => item && item.id === parentId),
-                                tap(() => {
-                                    // Update the user if it's selected
-                                    this._user.next(updatedUser);
-
-                                    // Return the updated user
-                                    return updatedUser;
-                                })
-                            )
-                        )
-                    )
-            )
-        );
+        return this._httpClient
+            .delete(`${this.apiUrl}/users/${parentId}/players/${playerId}`)
+            .pipe(switchMap(() => this.getUserById(parentId)));
     }
 
     /**

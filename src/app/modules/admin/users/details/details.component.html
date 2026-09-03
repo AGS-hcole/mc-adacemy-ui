@@ -218,17 +218,20 @@
                             {{ 'HOME.USERS.DETAILS.PLAYERS' | transloco }}
                         </div>
 
-                        @if (user.players && user.players.length) {
+                        @if (user.childrenLinks && user.childrenLinks.length) {
                             <div class="flex flex-col space-y-2">
-                                @for (player of user.players; track player.id) {
+                                @for (
+                                    link of user.childrenLinks;
+                                    track link.childUserId
+                                ) {
                                     <div
                                         class="flex items-center justify-between rounded-md border px-4 py-2"
                                     >
                                         <div class="text-sm">
                                             {{
-                                                player.firstname +
+                                                link.childUser.firstname +
                                                     ' ' +
-                                                    player.lastname
+                                                    link.childUser.lastname
                                             }}
                                         </div>
                                         <button
@@ -237,7 +240,9 @@
                                                 'HOME.USERS.DETAILS.UNLINK_PLAYER'
                                                     | transloco
                                             "
-                                            (click)="unlinkPlayer(player.id)"
+                                            (click)="
+                                                unlinkPlayer(link.childUserId)
+                                            "
                                         >
                                             <mat-icon
                                                 class="text-warn"
