@@ -4,9 +4,9 @@ import { AuthGuard } from 'app/core/auth/guards/auth.guard';
 import { NoAuthGuard } from 'app/core/auth/guards/noAuth.guard';
 import { OnboardingGuard } from 'app/core/auth/guards/onboarding.guard';
 import { RoleGuard } from 'app/core/auth/guards/role.guard';
+import { LayoutComponent } from 'app/layout/layout.component';
 import { RoleRedirectGuard } from './core/auth/guards/role-redirect.guard';
 import { Role } from './core/user/user.types';
-import { LayoutComponent } from 'app/layout/layout.component';
 
 export const appRoutes: Route[] = [
     // Redirect empty path to '/home'
