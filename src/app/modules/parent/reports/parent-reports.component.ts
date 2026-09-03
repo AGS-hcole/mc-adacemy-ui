@@ -7,28 +7,28 @@ import {
     OnInit,
     ViewEncapsulation,
 } from '@angular/core';
+import { MatIconModule } from '@angular/material/icon';
 import { TranslocoModule } from '@jsverse/transloco';
 import { ParentService } from 'app/core/parent/parent.service';
+import { ParentChild } from 'app/core/parent/parent.types';
 import { ReportsDashboardComponent } from 'app/modules/admin/reports/dashboard/reports-dashboard.component';
 import { Subject, takeUntil } from 'rxjs';
 
 @Component({
     selector: 'parent-reports',
-    template: `
-        <reports-dashboard
-            *ngIf="childId"
-            [lockedUserId]="childId"
-        ></reports-dashboard>
-        <div *ngIf="!childId && !loading" class="flex flex-auto items-center justify-center p-12 text-secondary">
-            {{ 'PARENT.REPORTS.NO_CHILD' | transloco }}
-        </div>
-    `,
+    templateUrl: './parent-reports.component.html',
     encapsulation: ViewEncapsulation.None,
     changeDetection: ChangeDetectionStrategy.OnPush,
     standalone: true,
-    imports: [CommonModule, TranslocoModule, ReportsDashboardComponent],
+    imports: [
+        CommonModule,
+        MatIconModule,
+        TranslocoModule,
+        ReportsDashboardComponent,
+    ],
 })
 export class ParentReportsComponent implements OnInit, OnDestroy {
+    children: ParentChild[] = [];
     childId: string | null = null;
     loading = true;
 
@@ -42,6 +42,14 @@ export class ParentReportsComponent implements OnInit, OnDestroy {
     ngOnInit(): void {
         this.loading = true;
 
+        // Subscribe to the children list
+        this._parentService.children$
+            .pipe(takeUntil(this._unsubscribeAll))
+            .subscribe((children) => {
+                this.children = children;
+                this._cdr.markForCheck();
+            });
+
         // Subscribe to selected child independently
         this._parentService.selectedChild$
             .pipe(takeUntil(this._unsubscribeAll))
@@ -51,7 +59,7 @@ export class ParentReportsComponent implements OnInit, OnDestroy {
                 this._cdr.markForCheck();
             });
 
-        // Trigger loading children (side effect: populates selectedChild$)
+        // Trigger loading children (side effect: populates children$ and selectedChild$)
         this._parentService.loadChildren().subscribe({
             error: () => {
                 this.loading = false;
@@ -64,4 +72,12 @@ export class ParentReportsComponent implements OnInit, OnDestroy {
         this._unsubscribeAll.next();
         this._unsubscribeAll.complete();
     }
+
+    /**
+     * Select the child to examine in the reports dashboard
+     */
+    onChildChange(child: ParentChild): void {
+        this._parentService.selectChild(child);
+    }
 }
+
