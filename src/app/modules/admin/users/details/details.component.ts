@@ -397,7 +397,9 @@ export class UsersDetailsComponent implements OnInit, OnDestroy {
             return [];
         }
 
-        const linkedIds = (this.user.players || []).map((player) => player.id);
+        const linkedIds = (this.user.childrenLinks || []).map(
+            (link) => link.childUserId
+        );
 
         return this.users.filter(
             (item) =>
