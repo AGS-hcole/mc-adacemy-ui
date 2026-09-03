@@ -14,6 +14,7 @@
     <!-- Filters -->
     <reports-filters
         [filters]="filters"
+        [hideUserFilter]="!!lockedUserId"
         (filtersChange)="onFiltersChange($event)"
         (apply)="onApplyFilters()"
         (reset)="onResetFilters()"

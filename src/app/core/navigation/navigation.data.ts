@@ -92,6 +92,27 @@ export const adminNavigation: FuseNavigationItem[] = [
 ];
 
 /**
+ * Parent Navigation
+ */
+export const parentNavigation: FuseNavigationItem[] = [
+    {
+        id: 'parent',
+        title: 'NAVIGATION.PARENT.TITLE',
+        type: 'group',
+        subtitle: 'NAVIGATION.PARENT.SUBTITLE',
+        children: [
+            {
+                id: 'reports',
+                title: 'NAVIGATION.PARENT.REPORTS.TITLE',
+                type: 'basic',
+                icon: 'heroicons_outline:chart-bar',
+                link: '/parent/reports',
+            },
+        ],
+    },
+];
+
+/**
  * User Navigation
  */
 export const userNavigation: FuseNavigationItem[] = [

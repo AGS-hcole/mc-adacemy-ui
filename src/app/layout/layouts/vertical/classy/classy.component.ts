@@ -215,9 +215,10 @@ export class ClassyLayoutComponent implements OnInit, OnDestroy {
                 case Role.admin:
                     navigation.navigation = clonedNavigation.admin;
                     break;
-                case Role.user:
-                    navigation.navigation = clonedNavigation.user;
+                case Role.parent:
+                    navigation.navigation = clonedNavigation.parent;
                     break;
+                case Role.user:
                 default:
                     navigation.navigation = clonedNavigation.user;
                     break;
@@ -235,6 +236,7 @@ export class ClassyLayoutComponent implements OnInit, OnDestroy {
     private prepareNavigation(navigation: Navigation) {
         this.translateAndSetParams(navigation.user);
         this.translateAndSetParams(navigation.admin);
+        this.translateAndSetParams(navigation.parent);
     }
 
     /**
@@ -250,7 +252,14 @@ export class ClassyLayoutComponent implements OnInit, OnDestroy {
 
             // Set the params in the link
             if (item.link) {
-                const scope = this.user?.role === Role.admin ? 'admin' : 'user';
+                let scope: string;
+                if (this.user?.role === Role.admin) {
+                    scope = 'admin';
+                } else if (this.user?.role === Role.parent) {
+                    scope = 'parent';
+                } else {
+                    scope = 'user';
+                }
 
                 item.link = this.replaceRouteParams(item.link, { scope });
             }
