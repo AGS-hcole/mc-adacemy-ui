@@ -220,15 +220,16 @@
 
                         @if (user.players && user.players.length) {
                             <div class="flex flex-col space-y-2">
-                                @for (
-                                    player of user.players;
-                                    track player.id
-                                ) {
+                                @for (player of user.players; track player.id) {
                                     <div
                                         class="flex items-center justify-between rounded-md border px-4 py-2"
                                     >
                                         <div class="text-sm">
-                                            {{ player.displayName }}
+                                            {{
+                                                player.firstname +
+                                                    ' ' +
+                                                    player.lastname
+                                            }}
                                         </div>
                                         <button
                                             mat-icon-button
@@ -250,7 +251,9 @@
                             </div>
                         } @else {
                             <div class="text-secondary text-sm">
-                                {{ 'HOME.USERS.DETAILS.NO_PLAYERS' | transloco }}
+                                {{
+                                    'HOME.USERS.DETAILS.NO_PLAYERS' | transloco
+                                }}
                             </div>
                         }
 
@@ -269,7 +272,11 @@
                                         track player.id
                                     ) {
                                         <mat-option [value]="player.id">
-                                            {{ player.displayName }}
+                                            {{
+                                                player.firstname +
+                                                    ' ' +
+                                                    player.lastname
+                                            }}
                                         </mat-option>
                                     }
                                 </mat-select>
@@ -281,8 +288,7 @@
                                 (click)="linkPlayer()"
                             >
                                 {{
-                                    'HOME.USERS.DETAILS.LINK_PLAYER'
-                                        | transloco
+                                    'HOME.USERS.DETAILS.LINK_PLAYER' | transloco
                                 }}
                             </button>
                         </div>
