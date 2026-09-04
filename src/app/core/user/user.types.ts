@@ -55,4 +55,17 @@ export interface User {
     displayName: string; // `${firstname} ${lastname}`
     isAdmin: boolean; // role === 'admin'
     avatarUrl?: string | null; // `data:${avatarMime};base64,${avatarData}`
+
+    // Children linked to a parent account (only present when role === 'parent')
+    childrenLinks?: ChildLink[];
+}
+
+export interface ChildLink {
+    childUserId: UUID;
+    childUser: {
+        id: UUID;
+        firstname: string;
+        lastname: string;
+        birthDate?: Date | null;
+    };
 }

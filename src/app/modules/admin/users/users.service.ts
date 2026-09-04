@@ -7,11 +7,9 @@ import {
     Observable,
     filter,
     map,
-    of,
     switchMap,
     take,
     tap,
-    throwError,
 } from 'rxjs';
 
 @Injectable({ providedIn: 'root' })
@@ -71,26 +69,10 @@ export class UsersService {
      * Get user by id
      */
     getUserById(id: string): Observable<User> {
-        return this._users.pipe(
-            take(1),
-            map((users) => {
-                // Find the user
-                const user = users.find((item) => item.id === id) || null;
-
+        return this._httpClient.get<User>(`${this.apiUrl}/users/${id}`).pipe(
+            tap((user) => {
                 // Update the user
                 this._user.next(user);
-
-                // Return the user
-                return user;
-            }),
-            switchMap((user) => {
-                if (!user) {
-                    return throwError(
-                        'Could not found user with id of ' + id + '!'
-                    );
-                }
-
-                return of(user);
             })
         );
     }
@@ -192,6 +174,30 @@ export class UsersService {
                 )
             )
         );
+    }
+
+    /**
+     * Associate a player to a parent user
+     *
+     * @param parentId
+     * @param playerId
+     */
+    addPlayer(parentId: string, playerId: string): Observable<User> {
+        return this._httpClient
+            .post(`${this.apiUrl}/users/${parentId}/players/${playerId}`, null)
+            .pipe(switchMap(() => this.getUserById(parentId)));
+    }
+
+    /**
+     * Remove a player association from a parent user
+     *
+     * @param parentId
+     * @param playerId
+     */
+    removePlayer(parentId: string, playerId: string): Observable<User> {
+        return this._httpClient
+            .delete(`${this.apiUrl}/users/${parentId}/players/${playerId}`)
+            .pipe(switchMap(() => this.getUserById(parentId)));
     }
 
     /**

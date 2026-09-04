@@ -26,8 +26,14 @@ export class ParentService {
             .pipe(
                 tap((children) => {
                     this._children$.next(children);
-                    if (children.length > 0 && !this._selectedChild$.value) {
-                        this._selectedChild$.next(children[0]);
+                    const current = this._selectedChild$.value;
+                    const isCurrentStillValid =
+                        !!current &&
+                        children.some((child) => child.id === current.id);
+                    if (!isCurrentStillValid) {
+                        this._selectedChild$.next(
+                            children.length > 0 ? children[0] : null
+                        );
                     }
                 })
             );
@@ -37,10 +43,9 @@ export class ParentService {
         this._selectedChild$.next(child);
     }
 
-    getDashboard(childId: string): Observable<ParentDashboardDto> {
+    getDashboard(): Observable<ParentDashboardDto> {
         return this._httpClient.get<ParentDashboardDto>(
-            `${this.apiUrl}/parent/dashboard`,
-            { params: { childId } }
+            `${this.apiUrl}/parent/dashboard`
         );
     }
 }

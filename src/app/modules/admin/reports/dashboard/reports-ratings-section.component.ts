@@ -65,6 +65,7 @@ export class ReportsRatingsSectionComponent {
 
     @Input() loading = false;
     @Input() filteredUserId: string | undefined = undefined;
+    @Input() hideTopBottomUsers: boolean = false;
 
     private _ratingsSummary: RatingsSummaryDto | null = null;
 
