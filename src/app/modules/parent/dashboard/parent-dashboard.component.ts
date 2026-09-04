@@ -60,12 +60,13 @@ export class ParentDashboardComponent implements OnInit, OnDestroy {
                     if (!child) {
                         return [];
                     }
-                    return this._parentService.getDashboard(child.id);
+                    return this._parentService.getDashboard();
                 })
             )
             .subscribe({
                 next: (data) => {
                     this.dashboard = data as ParentDashboardDto;
+                    console.log(data);
                     this.loading = false;
                     this._cdr.markForCheck();
                 },
