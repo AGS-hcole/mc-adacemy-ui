@@ -37,7 +37,7 @@ export class ParentService {
         this._selectedChild$.next(child);
     }
 
-    getDashboard(childId: string): Observable<ParentDashboardDto> {
+    getDashboard(): Observable<ParentDashboardDto> {
         return this._httpClient.get<ParentDashboardDto>(
             `${this.apiUrl}/parent/dashboard`
         );
