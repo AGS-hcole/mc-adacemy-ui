@@ -5,16 +5,41 @@ export interface ParentChild {
     displayName: string;
 }
 
-export interface ParentDashboardDto {
-    childId: string;
-    currentWeek: {
-        from: string; // ISO date
-        to: string; // ISO date
+export interface ParentDashboardChild {
+    id: string;
+    firstname: string;
+    lastname: string;
+    birthDate: string;
+}
+
+export interface ParentDashboardChildStats {
+    child: ParentDashboardChild;
+    ratings: {
+        average: number | null;
+        count: number;
     };
-    trainingSessions: number;
-    trainingAvgRating: number | null;
-    transportsUsed: number;
-    manorNights: number;
-    upcomingTournaments: number;
-    doneTournaments: number;
+    residence: {
+        nightsCount: number;
+    };
+    tournaments: {
+        completedCount: number;
+        upcomingCount: number;
+    };
+    trainingSessions: {
+        completedCount: number;
+    };
+    transports: {
+        completedCount: number;
+    };
+}
+
+export interface ParentDashboardPeriod {
+    from: string; // ISO date
+    to: string; // ISO date
+    timezone: string;
+}
+
+export interface ParentDashboardDto {
+    children: ParentDashboardChildStats[];
+    period: ParentDashboardPeriod;
 }
