@@ -66,7 +66,6 @@ export class ParentDashboardComponent implements OnInit, OnDestroy {
             .subscribe({
                 next: (data) => {
                     this.dashboard = data as ParentDashboardDto;
-                    console.log(data);
                     this.loading = false;
                     this._cdr.markForCheck();
                 },
