@@ -1,5 +1,6 @@
 import { CommonModule } from '@angular/common';
 import {
+    ChangeDetectorRef,
     Component,
     Input,
     OnChanges,
@@ -63,7 +64,8 @@ export class ReportsDashboardComponent implements OnInit, OnChanges, OnDestroy {
         private _route: ActivatedRoute,
         private _router: Router,
         private _state: ReportsStateService,
-        private _export: ReportsExportService
+        private _export: ReportsExportService,
+        private _changeDetectorRef: ChangeDetectorRef
     ) {}
 
     ngOnInit(): void {
@@ -83,42 +85,64 @@ export class ReportsDashboardComponent implements OnInit, OnChanges, OnDestroy {
             .pipe(takeUntil(this._unsubscribeAll))
             .subscribe((filters) => {
                 this.filters = filters;
+
+                // Mark for check (needed when this component is nested under
+                // an OnPush ancestor, e.g. the parent reports page)
+                this._changeDetectorRef.markForCheck();
             });
 
         this._state.summary$
             .pipe(takeUntil(this._unsubscribeAll))
             .subscribe((summary) => {
                 this.summary = summary;
+
+                // Mark for check
+                this._changeDetectorRef.markForCheck();
             });
 
         this._state.timeseries$
             .pipe(takeUntil(this._unsubscribeAll))
             .subscribe((timeseries) => {
                 this.timeseries = timeseries;
+
+                // Mark for check
+                this._changeDetectorRef.markForCheck();
             });
 
         this._state.sessionsList$
             .pipe(takeUntil(this._unsubscribeAll))
             .subscribe((sessionsList) => {
                 this.sessionsList = sessionsList;
+
+                // Mark for check
+                this._changeDetectorRef.markForCheck();
             });
 
         this._state.ratingsSummary$
             .pipe(takeUntil(this._unsubscribeAll))
             .subscribe((ratingsSummary) => {
                 this.ratingsSummary = ratingsSummary;
+
+                // Mark for check
+                this._changeDetectorRef.markForCheck();
             });
 
         this._state.loading$
             .pipe(takeUntil(this._unsubscribeAll))
             .subscribe((loading) => {
                 this.loading = loading;
+
+                // Mark for check
+                this._changeDetectorRef.markForCheck();
             });
 
         this._state.error$
             .pipe(takeUntil(this._unsubscribeAll))
             .subscribe((error) => {
                 this.error = error;
+
+                // Mark for check
+                this._changeDetectorRef.markForCheck();
             });
     }
 
@@ -148,6 +172,7 @@ export class ReportsDashboardComponent implements OnInit, OnChanges, OnDestroy {
             page: 1,
         });
         this._state.loadData();
+        this._changeDetectorRef.markForCheck();
     }
 
     /**
