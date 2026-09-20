@@ -43,6 +43,7 @@ import { Subject, takeUntil } from 'rxjs';
 })
 export class ReportsFiltersComponent implements OnInit, OnDestroy {
     @Input() filters!: ReportsFilters;
+    @Input() hideUserFilter: boolean = false;
     @Output() filtersChange = new EventEmitter<Partial<ReportsFilters>>();
     @Output() apply = new EventEmitter<void>();
     @Output() reset = new EventEmitter<void>();

@@ -3,8 +3,10 @@ import { initialDataResolver } from 'app/app.resolvers';
 import { AuthGuard } from 'app/core/auth/guards/auth.guard';
 import { NoAuthGuard } from 'app/core/auth/guards/noAuth.guard';
 import { OnboardingGuard } from 'app/core/auth/guards/onboarding.guard';
+import { RoleGuard } from 'app/core/auth/guards/role.guard';
 import { LayoutComponent } from 'app/layout/layout.component';
 import { RoleRedirectGuard } from './core/auth/guards/role-redirect.guard';
+import { Role } from './core/user/user.types';
 
 export const appRoutes: Route[] = [
     // Redirect empty path to '/home'
@@ -104,13 +106,28 @@ export const appRoutes: Route[] = [
             // Admin Routes
             {
                 path: 'admin',
+                canActivate: [RoleGuard],
+                canActivateChild: [RoleGuard],
+                data: { roles: [Role.admin] },
                 loadChildren: () => import('app/modules/admin/admin.routes'),
             },
 
             // User Routes
             {
                 path: 'user',
+                canActivate: [RoleGuard],
+                canActivateChild: [RoleGuard],
+                data: { roles: [Role.user] },
                 loadChildren: () => import('app/modules/user/user.routes'),
+            },
+
+            // Parent Routes
+            {
+                path: 'parent',
+                canActivate: [RoleGuard],
+                canActivateChild: [RoleGuard],
+                data: { roles: [Role.parent] },
+                loadChildren: () => import('app/modules/parent/parent.routes'),
             },
 
             // 404 & Catch all

@@ -1,1188 +1,1162 @@
 {
-    "SHARED": {
-        "UNDER_CONSTRUCTION": "En construction",
-        "UNDER_CONSTRUCTION_DESCRIPTION": "Cette fonctionnalité est en cours de développement et sera bientôt disponible.",
-        "CLOSE": "Fermer",
-        "LOADING": "Chargement...",
-        "CLIPBOARD": {
-            "COPYTO": "Copier dans le presse-papiers",
-            "SUCCESS": "Copié dans le presse-papiers",
-            "ERROR": "Erreur lors de la copie dans le presse-papiers"
-        },
-        "USER": {
-            "SIGNED_IN_AS": "Connecté en tant que",
-            "PROFILE": "Profil",
-            "SIGN_OUT": "Se déconnecter"
-        }
+  "SHARED": {
+    "UNDER_CONSTRUCTION": "En construction",
+    "UNDER_CONSTRUCTION_DESCRIPTION": "Cette fonctionnalité est en cours de développement et sera bientôt disponible.",
+    "CLOSE": "Fermer",
+    "LOADING": "Chargement...",
+    "CLIPBOARD": {
+      "COPYTO": "Copier dans le presse-papiers",
+      "SUCCESS": "Copié dans le presse-papiers",
+      "ERROR": "Erreur lors de la copie dans le presse-papiers"
     },
-    "ERROR": {
-        "404": {
-            "TITLE": "Oups... 404 !",
-            "MESSAGE": "La page que vous avez demandée n'a pas pu être trouvée.",
-            "BACK": "Retour au tableau de bord"
-        },
-        "500": {
-            "TITLE": "Une erreur s'est produite !",
-            "MESSAGE": "Erreur serveur 500. Notre équipe a été notifiée, merci de votre compréhension.",
-            "BACK": "Retour au tableau de bord"
-        }
+    "USER": {
+      "SIGNED_IN_AS": "Connecté en tant que",
+      "PROFILE": "Profil",
+      "SIGN_OUT": "Se déconnecter"
+    }
+  },
+  "ERROR": {
+    "404": {
+      "TITLE": "Oups... 404 !",
+      "MESSAGE": "La page que vous avez demandée n'a pas pu être trouvée.",
+      "BACK": "Retour au tableau de bord"
     },
-    "SETTINGS": {
-        "THEME": "Thème",
-        "SCHEME": "Schéma",
-        "SCHEME_AUTO": "Auto",
-        "SCHEME_DARK": "Sombre",
-        "SCHEME_LIGHT": "Clair",
-        "LAYOUT": "Disposition"
+    "500": {
+      "TITLE": "Une erreur s'est produite !",
+      "MESSAGE": "Erreur serveur 500. Notre équipe a été notifiée, merci de votre compréhension.",
+      "BACK": "Retour au tableau de bord"
+    }
+  },
+  "SETTINGS": {
+    "THEME": "Thème",
+    "SCHEME": "Schéma",
+    "SCHEME_AUTO": "Auto",
+    "SCHEME_DARK": "Sombre",
+    "SCHEME_LIGHT": "Clair",
+    "LAYOUT": "Disposition"
+  },
+  "DIALOGS": {
+    "DELETE_SESSION": {
+      "TITLE": "Supprimer la session",
+      "MESSAGE": "Êtes-vous sûr de vouloir supprimer cette session ?",
+      "CONFIRM": "Supprimer"
     },
-    "DIALOGS": {
-        "DELETE_SESSION": {
-            "TITLE": "Supprimer la session",
-            "MESSAGE": "Êtes-vous sûr de vouloir supprimer cette session ?",
-            "CONFIRM": "Supprimer"
-        },
-        "CANCEL_SESSION": {
-            "TITLE": "Annuler la session",
-            "MESSAGE": "Êtes-vous sûr de vouloir annuler cette session ?",
-            "CONFIRM": "Annuler la session"
-        },
-        "REMOVE_PARTICIPANT": {
-            "TITLE": "Retirer le participant",
-            "MESSAGE": "Êtes-vous sûr de vouloir retirer ce participant ?",
-            "CONFIRM": "Retirer"
-        },
-        "RESET_RATING": {
-            "TITLE": "Réinitialiser la note",
-            "MESSAGE": "Êtes-vous sûr de vouloir réinitialiser cette note ?",
-            "CONFIRM": "Réinitialiser"
-        },
-        "DELETE_SITE": {
-            "TITLE": "Supprimer le site",
-            "MESSAGE": "Êtes-vous sûr de vouloir supprimer \"{{name}}\" ? Cette action ne peut pas être annulée.",
-            "CONFIRM": "Supprimer"
-        },
-        "DELETE_TOURNAMENT": {
-            "TITLE": "Supprimer le tournoi",
-            "MESSAGE": "Êtes-vous sûr de vouloir supprimer \"{{title}}\" ?",
-            "CONFIRM": "Supprimer"
-        },
-        "DELETE_USER": {
-            "TITLE": "Supprimer l'utilisateur",
-            "MESSAGE": "Êtes-vous sûr de vouloir supprimer cet utilisateur ? Cette action ne peut pas être annulée !",
-            "CONFIRM": "Supprimer"
-        },
-        "DELETE_EVENT": {
-            "TITLE": "Supprimer l'événement",
-            "MESSAGE": "Êtes-vous sûr de vouloir supprimer \"{{name}}\" ? Cette action ne peut pas être annulée.",
-            "CONFIRM": "Supprimer"
-        },
-        "DISABLE_TEMPLATE": {
-            "TITLE": "Désactiver le modèle de transport",
-            "MESSAGE": "Êtes-vous sûr de vouloir désactiver ce modèle de transport ? Il ne générera plus d'occurrences.",
-            "CONFIRM": "Désactiver"
-        },
-        "CANCEL_OCCURRENCE": {
-            "TITLE": "Annuler l'occurrence de transport",
-            "MESSAGE": "Êtes-vous sûr de vouloir annuler cette occurrence de transport ? Toutes les réservations seront affectées.",
-            "CONFIRM": "Annuler l'occurrence"
-        },
-        "CANCEL_BOOKING": {
-            "TITLE": "Annuler la réservation",
-            "MESSAGE": "Êtes-vous sûr de vouloir annuler cette réservation ?",
-            "CONFIRM": "Annuler la réservation"
-        }
+    "CANCEL_SESSION": {
+      "TITLE": "Annuler la session",
+      "MESSAGE": "Êtes-vous sûr de vouloir annuler cette session ?",
+      "CONFIRM": "Annuler la session"
     },
-    "AUTH": {
-        "SUBTITLE": "My Center Academy, l’école où les passionnés de padel deviennent les champions de demain. Entraînements, suivi personnalisé et esprit d’équipe pour révéler tout votre potentiel.",
-        "DESCRIPTION": "Découvrez les talents de demain, formés à My Center Academy.",
-        "SIGNIN": {
-            "TITLE": "Se connecter",
-            "EMAIL": "Adresse e-mail",
-            "EMAIL_REQUIRED": "L'adresse e-mail est requise",
-            "EMAIL_INVALID": "Veuillez entrer une adresse e-mail valide",
-            "PASSWORD": "Mot de passe",
-            "PASSWORD_REQUIRED": "Le mot de passe est requis",
-            "REMEMBER_ME": "Se souvenir de moi",
-            "FORGOT_PASSWORD": "Mot de passe oublié ?",
-            "SIGNIN": "Se connecter",
-            "ERROR_MESSAGE": "Utilisateur ou mot de passe invalide"
-        },
-        "SIGN_OUT": {
-            "TITLE": "Déconnexion",
-            "REDIRECTING": "Redirection dans ",
-            "REDIRECTED": "Vous êtes maintenant redirigé !",
-            "GOTO": "Aller à",
-            "SIGN_IN": "se connecter"
-        },
-        "RESET_PASSWORD": {
-            "TITLE": "Réinitialiser le mot de passe",
-            "SUBTITLE": "Entrez votre adresse e-mail pour recevoir un lien de réinitialisation de mot de passe.",
-            "PASSWORD": "Nouveau mot de passe",
-            "PASSWORD_REQUIRED": "Le mot de passe est requis",
-            "PASSWORD_CONFIRM": "Confirmer le mot de passe",
-            "PASSWORD_CONFIRM_REQUIRED": "La confirmation du mot de passe est requise",
-            "PASSWORD_MUST_MATCH": "Les mots de passe doivent correspondre",
-            "SUBMIT": "Réinitialiser le mot de passe",
-            "RETURNTO": "Retour à",
-            "SIGN_IN": "se connecter",
-            "SUCCESS_MESSAGE": "Votre mot de passe a été réinitialisé.",
-            "ERROR_MESSAGE": "Une erreur est survenue, veuillez réessayer."
-        },
-        "FORGOT_PASSWORD": {
-            "TITLE": "Mot de passe oublié",
-            "SUBTITLE": "Entrez votre adresse e-mail pour recevoir un lien de réinitialisation de mot de passe.",
-            "EMAIL": "Adresse e-mail",
-            "EMAIL_REQUIRED": "L'adresse e-mail est requise",
-            "EMAIL_INVALID": "Veuillez entrer une adresse e-mail valide",
-            "SEND_LINK": "Envoyer le lien de réinitialisation",
-            "RETURNTO": "Retour à",
-            "SIGN_IN": "se connecter"
-        },
-        "CONFIRMATION_REQUIRED": {
-            "TITLE": "Confirmation requise",
-            "DESCRIPTION": "Un e-mail de confirmation avec des instructions a été envoyé à votre adresse e-mail. Suivez ces instructions pour confirmer votre adresse e-mail et activer votre compte.",
-            "RETURNTO": "Retour à",
-            "SIGN_IN": "se connecter"
-        }
+    "REMOVE_PARTICIPANT": {
+      "TITLE": "Retirer le participant",
+      "MESSAGE": "Êtes-vous sûr de vouloir retirer ce participant ?",
+      "CONFIRM": "Retirer"
     },
-    "NAVIGATION": {
-        "TITLE": "Accueil",
-        "SUBTITLE": "Informations générales",
-        "DASHBOARD": {
-            "TITLE": "Tableau de bord"
-        },
-        "ADMIN": {
-            "TITLE": "Administration",
-            "SUBTITLE": "Gestion de l'application",
-            "USERS": {
-                "TITLE": "Utilisateurs"
-            },
-            "SESSIONS": {
-                "TITLE": "Sessions d'entraînement"
-            },
-            "SITES": {
-                "TITLE": "Sites"
-            },
-            "REPORTS": {
-                "TITLE": "Reporting"
-            },
-            "TOURNAMENTS": {
-                "TITLE": "Tournois"
-            },
-            "TRANSPORTS": {
-                "TITLE": "Transports"
-            },
-            "EVENTS": {
-                "TITLE": "Événements"
-            }
-        },
-        "USER": {
-            "TITLE": "Utilisateur",
-            "SUBTITLE": "Espace utilisateur",
-            "DASHBOARD": {
-                "TITLE": "Tableau de bord"
-            },
-            "PROFILE": {
-                "TITLE": "Profil"
-            },
-            "SESSIONS": {
-                "TITLE": "Mes sessions"
-            },
-            "TOURNAMENTS": {
-                "TITLE": "Mes tournois"
-            }
-        }
+    "RESET_RATING": {
+      "TITLE": "Réinitialiser la note",
+      "MESSAGE": "Êtes-vous sûr de vouloir réinitialiser cette note ?",
+      "CONFIRM": "Réinitialiser"
     },
+    "DELETE_SITE": {
+      "TITLE": "Supprimer le site",
+      "MESSAGE": "Êtes-vous sûr de vouloir supprimer \"{{name}}\" ? Cette action ne peut pas être annulée.",
+      "CONFIRM": "Supprimer"
+    },
+    "DELETE_TOURNAMENT": {
+      "TITLE": "Supprimer le tournoi",
+      "MESSAGE": "Êtes-vous sûr de vouloir supprimer \"{{title}}\" ?",
+      "CONFIRM": "Supprimer"
+    },
+    "DELETE_USER": {
+      "TITLE": "Supprimer l'utilisateur",
+      "MESSAGE": "Êtes-vous sûr de vouloir supprimer cet utilisateur ? Cette action ne peut pas être annulée !",
+      "CONFIRM": "Supprimer"
+    },
+    "DELETE_EVENT": {
+      "TITLE": "Supprimer l'événement",
+      "MESSAGE": "Êtes-vous sûr de vouloir supprimer \"{{name}}\" ? Cette action ne peut pas être annulée.",
+      "CONFIRM": "Supprimer"
+    },
+    "DISABLE_TEMPLATE": {
+      "TITLE": "Désactiver le modèle de transport",
+      "MESSAGE": "Êtes-vous sûr de vouloir désactiver ce modèle de transport ? Il ne générera plus d'occurrences.",
+      "CONFIRM": "Désactiver"
+    },
+    "CANCEL_OCCURRENCE": {
+      "TITLE": "Annuler l'occurrence de transport",
+      "MESSAGE": "Êtes-vous sûr de vouloir annuler cette occurrence de transport ? Toutes les réservations seront affectées.",
+      "CONFIRM": "Annuler l'occurrence"
+    },
+    "CANCEL_BOOKING": {
+      "TITLE": "Annuler la réservation",
+      "MESSAGE": "Êtes-vous sûr de vouloir annuler cette réservation ?",
+      "CONFIRM": "Annuler la réservation"
+    }
+  },
+  "AUTH": {
+    "SUBTITLE": "My Center Academy, l’école où les passionnés de padel deviennent les champions de demain. Entraînements, suivi personnalisé et esprit d’équipe pour révéler tout votre potentiel.",
+    "DESCRIPTION": "Découvrez les talents de demain, formés à My Center Academy.",
+    "SIGNIN": {
+      "TITLE": "Se connecter",
+      "EMAIL": "Adresse e-mail",
+      "EMAIL_REQUIRED": "L'adresse e-mail est requise",
+      "EMAIL_INVALID": "Veuillez entrer une adresse e-mail valide",
+      "PASSWORD": "Mot de passe",
+      "PASSWORD_REQUIRED": "Le mot de passe est requis",
+      "REMEMBER_ME": "Se souvenir de moi",
+      "FORGOT_PASSWORD": "Mot de passe oublié ?",
+      "SIGNIN": "Se connecter",
+      "ERROR_MESSAGE": "Utilisateur ou mot de passe invalide"
+    },
+    "SIGN_OUT": {
+      "TITLE": "Déconnexion",
+      "REDIRECTING": "Redirection dans ",
+      "REDIRECTED": "Vous êtes maintenant redirigé !",
+      "GOTO": "Aller à",
+      "SIGN_IN": "se connecter"
+    },
+    "RESET_PASSWORD": {
+      "TITLE": "Réinitialiser le mot de passe",
+      "SUBTITLE": "Entrez votre adresse e-mail pour recevoir un lien de réinitialisation de mot de passe.",
+      "PASSWORD": "Nouveau mot de passe",
+      "PASSWORD_REQUIRED": "Le mot de passe est requis",
+      "PASSWORD_CONFIRM": "Confirmer le mot de passe",
+      "PASSWORD_CONFIRM_REQUIRED": "La confirmation du mot de passe est requise",
+      "PASSWORD_MUST_MATCH": "Les mots de passe doivent correspondre",
+      "SUBMIT": "Réinitialiser le mot de passe",
+      "RETURNTO": "Retour à",
+      "SIGN_IN": "se connecter",
+      "SUCCESS_MESSAGE": "Votre mot de passe a été réinitialisé.",
+      "ERROR_MESSAGE": "Une erreur est survenue, veuillez réessayer."
+    },
+    "FORGOT_PASSWORD": {
+      "TITLE": "Mot de passe oublié",
+      "SUBTITLE": "Entrez votre adresse e-mail pour recevoir un lien de réinitialisation de mot de passe.",
+      "EMAIL": "Adresse e-mail",
+      "EMAIL_REQUIRED": "L'adresse e-mail est requise",
+      "EMAIL_INVALID": "Veuillez entrer une adresse e-mail valide",
+      "SEND_LINK": "Envoyer le lien de réinitialisation",
+      "RETURNTO": "Retour à",
+      "SIGN_IN": "se connecter"
+    },
+    "CONFIRMATION_REQUIRED": {
+      "TITLE": "Confirmation requise",
+      "DESCRIPTION": "Un e-mail de confirmation avec des instructions a été envoyé à votre adresse e-mail. Suivez ces instructions pour confirmer votre adresse e-mail et activer votre compte.",
+      "RETURNTO": "Retour à",
+      "SIGN_IN": "se connecter"
+    }
+  },
+  "NAVIGATION": {
+    "TITLE": "Navigation",
     "DASHBOARD": {
-        "TITLE": "Tableau de bord admin",
-        "SUBTITLE": "Vue journalière",
-        "LOADING": "Chargement...",
-        "TODAY": "Aujourd'hui",
-        "SELECT_DATE": "Sélectionner une date",
-        "PREVIOUS_DAY": "Jour précédent",
-        "NEXT_DAY": "Jour suivant",
-        "ERROR_TITLE": "Erreur de chargement des données",
-        "RETRY": "Réessayer",
-        "RATING_SAVED": "Évaluation enregistrée avec succès",
-        "RATING_ERROR": "Échec de l'enregistrement de l'évaluation",
-        "SECTIONS": {
-            "GENERAL": "Informations générales",
-            "ACTIVITIES": "Activités"
-        },
-        "ACTIONS": {
-            "VIEW_SESSIONS": "Voir les sessions"
-        },
-        "STATS": {
-            "SITES": "Sites",
-            "TOTAL_USERS": "Utilisateurs totaux",
-            "ADMINS": "Administrateurs",
-            "REGULAR_USERS": "Utilisateurs",
-            "UPCOMING_SESSIONS": "Sessions à venir",
-            "UPCOMING_TOURNAMENTS": "Tournois à venir",
-            "COMING_SOON": "Bientôt disponible",
-            "REGULAR_USERS_HINT": "Académiciens (rôle : utilisateur)"
-        },
-        "SESSIONS": {
-            "TITLE": "Sessions d'entraînement",
-            "EMPTY": "Aucune session programmée pour ce jour",
-            "CANCELED": "Annulée",
-            "OUT_OF_CONTRACT": "Hors contrat",
-            "EDIT_RATING": "Modifier l'évaluation",
-            "EDIT_COMMENT": "Modifier le commentaire",
-            "HAS_COMMENT": "A un commentaire"
-        },
-        "MANORS": {
-            "TITLE": "Hébergements",
-            "EMPTY": "Aucun hébergement pour ce jour",
-            "CAPACITY": "Capacité",
-            "ENFORCE_CAPACITY": "Capacité stricte",
-            "OVER_CAPACITY": "Capacité dépassée",
-            "ADMIN_CREATED": "Admin",
-            "SHOW_MORE": "Afficher plus",
-            "SHOW_LESS": "Afficher moins",
-            "MORE": "de plus"
-        },
-        "TRANSPORTS": {
-            "TITLE": "Transports",
-            "EMPTY": "Aucun transport programmé pour ce jour",
-            "CAPACITY": "Réservés / Capacité",
-            "NO_BOOKINGS": "Aucune réservation pour le moment",
-            "SEAT": "place",
-            "SEATS": "places"
-        },
-        "RATING_EDIT": {
-            "TITLE": "Modifier l'évaluation",
-            "SCORE": "Note",
-            "COMMENT": "Commentaire",
-            "COMMENT_PLACEHOLDER": "Ajouter un commentaire...",
-            "SAVE": "Enregistrer",
-            "CANCEL": "Annuler"
-        }
-    },
-    "HOME": {
-        "DASHBOARD": {
-            "TITLE": "MyCenter Academy",
-            "SUBTITLE": "Bienvenue sur MCA",
-            "TITLEDETAILS": "My Center Academy, l’école où les passionnés de padel deviennent les champions de demain. Entraînements, suivi personnalisé et esprit d’équipe pour révéler tout votre potentiel."
-        },
-        "USERS": {
-            "TITLE": "Utilisateurs",
-            "SEARCH": "Rechercher un utilisateur",
-            "ADD": "Ajouter",
-            "NO_USERS": "Aucun utilisateur trouvé",
-            "USER": "Utilisateur",
-            "USERS": "Utilisateurs",
-            "DETAILS": {
-                "ROLES": "Rôles",
-                "ROLE": "Rôle",
-                "PH_EMAIL": "Adresse e-mail",
-                "EMAIL": "Adresse e-mail",
-                "CURRENT_RANKING": "Classement",
-                "PH_FIRSTNAME": "Prénom",
-                "FIRSTNAME": "Prénom",
-                "PH_LASTNAME": "Nom",
-                "LASTNAME": "Nom",
-                "PH_PHONE": "Numéro de téléphone",
-                "PHONE": "Téléphone",
-                "PH_BIRTH_DATE": "Date de naissance",
-                "BIRTH_DATE": "Date de naissance",
-                "PH_FFT_LICENSE": "Numéro de licence FFT",
-                "FFT_LICENSE": "Licence FFT",
-                "FORMULA": "Formule",
-                "NO_FORMULA": "Aucune formule",
-                "CONSENTS": "Consentements (RGPD)",
-                "PRIVACY_CONSENT": "Consentement aux conditions d'utilisation et politique de confidentialité",
-                "PHOTO_CONSENT": "Consentement à l'utilisation de photos",
-                "MARKETING_CONSENT": "Consentement marketing et communications",
-                "NOTIFICATIONS": "Préférences de Notifications",
-                "NOTIFY_EMAIL": "Notifications par e-mail",
-                "NOTIFY_SMS": "Notifications par SMS",
-                "NOTIFY_WHATSAPP": "Notifications WhatsApp",
-                "COMMUNICATION_PLAN": "Plan de communication",
-                "PH_COMMUNICATION_PLAN": "Sélectionner un plan de communication",
-                "ALLOW_LOGIN": "Autoriser la connexion"
-            },
-            "ROLES": {
-                "ADD": "Ajouter",
-                "EDIT": "Modifier",
-                "USER": "Utilisateur",
-                "ADMIN": "Administrateur"
-            },
-            "FORMULAS": {
-                "MORNING": "Matin",
-                "AFTERNOON": "Après-midi",
-                "FULL": "Journée complète"
-            },
-            "ACTIONS": {
-                "DELETE": "Supprimer",
-                "CANCEL": "Annuler",
-                "SAVE": "Enregistrer",
-                "ADD": "Ajouter",
-                "EDIT": "Modifier"
-            }
-        }
-    },
-    "SESSIONS": {
-        "VIEW": {
-            "BREADCRUMB": {
-                "BACK": "Retour aux sessions"
-            },
-            "TITLE": "Session",
-            "INFO": "Informations",
-            "INFO_DESCRIPTION": "Détails et paramètres de la session",
-            "PARTICIPANTS": "Participants",
-            "PARTICIPANTS_DESCRIPTION": "Gérer les participants inscrits à cette session"
-        },
-        "SLOT": {
-            "AM": "Matin",
-            "PM": "Après-midi"
-        },
-        "STATUS": {
-            "PUBLISHED": "Publié",
-            "DRAFT": "Brouillon",
-            "CANCELED": "Annulé"
-        },
-        "ADMIN": {
-            "TITLE": "Sessions d'entraînement",
-            "CREATE_SESSION": "Créer une session",
-            "EDIT_SESSION": "Modifier la session",
-            "NO_SESSIONS": "Aucune session trouvée",
-            "VIEW": {
-                "TABS": {
-                    "INFO": "Informations",
-                    "PARTICIPANTS": "Participants"
-                }
-            },
-            "FILTERS": {
-                "START_DATE": "Date de début",
-                "END_DATE": "Date de fin",
-                "SITE": "Site",
-                "ALL_SITES": "Tous les sites",
-                "SLOT": "Créneau",
-                "ALL_SLOTS": "Tous les créneaux",
-                "STATUS": "Statut",
-                "ALL_STATUS": "Tous les statuts"
-            },
-            "TABLE": {
-                "SESSION": "Session",
-                "SLOT": "Créneau",
-                "TIME": "Horaire",
-                "SITE": "Site",
-                "PARTICIPANTS": "Participants",
-                "STATUS": "Statut",
-                "ACTIONS": "Actions"
-            },
-            "ACTIONS": {
-                "EDIT": "Modifier",
-                "DELETE": "Supprimer",
-                "CANCEL": "Annuler",
-                "PUBLISH": "Publier",
-                "UNPUBLISH": "Dépublier"
-            },
-            "FORM": {
-                "SITE": "Site",
-                "SITE_REQUIRED": "Le site est requis",
-                "DATE": "Date",
-                "DATE_REQUIRED": "La date est requise",
-                "DATE_MULTIPLE": "Sélectionner des dates",
-                "DATE_MULTIPLE_HINT": "Cliquez sur une date pour l'ajouter à la liste",
-                "SELECTED_DATES": "Dates sélectionnées",
-                "SLOT": "Créneau",
-                "SLOT_REQUIRED": "Le créneau est requis",
-                "START_TIME": "Heure de début",
-                "START_TIME_HINT": "Laissez vide pour utiliser les horaires par défaut",
-                "END_TIME": "Heure de fin",
-                "END_TIME_HINT": "Laissez vide pour utiliser les horaires par défaut",
-                "INVALID_TIME_RANGE": "L'heure de fin doit être après l'heure de début",
-                "NOTES": "Notes",
-                "NOTES_HINT": "Notes ou instructions pour cette session",
-                "IS_PUBLISHED": "Publier cette session",
-                "IS_PUBLISHED_HINT": "Les sessions publiées sont visibles par les utilisateurs",
-                "CANCEL": "Annuler",
-                "SAVE": "Enregistrer",
-                "CREATE": "Créer",
-                "CREATE_MODE_TITLE": "Dates multiples",
-                "CREATE_MODE_INFO": "En sélectionnant plusieurs dates, une session distincte sera créée pour chaque date choisie avec les mêmes paramètres."
-            },
-            "ATTENDEES": {
-                "TITLE": "Gestion des participants",
-                "ADD_PARTICIPANT": "Ajouter un participant",
-                "SELECT_USER": "Sélectionner un utilisateur",
-                "ADD": "Ajouter",
-                "PARTICIPANTS_LIST": "Liste des participants",
-                "NO_PARTICIPANTS": "Aucun participant pour cette session",
-                "ADMIN_REGISTERED": "Inscrit par admin",
-                "REMOVE": "Retirer",
-                "CLOSE": "Fermer"
-            },
-            "RATINGS": {
-                "TITLE": "Évaluations",
-                "AVERAGE": "Moyenne",
-                "COUNT": "{{count}} évaluation",
-                "COUNT_plural": "{{count}} évaluations",
-                "DISTRIBUTION": "Distribution",
-                "SET_RATING": "Définir la note à {{value}} / {{max}}",
-                "RATING_LABEL": "Note {{value}} sur {{max}}",
-                "COMMENT": {
-                    "EDIT": "Modifier le commentaire",
-                    "PLACEHOLDER": "Ajouter un commentaire sur la performance de ce participant...",
-                    "TITLE": "Commentaire d'évaluation",
-                    "MAX_LENGTH": "Maximum 2000 caractères"
-                },
-                "SAVE": "Enregistrer",
-                "CANCEL": "Annuler",
-                "RESET": "Réinitialiser la note",
-                "RESET_CONFIRM": "Êtes-vous sûr de vouloir réinitialiser cette note ?",
-                "SAVED": "Note enregistrée avec succès",
-                "ERROR": "Échec de l'enregistrement de la note",
-                "NO_RATINGS": "Aucune évaluation pour le moment",
-                "PARTICIPANT": "Participant",
-                "FORMULA": "Formule",
-                "RATING": "Note",
-                "ACTIONS": "Actions"
-            }
-        },
-        "USER": {
-            "TITLE": "Mes sessions d'entraînement",
-            "NO_SESSIONS": "Aucune session à venir",
-            "NO_SESSIONS_DESCRIPTION": "Revenez plus tard pour voir les prochaines sessions disponibles",
-            "STATUS": {
-                "AVAILABLE": "Disponible",
-                "REGISTERED": "Inscrit",
-                "CANCELLED": "Annulée",
-                "CUTOFF_PASSED": "Date limite dépassée",
-                "FULL": "Complet",
-                "NOT_PUBLISHED": "Non publiée",
-                "UNAVAILABLE": "Non disponible",
-                "OUT_OF_CONTRACT": "Hors formule"
-            },
-            "ACTIONS": {
-                "REGISTER": "S'inscrire",
-                "REGISTERED": "Inscrit"
-            }
-        }
-    },
-    "SITES": {
-        "ADMIN": {
-            "TITLE": "Sites d'entraînement",
-            "CREATE_SITE": "Créer un site",
-            "EDIT_SITE": "Modifier le site",
-            "NO_SITES": "Aucun site trouvé",
-            "NO_SITES_DESCRIPTION": "Créez un nouveau site pour commencer",
-            "SEARCH": "Rechercher un site",
-            "TABLE": {
-                "NAME": "Nom",
-                "CITY": "Ville",
-                "ADDRESS": "Adresse",
-                "ACTIONS": "Actions"
-            },
-            "ACTIONS": {
-                "EDIT": "Modifier",
-                "DELETE": "Supprimer"
-            },
-            "FORM": {
-                "NAME": "Nom du site",
-                "NAME_REQUIRED": "Le nom est requis",
-                "NAME_HINT": "Nom du site d'entraînement",
-                "CITY": "Ville",
-                "CITY_HINT": "Ville où se trouve le site",
-                "ADDRESS": "Adresse",
-                "ADDRESS_HINT": "Adresse complète du site",
-                "CANCEL": "Annuler",
-                "SAVE": "Enregistrer",
-                "CREATE": "Créer",
-                "MORNING_DEFAULT": "Définir ce site par défaut pour les sessions du matin",
-                "AFTERNOON_DEFAULT": "Définir ce site par défaut pour les sessions de l'après-midi"
-            }
-        }
-    },
-    "ONBOARDING": {
-        "TITLE": "Complétez votre profil",
-        "STEPS": {
-            "PROFILE": "Profil",
-            "CONTRACT": "Contrat & Notifications",
-            "CONSENTS": "Consentements",
-            "SUMMARY": "Résumé"
-        },
-        "ACTIONS": {
-            "BACK": "Retour",
-            "NEXT": "Suivant",
-            "FINISH": "Terminer"
-        },
-        "PROFILE": {
-            "FIRSTNAME": "Prénom",
-            "FIRSTNAME_REQUIRED": "Le prénom est requis",
-            "FIRSTNAME_MIN": "Le prénom doit contenir au moins 2 caractères",
-            "LASTNAME": "Nom",
-            "LASTNAME_REQUIRED": "Le nom est requis",
-            "LASTNAME_MIN": "Le nom doit contenir au moins 2 caractères",
-            "EMAIL": "Email",
-            "PHONE": "Téléphone",
-            "PHONE_PATTERN": "Format de téléphone invalide",
-            "BIRTHDATE": "Date de naissance",
-            "BIRTHDATE_INVALID": "Date invalide",
-            "FFT_NUMBER": "Numéro de licence FFT",
-            "CURRENT_RANKING": "Classement",
-            "AVATAR": "Photo de profil",
-            "AVATAR_HINT": "Télécharger une photo de profil (max 2MB, PNG/JPEG)",
-            "AVATAR_UPLOAD": "Télécharger",
-            "AVATAR_REMOVE": "Supprimer",
-            "BACKGROUND": "Image de couverture",
-            "BACKGROUND_HINT": "Télécharger une image de couverture (max 4MB, PNG/JPEG)",
-            "BACKGROUND_UPLOAD": "Télécharger",
-            "BACKGROUND_REMOVE": "Supprimer"
-        },
-        "CONTRACT": {
-            "FORMULA": "Formule d'entraînement",
-            "FORMULA_REQUIRED": "La formule est requise",
-            "FORMULA_OPTIONS": {
-                "MORNING": "Matin (AM)",
-                "AFTERNOON": "Après-midi (PM)",
-                "FULL": "Accès complet (AM + PM)"
-            },
-            "NOTIFY_EMAIL": "Notifications par email",
-            "NOTIFY_SMS": "Notifications par SMS",
-            "NOTIFY_WHATSAPP": "Notifications par WhatsApp",
-            "SMS_HINT": "Nécessite un numéro de téléphone valide.",
-            "SMS_WARNING": "Un numéro de téléphone est requis pour les notifications SMS"
-        },
-        "CONSENTS": {
-            "TITLE": "Consentements légaux",
-            "PRIVACY": "J'accepte la Politique de confidentialité et les Conditions d'utilisation.",
-            "PRIVACY_REQUIRED": "Le consentement de confidentialité est requis",
-            "PHOTO": "J'autorise l'utilisation de mon image pour les communications de l'académie.",
-            "MARKETING": "J'accepte de recevoir des communications marketing.",
-            "LINK_PRIVACY": "Lire la Politique de confidentialité"
-        },
-        "SUMMARY": {
-            "CHECK": "Veuillez vérifier vos informations avant de terminer.",
-            "PROFILE_TITLE": "Informations de profil",
-            "CONTRACT_TITLE": "Contrat & Notifications",
-            "CONSENTS_TITLE": "Consentements légaux",
-            "FORMULA": "Formule",
-            "NOTIFICATIONS": "Notifications"
-        },
-        "SUCCESS": "Votre profil est complet. Bienvenue !",
-        "ERROR": "Une erreur s'est produite. Veuillez réessayer."
-    },
-    "REPORTS": {
-        "TITLE": "Rapports",
-        "DESCRIPTION": "Analytique et statistiques des sessions de formation",
-        "CHART": {
-            "CONTRACT_SHARE": "Sessions sous contrat vs hors contrat",
-            "SESSIONS_OVER_TIME": "Sessions dans le temps"
-        },
-        "ERROR": {
-            "TITLE": "Échec du chargement des données de rapport"
-        },
-        "ACTIONS": {
-            "RETRY": "Réessayer",
-            "EXPORT_CSV": "Exporter CSV",
-            "EXPORT_JSON": "Exporter JSON",
-            "APPLY": "Appliquer",
-            "RESET": "Réinitialiser",
-            "VIEW_SESSION": "Voir la session"
-        },
-        "EMPTY": {
-            "NO_DATA": "Aucune donnée disponible pour la période sélectionnée",
-            "NO_SESSIONS": "Aucune session trouvée pour la période sélectionnée"
-        },
-        "RATINGS": {
-            "TITLE": "Notes",
-            "KPI": {
-                "AVERAGE": "Note moyenne",
-                "TOTAL": "Total des notes",
-                "RATED_SESSIONS": "Sessions notées",
-                "UNRATED_SESSIONS": "Sessions non notées"
-            },
-            "DISTRIBUTION": {
-                "TITLE": "Répartition des notes (1-10)"
-            },
-            "PER_USER": {
-                "TITLE": "Notes par élève",
-                "NAME": "Nom",
-                "AVERAGE": "Moyenne",
-                "COUNT": "Nombre"
-            },
-            "TOP_USERS": "Meilleurs élèves",
-            "BOTTOM_USERS": "Élèves en difficulté",
-            "PIE": {
-                "CONTRACT_VS_NONCONTRACT": "Notes: Sous contrat vs Hors contrat"
-            },
-            "EMPTY": "Aucune note pour cette période",
-            "NO_DATA": "Aucune information disponible",
-            "USER": "Élève",
-            "RATINGS_COUNT": "notes",
-            "USER_STATS": {
-                "TITLE": "Statistiques de notes de l'élève"
-            }
-        },
-        "KPI": {
-            "TOTAL": "Total des sessions",
-            "UNDER": "Sous contrat",
-            "OFF": "Hors contrat",
-            "UNIQUE": "Utilisateurs uniques"
-        },
-        "SESSIONS": {
-            "TITLE": "Sessions"
-        },
-        "FILTERS": {
-            "PERIOD": "Période",
-            "USER": "Élève",
-            "DATE_FROM": "Date de début",
-            "DATE_TO": "Date de fin",
-            "ALL_USERS": "Tous les élèves",
-            "CONTRACT_SCOPE": "Type de contrat",
-            "PRESET": {
-                "LAST_7": "7 derniers jours",
-                "LAST_30": "30 derniers jours",
-                "THIS_MONTH": "Ce mois-ci",
-                "PREV_MONTH": "Mois précédent",
-                "CUSTOM": "Période personnalisée"
-            },
-            "CONTRACT": {
-                "ALL": "Toutes les sessions",
-                "UNDER": "Sous contrat",
-                "OFF": "Hors contrat"
-            }
-        },
-        "TABLE": {
-            "TITLE": "Liste des sessions",
-            "DATE": "Date",
-            "SESSION_TITLE": "Session",
-            "COACH": "Coach",
-            "CONTRACT": "Contrat",
-            "ATTENDEES": "Participants",
-            "STATUS": "Statut"
-        }
-    },
-    "PROFILE": {
-        "TITLE": "Mon Profil",
-        "NAME": "Nom complet",
-        "FIRSTNAME": "Prénom",
-        "FIRSTNAME_REQUIRED": "Le prénom est requis",
-        "FIRSTNAME_MIN": "Le prénom doit contenir au moins 2 caractères",
-        "LASTNAME": "Nom",
-        "LASTNAME_REQUIRED": "Le nom est requis",
-        "LASTNAME_MIN": "Le nom doit contenir au moins 2 caractères",
-        "EMAIL": "Email",
-        "EMAIL_READONLY": "L'adresse email ne peut pas être modifiée",
-        "PHONE": "Téléphone",
-        "CURRENT_RANKING": "Classement",
-        "RATING": "Note",
-        "HOME": "Tableau de bord",
-        "SESSIONS": "Sessions",
-        "TOURNAMENTS": "Tournois",
-        "PHONE_PATTERN": "Format de téléphone invalide",
-        "BIRTHDATE": "Date de naissance",
-        "FFT_NUMBER": "Numéro de licence FFT",
-        "FORMULA": "Formule",
-        "AVATAR": "Photo de profil",
-        "AVATAR_HINT": "Télécharger une photo de profil (max 2MB, PNG/JPEG)",
-        "AVATAR_UPLOAD": "Télécharger",
-        "AVATAR_REMOVE": "Supprimer",
-        "BACKGROUND": "Image de couverture",
-        "BACKGROUND_HINT": "Télécharger une image de couverture (max 4MB, PNG/JPEG)",
-        "BACKGROUND_UPLOAD": "Télécharger",
-        "BACKGROUND_REMOVE": "Supprimer",
-        "CHANGE_AVATAR": "Changer la photo de profil",
-        "CHANGE_COVER": "Changer l'image de couverture",
-        "EDIT": "Modifier",
-        "EDIT_INFO": "Modifier les informations",
-        "CANCEL": "Annuler",
-        "SAVE": "Enregistrer les modifications",
-        "ABOUT": "À propos",
-        "UPDATE_SUCCESS": "Profil mis à jour avec succès",
-        "UPDATE_ERROR": "Échec de la mise à jour du profil, veuillez réessayer",
-        "STATS": {
-            "TITLE": "Statistiques",
-            "SESSIONS": "Sessions",
-            "TOURNAMENTS": "Tournois"
-        },
-        "NOTIFICATIONS": {
-            "TITLE": "Préférences de notifications",
-            "DESCRIPTION": "Choisissez comment vous souhaitez recevoir les notifications",
-            "EMAIL": "Notifications par email",
-            "SMS": "Notifications par SMS",
-            "WHATSAPP": "Notifications WhatsApp"
-        },
-        "CONSENTS": {
-            "TITLE": "Consentements",
-            "DESCRIPTION": "Gérez vos consentements et autorisations",
-            "PRIVACY": "J'accepte la politique de confidentialité et les conditions d'utilisation",
-            "PHOTO": "J'autorise l'utilisation de mon image pour les communications de l'académie",
-            "MARKETING": "J'accepte de recevoir des communications marketing"
-        },
-        "ACTIVITY": {
-            "TITLE": "Activité récente",
-            "EMPTY": "Aucune activité pour le moment",
-            "EMPTY_DESC": "Les sessions auxquelles vous participez apparaîtront ici.",
-            "ERROR": "Impossible de charger l'activité pour le moment.",
-            "RETRY": "Réessayer",
-            "NO_RATING": "Pas encore de note",
-            "NO_AVG_RATING": "Aucune note moyenne disponible",
-            "AVG_RATING": "Note moyenne",
-            "PARTICIPANTS": "participants",
-            "LOAD_MORE": "Charger plus",
-            "LIKE": "J'aime",
-            "COMMENT": "Commentaire",
-            "ADD_COMMENT": "Ajouter un commentaire",
-            "COMMENT_PLACEHOLDER": "Partagez votre avis sur cette session...",
-            "COMMENT_ADDED": "Commentaire ajouté avec succès",
-            "COMMENTS_PLACEHOLDER": "Les commentaires apparaîtront ici prochainement",
-            "NO_COMMENTS": "Aucun commentaire pour le moment. Soyez le premier à commenter !",
-            "LOAD_MORE_COMMENTS": "Charger plus de commentaires",
-            "LIKE_ERROR": "Impossible de mettre à jour le like pour le moment.",
-            "COMMENT_ERROR": "Impossible d'ajouter le commentaire pour le moment.",
-            "COMMENT_LOAD_ERROR": "Impossible de charger les commentaires."
-        },
-        "SESSION_STATUS": {
-            "YES": "Présent",
-            "NO": "Absent",
-            "CANCELLED": "Annulé",
-            "WAITING": "Liste d'attente"
-        },
-        "SOCIAL_TYPE": {
-            "SESSION": "Entraînement",
-            "TOURNAMENT": "Tournoi",
-            "OTHER": "Autre"
-        }
-    },
-    "TOURNAMENTS": {
-        "TYPE": {
-            "P250": "P250",
-            "P500": "P500",
-            "P1000": "P1000",
-            "P1500": "P1500",
-            "P2000": "P2000"
-        },
-        "STATUS": {
-            "DRAFT": "Brouillon",
-            "PUBLISHED": "Publié",
-            "ARCHIVED": "Archivé"
-        },
-        "RSVP": {
-            "CONFIRM": "Confirmer",
-            "DECLINE": "Décliner",
-            "CONFIRMED": "Confirmé",
-            "DECLINED": "Décliné",
-            "PENDING": "En attente"
-        },
-        "ADMIN": {
-            "TITLE": "Tournois",
-            "CREATE": "Créer un tournoi",
-            "EDIT": "Modifier le tournoi",
-            "NO_TOURNAMENTS": "Aucun tournoi trouvé",
-            "FILTERS": {
-                "SEARCH": "Rechercher des tournois...",
-                "STATUS": "Statut",
-                "ALL_STATUS": "Tous les statuts",
-                "TYPE": "Type",
-                "ALL_TYPES": "Tous les types"
-            },
-            "TABLE": {
-                "TITLE": "Titre",
-                "TYPE": "Type",
-                "DATES": "Dates",
-                "LOCATION": "Lieu",
-                "STATUS": "Statut",
-                "ACTIONS": "Actions"
-            },
-            "ACTIONS": {
-                "EDIT": "Modifier",
-                "DELETE": "Supprimer",
-                "PUBLISH": "Publier",
-                "ARCHIVE": "Archiver"
-            },
-            "PUBLISH_ERROR_PARTICIPANTS": "Impossible de publier : il faut au moins 2 participants",
-            "PUBLISH_ERROR_TEAMS": "Impossible de publier : aucune équipe générée"
-        },
-        "USER": {
-            "TITLE": "Mes tournois",
-            "UPCOMING": "À venir",
-            "PAST": "Passés",
-            "NO_UPCOMING": "Aucun tournoi à venir",
-            "NO_PAST": "Aucun tournoi passé",
-            "INFO": "Informations du tournoi",
-            "DATES": "Dates",
-            "LOCATION": "Lieu",
-            "MY_TEAM": "Mon équipe",
-            "YOU": "Vous",
-            "TEAMMATE": "Coéquipier",
-            "NO_TEAMMATE": "Solo",
-            "RANKING": "Classement",
-            "PLACE": "Place",
-            "RSVP": "Réponse",
-            "CURRENT_STATUS": "Statut actuel",
-            "RSVP_STATUS": "Statut de réponse",
-            "FEEDBACK": "Commentaire",
-            "PARTICIPANTS": "Participants",
-            "TEAMS": "Équipes"
-        },
-        "FORMS": {
-            "BASIC_INFO": "Informations de base",
-            "TITLE": "Titre",
-            "TITLE_REQUIRED": "Le titre est requis",
-            "TYPE": "Type",
-            "TYPE_REQUIRED": "Le type est requis",
-            "STARTS_AT": "Début",
-            "STARTS_AT_REQUIRED": "La date de début est requise",
-            "ENDS_AT": "Fin",
-            "ENDS_AT_REQUIRED": "La date de fin est requise",
-            "ADDRESS": "Adresse",
-            "ADDRESS_LINE1": "Adresse ligne 1",
-            "ADDRESS_LINE1_REQUIRED": "L'adresse ligne 1 est requise",
-            "ADDRESS_LINE2": "Adresse ligne 2 (Optionnel)",
-            "POSTAL_CODE": "Code postal",
-            "POSTAL_CODE_REQUIRED": "Le code postal est requis",
-            "CITY": "Ville",
-            "CITY_REQUIRED": "La ville est requise",
-            "COUNTRY": "Pays",
-            "COUNTRY_REQUIRED": "Le pays est requis",
-            "LATITUDE": "Latitude (Optionnel)",
-            "LONGITUDE": "Longitude (Optionnel)",
-            "SEARCH_USERS": "Rechercher des utilisateurs...",
-            "SAVE_PARTICIPANTS": "Enregistrer les participants",
-            "SELECTED": "sélectionné(s)",
-            "TEAMS": "Équipes",
-            "ADD_TEAM": "Ajouter une équipe",
-            "GENERATE_TEAMS": "Générer des paires homogènes",
-            "REBALANCE_TEAMS": "Rééquilibrer les équipes",
-            "CLEAR_TEAMS": "Effacer les équipes",
-            "NO_TEAMS": "Aucune équipe générée",
-            "SAVE": "Enregistrer",
-            "CANCEL": "Annuler",
-            "RANKING": "Classement",
-            "NO_USERS_FOUND": "Aucun utilisateur trouvé",
-            "TEAM": "Équipe",
-            "PLACEMENT": "Placement",
-            "NO_PARTICIPANTS_YET": "Aucun participant pour le moment",
-            "ADD_PARTICIPANTS_FIRST": "Ajoutez d'abord des participants pour générer des équipes",
-            "CLICK_GENERATE_TEAMS": "Cliquez sur le bouton ci-dessus pour générer des paires équilibrées",
-            "BENCH": "Liste d'attente",
-            "LOCKED": "Verrouillé",
-            "TEAM_STRENGTH": "F",
-            "AVG_STRENGTH": "M",
-            "MOVE_TO_TEAM": "Déplacer vers l'équipe",
-            "MOVE_TO_BENCH": "Déplacer vers la liste d'attente",
-            "SWAP_WITH": "Échanger avec",
-            "EMPTY_TEAM": "Équipe vide - glissez les membres ici",
-            "EMPTY_BENCH": "Aucun participant sur la liste d'attente",
-            "PARTICIPANTS": {
-                "PARTICIPANTS": "Participants",
-                "UPDATE_SUCCESS": "Participants mis à jour avec succès"
-            },
-            "LINEUPS": {
-                "GENERATE_ERROR": "Une erreur s'est produite lors de la génération des équipes, vérifiez qu'il y a suffisamment de participants."
-            }
-        },
-        "FEEDBACK": {
-            "PLACEHOLDER": "Partagez vos commentaires sur ce tournoi...",
-            "SUBMIT": "Soumettre le commentaire"
-        },
-        "VIEW": {
-            "TITLE": "Détails du tournoi",
-            "BREADCRUMB": {
-                "BACK": "Retour aux tournois"
-            },
-            "INFO": "Informations du tournoi",
-            "INFO_DESCRIPTION": "Configuration générale et détails",
-            "PARTICIPANTS": "Gestion des participants",
-            "PARTICIPANTS_DESCRIPTION": "Ajouter, supprimer et gérer les participants du tournoi",
-            "LINEUPS": "Compositions d'équipes",
-            "LINEUPS_DESCRIPTION": "Voir et gérer les compositions et les paires d'équipes"
-        }
-    },
-    "EVENTS": {
-        "TITLE": "Événements",
-        "EMPTY": "Aucun événement pour le moment.",
-        "REGISTER": "S'inscrire",
-        "HAPPENING_NOW": "En cours",
-        "LOAD_MORE": "Charger plus",
-        "ADMIN": {
-            "TITLE": "Événements",
-            "CREATE": "Créer un événement",
-            "EDIT": "Modifier l'événement",
-            "DELETE": "Supprimer",
-            "SAVE": "Enregistrer",
-            "CANCEL": "Annuler",
-            "SEARCH": "Rechercher…",
-            "PUBLISHED": "Publié",
-            "ACTIVE": "Actif",
-            "ORDER": "Ordre",
-            "ORDER_INDEX_HINT": "Plus la valeur est basse, plus l'événement apparaît en haut de la liste",
-            "START": "Heure de début",
-            "END": "Heure de fin",
-            "END_TIME_INVALID": "L'heure de fin doit être après l'heure de début",
-            "UPDATED_AT": "Mis à jour",
-            "COPY_PUBLIC_URL": "Copier l'URL publique",
-            "OPEN_PUBLIC": "Ouvrir la page publique",
-            "QR": "Générer le QR",
-            "PREVIEW": "Aperçu",
-            "NAME": "Nom",
-            "DESCRIPTION": "Description",
-            "SLUG": "Slug",
-            "SLUG_INFO": "Identifiant unique pour l'URL publique (ex : mon-evenement), laissez vide pour générer automatiquement",
-            "BACKGROUND_IMAGE_URL": "URL de l'image de fond",
-            "EXTERNAL_REGISTRATION_URL": "URL d'inscription externe",
-            "ORDER_INDEX": "Index d'ordre",
-            "NO_EVENTS": "Aucun événement trouvé",
-            "QR_DIALOG": {
-                "TITLE": "Code QR",
-                "DOWNLOAD": "Télécharger",
-                "ERROR": "Impossible de charger le QR Code"
-            },
-            "DELETE_SUCCESS": "Événement supprimé avec succès",
-            "DELETE_ERROR": "Erreur lors de la suppression de l'événement",
-            "URL_COPIED": "URL copiée dans le presse-papiers",
-            "CREATE_SUCCESS": "Événement créé avec succès",
-            "UPDATE_SUCCESS": "Événement mis à jour avec succès",
-            "SAVE_ERROR": "Erreur lors de l'enregistrement de l'événement"
-        }
+      "TITLE": "Tableau de bord"
     },
     "ADMIN": {
-        "MANORS": {
-            "TITLE": "Manoirs",
-            "SUBTITLE": "Gérer les manoirs disponibles, leur capacité et les restrictions.",
-            "NEW": "Nouveau manoir",
-            "EDIT": "Modifier le manoir",
-            "SAVED": "Manoir enregistré avec succès",
-            "ERROR": "Une erreur est survenue",
-            "CONFIRM_DISCARD": "Voulez-vous abandonner les modifications ?",
-            "YES": "Oui",
-            "NO": "Non",
-            "ACTIVE": "Actif",
-            "INACTIVE": "Inactif",
-            "NO_MANORS": "Aucun manoir trouvé",
-            "FIELDS": {
-                "NAME": "Nom",
-                "ADDRESS": "Adresse",
-                "CITY": "Ville",
-                "CAPACITY": "Capacité",
-                "ENFORCE": "Limiter à la capacité",
-                "ACTIVE": "Actif"
-            },
-            "TABLE": {
-                "ACTIONS": "Actions"
-            },
-            "ACTIONS": {
-                "EDIT": "Modifier",
-                "DISABLE": "Désactiver",
-                "DELETE_CONFIRM": "Désactiver ce manoir ?",
-                "DELETE_MESSAGE": "Êtes-vous sûr de vouloir désactiver \"{{name}}\" ?"
-            }
-        }
+      "TITLE": "Administration",
+      "SUBTITLE": "Gestion avancée",
+      "USERS": {
+        "TITLE": "Utilisateurs"
+      },
+      "SITES": {
+        "TITLE": "Sites"
+      },
+      "SESSIONS": {
+        "TITLE": "Sessions"
+      },
+      "TOURNAMENTS": {
+        "TITLE": "Tournois"
+      },
+      "TRANSPORTS": {
+        "TITLE": "Transports"
+      },
+      "EVENTS": {
+        "TITLE": "Événements"
+      },
+      "REPORTS": {
+        "TITLE": "Rapports"
+      },
+      "MANORS": {
+        "TITLE": "Manoirs"
+      }
     },
-    "USERS": {
-        "MY_NIGHTS": {
-            "TITLE": "Mes nuits au manoir",
-            "SUBTITLE": "Inscris-toi avant midi pour la nuit du jour même.",
-            "CUTOFF_LOCKED": "Modifications fermées (après midi).",
-            "CUTOFF_ERROR": "Trop tard : modifications fermées après midi.",
-            "SELECT_MANOR": "Choisir un manoir",
-            "SUBSCRIBE": "S'inscrire",
-            "UNSUBSCRIBE": "Se désinscrire",
-            "SAVED": "Mise à jour enregistrée",
-            "ERROR": "Une erreur est survenue",
-            "FULL": "Manoir complet pour cette nuit",
-            "NO_DAYS": "Aucune date disponible"
-        }
+    "USER": {
+      "TITLE": "Mon espace",
+      "SUBTITLE": "Mes activités",
+      "SESSIONS": {
+        "TITLE": "Mes sessions"
+      },
+      "TRANSPORTS": {
+        "TITLE": "Mes transports"
+      },
+      "TOURNAMENTS": {
+        "TITLE": "Mes tournois"
+      },
+      "MY_NIGHTS": {
+        "TITLE": "Mes nuits"
+      }
     },
-    "COMMON": {
-        "CANCEL": "Annuler",
-        "SAVE": "Enregistrer",
-        "CONFIRM": "Confirmer"
+    "PARENT": {
+      "TITLE": "Espace parent",
+      "SUBTITLE": "Suivi de mon enfant",
+      "REPORTS": {
+        "TITLE": "Rapports"
+      }
+    }
+  },
+  "DASHBOARD": {
+    "TITLE": "Tableau de bord admin",
+    "SUBTITLE": "Vue journalière",
+    "LOADING": "Chargement...",
+    "TODAY": "Aujourd'hui",
+    "SELECT_DATE": "Sélectionner une date",
+    "PREVIOUS_DAY": "Jour précédent",
+    "NEXT_DAY": "Jour suivant",
+    "ERROR_TITLE": "Erreur de chargement des données",
+    "RETRY": "Réessayer",
+    "RATING_SAVED": "Évaluation enregistrée avec succès",
+    "RATING_ERROR": "Échec de l'enregistrement de l'évaluation",
+    "SECTIONS": {
+      "GENERAL": "Informations générales",
+      "ACTIVITIES": "Activités"
     },
-    "NAVIGATION": {
-        "TITLE": "Navigation",
-        "DASHBOARD": {
-            "TITLE": "Tableau de bord"
-        },
-        "ADMIN": {
-            "TITLE": "Administration",
-            "SUBTITLE": "Gestion avancée",
-            "USERS": {
-                "TITLE": "Utilisateurs"
-            },
-            "SITES": {
-                "TITLE": "Sites"
-            },
-            "SESSIONS": {
-                "TITLE": "Sessions"
-            },
-            "TOURNAMENTS": {
-                "TITLE": "Tournois"
-            },
-            "TRANSPORTS": {
-                "TITLE": "Transports"
-            },
-            "EVENTS": {
-                "TITLE": "Événements"
-            },
-            "REPORTS": {
-                "TITLE": "Rapports"
-            },
-            "MANORS": {
-                "TITLE": "Manoirs"
-            }
-        },
-        "USER": {
-            "TITLE": "Mon espace",
-            "SUBTITLE": "Mes activités",
-            "SESSIONS": {
-                "TITLE": "Mes sessions"
-            },
-            "TRANSPORTS": {
-                "TITLE": "Mes transports"
-            },
-            "TOURNAMENTS": {
-                "TITLE": "Mes tournois"
-            },
-            "MY_NIGHTS": {
-                "TITLE": "Mes nuits"
-            }
-        }
+    "ACTIONS": {
+      "VIEW_SESSIONS": "Voir les sessions"
+    },
+    "STATS": {
+      "SITES": "Sites",
+      "TOTAL_USERS": "Utilisateurs totaux",
+      "ADMINS": "Administrateurs",
+      "REGULAR_USERS": "Utilisateurs",
+      "UPCOMING_SESSIONS": "Sessions à venir",
+      "UPCOMING_TOURNAMENTS": "Tournois à venir",
+      "COMING_SOON": "Bientôt disponible",
+      "REGULAR_USERS_HINT": "Académiciens (rôle : utilisateur)"
+    },
+    "SESSIONS": {
+      "TITLE": "Sessions d'entraînement",
+      "EMPTY": "Aucune session programmée pour ce jour",
+      "CANCELED": "Annulée",
+      "OUT_OF_CONTRACT": "Hors contrat",
+      "EDIT_RATING": "Modifier l'évaluation",
+      "EDIT_COMMENT": "Modifier le commentaire",
+      "HAS_COMMENT": "A un commentaire"
+    },
+    "MANORS": {
+      "TITLE": "Hébergements",
+      "EMPTY": "Aucun hébergement pour ce jour",
+      "CAPACITY": "Capacité",
+      "ENFORCE_CAPACITY": "Capacité stricte",
+      "OVER_CAPACITY": "Capacité dépassée",
+      "ADMIN_CREATED": "Admin",
+      "SHOW_MORE": "Afficher plus",
+      "SHOW_LESS": "Afficher moins",
+      "MORE": "de plus"
     },
     "TRANSPORTS": {
-        "ADMIN": {
-            "TITLE": "Transports",
-            "CREATE_TEMPLATE": "Créer un modèle",
-            "NO_TEMPLATES": "Aucun modèle de transport trouvé",
-            "EVERY_DAY": "Tous les jours",
-            "OVERBOOK": "SR",
-            "OVERBOOK_ALLOWED": "Surréservation autorisée",
-            "CAPACITY": "Capacité",
-            "TABLE": {
-                "NAME": "Nom",
-                "ROUTE": "Trajet",
-                "SCHEDULE": "Horaire",
-                "CAPACITY": "Capacité",
-                "ACTIVE": "Actif",
-                "ACTIONS": "Actions"
-            },
-            "FILTERS": {
-                "SEARCH": "Rechercher",
-                "SEARCH_PLACEHOLDER": "Rechercher des modèles...",
-                "STATUS": "Statut",
-                "ALL_STATUS": "Tous les statuts"
-            },
-            "ACTIONS": {
-                "MORE": "Plus d'actions",
-                "VIEW_DETAILS": "Voir les détails",
-                "EDIT": "Modifier",
-                "DISABLE": "Désactiver",
-                "GENERATE_OCCURRENCES": "Générer des occurrences"
-            },
-            "INFO": {
-                "TITLE": "Informations du modèle"
-            },
-            "FORM": {
-                "NAME": "Nom du modèle",
-                "NAME_PLACEHOLDER": "ex: Transport scolaire matinal",
-                "NAME_REQUIRED": "Le nom du modèle est requis",
-                "DESCRIPTION": "Description",
-                "DESCRIPTION_PLACEHOLDER": "Description facultative",
-                "FROM": "Départ",
-                "FROM_PLACEHOLDER": "ex: École",
-                "FROM_REQUIRED": "Le lieu de départ est requis",
-                "TO": "Arrivée",
-                "TO_PLACEHOLDER": "ex: Centre sportif",
-                "TO_REQUIRED": "Le lieu d'arrivée est requis",
-                "DAYS_OF_WEEK": "Jours de la semaine",
-                "DAYS_OF_WEEK_REQUIRED": "Veuillez sélectionner au moins un jour",
-                "TIME_OF_DAY": "Heure de départ",
-                "TIME_OF_DAY_REQUIRED": "L'heure de départ est requise",
-                "CAPACITY": "Capacité",
-                "CAPACITY_REQUIRED": "La capacité est requise",
-                "CAPACITY_MIN": "La capacité doit être au moins de 1",
-                "ALLOW_OVERBOOK": "Autoriser la surréservation",
-                "ALLOW_OVERBOOK_HINT": "Autoriser les réservations au-delà de la capacité",
-                "IS_ACTIVE": "Actif",
-                "IS_ACTIVE_HINT": "Seuls les modèles actifs peuvent générer des occurrences",
-                "CANCEL": "Annuler",
-                "SAVE": "Enregistrer",
-                "CREATE": "Créer le modèle"
-            },
-            "PARTICIPANTS": {
-                "TITLE": "Occurrences et participants",
-                "FILTERS": "Filtres de plage de dates",
-                "FROM_DATE": "Date de début",
-                "TO_DATE": "Date de fin",
-                "APPLY": "Appliquer",
-                "RESET": "Réinitialiser",
-                "SELECT_OCCURRENCE": "Sélectionner une occurrence",
-                "NO_OCCURRENCE": "Sélectionner une occurrence...",
-                "NO_OCCURRENCES": "Aucune occurrence trouvée pour cette période",
-                "BOOKED_SEATS": "Places réservées",
-                "CANCEL_OCCURRENCE": "Annuler l'occurrence",
-                "OCCURRENCE_CANCELLED": "Cette occurrence a été annulée",
-                "BOOKINGS_LIST": "Réservations",
-                "PARTICIPANT": "Participant",
-                "EMAIL": "Email",
-                "BOOKED_AT": "Réservé le",
-                "STATUS": "Statut",
-                "ACTIONS": "Actions",
-                "CANCEL_BOOKING": "Annuler la réservation",
-                "NO_BOOKINGS": "Aucune réservation pour cette occurrence"
-            },
-            "TABS": {
-                "INFO": "Informations",
-                "INFO_DESCRIPTION": "Détails et paramètres du modèle",
-                "PARTICIPANTS": "Occurrences",
-                "PARTICIPANTS_DESCRIPTION": "Voir et gérer les occurrences et les réservations"
-            }
-        },
-        "USER": {
-            "TITLE": "Réservations de transport",
-            "SEATS_BOOKED": "places réservées",
-            "OVERBOOK": "SR",
-            "OVERBOOK_ALLOWED": "Surréservation autorisée",
-            "BOOKING_CLOSED": "Réservation fermée",
-            "FULLY_BOOKED": "Complet",
-            "ALREADY_BOOKED": "Vous avez une réservation",
-            "BOOK": "Réserver",
-            "CANCEL": "Annuler la réservation",
-            "NO_OCCURRENCES": "Aucun transport disponible pour cette période",
-            "FILTERS": {
-                "FROM_DATE": "Date de début",
-                "TO_DATE": "Date de fin",
-                "APPLY": "Appliquer",
-                "RESET": "Réinitialiser"
-            }
-        },
-        "VIEW": {
-            "BREADCRUMB": {
-                "BACK": "Retour aux modèles"
-            }
-        },
-        "STATUS": {
-            "ACTIVE": "Actif",
-            "INACTIVE": "Inactif"
-        },
-        "OCCURRENCE_STATUS": {
-            "SCHEDULED": "Programmé",
-            "CANCELLED": "Annulé",
-            "COMPLETED": "Terminé"
-        },
-        "BOOKING_STATUS": {
-            "CONFIRMED": "Confirmé",
-            "CANCELLED": "Annulé"
-        },
-        "DAYS": {
-            "MONDAY": "Lundi",
-            "MONDAY_SHORT": "Lun",
-            "TUESDAY": "Mardi",
-            "TUESDAY_SHORT": "Mar",
-            "WEDNESDAY": "Mercredi",
-            "WEDNESDAY_SHORT": "Mer",
-            "THURSDAY": "Jeudi",
-            "THURSDAY_SHORT": "Jeu",
-            "FRIDAY": "Vendredi",
-            "FRIDAY_SHORT": "Ven",
-            "SATURDAY": "Samedi",
-            "SATURDAY_SHORT": "Sam",
-            "SUNDAY": "Dimanche",
-            "SUNDAY_SHORT": "Dim"
-        }
+      "TITLE": "Transports",
+      "EMPTY": "Aucun transport programmé pour ce jour",
+      "CAPACITY": "Réservés / Capacité",
+      "NO_BOOKINGS": "Aucune réservation pour le moment",
+      "SEAT": "place",
+      "SEATS": "places"
+    },
+    "RATING_EDIT": {
+      "TITLE": "Modifier l'évaluation",
+      "SCORE": "Note",
+      "COMMENT": "Commentaire",
+      "COMMENT_PLACEHOLDER": "Ajouter un commentaire...",
+      "SAVE": "Enregistrer",
+      "CANCEL": "Annuler"
     }
+  },
+  "HOME": {
+    "DASHBOARD": {
+      "TITLE": "MyCenter Academy",
+      "SUBTITLE": "Bienvenue sur MCA",
+      "TITLEDETAILS": "My Center Academy, l’école où les passionnés de padel deviennent les champions de demain. Entraînements, suivi personnalisé et esprit d’équipe pour révéler tout votre potentiel."
+    },
+    "USERS": {
+      "TITLE": "Utilisateurs",
+      "SEARCH": "Rechercher un utilisateur",
+      "ADD": "Ajouter",
+      "NO_USERS": "Aucun utilisateur trouvé",
+      "USER": "Utilisateur",
+      "USERS": "Utilisateurs",
+      "DETAILS": {
+        "ROLES": "Rôles",
+        "ROLE": "Rôle",
+        "PH_EMAIL": "Adresse e-mail",
+        "EMAIL": "Adresse e-mail",
+        "CURRENT_RANKING": "Classement",
+        "PH_FIRSTNAME": "Prénom",
+        "FIRSTNAME": "Prénom",
+        "PH_LASTNAME": "Nom",
+        "LASTNAME": "Nom",
+        "PH_PHONE": "Numéro de téléphone",
+        "PHONE": "Téléphone",
+        "PH_BIRTH_DATE": "Date de naissance",
+        "BIRTH_DATE": "Date de naissance",
+        "PH_FFT_LICENSE": "Numéro de licence FFT",
+        "FFT_LICENSE": "Licence FFT",
+        "FORMULA": "Formule",
+        "NO_FORMULA": "Aucune formule",
+        "CONSENTS": "Consentements (RGPD)",
+        "PRIVACY_CONSENT": "Consentement aux conditions d'utilisation et politique de confidentialité",
+        "PHOTO_CONSENT": "Consentement à l'utilisation de photos",
+        "MARKETING_CONSENT": "Consentement marketing et communications",
+        "NOTIFICATIONS": "Préférences de Notifications",
+        "NOTIFY_EMAIL": "Notifications par e-mail",
+        "NOTIFY_SMS": "Notifications par SMS",
+        "NOTIFY_WHATSAPP": "Notifications WhatsApp",
+        "COMMUNICATION_PLAN": "Plan de communication",
+        "PH_COMMUNICATION_PLAN": "Sélectionner un plan de communication",
+        "ALLOW_LOGIN": "Autoriser la connexion"
+      },
+      "ROLES": {
+        "ADD": "Ajouter",
+        "EDIT": "Modifier",
+        "USER": "Utilisateur",
+        "ADMIN": "Administrateur"
+      },
+      "FORMULAS": {
+        "MORNING": "Matin",
+        "AFTERNOON": "Après-midi",
+        "FULL": "Journée complète"
+      },
+      "ACTIONS": {
+        "DELETE": "Supprimer",
+        "CANCEL": "Annuler",
+        "SAVE": "Enregistrer",
+        "ADD": "Ajouter",
+        "EDIT": "Modifier"
+      }
+    }
+  },
+  "SESSIONS": {
+    "VIEW": {
+      "BREADCRUMB": {
+        "BACK": "Retour aux sessions"
+      },
+      "TITLE": "Session",
+      "INFO": "Informations",
+      "INFO_DESCRIPTION": "Détails et paramètres de la session",
+      "PARTICIPANTS": "Participants",
+      "PARTICIPANTS_DESCRIPTION": "Gérer les participants inscrits à cette session"
+    },
+    "SLOT": {
+      "AM": "Matin",
+      "PM": "Après-midi"
+    },
+    "STATUS": {
+      "PUBLISHED": "Publié",
+      "DRAFT": "Brouillon",
+      "CANCELED": "Annulé"
+    },
+    "ADMIN": {
+      "TITLE": "Sessions d'entraînement",
+      "CREATE_SESSION": "Créer une session",
+      "EDIT_SESSION": "Modifier la session",
+      "NO_SESSIONS": "Aucune session trouvée",
+      "VIEW": {
+        "TABS": {
+          "INFO": "Informations",
+          "PARTICIPANTS": "Participants"
+        }
+      },
+      "FILTERS": {
+        "START_DATE": "Date de début",
+        "END_DATE": "Date de fin",
+        "SITE": "Site",
+        "ALL_SITES": "Tous les sites",
+        "SLOT": "Créneau",
+        "ALL_SLOTS": "Tous les créneaux",
+        "STATUS": "Statut",
+        "ALL_STATUS": "Tous les statuts"
+      },
+      "TABLE": {
+        "SESSION": "Session",
+        "SLOT": "Créneau",
+        "TIME": "Horaire",
+        "SITE": "Site",
+        "PARTICIPANTS": "Participants",
+        "STATUS": "Statut",
+        "ACTIONS": "Actions"
+      },
+      "ACTIONS": {
+        "EDIT": "Modifier",
+        "DELETE": "Supprimer",
+        "CANCEL": "Annuler",
+        "PUBLISH": "Publier",
+        "UNPUBLISH": "Dépublier"
+      },
+      "FORM": {
+        "SITE": "Site",
+        "SITE_REQUIRED": "Le site est requis",
+        "DATE": "Date",
+        "DATE_REQUIRED": "La date est requise",
+        "DATE_MULTIPLE": "Sélectionner des dates",
+        "DATE_MULTIPLE_HINT": "Cliquez sur une date pour l'ajouter à la liste",
+        "SELECTED_DATES": "Dates sélectionnées",
+        "SLOT": "Créneau",
+        "SLOT_REQUIRED": "Le créneau est requis",
+        "START_TIME": "Heure de début",
+        "START_TIME_HINT": "Laissez vide pour utiliser les horaires par défaut",
+        "END_TIME": "Heure de fin",
+        "END_TIME_HINT": "Laissez vide pour utiliser les horaires par défaut",
+        "INVALID_TIME_RANGE": "L'heure de fin doit être après l'heure de début",
+        "NOTES": "Notes",
+        "NOTES_HINT": "Notes ou instructions pour cette session",
+        "IS_PUBLISHED": "Publier cette session",
+        "IS_PUBLISHED_HINT": "Les sessions publiées sont visibles par les utilisateurs",
+        "CANCEL": "Annuler",
+        "SAVE": "Enregistrer",
+        "CREATE": "Créer",
+        "CREATE_MODE_TITLE": "Dates multiples",
+        "CREATE_MODE_INFO": "En sélectionnant plusieurs dates, une session distincte sera créée pour chaque date choisie avec les mêmes paramètres."
+      },
+      "ATTENDEES": {
+        "TITLE": "Gestion des participants",
+        "ADD_PARTICIPANT": "Ajouter un participant",
+        "SELECT_USER": "Sélectionner un utilisateur",
+        "ADD": "Ajouter",
+        "PARTICIPANTS_LIST": "Liste des participants",
+        "NO_PARTICIPANTS": "Aucun participant pour cette session",
+        "ADMIN_REGISTERED": "Inscrit par admin",
+        "REMOVE": "Retirer",
+        "CLOSE": "Fermer"
+      },
+      "RATINGS": {
+        "TITLE": "Évaluations",
+        "AVERAGE": "Moyenne",
+        "COUNT": "{{count}} évaluation",
+        "COUNT_plural": "{{count}} évaluations",
+        "DISTRIBUTION": "Distribution",
+        "SET_RATING": "Définir la note à {{value}} / {{max}}",
+        "RATING_LABEL": "Note {{value}} sur {{max}}",
+        "COMMENT": {
+          "EDIT": "Modifier le commentaire",
+          "PLACEHOLDER": "Ajouter un commentaire sur la performance de ce participant...",
+          "TITLE": "Commentaire d'évaluation",
+          "MAX_LENGTH": "Maximum 2000 caractères"
+        },
+        "SAVE": "Enregistrer",
+        "CANCEL": "Annuler",
+        "RESET": "Réinitialiser la note",
+        "RESET_CONFIRM": "Êtes-vous sûr de vouloir réinitialiser cette note ?",
+        "SAVED": "Note enregistrée avec succès",
+        "ERROR": "Échec de l'enregistrement de la note",
+        "NO_RATINGS": "Aucune évaluation pour le moment",
+        "PARTICIPANT": "Participant",
+        "FORMULA": "Formule",
+        "RATING": "Note",
+        "ACTIONS": "Actions"
+      }
+    },
+    "USER": {
+      "TITLE": "Mes sessions d'entraînement",
+      "NO_SESSIONS": "Aucune session à venir",
+      "NO_SESSIONS_DESCRIPTION": "Revenez plus tard pour voir les prochaines sessions disponibles",
+      "STATUS": {
+        "AVAILABLE": "Disponible",
+        "REGISTERED": "Inscrit",
+        "CANCELLED": "Annulée",
+        "CUTOFF_PASSED": "Date limite dépassée",
+        "FULL": "Complet",
+        "NOT_PUBLISHED": "Non publiée",
+        "UNAVAILABLE": "Non disponible",
+        "OUT_OF_CONTRACT": "Hors formule"
+      },
+      "ACTIONS": {
+        "REGISTER": "S'inscrire",
+        "REGISTERED": "Inscrit"
+      }
+    }
+  },
+  "SITES": {
+    "ADMIN": {
+      "TITLE": "Sites d'entraînement",
+      "CREATE_SITE": "Créer un site",
+      "EDIT_SITE": "Modifier le site",
+      "NO_SITES": "Aucun site trouvé",
+      "NO_SITES_DESCRIPTION": "Créez un nouveau site pour commencer",
+      "SEARCH": "Rechercher un site",
+      "TABLE": {
+        "NAME": "Nom",
+        "CITY": "Ville",
+        "ADDRESS": "Adresse",
+        "ACTIONS": "Actions"
+      },
+      "ACTIONS": {
+        "EDIT": "Modifier",
+        "DELETE": "Supprimer"
+      },
+      "FORM": {
+        "NAME": "Nom du site",
+        "NAME_REQUIRED": "Le nom est requis",
+        "NAME_HINT": "Nom du site d'entraînement",
+        "CITY": "Ville",
+        "CITY_HINT": "Ville où se trouve le site",
+        "ADDRESS": "Adresse",
+        "ADDRESS_HINT": "Adresse complète du site",
+        "CANCEL": "Annuler",
+        "SAVE": "Enregistrer",
+        "CREATE": "Créer",
+        "MORNING_DEFAULT": "Définir ce site par défaut pour les sessions du matin",
+        "AFTERNOON_DEFAULT": "Définir ce site par défaut pour les sessions de l'après-midi"
+      }
+    }
+  },
+  "ONBOARDING": {
+    "TITLE": "Complétez votre profil",
+    "STEPS": {
+      "PROFILE": "Profil",
+      "CONTRACT": "Contrat & Notifications",
+      "CONSENTS": "Consentements",
+      "SUMMARY": "Résumé"
+    },
+    "ACTIONS": {
+      "BACK": "Retour",
+      "NEXT": "Suivant",
+      "FINISH": "Terminer"
+    },
+    "PROFILE": {
+      "FIRSTNAME": "Prénom",
+      "FIRSTNAME_REQUIRED": "Le prénom est requis",
+      "FIRSTNAME_MIN": "Le prénom doit contenir au moins 2 caractères",
+      "LASTNAME": "Nom",
+      "LASTNAME_REQUIRED": "Le nom est requis",
+      "LASTNAME_MIN": "Le nom doit contenir au moins 2 caractères",
+      "EMAIL": "Email",
+      "PHONE": "Téléphone",
+      "PHONE_PATTERN": "Format de téléphone invalide",
+      "BIRTHDATE": "Date de naissance",
+      "BIRTHDATE_INVALID": "Date invalide",
+      "FFT_NUMBER": "Numéro de licence FFT",
+      "CURRENT_RANKING": "Classement",
+      "AVATAR": "Photo de profil",
+      "AVATAR_HINT": "Télécharger une photo de profil (max 2MB, PNG/JPEG)",
+      "AVATAR_UPLOAD": "Télécharger",
+      "AVATAR_REMOVE": "Supprimer",
+      "BACKGROUND": "Image de couverture",
+      "BACKGROUND_HINT": "Télécharger une image de couverture (max 4MB, PNG/JPEG)",
+      "BACKGROUND_UPLOAD": "Télécharger",
+      "BACKGROUND_REMOVE": "Supprimer"
+    },
+    "CONTRACT": {
+      "FORMULA": "Formule d'entraînement",
+      "FORMULA_REQUIRED": "La formule est requise",
+      "FORMULA_OPTIONS": {
+        "MORNING": "Matin (AM)",
+        "AFTERNOON": "Après-midi (PM)",
+        "FULL": "Accès complet (AM + PM)"
+      },
+      "NOTIFY_EMAIL": "Notifications par email",
+      "NOTIFY_SMS": "Notifications par SMS",
+      "NOTIFY_WHATSAPP": "Notifications par WhatsApp",
+      "SMS_HINT": "Nécessite un numéro de téléphone valide.",
+      "SMS_WARNING": "Un numéro de téléphone est requis pour les notifications SMS"
+    },
+    "CONSENTS": {
+      "TITLE": "Consentements légaux",
+      "PRIVACY": "J'accepte la Politique de confidentialité et les Conditions d'utilisation.",
+      "PRIVACY_REQUIRED": "Le consentement de confidentialité est requis",
+      "PHOTO": "J'autorise l'utilisation de mon image pour les communications de l'académie.",
+      "MARKETING": "J'accepte de recevoir des communications marketing.",
+      "LINK_PRIVACY": "Lire la Politique de confidentialité"
+    },
+    "SUMMARY": {
+      "CHECK": "Veuillez vérifier vos informations avant de terminer.",
+      "PROFILE_TITLE": "Informations de profil",
+      "CONTRACT_TITLE": "Contrat & Notifications",
+      "CONSENTS_TITLE": "Consentements légaux",
+      "FORMULA": "Formule",
+      "NOTIFICATIONS": "Notifications"
+    },
+    "SUCCESS": "Votre profil est complet. Bienvenue !",
+    "ERROR": "Une erreur s'est produite. Veuillez réessayer."
+  },
+  "REPORTS": {
+    "TITLE": "Rapports",
+    "DESCRIPTION": "Analytique et statistiques des sessions de formation",
+    "CHART": {
+      "CONTRACT_SHARE": "Sessions sous contrat vs hors contrat",
+      "SESSIONS_OVER_TIME": "Sessions dans le temps"
+    },
+    "ERROR": {
+      "TITLE": "Échec du chargement des données de rapport"
+    },
+    "ACTIONS": {
+      "RETRY": "Réessayer",
+      "EXPORT_CSV": "Exporter CSV",
+      "EXPORT_JSON": "Exporter JSON",
+      "APPLY": "Appliquer",
+      "RESET": "Réinitialiser",
+      "VIEW_SESSION": "Voir la session"
+    },
+    "EMPTY": {
+      "NO_DATA": "Aucune donnée disponible pour la période sélectionnée",
+      "NO_SESSIONS": "Aucune session trouvée pour la période sélectionnée"
+    },
+    "RATINGS": {
+      "TITLE": "Notes",
+      "KPI": {
+        "AVERAGE": "Note moyenne",
+        "TOTAL": "Total des notes",
+        "RATED_SESSIONS": "Sessions notées",
+        "UNRATED_SESSIONS": "Sessions non notées"
+      },
+      "DISTRIBUTION": {
+        "TITLE": "Répartition des notes (1-10)"
+      },
+      "PER_USER": {
+        "TITLE": "Notes par élève",
+        "NAME": "Nom",
+        "AVERAGE": "Moyenne",
+        "COUNT": "Nombre"
+      },
+      "TOP_USERS": "Meilleurs élèves",
+      "BOTTOM_USERS": "Élèves en difficulté",
+      "PIE": {
+        "CONTRACT_VS_NONCONTRACT": "Notes: Sous contrat vs Hors contrat"
+      },
+      "EMPTY": "Aucune note pour cette période",
+      "NO_DATA": "Aucune information disponible",
+      "USER": "Élève",
+      "RATINGS_COUNT": "notes",
+      "USER_STATS": {
+        "TITLE": "Statistiques de notes de l'élève"
+      }
+    },
+    "KPI": {
+      "TOTAL": "Total des sessions",
+      "UNDER": "Sous contrat",
+      "OFF": "Hors contrat",
+      "UNIQUE": "Utilisateurs uniques"
+    },
+    "SESSIONS": {
+      "TITLE": "Sessions"
+    },
+    "FILTERS": {
+      "PERIOD": "Période",
+      "USER": "Élève",
+      "DATE_FROM": "Date de début",
+      "DATE_TO": "Date de fin",
+      "ALL_USERS": "Tous les élèves",
+      "CONTRACT_SCOPE": "Type de contrat",
+      "PRESET": {
+        "LAST_7": "7 derniers jours",
+        "LAST_30": "30 derniers jours",
+        "THIS_MONTH": "Ce mois-ci",
+        "PREV_MONTH": "Mois précédent",
+        "CUSTOM": "Période personnalisée"
+      },
+      "CONTRACT": {
+        "ALL": "Toutes les sessions",
+        "UNDER": "Sous contrat",
+        "OFF": "Hors contrat"
+      }
+    },
+    "TABLE": {
+      "TITLE": "Liste des sessions",
+      "DATE": "Date",
+      "SESSION_TITLE": "Session",
+      "COACH": "Coach",
+      "CONTRACT": "Contrat",
+      "ATTENDEES": "Participants",
+      "STATUS": "Statut"
+    }
+  },
+  "PROFILE": {
+    "TITLE": "Mon Profil",
+    "NAME": "Nom complet",
+    "FIRSTNAME": "Prénom",
+    "FIRSTNAME_REQUIRED": "Le prénom est requis",
+    "FIRSTNAME_MIN": "Le prénom doit contenir au moins 2 caractères",
+    "LASTNAME": "Nom",
+    "LASTNAME_REQUIRED": "Le nom est requis",
+    "LASTNAME_MIN": "Le nom doit contenir au moins 2 caractères",
+    "EMAIL": "Email",
+    "EMAIL_READONLY": "L'adresse email ne peut pas être modifiée",
+    "PHONE": "Téléphone",
+    "CURRENT_RANKING": "Classement",
+    "RATING": "Note",
+    "HOME": "Tableau de bord",
+    "SESSIONS": "Sessions",
+    "TOURNAMENTS": "Tournois",
+    "PHONE_PATTERN": "Format de téléphone invalide",
+    "BIRTHDATE": "Date de naissance",
+    "FFT_NUMBER": "Numéro de licence FFT",
+    "FORMULA": "Formule",
+    "AVATAR": "Photo de profil",
+    "AVATAR_HINT": "Télécharger une photo de profil (max 2MB, PNG/JPEG)",
+    "AVATAR_UPLOAD": "Télécharger",
+    "AVATAR_REMOVE": "Supprimer",
+    "BACKGROUND": "Image de couverture",
+    "BACKGROUND_HINT": "Télécharger une image de couverture (max 4MB, PNG/JPEG)",
+    "BACKGROUND_UPLOAD": "Télécharger",
+    "BACKGROUND_REMOVE": "Supprimer",
+    "CHANGE_AVATAR": "Changer la photo de profil",
+    "CHANGE_COVER": "Changer l'image de couverture",
+    "EDIT": "Modifier",
+    "EDIT_INFO": "Modifier les informations",
+    "CANCEL": "Annuler",
+    "SAVE": "Enregistrer les modifications",
+    "ABOUT": "À propos",
+    "UPDATE_SUCCESS": "Profil mis à jour avec succès",
+    "UPDATE_ERROR": "Échec de la mise à jour du profil, veuillez réessayer",
+    "STATS": {
+      "TITLE": "Statistiques",
+      "SESSIONS": "Sessions",
+      "TOURNAMENTS": "Tournois"
+    },
+    "NOTIFICATIONS": {
+      "TITLE": "Préférences de notifications",
+      "DESCRIPTION": "Choisissez comment vous souhaitez recevoir les notifications",
+      "EMAIL": "Notifications par email",
+      "SMS": "Notifications par SMS",
+      "WHATSAPP": "Notifications WhatsApp"
+    },
+    "CONSENTS": {
+      "TITLE": "Consentements",
+      "DESCRIPTION": "Gérez vos consentements et autorisations",
+      "PRIVACY": "J'accepte la politique de confidentialité et les conditions d'utilisation",
+      "PHOTO": "J'autorise l'utilisation de mon image pour les communications de l'académie",
+      "MARKETING": "J'accepte de recevoir des communications marketing"
+    },
+    "ACTIVITY": {
+      "TITLE": "Activité récente",
+      "EMPTY": "Aucune activité pour le moment",
+      "EMPTY_DESC": "Les sessions auxquelles vous participez apparaîtront ici.",
+      "ERROR": "Impossible de charger l'activité pour le moment.",
+      "RETRY": "Réessayer",
+      "NO_RATING": "Pas encore de note",
+      "NO_AVG_RATING": "Aucune note moyenne disponible",
+      "AVG_RATING": "Note moyenne",
+      "PARTICIPANTS": "participants",
+      "LOAD_MORE": "Charger plus",
+      "LIKE": "J'aime",
+      "COMMENT": "Commentaire",
+      "ADD_COMMENT": "Ajouter un commentaire",
+      "COMMENT_PLACEHOLDER": "Partagez votre avis sur cette session...",
+      "COMMENT_ADDED": "Commentaire ajouté avec succès",
+      "COMMENTS_PLACEHOLDER": "Les commentaires apparaîtront ici prochainement",
+      "NO_COMMENTS": "Aucun commentaire pour le moment. Soyez le premier à commenter !",
+      "LOAD_MORE_COMMENTS": "Charger plus de commentaires",
+      "LIKE_ERROR": "Impossible de mettre à jour le like pour le moment.",
+      "COMMENT_ERROR": "Impossible d'ajouter le commentaire pour le moment.",
+      "COMMENT_LOAD_ERROR": "Impossible de charger les commentaires."
+    },
+    "SESSION_STATUS": {
+      "YES": "Présent",
+      "NO": "Absent",
+      "CANCELLED": "Annulé",
+      "WAITING": "Liste d'attente"
+    },
+    "SOCIAL_TYPE": {
+      "SESSION": "Entraînement",
+      "TOURNAMENT": "Tournoi",
+      "OTHER": "Autre"
+    }
+  },
+  "TOURNAMENTS": {
+    "TYPE": {
+      "P250": "P250",
+      "P500": "P500",
+      "P1000": "P1000",
+      "P1500": "P1500",
+      "P2000": "P2000"
+    },
+    "STATUS": {
+      "DRAFT": "Brouillon",
+      "PUBLISHED": "Publié",
+      "ARCHIVED": "Archivé"
+    },
+    "RSVP": {
+      "CONFIRM": "Confirmer",
+      "DECLINE": "Décliner",
+      "CONFIRMED": "Confirmé",
+      "DECLINED": "Décliné",
+      "PENDING": "En attente"
+    },
+    "ADMIN": {
+      "TITLE": "Tournois",
+      "CREATE": "Créer un tournoi",
+      "EDIT": "Modifier le tournoi",
+      "NO_TOURNAMENTS": "Aucun tournoi trouvé",
+      "FILTERS": {
+        "SEARCH": "Rechercher des tournois...",
+        "STATUS": "Statut",
+        "ALL_STATUS": "Tous les statuts",
+        "TYPE": "Type",
+        "ALL_TYPES": "Tous les types"
+      },
+      "TABLE": {
+        "TITLE": "Titre",
+        "TYPE": "Type",
+        "DATES": "Dates",
+        "LOCATION": "Lieu",
+        "STATUS": "Statut",
+        "ACTIONS": "Actions"
+      },
+      "ACTIONS": {
+        "EDIT": "Modifier",
+        "DELETE": "Supprimer",
+        "PUBLISH": "Publier",
+        "ARCHIVE": "Archiver"
+      },
+      "PUBLISH_ERROR_PARTICIPANTS": "Impossible de publier : il faut au moins 2 participants",
+      "PUBLISH_ERROR_TEAMS": "Impossible de publier : aucune équipe générée"
+    },
+    "USER": {
+      "TITLE": "Mes tournois",
+      "UPCOMING": "À venir",
+      "PAST": "Passés",
+      "NO_UPCOMING": "Aucun tournoi à venir",
+      "NO_PAST": "Aucun tournoi passé",
+      "INFO": "Informations du tournoi",
+      "DATES": "Dates",
+      "LOCATION": "Lieu",
+      "MY_TEAM": "Mon équipe",
+      "YOU": "Vous",
+      "TEAMMATE": "Coéquipier",
+      "NO_TEAMMATE": "Solo",
+      "RANKING": "Classement",
+      "PLACE": "Place",
+      "RSVP": "Réponse",
+      "CURRENT_STATUS": "Statut actuel",
+      "RSVP_STATUS": "Statut de réponse",
+      "FEEDBACK": "Commentaire",
+      "PARTICIPANTS": "Participants",
+      "TEAMS": "Équipes"
+    },
+    "FORMS": {
+      "BASIC_INFO": "Informations de base",
+      "TITLE": "Titre",
+      "TITLE_REQUIRED": "Le titre est requis",
+      "TYPE": "Type",
+      "TYPE_REQUIRED": "Le type est requis",
+      "STARTS_AT": "Début",
+      "STARTS_AT_REQUIRED": "La date de début est requise",
+      "ENDS_AT": "Fin",
+      "ENDS_AT_REQUIRED": "La date de fin est requise",
+      "ADDRESS": "Adresse",
+      "ADDRESS_LINE1": "Adresse ligne 1",
+      "ADDRESS_LINE1_REQUIRED": "L'adresse ligne 1 est requise",
+      "ADDRESS_LINE2": "Adresse ligne 2 (Optionnel)",
+      "POSTAL_CODE": "Code postal",
+      "POSTAL_CODE_REQUIRED": "Le code postal est requis",
+      "CITY": "Ville",
+      "CITY_REQUIRED": "La ville est requise",
+      "COUNTRY": "Pays",
+      "COUNTRY_REQUIRED": "Le pays est requis",
+      "LATITUDE": "Latitude (Optionnel)",
+      "LONGITUDE": "Longitude (Optionnel)",
+      "SEARCH_USERS": "Rechercher des utilisateurs...",
+      "SAVE_PARTICIPANTS": "Enregistrer les participants",
+      "SELECTED": "sélectionné(s)",
+      "TEAMS": "Équipes",
+      "ADD_TEAM": "Ajouter une équipe",
+      "GENERATE_TEAMS": "Générer des paires homogènes",
+      "REBALANCE_TEAMS": "Rééquilibrer les équipes",
+      "CLEAR_TEAMS": "Effacer les équipes",
+      "NO_TEAMS": "Aucune équipe générée",
+      "SAVE": "Enregistrer",
+      "CANCEL": "Annuler",
+      "RANKING": "Classement",
+      "NO_USERS_FOUND": "Aucun utilisateur trouvé",
+      "TEAM": "Équipe",
+      "PLACEMENT": "Placement",
+      "NO_PARTICIPANTS_YET": "Aucun participant pour le moment",
+      "ADD_PARTICIPANTS_FIRST": "Ajoutez d'abord des participants pour générer des équipes",
+      "CLICK_GENERATE_TEAMS": "Cliquez sur le bouton ci-dessus pour générer des paires équilibrées",
+      "BENCH": "Liste d'attente",
+      "LOCKED": "Verrouillé",
+      "TEAM_STRENGTH": "F",
+      "AVG_STRENGTH": "M",
+      "MOVE_TO_TEAM": "Déplacer vers l'équipe",
+      "MOVE_TO_BENCH": "Déplacer vers la liste d'attente",
+      "SWAP_WITH": "Échanger avec",
+      "EMPTY_TEAM": "Équipe vide - glissez les membres ici",
+      "EMPTY_BENCH": "Aucun participant sur la liste d'attente",
+      "PARTICIPANTS": {
+        "PARTICIPANTS": "Participants",
+        "UPDATE_SUCCESS": "Participants mis à jour avec succès"
+      },
+      "LINEUPS": {
+        "GENERATE_ERROR": "Une erreur s'est produite lors de la génération des équipes, vérifiez qu'il y a suffisamment de participants."
+      }
+    },
+    "FEEDBACK": {
+      "PLACEHOLDER": "Partagez vos commentaires sur ce tournoi...",
+      "SUBMIT": "Soumettre le commentaire"
+    },
+    "VIEW": {
+      "TITLE": "Détails du tournoi",
+      "BREADCRUMB": {
+        "BACK": "Retour aux tournois"
+      },
+      "INFO": "Informations du tournoi",
+      "INFO_DESCRIPTION": "Configuration générale et détails",
+      "PARTICIPANTS": "Gestion des participants",
+      "PARTICIPANTS_DESCRIPTION": "Ajouter, supprimer et gérer les participants du tournoi",
+      "LINEUPS": "Compositions d'équipes",
+      "LINEUPS_DESCRIPTION": "Voir et gérer les compositions et les paires d'équipes"
+    }
+  },
+  "EVENTS": {
+    "TITLE": "Événements",
+    "EMPTY": "Aucun événement pour le moment.",
+    "REGISTER": "S'inscrire",
+    "HAPPENING_NOW": "En cours",
+    "LOAD_MORE": "Charger plus",
+    "ADMIN": {
+      "TITLE": "Événements",
+      "CREATE": "Créer un événement",
+      "EDIT": "Modifier l'événement",
+      "DELETE": "Supprimer",
+      "SAVE": "Enregistrer",
+      "CANCEL": "Annuler",
+      "SEARCH": "Rechercher…",
+      "PUBLISHED": "Publié",
+      "ACTIVE": "Actif",
+      "ORDER": "Ordre",
+      "ORDER_INDEX_HINT": "Plus la valeur est basse, plus l'événement apparaît en haut de la liste",
+      "START": "Heure de début",
+      "END": "Heure de fin",
+      "END_TIME_INVALID": "L'heure de fin doit être après l'heure de début",
+      "UPDATED_AT": "Mis à jour",
+      "COPY_PUBLIC_URL": "Copier l'URL publique",
+      "OPEN_PUBLIC": "Ouvrir la page publique",
+      "QR": "Générer le QR",
+      "PREVIEW": "Aperçu",
+      "NAME": "Nom",
+      "DESCRIPTION": "Description",
+      "SLUG": "Slug",
+      "SLUG_INFO": "Identifiant unique pour l'URL publique (ex : mon-evenement), laissez vide pour générer automatiquement",
+      "BACKGROUND_IMAGE_URL": "URL de l'image de fond",
+      "EXTERNAL_REGISTRATION_URL": "URL d'inscription externe",
+      "ORDER_INDEX": "Index d'ordre",
+      "NO_EVENTS": "Aucun événement trouvé",
+      "QR_DIALOG": {
+        "TITLE": "Code QR",
+        "DOWNLOAD": "Télécharger",
+        "ERROR": "Impossible de charger le QR Code"
+      },
+      "DELETE_SUCCESS": "Événement supprimé avec succès",
+      "DELETE_ERROR": "Erreur lors de la suppression de l'événement",
+      "URL_COPIED": "URL copiée dans le presse-papiers",
+      "CREATE_SUCCESS": "Événement créé avec succès",
+      "UPDATE_SUCCESS": "Événement mis à jour avec succès",
+      "SAVE_ERROR": "Erreur lors de l'enregistrement de l'événement"
+    }
+  },
+  "ADMIN": {
+    "MANORS": {
+      "TITLE": "Manoirs",
+      "SUBTITLE": "Gérer les manoirs disponibles, leur capacité et les restrictions.",
+      "NEW": "Nouveau manoir",
+      "EDIT": "Modifier le manoir",
+      "SAVED": "Manoir enregistré avec succès",
+      "ERROR": "Une erreur est survenue",
+      "CONFIRM_DISCARD": "Voulez-vous abandonner les modifications ?",
+      "YES": "Oui",
+      "NO": "Non",
+      "ACTIVE": "Actif",
+      "INACTIVE": "Inactif",
+      "NO_MANORS": "Aucun manoir trouvé",
+      "FIELDS": {
+        "NAME": "Nom",
+        "ADDRESS": "Adresse",
+        "CITY": "Ville",
+        "CAPACITY": "Capacité",
+        "ENFORCE": "Limiter à la capacité",
+        "ACTIVE": "Actif"
+      },
+      "TABLE": {
+        "ACTIONS": "Actions"
+      },
+      "ACTIONS": {
+        "EDIT": "Modifier",
+        "DISABLE": "Désactiver",
+        "DELETE_CONFIRM": "Désactiver ce manoir ?",
+        "DELETE_MESSAGE": "Êtes-vous sûr de vouloir désactiver \"{{name}}\" ?"
+      }
+    }
+  },
+  "USERS": {
+    "MY_NIGHTS": {
+      "TITLE": "Mes nuits au manoir",
+      "SUBTITLE": "Inscris-toi avant midi pour la nuit du jour même.",
+      "CUTOFF_LOCKED": "Modifications fermées (après midi).",
+      "CUTOFF_ERROR": "Trop tard : modifications fermées après midi.",
+      "SELECT_MANOR": "Choisir un manoir",
+      "SUBSCRIBE": "S'inscrire",
+      "UNSUBSCRIBE": "Se désinscrire",
+      "SAVED": "Mise à jour enregistrée",
+      "ERROR": "Une erreur est survenue",
+      "FULL": "Manoir complet pour cette nuit",
+      "NO_DAYS": "Aucune date disponible"
+    }
+  },
+  "COMMON": {
+    "CANCEL": "Annuler",
+    "SAVE": "Enregistrer",
+    "CONFIRM": "Confirmer"
+  },
+  "TRANSPORTS": {
+    "ADMIN": {
+      "TITLE": "Transports",
+      "CREATE_TEMPLATE": "Créer un modèle",
+      "NO_TEMPLATES": "Aucun modèle de transport trouvé",
+      "EVERY_DAY": "Tous les jours",
+      "OVERBOOK": "SR",
+      "OVERBOOK_ALLOWED": "Surréservation autorisée",
+      "CAPACITY": "Capacité",
+      "TABLE": {
+        "NAME": "Nom",
+        "ROUTE": "Trajet",
+        "SCHEDULE": "Horaire",
+        "CAPACITY": "Capacité",
+        "ACTIVE": "Actif",
+        "ACTIONS": "Actions"
+      },
+      "FILTERS": {
+        "SEARCH": "Rechercher",
+        "SEARCH_PLACEHOLDER": "Rechercher des modèles...",
+        "STATUS": "Statut",
+        "ALL_STATUS": "Tous les statuts"
+      },
+      "ACTIONS": {
+        "MORE": "Plus d'actions",
+        "VIEW_DETAILS": "Voir les détails",
+        "EDIT": "Modifier",
+        "DISABLE": "Désactiver",
+        "GENERATE_OCCURRENCES": "Générer des occurrences"
+      },
+      "INFO": {
+        "TITLE": "Informations du modèle"
+      },
+      "FORM": {
+        "NAME": "Nom du modèle",
+        "NAME_PLACEHOLDER": "ex: Transport scolaire matinal",
+        "NAME_REQUIRED": "Le nom du modèle est requis",
+        "DESCRIPTION": "Description",
+        "DESCRIPTION_PLACEHOLDER": "Description facultative",
+        "FROM": "Départ",
+        "FROM_PLACEHOLDER": "ex: École",
+        "FROM_REQUIRED": "Le lieu de départ est requis",
+        "TO": "Arrivée",
+        "TO_PLACEHOLDER": "ex: Centre sportif",
+        "TO_REQUIRED": "Le lieu d'arrivée est requis",
+        "DAYS_OF_WEEK": "Jours de la semaine",
+        "DAYS_OF_WEEK_REQUIRED": "Veuillez sélectionner au moins un jour",
+        "TIME_OF_DAY": "Heure de départ",
+        "TIME_OF_DAY_REQUIRED": "L'heure de départ est requise",
+        "CAPACITY": "Capacité",
+        "CAPACITY_REQUIRED": "La capacité est requise",
+        "CAPACITY_MIN": "La capacité doit être au moins de 1",
+        "ALLOW_OVERBOOK": "Autoriser la surréservation",
+        "ALLOW_OVERBOOK_HINT": "Autoriser les réservations au-delà de la capacité",
+        "IS_ACTIVE": "Actif",
+        "IS_ACTIVE_HINT": "Seuls les modèles actifs peuvent générer des occurrences",
+        "CANCEL": "Annuler",
+        "SAVE": "Enregistrer",
+        "CREATE": "Créer le modèle"
+      },
+      "PARTICIPANTS": {
+        "TITLE": "Occurrences et participants",
+        "FILTERS": "Filtres de plage de dates",
+        "FROM_DATE": "Date de début",
+        "TO_DATE": "Date de fin",
+        "APPLY": "Appliquer",
+        "RESET": "Réinitialiser",
+        "SELECT_OCCURRENCE": "Sélectionner une occurrence",
+        "NO_OCCURRENCE": "Sélectionner une occurrence...",
+        "NO_OCCURRENCES": "Aucune occurrence trouvée pour cette période",
+        "BOOKED_SEATS": "Places réservées",
+        "CANCEL_OCCURRENCE": "Annuler l'occurrence",
+        "OCCURRENCE_CANCELLED": "Cette occurrence a été annulée",
+        "BOOKINGS_LIST": "Réservations",
+        "PARTICIPANT": "Participant",
+        "EMAIL": "Email",
+        "BOOKED_AT": "Réservé le",
+        "STATUS": "Statut",
+        "ACTIONS": "Actions",
+        "CANCEL_BOOKING": "Annuler la réservation",
+        "NO_BOOKINGS": "Aucune réservation pour cette occurrence"
+      },
+      "TABS": {
+        "INFO": "Informations",
+        "INFO_DESCRIPTION": "Détails et paramètres du modèle",
+        "PARTICIPANTS": "Occurrences",
+        "PARTICIPANTS_DESCRIPTION": "Voir et gérer les occurrences et les réservations"
+      }
+    },
+    "USER": {
+      "TITLE": "Réservations de transport",
+      "SEATS_BOOKED": "places réservées",
+      "OVERBOOK": "SR",
+      "OVERBOOK_ALLOWED": "Surréservation autorisée",
+      "BOOKING_CLOSED": "Réservation fermée",
+      "FULLY_BOOKED": "Complet",
+      "ALREADY_BOOKED": "Vous avez une réservation",
+      "BOOK": "Réserver",
+      "CANCEL": "Annuler la réservation",
+      "NO_OCCURRENCES": "Aucun transport disponible pour cette période",
+      "FILTERS": {
+        "FROM_DATE": "Date de début",
+        "TO_DATE": "Date de fin",
+        "APPLY": "Appliquer",
+        "RESET": "Réinitialiser"
+      }
+    },
+    "VIEW": {
+      "BREADCRUMB": {
+        "BACK": "Retour aux modèles"
+      }
+    },
+    "STATUS": {
+      "ACTIVE": "Actif",
+      "INACTIVE": "Inactif"
+    },
+    "OCCURRENCE_STATUS": {
+      "SCHEDULED": "Programmé",
+      "CANCELLED": "Annulé",
+      "COMPLETED": "Terminé"
+    },
+    "BOOKING_STATUS": {
+      "CONFIRMED": "Confirmé",
+      "CANCELLED": "Annulé"
+    },
+    "DAYS": {
+      "MONDAY": "Lundi",
+      "MONDAY_SHORT": "Lun",
+      "TUESDAY": "Mardi",
+      "TUESDAY_SHORT": "Mar",
+      "WEDNESDAY": "Mercredi",
+      "WEDNESDAY_SHORT": "Mer",
+      "THURSDAY": "Jeudi",
+      "THURSDAY_SHORT": "Jeu",
+      "FRIDAY": "Vendredi",
+      "FRIDAY_SHORT": "Ven",
+      "SATURDAY": "Samedi",
+      "SATURDAY_SHORT": "Sam",
+      "SUNDAY": "Dimanche",
+      "SUNDAY_SHORT": "Dim"
+    }
+  },
+  "PARENT": {
+    "DASHBOARD": {
+      "TITLE": "Tableau de bord parent",
+      "CURRENT_WEEK": "Semaine en cours",
+      "TRAINING_SESSIONS": "Sessions d'entraînement",
+      "AVG_RATING": "Note moyenne",
+      "TRANSPORTS": "Trajets utilisés",
+      "MANOR_NIGHTS": "Nuits au Manoir",
+      "UPCOMING_TOURNAMENTS": "Tournois à venir",
+      "DONE_TOURNAMENTS": "Tournois effectués"
+    },
+    "REPORTS": {
+      "NO_CHILD": "Aucun enfant associé à votre compte."
+    }
+  }
 }

@@ -42,6 +42,10 @@ export class NavigationService {
                         ...cloneDeep(data.commonNavigation),
                         ...cloneDeep(data.userNavigation),
                     ],
+                    parent: [
+                        ...cloneDeep(data.commonNavigation),
+                        ...cloneDeep(data.parentNavigation),
+                    ],
                 });
                 observer.complete();
             });

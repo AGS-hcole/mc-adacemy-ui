@@ -4,6 +4,7 @@ export type UUID = string;
 export enum Role {
     user = 'user',
     admin = 'admin',
+    parent = 'parent',
 }
 
 export enum FormulaType {

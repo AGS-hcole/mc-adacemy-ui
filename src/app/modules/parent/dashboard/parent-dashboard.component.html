@@ -1,0 +1,137 @@
+<div class="absolute inset-0 flex min-w-0 flex-col overflow-y-auto">
+    <!-- Header -->
+    <div class="dark relative flex-0 overflow-hidden bg-primary px-4 py-8 sm:p-12">
+        <svg
+            class="absolute inset-0 pointer-events-none"
+            viewBox="0 0 960 540"
+            width="100%"
+            height="100%"
+            preserveAspectRatio="xMidYMax slice"
+            xmlns="http://www.w3.org/2000/svg"
+        >
+            <g class="text-gray-700 opacity-25" fill="none" stroke="currentColor" stroke-width="100">
+                <circle r="234" cx="196" cy="23"></circle>
+                <circle r="234" cx="790" cy="491"></circle>
+            </g>
+        </svg>
+        <div class="relative z-10 flex flex-col items-center">
+            <h2 class="text-xl font-semibold">
+                {{ 'PARENT.DASHBOARD.TITLE' | transloco }}
+            </h2>
+            <div class="mt-1 text-center text-3xl font-extrabold leading-tight tracking-tight sm:text-5xl">
+                <ng-container *ngIf="selectedChild">
+                    {{ selectedChild.displayName }}
+                </ng-container>
+            </div>
+        </div>
+    </div>
+
+    <!-- Child Selector (multiple children only) -->
+    <div *ngIf="children.length > 1" class="bg-card shadow-sm px-4 py-3 sm:px-6">
+        <div class="flex items-center gap-3">
+            <mat-icon class="text-secondary icon-size-5" svgIcon="heroicons_outline:user"></mat-icon>
+            <div class="flex flex-wrap gap-2">
+                <button
+                    *ngFor="let child of children"
+                    type="button"
+                    (click)="onChildChange(child)"
+                    [class.bg-primary]="selectedChild?.id === child.id"
+                    [class.text-white]="selectedChild?.id === child.id"
+                    class="rounded-full px-4 py-1 text-sm font-medium border transition-colors"
+                    [class.border-primary]="selectedChild?.id === child.id"
+                    [class.border-gray-300]="selectedChild?.id !== child.id"
+                >
+                    {{ child.displayName }}
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Loading -->
+    <div *ngIf="loading" class="flex flex-auto items-center justify-center p-12">
+        <mat-icon class="animate-spin icon-size-8 text-primary" svgIcon="heroicons_outline:arrow-path"></mat-icon>
+    </div>
+
+    <!-- Error -->
+    <div *ngIf="!loading && error" class="p-6">
+        <div class="rounded-lg border border-red-200 bg-red-50 p-4 text-red-700">
+            {{ error }}
+        </div>
+    </div>
+
+    <!-- Dashboard Cards -->
+    <div *ngIf="!loading && !error && dashboard" class="flex-auto p-4 sm:p-6">
+        <p class="text-secondary mb-4 text-sm">
+            {{ 'PARENT.DASHBOARD.CURRENT_WEEK' | transloco }}
+        </p>
+        <div class="grid grid-cols-2 gap-4 sm:grid-cols-3">
+
+            <!-- Training Sessions -->
+            <div class="bg-card flex flex-col items-center justify-center rounded-2xl p-5 shadow text-center">
+                <div class="mb-3 flex h-11 w-11 items-center justify-center rounded-full bg-blue-100 dark:bg-blue-800">
+                    <mat-icon class="text-blue-600 icon-size-6 dark:text-blue-200" svgIcon="heroicons_outline:calendar"></mat-icon>
+                </div>
+                <div class="text-3xl font-bold">{{ dashboard.trainingSessions }}</div>
+                <div class="text-secondary mt-1 text-xs font-medium">
+                    {{ 'PARENT.DASHBOARD.TRAINING_SESSIONS' | transloco }}
+                </div>
+            </div>
+
+            <!-- Avg Rating -->
+            <div class="bg-card flex flex-col items-center justify-center rounded-2xl p-5 shadow text-center">
+                <div class="mb-3 flex h-11 w-11 items-center justify-center rounded-full bg-yellow-100 dark:bg-yellow-800">
+                    <mat-icon class="text-yellow-600 icon-size-6 dark:text-yellow-200" svgIcon="heroicons_outline:star"></mat-icon>
+                </div>
+                <div class="text-3xl font-bold">{{ avgRating }}</div>
+                <div class="text-secondary mt-1 text-xs font-medium">
+                    {{ 'PARENT.DASHBOARD.AVG_RATING' | transloco }}
+                </div>
+            </div>
+
+            <!-- Transports -->
+            <div class="bg-card flex flex-col items-center justify-center rounded-2xl p-5 shadow text-center">
+                <div class="mb-3 flex h-11 w-11 items-center justify-center rounded-full bg-green-100 dark:bg-green-800">
+                    <mat-icon class="text-green-600 icon-size-6 dark:text-green-200" svgIcon="heroicons_outline:truck"></mat-icon>
+                </div>
+                <div class="text-3xl font-bold">{{ dashboard.transportsUsed }}</div>
+                <div class="text-secondary mt-1 text-xs font-medium">
+                    {{ 'PARENT.DASHBOARD.TRANSPORTS' | transloco }}
+                </div>
+            </div>
+
+            <!-- Manor Nights -->
+            <div class="bg-card flex flex-col items-center justify-center rounded-2xl p-5 shadow text-center">
+                <div class="mb-3 flex h-11 w-11 items-center justify-center rounded-full bg-purple-100 dark:bg-purple-800">
+                    <mat-icon class="text-purple-600 icon-size-6 dark:text-purple-200" svgIcon="heroicons_outline:moon"></mat-icon>
+                </div>
+                <div class="text-3xl font-bold">{{ dashboard.manorNights }}</div>
+                <div class="text-secondary mt-1 text-xs font-medium">
+                    {{ 'PARENT.DASHBOARD.MANOR_NIGHTS' | transloco }}
+                </div>
+            </div>
+
+            <!-- Upcoming Tournaments -->
+            <div class="bg-card flex flex-col items-center justify-center rounded-2xl p-5 shadow text-center">
+                <div class="mb-3 flex h-11 w-11 items-center justify-center rounded-full bg-orange-100 dark:bg-orange-800">
+                    <mat-icon class="text-orange-600 icon-size-6 dark:text-orange-200" svgIcon="heroicons_outline:trophy"></mat-icon>
+                </div>
+                <div class="text-3xl font-bold">{{ dashboard.upcomingTournaments }}</div>
+                <div class="text-secondary mt-1 text-xs font-medium">
+                    {{ 'PARENT.DASHBOARD.UPCOMING_TOURNAMENTS' | transloco }}
+                </div>
+            </div>
+
+            <!-- Done Tournaments -->
+            <div class="bg-card flex flex-col items-center justify-center rounded-2xl p-5 shadow text-center">
+                <div class="mb-3 flex h-11 w-11 items-center justify-center rounded-full bg-teal-100 dark:bg-teal-800">
+                    <mat-icon class="text-teal-600 icon-size-6 dark:text-teal-200" svgIcon="heroicons_outline:check-badge"></mat-icon>
+                </div>
+                <div class="text-3xl font-bold">{{ dashboard.doneTournaments }}</div>
+                <div class="text-secondary mt-1 text-xs font-medium">
+                    {{ 'PARENT.DASHBOARD.DONE_TOURNAMENTS' | transloco }}
+                </div>
+            </div>
+
+        </div>
+    </div>
+</div>

@@ -51,7 +51,7 @@
             </mat-form-field>
 
             <!-- User Filter -->
-            <mat-form-field class="min-w-64 flex-auto">
+            <mat-form-field class="min-w-64 flex-auto" *ngIf="!hideUserFilter">
                 <mat-label>{{ 'REPORTS.FILTERS.USER' | transloco }}</mat-label>
                 <mat-select formControlName="userId">
                     <mat-option [value]="null">{{
