@@ -1,4 +1,4 @@
-import { CommonModule } from '@angular/common';
+import { CommonModule, NgClass } from '@angular/common';
 import { Component, Input } from '@angular/core';
 import { MatButtonModule } from '@angular/material/button';
 import { MatIconModule } from '@angular/material/icon';
@@ -15,6 +15,7 @@ import { DateTime } from 'luxon';
     standalone: true,
     imports: [
         CommonModule,
+        NgClass,
         MatTableModule,
         MatButtonModule,
         MatIconModule,
