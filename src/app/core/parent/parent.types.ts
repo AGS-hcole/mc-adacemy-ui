@@ -9,33 +9,24 @@ export interface ParentDashboardChild {
     id: string;
     firstname: string;
     lastname: string;
-    birthDate: string;
+    email?: string;
 }
 
 export interface ParentDashboardChildStats {
     child: ParentDashboardChild;
-    ratings: {
-        average: number | null;
-        count: number;
-    };
-    residence: {
-        nightsCount: number;
-    };
-    tournaments: {
-        completedCount: number;
-        upcomingCount: number;
-    };
-    trainingSessions: {
-        completedCount: number;
-    };
-    transports: {
-        completedCount: number;
+    metrics: {
+        averageTrainingRating: number | null;
+        residenceNightsDone: number;
+        tournamentsDone: number;
+        tournamentsUpcoming: number;
+        trainingSessionsDone: number;
+        transportsDone: number;
     };
 }
 
 export interface ParentDashboardPeriod {
-    from: string; // ISO date
-    to: string; // ISO date
+    startDate: string; // ISO date
+    endDate: string; // ISO date
     timezone: string;
 }
 

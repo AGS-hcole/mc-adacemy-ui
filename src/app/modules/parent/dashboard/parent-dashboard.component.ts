@@ -11,7 +11,10 @@ import { MatIconModule } from '@angular/material/icon';
 import { MatSelectModule } from '@angular/material/select';
 import { TranslocoModule } from '@jsverse/transloco';
 import { ParentService } from 'app/core/parent/parent.service';
-import { ParentDashboardChildStats } from 'app/core/parent/parent.types';
+import {
+    ParentDashboardChildStats,
+    ParentDashboardPeriod,
+} from 'app/core/parent/parent.types';
 import { Subject, takeUntil } from 'rxjs';
 
 @Component({
@@ -25,6 +28,7 @@ import { Subject, takeUntil } from 'rxjs';
 export class ParentDashboardComponent implements OnInit, OnDestroy {
     children: ParentDashboardChildStats[] = [];
     selectedChildId: string | null = null;
+    period: ParentDashboardPeriod | null = null;
     loading = false;
     error: string | null = null;
 
@@ -44,8 +48,8 @@ export class ParentDashboardComponent implements OnInit, OnDestroy {
             .pipe(takeUntil(this._unsubscribeAll))
             .subscribe({
                 next: (data) => {
-                    console.log('Dashboard data received:', data);
                     this.children = data.children ?? [];
+                    this.period = data.period ?? null;
                     this.selectedChildId = this.children[0]?.child.id ?? null;
                     this.loading = false;
                     this._cdr.markForCheck();
@@ -83,10 +87,24 @@ export class ParentDashboardComponent implements OnInit, OnDestroy {
     }
 
     get avgRating(): string {
-        const average = this.selectedChild?.ratings?.average;
+        const average = this.selectedChild?.metrics?.averageTrainingRating;
         if (average === null || average === undefined) {
             return '–';
         }
         return average.toFixed(1);
+    }
+
+    get periodLabel(): string {
+        if (!this.period?.startDate || !this.period?.endDate) {
+            return '';
+        }
+
+        return `${this._formatDate(this.period.startDate)} - ${this._formatDate(
+            this.period.endDate
+        )}`;
+    }
+
+    private _formatDate(date: string): string {
+        return new Date(date).toLocaleDateString('fr-FR');
     }
 }
