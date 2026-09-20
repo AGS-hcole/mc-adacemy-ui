@@ -1,4 +1,12 @@
-import { NgClass, NgFor, NgIf } from '@angular/common';
+import { NgClass } from '@angular/common';
+import {
+    ChangeDetectionStrategy,
+    ChangeDetectorRef,
+    Component,
+    OnDestroy,
+    OnInit,
+    ViewEncapsulation,
+} from '@angular/core';
 import {
     AbstractControl,
     FormArray,
@@ -9,14 +17,6 @@ import {
     ValidatorFn,
     Validators,
 } from '@angular/forms';
-import {
-    ChangeDetectionStrategy,
-    ChangeDetectorRef,
-    Component,
-    OnDestroy,
-    OnInit,
-    ViewEncapsulation,
-} from '@angular/core';
 import { MatButtonModule } from '@angular/material/button';
 import { MatCheckboxModule } from '@angular/material/checkbox';
 import { MatChipsModule } from '@angular/material/chips';
@@ -39,7 +39,15 @@ import {
 import { TrainingGroupsService } from 'app/core/training-group/training-groups.service';
 import { FormulaType, Role, User } from 'app/core/user/user.types';
 import { UsersService } from 'app/modules/admin/users/users.service';
-import { Observable, Subject, concatMap, finalize, forkJoin, of, takeUntil } from 'rxjs';
+import {
+    Observable,
+    Subject,
+    concatMap,
+    finalize,
+    forkJoin,
+    of,
+    takeUntil,
+} from 'rxjs';
 
 interface ScheduleFormValue {
     id?: string | null;
@@ -54,8 +62,6 @@ interface ScheduleFormValue {
     encapsulation: ViewEncapsulation.None,
     changeDetection: ChangeDetectionStrategy.OnPush,
     imports: [
-        NgIf,
-        NgFor,
         NgClass,
         ReactiveFormsModule,
         MatButtonModule,
@@ -112,9 +118,11 @@ export class AdminTrainingGroupDetailsComponent implements OnInit, OnDestroy {
 
     ngOnInit(): void {
         this.trainingGroup =
-            (this._activatedRoute.snapshot.data['trainingGroup'] as TrainingGroup | null) ||
-            null;
-        this.sites = (this._activatedRoute.snapshot.data['sites'] as Site[]) || [];
+            (this._activatedRoute.snapshot.data[
+                'trainingGroup'
+            ] as TrainingGroup | null) || null;
+        this.sites =
+            (this._activatedRoute.snapshot.data['sites'] as Site[]) || [];
         this.isEditMode = !!this.trainingGroup;
 
         this._initForms();
@@ -132,7 +140,8 @@ export class AdminTrainingGroupDetailsComponent implements OnInit, OnDestroy {
     }
 
     get selectedMemberIds(): string[] {
-        return (this.trainingGroupForm.get('memberUserIds')?.value || []) as string[];
+        return (this.trainingGroupForm.get('memberUserIds')?.value ||
+            []) as string[];
     }
 
     get filteredUsers(): User[] {
@@ -146,7 +155,8 @@ export class AdminTrainingGroupDetailsComponent implements OnInit, OnDestroy {
                     return true;
                 }
 
-                const fullName = `${user.firstname} ${user.lastname}`.toLowerCase();
+                const fullName =
+                    `${user.firstname} ${user.lastname}`.toLowerCase();
                 return (
                     fullName.includes(term) ||
                     user.email.toLowerCase().includes(term)
@@ -169,9 +179,10 @@ export class AdminTrainingGroupDetailsComponent implements OnInit, OnDestroy {
 
         this.schedulesFormArray.markAllAsTouched();
 
-        const request$ = this.isEditMode && this.trainingGroup
-            ? this._saveExistingTrainingGroup()
-            : this._createTrainingGroup();
+        const request$ =
+            this.isEditMode && this.trainingGroup
+                ? this._saveExistingTrainingGroup()
+                : this._createTrainingGroup();
 
         this.saving = true;
         this._changeDetectorRef.markForCheck();
@@ -314,7 +325,10 @@ export class AdminTrainingGroupDetailsComponent implements OnInit, OnDestroy {
     addBulkSchedules(): void {
         this.bulkScheduleForm.markAllAsTouched();
 
-        if (this.bulkScheduleForm.invalid || this.selectedBulkDays.length === 0) {
+        if (
+            this.bulkScheduleForm.invalid ||
+            this.selectedBulkDays.length === 0
+        ) {
             if (this.selectedBulkDays.length === 0) {
                 this.bulkScheduleForm.get('daysPlaceholder')?.setErrors({
                     required: true,
@@ -380,8 +394,8 @@ export class AdminTrainingGroupDetailsComponent implements OnInit, OnDestroy {
 
     getScheduleDayLabel(dayOfWeek: number): string {
         return (
-            this.dayOptions.find((day) => day.value === dayOfWeek)?.shortLabel ||
-            `${dayOfWeek}`
+            this.dayOptions.find((day) => day.value === dayOfWeek)
+                ?.shortLabel || `${dayOfWeek}`
         );
     }
 
@@ -415,19 +429,28 @@ export class AdminTrainingGroupDetailsComponent implements OnInit, OnDestroy {
             }),
         });
 
-        this.bulkScheduleForm = this._formBuilder.group({
-            daysPlaceholder: [''],
-            startTime: [
-                '09:00',
-                [Validators.required, Validators.pattern(this._timePattern)],
-            ],
-            endTime: [
-                '10:30',
-                [Validators.required, Validators.pattern(this._timePattern)],
-            ],
-        }, {
-            validators: [this._timeRangeValidator()],
-        });
+        this.bulkScheduleForm = this._formBuilder.group(
+            {
+                daysPlaceholder: [''],
+                startTime: [
+                    '09:00',
+                    [
+                        Validators.required,
+                        Validators.pattern(this._timePattern),
+                    ],
+                ],
+                endTime: [
+                    '10:30',
+                    [
+                        Validators.required,
+                        Validators.pattern(this._timePattern),
+                    ],
+                ],
+            },
+            {
+                validators: [this._timeRangeValidator()],
+            }
+        );
     }
 
     private _patchTrainingGroup(): void {
@@ -556,7 +579,10 @@ export class AdminTrainingGroupDetailsComponent implements OnInit, OnDestroy {
         }
 
         const initialSchedules = new Map(
-            (trainingGroup.schedules || []).map((schedule) => [schedule.id, schedule])
+            (trainingGroup.schedules || []).map((schedule) => [
+                schedule.id,
+                schedule,
+            ])
         );
         const keptScheduleIds = new Set(
             finalSchedules
@@ -567,11 +593,14 @@ export class AdminTrainingGroupDetailsComponent implements OnInit, OnDestroy {
         finalSchedules.forEach((schedule) => {
             if (!schedule.id) {
                 operations.push(
-                    this._trainingGroupsService.createSchedule(trainingGroup.id, {
-                        dayOfWeek: schedule.dayOfWeek,
-                        startTime: schedule.startTime,
-                        endTime: schedule.endTime,
-                    })
+                    this._trainingGroupsService.createSchedule(
+                        trainingGroup.id,
+                        {
+                            dayOfWeek: schedule.dayOfWeek,
+                            startTime: schedule.startTime,
+                            endTime: schedule.endTime,
+                        }
+                    )
                 );
                 return;
             }
@@ -612,7 +641,10 @@ export class AdminTrainingGroupDetailsComponent implements OnInit, OnDestroy {
             });
 
         const metadataRequest$ = Object.keys(metadataPayload).length
-            ? this._trainingGroupsService.update(trainingGroup.id, metadataPayload)
+            ? this._trainingGroupsService.update(
+                  trainingGroup.id,
+                  metadataPayload
+              )
             : of(trainingGroup);
 
         return metadataRequest$.pipe(
@@ -635,11 +667,17 @@ export class AdminTrainingGroupDetailsComponent implements OnInit, OnDestroy {
                 dayOfWeek: [schedule?.dayOfWeek ?? 1, [Validators.required]],
                 startTime: [
                     schedule?.startTime || '09:00',
-                    [Validators.required, Validators.pattern(this._timePattern)],
+                    [
+                        Validators.required,
+                        Validators.pattern(this._timePattern),
+                    ],
                 ],
                 endTime: [
                     schedule?.endTime || '10:30',
-                    [Validators.required, Validators.pattern(this._timePattern)],
+                    [
+                        Validators.required,
+                        Validators.pattern(this._timePattern),
+                    ],
                 ],
             },
             {
@@ -709,10 +747,14 @@ export class AdminTrainingGroupDetailsComponent implements OnInit, OnDestroy {
     }
 
     private _sortSchedules(): void {
-        const sortedSchedules = this._sortScheduleValues(this.getScheduleValues());
+        const sortedSchedules = this._sortScheduleValues(
+            this.getScheduleValues()
+        );
         this.schedulesFormArray.clear();
         sortedSchedules.forEach((schedule) => {
-            this.schedulesFormArray.push(this._createScheduleFormGroup(schedule));
+            this.schedulesFormArray.push(
+                this._createScheduleFormGroup(schedule)
+            );
         });
     }
 
@@ -724,7 +766,9 @@ export class AdminTrainingGroupDetailsComponent implements OnInit, OnDestroy {
                 return (first.dayOfWeek || 0) - (second.dayOfWeek || 0);
             }
 
-            return (first.startTime || '').localeCompare(second.startTime || '');
+            return (first.startTime || '').localeCompare(
+                second.startTime || ''
+            );
         });
     }
 
@@ -733,10 +777,12 @@ export class AdminTrainingGroupDetailsComponent implements OnInit, OnDestroy {
     }
 
     private _getSortedSchedulePayload(): CreateTrainingGroupScheduleRequest[] {
-        return this._sortScheduleValues(this.getScheduleValues()).map((schedule) => ({
-            dayOfWeek: schedule.dayOfWeek,
-            startTime: schedule.startTime,
-            endTime: schedule.endTime,
-        }));
+        return this._sortScheduleValues(this.getScheduleValues()).map(
+            (schedule) => ({
+                dayOfWeek: schedule.dayOfWeek,
+                startTime: schedule.startTime,
+                endTime: schedule.endTime,
+            })
+        );
     }
 }

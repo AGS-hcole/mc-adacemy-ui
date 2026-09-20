@@ -1,4 +1,6 @@
-<div class="absolute inset-0 flex min-w-0 flex-col overflow-y-auto sm:overflow-hidden">
+<div
+    class="absolute inset-0 flex min-w-0 flex-col overflow-y-auto sm:overflow-hidden"
+>
     <div
         class="bg-card relative flex flex-0 flex-col border-b px-6 py-8 sm:flex-row sm:items-center sm:justify-between md:px-8 dark:bg-transparent"
     >
@@ -37,10 +39,8 @@
                 (click)="save()"
             >
                 {{
-                    (saving
-                        ? 'TRAINING_GROUPS.ADMIN.SAVING'
-                        : 'COMMON.SAVE'
-                    ) | transloco
+                    (saving ? 'TRAINING_GROUPS.ADMIN.SAVING' : 'COMMON.SAVE')
+                        | transloco
                 }}
             </button>
         </div>
@@ -92,7 +92,9 @@
                             </mat-error>
                         </mat-form-field>
 
-                        <div class="flex items-center rounded-2xl bg-gray-50 px-4 py-3 dark:bg-gray-800">
+                        <div
+                            class="flex items-center rounded-2xl bg-gray-50 px-4 py-3 dark:bg-gray-800"
+                        >
                             <mat-checkbox formControlName="isActive">
                                 {{
                                     'TRAINING_GROUPS.ADMIN.FORM.IS_ACTIVE'
@@ -104,7 +106,9 @@
                 </div>
 
                 <div class="bg-card rounded-2xl p-6 shadow">
-                    <div class="mb-6 flex flex-col gap-2 sm:flex-row sm:items-center sm:justify-between">
+                    <div
+                        class="mb-6 flex flex-col gap-2 sm:flex-row sm:items-center sm:justify-between"
+                    >
                         <div>
                             <h2 class="text-2xl font-semibold">
                                 {{
@@ -125,9 +129,15 @@
                         </div>
                     </div>
 
-                    <div class="grid grid-cols-1 gap-6 lg:grid-cols-[minmax(0,1fr)_minmax(0,1.2fr)]">
-                        <div class="rounded-2xl border border-dashed border-gray-300 p-4 dark:border-gray-700">
-                            <div class="text-secondary text-sm font-medium uppercase">
+                    <div
+                        class="grid grid-cols-1 gap-6 lg:grid-cols-[minmax(0,1fr)_minmax(0,1.2fr)]"
+                    >
+                        <div
+                            class="rounded-2xl border border-dashed border-gray-300 p-4 dark:border-gray-700"
+                        >
+                            <div
+                                class="text-secondary text-sm font-medium uppercase"
+                            >
                                 {{
                                     'TRAINING_GROUPS.ADMIN.SELECTED_PLAYERS'
                                         | transloco
@@ -155,7 +165,9 @@
                                                     {{ user.firstname }}
                                                     {{ user.lastname }}
                                                 </div>
-                                                <div class="text-secondary text-xs">
+                                                <div
+                                                    class="text-secondary text-xs"
+                                                >
                                                     {{ user.email }}
                                                 </div>
                                             </div>
@@ -166,7 +178,9 @@
                                                 (click)="removeUser(user.id)"
                                             >
                                                 <mat-icon
-                                                    [svgIcon]="'heroicons_solid:x-mark'"
+                                                    [svgIcon]="
+                                                        'heroicons_solid:x-mark'
+                                                    "
                                                 ></mat-icon>
                                             </button>
                                         </div>
@@ -175,8 +189,12 @@
                             }
                         </div>
 
-                        <div class="rounded-2xl border p-4 dark:border-gray-700">
-                            <div class="text-secondary text-sm font-medium uppercase">
+                        <div
+                            class="rounded-2xl border p-4 dark:border-gray-700"
+                        >
+                            <div
+                                class="text-secondary text-sm font-medium uppercase"
+                            >
                                 {{
                                     'TRAINING_GROUPS.ADMIN.ADD_PLAYERS'
                                         | transloco
@@ -191,18 +209,26 @@
                                 <input
                                     matInput
                                     [value]="userSearchTerm"
-                                    (input)="userSearchTerm = $any($event.target).value"
+                                    (input)="
+                                        userSearchTerm = $any(
+                                            $event.target
+                                        ).value
+                                    "
                                 />
                                 <mat-icon
                                     matPrefix
-                                    [svgIcon]="'heroicons_outline:magnifying-glass'"
+                                    [svgIcon]="
+                                        'heroicons_outline:magnifying-glass'
+                                    "
                                 ></mat-icon>
                             </mat-form-field>
 
                             @if (loadingUsers) {
                                 <div class="space-y-2">
                                     @for (item of [1, 2, 3, 4]; track item) {
-                                        <div class="h-16 animate-pulse rounded-xl bg-gray-200"></div>
+                                        <div
+                                            class="h-16 animate-pulse rounded-xl bg-gray-200"
+                                        ></div>
                                     }
                                 </div>
                             } @else if (filteredUsers.length === 0) {
@@ -213,7 +239,9 @@
                                     }}
                                 </div>
                             } @else {
-                                <div class="max-h-80 space-y-2 overflow-y-auto pr-1">
+                                <div
+                                    class="max-h-80 space-y-2 overflow-y-auto pr-1"
+                                >
                                     @for (
                                         user of filteredUsers;
                                         track trackByUser($index, user)
@@ -228,18 +256,27 @@
                                                     {{ user.firstname }}
                                                     {{ user.lastname }}
                                                 </div>
-                                                <div class="text-secondary mt-1 text-sm">
+                                                <div
+                                                    class="text-secondary mt-1 text-sm"
+                                                >
                                                     {{ user.email }}
                                                 </div>
-                                                @if (getUserFormulaLabel(user); as formulaLabel) {
-                                                    <div class="text-secondary mt-1 text-xs">
+                                                @if (
+                                                    getUserFormulaLabel(user);
+                                                    as formulaLabel
+                                                ) {
+                                                    <div
+                                                        class="text-secondary mt-1 text-xs"
+                                                    >
                                                         {{ formulaLabel }}
                                                     </div>
                                                 }
                                             </div>
                                             <mat-icon
                                                 class="text-secondary mt-1"
-                                                [svgIcon]="'heroicons_outline:plus-circle'"
+                                                [svgIcon]="
+                                                    'heroicons_outline:plus-circle'
+                                                "
                                             ></mat-icon>
                                         </button>
                                     }
@@ -250,7 +287,9 @@
                 </div>
 
                 <div class="bg-card rounded-2xl p-6 shadow">
-                    <div class="mb-6 flex flex-col gap-2 sm:flex-row sm:items-center sm:justify-between">
+                    <div
+                        class="mb-6 flex flex-col gap-2 sm:flex-row sm:items-center sm:justify-between"
+                    >
                         <div>
                             <h2 class="text-2xl font-semibold">
                                 {{
@@ -270,7 +309,9 @@
                             mat-stroked-button
                             (click)="addEmptySchedule()"
                         >
-                            <mat-icon [svgIcon]="'heroicons_outline:plus'"></mat-icon>
+                            <mat-icon
+                                [svgIcon]="'heroicons_outline:plus'"
+                            ></mat-icon>
                             <span class="ml-2">
                                 {{
                                     'TRAINING_GROUPS.ADMIN.ADD_SINGLE_SCHEDULE'
@@ -280,12 +321,22 @@
                         </button>
                     </div>
 
-                    <div class="rounded-2xl border bg-gray-50 p-4 dark:border-gray-700 dark:bg-gray-800/40">
-                        <div class="text-sm font-semibold uppercase tracking-wide">
-                            {{ 'TRAINING_GROUPS.ADMIN.QUICK_ADD_TITLE' | transloco }}
+                    <div
+                        class="rounded-2xl border bg-gray-50 p-4 dark:border-gray-700 dark:bg-gray-800/40"
+                    >
+                        <div
+                            class="text-sm font-semibold uppercase tracking-wide"
+                        >
+                            {{
+                                'TRAINING_GROUPS.ADMIN.QUICK_ADD_TITLE'
+                                    | transloco
+                            }}
                         </div>
                         <div class="text-secondary mt-1 text-sm">
-                            {{ 'TRAINING_GROUPS.ADMIN.QUICK_ADD_HELP' | transloco }}
+                            {{
+                                'TRAINING_GROUPS.ADMIN.QUICK_ADD_HELP'
+                                    | transloco
+                            }}
                         </div>
 
                         <div class="mt-4 flex flex-wrap gap-2">
@@ -295,9 +346,13 @@
                                     class="rounded-full border px-4 py-2 text-sm font-medium transition"
                                     [ngClass]="{
                                         'border-primary-500 bg-primary-500 text-white':
-                                            selectedBulkDays.includes(day.value),
+                                            selectedBulkDays.includes(
+                                                day.value
+                                            ),
                                         'border-gray-300 bg-white text-gray-700 dark:border-gray-600 dark:bg-gray-900 dark:text-gray-100':
-                                            !selectedBulkDays.includes(day.value),
+                                            !selectedBulkDays.includes(
+                                                day.value
+                                            ),
                                     }"
                                     (click)="toggleBulkDay(day.value)"
                                 >
@@ -306,13 +361,20 @@
                             }
                         </div>
 
-                        <div [formGroup]="bulkScheduleForm" class="mt-4 grid grid-cols-1 gap-4 md:grid-cols-[minmax(0,1fr)_minmax(0,1fr)_auto]">
+                        <div
+                            [formGroup]="bulkScheduleForm"
+                            class="mt-4 grid grid-cols-1 gap-4 md:grid-cols-[minmax(0,1fr)_minmax(0,1fr)_auto]"
+                        >
                             <mat-form-field class="w-full">
                                 <mat-label>{{
                                     'TRAINING_GROUPS.ADMIN.FORM.START_TIME'
                                         | transloco
                                 }}</mat-label>
-                                <input matInput type="time" formControlName="startTime" />
+                                <input
+                                    matInput
+                                    type="time"
+                                    formControlName="startTime"
+                                />
                                 <mat-error>
                                     {{
                                         'TRAINING_GROUPS.ADMIN.FORM.TIME_FORMAT'
@@ -326,7 +388,11 @@
                                     'TRAINING_GROUPS.ADMIN.FORM.END_TIME'
                                         | transloco
                                 }}</mat-label>
-                                <input matInput type="time" formControlName="endTime" />
+                                <input
+                                    matInput
+                                    type="time"
+                                    formControlName="endTime"
+                                />
                                 <mat-error>
                                     {{
                                         'TRAINING_GROUPS.ADMIN.FORM.TIME_FORMAT'
@@ -347,15 +413,23 @@
                         </div>
 
                         @if (bulkScheduleForm.hasError('invalidRange')) {
-                            <div class="mt-2 text-sm text-red-600 dark:text-red-400">
+                            <div
+                                class="mt-2 text-sm text-red-600 dark:text-red-400"
+                            >
                                 {{
                                     'TRAINING_GROUPS.ADMIN.FORM.END_AFTER_START'
                                         | transloco
                                 }}
                             </div>
                         }
-                        @if (bulkScheduleForm.get('daysPlaceholder')?.hasError('required')) {
-                            <div class="mt-2 text-sm text-red-600 dark:text-red-400">
+                        @if (
+                            bulkScheduleForm
+                                .get('daysPlaceholder')
+                                ?.hasError('required')
+                        ) {
+                            <div
+                                class="mt-2 text-sm text-red-600 dark:text-red-400"
+                            >
                                 {{
                                     'TRAINING_GROUPS.ADMIN.FORM.DAY_REQUIRED'
                                         | transloco
@@ -373,14 +447,19 @@
                                 class="rounded-2xl border p-4 dark:border-gray-700"
                                 [formGroupName]="$index"
                             >
-                                <div class="grid grid-cols-1 gap-4 lg:grid-cols-[minmax(0,1.2fr)_minmax(0,1fr)_minmax(0,1fr)_auto]">
+                                <div
+                                    class="grid grid-cols-1 gap-4 lg:grid-cols-[minmax(0,1.2fr)_minmax(0,1fr)_minmax(0,1fr)_auto]"
+                                >
                                     <mat-form-field class="w-full">
                                         <mat-label>{{
                                             'TRAINING_GROUPS.ADMIN.FORM.DAY'
                                                 | transloco
                                         }}</mat-label>
                                         <mat-select formControlName="dayOfWeek">
-                                            @for (day of dayOptions; track day.value) {
+                                            @for (
+                                                day of dayOptions;
+                                                track day.value
+                                            ) {
                                                 <mat-option [value]="day.value">
                                                     {{ day.label }}
                                                 </mat-option>
@@ -430,7 +509,9 @@
                                         </mat-error>
                                     </mat-form-field>
 
-                                    <div class="flex items-start justify-end pt-1">
+                                    <div
+                                        class="flex items-start justify-end pt-1"
+                                    >
                                         <button
                                             type="button"
                                             mat-icon-button
@@ -438,14 +519,18 @@
                                             (click)="removeSchedule($index)"
                                         >
                                             <mat-icon
-                                                [svgIcon]="'heroicons_outline:trash'"
+                                                [svgIcon]="
+                                                    'heroicons_outline:trash'
+                                                "
                                             ></mat-icon>
                                         </button>
                                     </div>
                                 </div>
 
                                 @if (scheduleControl.hasError('invalidRange')) {
-                                    <div class="mt-2 text-sm text-red-600 dark:text-red-400">
+                                    <div
+                                        class="mt-2 text-sm text-red-600 dark:text-red-400"
+                                    >
                                         {{
                                             'TRAINING_GROUPS.ADMIN.FORM.END_AFTER_START'
                                                 | transloco
@@ -457,7 +542,9 @@
                     </div>
 
                     @if (schedulesFormArray.hasError('duplicateSchedules')) {
-                        <div class="mt-4 text-sm text-red-600 dark:text-red-400">
+                        <div
+                            class="mt-4 text-sm text-red-600 dark:text-red-400"
+                        >
                             {{
                                 'TRAINING_GROUPS.ADMIN.SCHEDULE_DUPLICATE_ERROR'
                                     | transloco
@@ -465,7 +552,9 @@
                         </div>
                     }
                     @if (schedulesFormArray.hasError('required')) {
-                        <div class="mt-4 text-sm text-red-600 dark:text-red-400">
+                        <div
+                            class="mt-4 text-sm text-red-600 dark:text-red-400"
+                        >
                             {{
                                 'TRAINING_GROUPS.ADMIN.FORM.SCHEDULE_REQUIRED'
                                     | transloco

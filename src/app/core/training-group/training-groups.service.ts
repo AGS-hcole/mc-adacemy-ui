@@ -71,7 +71,10 @@ export class TrainingGroupsService {
         payload: UpdateTrainingGroupRequest
     ): Observable<TrainingGroup> {
         return this._httpClient
-            .patch<TrainingGroup>(`${this.apiUrl}/training-groups/${id}`, payload)
+            .patch<TrainingGroup>(
+                `${this.apiUrl}/training-groups/${id}`,
+                payload
+            )
             .pipe(
                 tap((trainingGroup) => {
                     this._updateTrainingGroupInCollection(id, trainingGroup);

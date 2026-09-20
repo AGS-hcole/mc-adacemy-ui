@@ -1,4 +1,6 @@
-<div class="absolute inset-0 flex min-w-0 flex-col overflow-y-auto sm:overflow-hidden">
+<div
+    class="absolute inset-0 flex min-w-0 flex-col overflow-y-auto sm:overflow-hidden"
+>
     <div
         class="bg-card relative flex flex-0 flex-col border-b px-6 py-8 sm:flex-row sm:items-center sm:justify-between md:px-8 dark:bg-transparent"
     >
@@ -38,7 +40,9 @@
                 matInput
                 [formControl]="searchInputControl"
                 [autocomplete]="'off'"
-                [placeholder]="'TRAINING_GROUPS.ADMIN.SEARCH_PLACEHOLDER' | transloco"
+                [placeholder]="
+                    'TRAINING_GROUPS.ADMIN.SEARCH_PLACEHOLDER' | transloco
+                "
             />
         </mat-form-field>
     </div>
@@ -46,15 +50,27 @@
     <div class="flex flex-auto border-t sm:overflow-hidden">
         <div class="flex flex-auto flex-col sm:overflow-y-auto">
             @if (loading) {
-                <div class="grid grid-cols-1 gap-4 p-6 md:grid-cols-2 xl:grid-cols-3">
+                <div
+                    class="grid grid-cols-1 gap-4 p-6 md:grid-cols-2 xl:grid-cols-3"
+                >
                     @for (item of [1, 2, 3, 4, 5, 6]; track item) {
                         <div class="bg-card rounded-2xl border p-6 shadow-sm">
-                            <div class="h-6 w-2/3 animate-pulse rounded bg-gray-200"></div>
-                            <div class="mt-4 h-4 w-1/2 animate-pulse rounded bg-gray-200"></div>
+                            <div
+                                class="h-6 w-2/3 animate-pulse rounded bg-gray-200"
+                            ></div>
+                            <div
+                                class="mt-4 h-4 w-1/2 animate-pulse rounded bg-gray-200"
+                            ></div>
                             <div class="mt-6 space-y-2">
-                                <div class="h-4 animate-pulse rounded bg-gray-200"></div>
-                                <div class="h-4 animate-pulse rounded bg-gray-200"></div>
-                                <div class="h-4 w-3/4 animate-pulse rounded bg-gray-200"></div>
+                                <div
+                                    class="h-4 animate-pulse rounded bg-gray-200"
+                                ></div>
+                                <div
+                                    class="h-4 animate-pulse rounded bg-gray-200"
+                                ></div>
+                                <div
+                                    class="h-4 w-3/4 animate-pulse rounded bg-gray-200"
+                                ></div>
                             </div>
                         </div>
                     }
@@ -73,7 +89,10 @@
                         {{ 'TRAINING_GROUPS.ADMIN.EMPTY_TITLE' | transloco }}
                     </div>
                     <div class="text-secondary mt-2 max-w-2xl text-md">
-                        {{ 'TRAINING_GROUPS.ADMIN.EMPTY_DESCRIPTION' | transloco }}
+                        {{
+                            'TRAINING_GROUPS.ADMIN.EMPTY_DESCRIPTION'
+                                | transloco
+                        }}
                     </div>
                     <button
                         class="mt-6"
@@ -81,20 +100,24 @@
                         [color]="'primary'"
                         (click)="createTrainingGroup()"
                     >
-                        <mat-icon [svgIcon]="'heroicons_outline:plus'"></mat-icon>
+                        <mat-icon
+                            [svgIcon]="'heroicons_outline:plus'"
+                        ></mat-icon>
                         <span class="ml-2">
                             {{ 'TRAINING_GROUPS.ADMIN.CREATE' | transloco }}
                         </span>
                     </button>
                 </div>
             } @else {
-                <div class="grid grid-cols-1 gap-4 p-6 md:grid-cols-2 xl:grid-cols-3">
+                <div
+                    class="grid grid-cols-1 gap-4 p-6 md:grid-cols-2 xl:grid-cols-3"
+                >
                     @for (
                         trainingGroup of filteredTrainingGroups;
                         track trackByFn($index, trainingGroup)
                     ) {
                         <div
-                            class="bg-card group rounded-2xl border p-6 shadow-sm transition hover:shadow-md"
+                            class="group bg-card rounded-2xl border p-6 shadow-sm transition hover:shadow-md"
                             [ngClass]="{
                                 'border-gray-200 opacity-75 dark:border-gray-700':
                                     !trainingGroup.isActive,
@@ -110,7 +133,9 @@
                                     >
                                         <mat-icon
                                             class="icon-size-4"
-                                            [svgIcon]="'heroicons_outline:map-pin'"
+                                            [svgIcon]="
+                                                'heroicons_outline:map-pin'
+                                            "
                                         ></mat-icon>
                                         <span class="truncate">{{
                                             getSiteName(trainingGroup)
@@ -142,17 +167,25 @@
                                         (click)="$event.stopPropagation()"
                                     >
                                         <mat-icon
-                                            [svgIcon]="'heroicons_outline:ellipsis-vertical'"
+                                            [svgIcon]="
+                                                'heroicons_outline:ellipsis-vertical'
+                                            "
                                         ></mat-icon>
                                     </button>
 
                                     <mat-menu #actionsMenu="matMenu">
                                         <button
                                             mat-menu-item
-                                            (click)="editTrainingGroup(trainingGroup.id)"
+                                            (click)="
+                                                editTrainingGroup(
+                                                    trainingGroup.id
+                                                )
+                                            "
                                         >
                                             <mat-icon
-                                                [svgIcon]="'heroicons_outline:pencil'"
+                                                [svgIcon]="
+                                                    'heroicons_outline:pencil'
+                                                "
                                             ></mat-icon>
                                             <span>{{
                                                 'TRAINING_GROUPS.ADMIN.ACTIONS.EDIT'
@@ -161,10 +194,16 @@
                                         </button>
                                         <button
                                             mat-menu-item
-                                            (click)="deleteTrainingGroup(trainingGroup)"
+                                            (click)="
+                                                deleteTrainingGroup(
+                                                    trainingGroup
+                                                )
+                                            "
                                         >
                                             <mat-icon
-                                                [svgIcon]="'heroicons_outline:trash'"
+                                                [svgIcon]="
+                                                    'heroicons_outline:trash'
+                                                "
                                             ></mat-icon>
                                             <span>{{
                                                 'TRAINING_GROUPS.ADMIN.ACTIONS.DELETE'
@@ -176,32 +215,59 @@
                             </div>
 
                             <div class="mt-5 grid grid-cols-2 gap-3">
-                                <div class="rounded-xl bg-gray-50 px-4 py-3 dark:bg-gray-800">
-                                    <div class="text-secondary text-xs font-medium uppercase">
-                                        {{ 'TRAINING_GROUPS.ADMIN.PLAYERS' | transloco }}
+                                <div
+                                    class="rounded-xl bg-gray-50 px-4 py-3 dark:bg-gray-800"
+                                >
+                                    <div
+                                        class="text-secondary text-xs font-medium uppercase"
+                                    >
+                                        {{
+                                            'TRAINING_GROUPS.ADMIN.PLAYERS'
+                                                | transloco
+                                        }}
                                     </div>
                                     <div class="mt-1 text-lg font-semibold">
-                                        {{ getMembersCountLabel(trainingGroup) }}
+                                        {{
+                                            getMembersCountLabel(trainingGroup)
+                                        }}
                                     </div>
                                 </div>
 
-                                <div class="rounded-xl bg-gray-50 px-4 py-3 dark:bg-gray-800">
-                                    <div class="text-secondary text-xs font-medium uppercase">
-                                        {{ 'TRAINING_GROUPS.ADMIN.SCHEDULES' | transloco }}
+                                <div
+                                    class="rounded-xl bg-gray-50 px-4 py-3 dark:bg-gray-800"
+                                >
+                                    <div
+                                        class="text-secondary text-xs font-medium uppercase"
+                                    >
+                                        {{
+                                            'TRAINING_GROUPS.ADMIN.SCHEDULES'
+                                                | transloco
+                                        }}
                                     </div>
                                     <div class="mt-1 text-lg font-semibold">
-                                        {{ getSchedulesCountLabel(trainingGroup) }}
+                                        {{
+                                            getSchedulesCountLabel(
+                                                trainingGroup
+                                            )
+                                        }}
                                     </div>
                                 </div>
                             </div>
 
                             <div class="mt-5">
-                                <div class="text-secondary text-xs font-medium uppercase">
-                                    {{ 'TRAINING_GROUPS.ADMIN.SCHEDULE_SUMMARY' | transloco }}
+                                <div
+                                    class="text-secondary text-xs font-medium uppercase"
+                                >
+                                    {{
+                                        'TRAINING_GROUPS.ADMIN.SCHEDULE_SUMMARY'
+                                            | transloco
+                                    }}
                                 </div>
 
                                 @if (trainingGroup.schedules.length === 0) {
-                                    <div class="text-secondary mt-3 text-sm italic">
+                                    <div
+                                        class="text-secondary mt-3 text-sm italic"
+                                    >
                                         {{
                                             'TRAINING_GROUPS.ADMIN.NO_SCHEDULES'
                                                 | transloco
@@ -210,7 +276,9 @@
                                 } @else {
                                     <div class="mt-3 space-y-2">
                                         @for (
-                                            schedule of getSortedSchedules(trainingGroup);
+                                            schedule of getSortedSchedules(
+                                                trainingGroup
+                                            );
                                             track schedule.id
                                         ) {
                                             <div
@@ -232,10 +300,14 @@
                                 }
                             </div>
 
-                            <div class="mt-6 flex items-center justify-end gap-2">
+                            <div
+                                class="mt-6 flex items-center justify-end gap-2"
+                            >
                                 <button
                                     mat-stroked-button
-                                    (click)="editTrainingGroup(trainingGroup.id)"
+                                    (click)="
+                                        editTrainingGroup(trainingGroup.id)
+                                    "
                                 >
                                     {{
                                         'TRAINING_GROUPS.ADMIN.ACTIONS.EDIT'

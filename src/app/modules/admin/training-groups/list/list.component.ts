@@ -1,4 +1,4 @@
-import { NgClass, NgFor, NgIf } from '@angular/common';
+import { NgClass } from '@angular/common';
 import {
     ChangeDetectionStrategy,
     ChangeDetectorRef,
@@ -37,8 +37,6 @@ import { Subject, debounceTime, takeUntil } from 'rxjs';
     encapsulation: ViewEncapsulation.None,
     changeDetection: ChangeDetectionStrategy.OnPush,
     imports: [
-        NgIf,
-        NgFor,
         NgClass,
         FormsModule,
         ReactiveFormsModule,
@@ -80,9 +78,11 @@ export class AdminTrainingGroupsListComponent implements OnInit, OnDestroy {
 
     ngOnInit(): void {
         this.trainingGroups =
-            (this._activatedRoute.snapshot.data['trainingGroups'] as TrainingGroup[]) ||
-            [];
-        this.sites = (this._activatedRoute.snapshot.data['sites'] as Site[]) || [];
+            (this._activatedRoute.snapshot.data[
+                'trainingGroups'
+            ] as TrainingGroup[]) || [];
+        this.sites =
+            (this._activatedRoute.snapshot.data['sites'] as Site[]) || [];
         this.loading = false;
 
         this.searchInputControl.valueChanges
@@ -100,7 +100,9 @@ export class AdminTrainingGroupsListComponent implements OnInit, OnDestroy {
     }
 
     get filteredTrainingGroups(): TrainingGroup[] {
-        const search = (this.searchInputControl.value || '').trim().toLowerCase();
+        const search = (this.searchInputControl.value || '')
+            .trim()
+            .toLowerCase();
         const groups = [...this.trainingGroups].sort((first, second) =>
             first.name.localeCompare(second.name, 'fr', { sensitivity: 'base' })
         );
