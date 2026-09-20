@@ -243,6 +243,7 @@
 
             <!-- Top Users Mini List -->
             <div
+                *ngIf="!hideTopBottomUsers"
                 class="bg-card rounded-lg p-6 shadow sm:col-span-2 lg:col-span-3"
             >
                 <h3 class="mb-4 text-lg font-semibold">
@@ -309,6 +310,7 @@
 
             <!-- Bottom Users Mini List (hidden on xs) -->
             <div
+                *ngIf="!hideTopBottomUsers"
                 class="bg-card hidden rounded-lg p-6 shadow sm:col-span-2 sm:block lg:col-span-3"
             >
                 <h3 class="mb-4 text-lg font-semibold">
