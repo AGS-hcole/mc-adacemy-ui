@@ -713,10 +713,12 @@
     },
     "REPORTS": {
         "TITLE": "Reports",
-        "DESCRIPTION": "Training sessions analytics and statistics",
+        "DESCRIPTION": "Analytics and statistics for sessions, residence and transports",
         "CHART": {
             "CONTRACT_SHARE": "Contract vs Non-Contract Sessions",
-            "SESSIONS_OVER_TIME": "Sessions Over Time"
+            "SESSIONS_OVER_TIME": "Sessions Over Time",
+            "RESIDENCE_OVER_TIME": "Residence Over Time",
+            "TRANSPORTS_OVER_TIME": "Transports Over Time"
         },
         "ERROR": {
             "TITLE": "Failed to load reports data"
@@ -770,6 +772,42 @@
         },
         "SESSIONS": {
             "TITLE": "Sessions"
+        },
+        "RESIDENCE": {
+            "TITLE": "Residence",
+            "EMPTY": "No residence booking found for the selected period",
+            "KPI": {
+                "NIGHTS": "Total Nights",
+                "PLANNED": "Planned",
+                "CANCELED": "Canceled",
+                "UNIQUE_USERS": "Unique Users"
+            },
+            "TABLE": {
+                "TITLE": "Latest Bookings",
+                "USER": "Student",
+                "MANOR": "Residence",
+                "OVER_CAPACITY": "Over Capacity",
+                "CREATED_BY_ADMIN": "Created by admin"
+            }
+        },
+        "TRANSPORTS": {
+            "TITLE": "Transports",
+            "EMPTY": "No transport booking found for the selected period",
+            "KPI": {
+                "BOOKINGS": "Bookings",
+                "CONFIRMED": "Confirmed",
+                "CANCELLED": "Cancelled",
+                "UNIQUE_USERS": "Unique Users",
+                "OCCURRENCES": "Unique Trips"
+            },
+            "TABLE": {
+                "TITLE": "Latest Bookings",
+                "DEPARTURE": "Departure",
+                "USER": "Student",
+                "TRANSPORT": "Transport",
+                "ROUTE": "Route",
+                "SEATS": "Seats"
+            }
         },
         "FILTERS": {
             "PERIOD": "Period",

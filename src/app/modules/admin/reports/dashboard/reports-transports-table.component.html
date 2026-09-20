@@ -1,0 +1,132 @@
+<div class="bg-card rounded-lg shadow">
+    <div class="p-6">
+        <div class="mb-4 flex items-center justify-between">
+            <h3 class="text-lg font-semibold">
+                {{ 'REPORTS.TRANSPORTS.TABLE.TITLE' | transloco }}
+            </h3>
+
+            <div class="flex items-center gap-2">
+                <button
+                    mat-icon-button
+                    (click)="exportCsv()"
+                    [disabled]="!transportsList || transportsList.items.length === 0"
+                    [matTooltip]="'REPORTS.ACTIONS.EXPORT_CSV' | transloco"
+                    class="text-gray-400 hover:text-gray-600"
+                >
+                    <mat-icon
+                        class="icon-size-5"
+                        svgIcon="heroicons_solid:document-arrow-down"
+                    ></mat-icon>
+                </button>
+                <button
+                    mat-icon-button
+                    (click)="exportJson()"
+                    [disabled]="!transportsList || transportsList.items.length === 0"
+                    [matTooltip]="'REPORTS.ACTIONS.EXPORT_JSON' | transloco"
+                    class="text-gray-400 hover:text-gray-600"
+                >
+                    <mat-icon
+                        class="icon-size-5"
+                        svgIcon="heroicons_solid:code-bracket"
+                    ></mat-icon>
+                </button>
+            </div>
+        </div>
+
+        <div *ngIf="loading" class="space-y-4">
+            <div class="h-8 animate-pulse rounded bg-gray-200"></div>
+            <div class="h-8 animate-pulse rounded bg-gray-200"></div>
+            <div class="h-8 animate-pulse rounded bg-gray-200"></div>
+            <div class="h-8 animate-pulse rounded bg-gray-200"></div>
+        </div>
+
+        <div
+            *ngIf="!loading && transportsList && transportsList.items.length > 0"
+            class="overflow-x-auto"
+        >
+            <table mat-table [dataSource]="transportsList.items" class="w-full">
+                <ng-container matColumnDef="departureAt">
+                    <th mat-header-cell *matHeaderCellDef class="font-semibold">
+                        {{ 'REPORTS.TRANSPORTS.TABLE.DEPARTURE' | transloco }}
+                    </th>
+                    <td mat-cell *matCellDef="let element">
+                        {{ formatDate(element.departureAt) }}
+                    </td>
+                </ng-container>
+
+                <ng-container matColumnDef="user">
+                    <th mat-header-cell *matHeaderCellDef class="font-semibold">
+                        {{ 'REPORTS.TRANSPORTS.TABLE.USER' | transloco }}
+                    </th>
+                    <td mat-cell *matCellDef="let element">
+                        {{ element.user.firstname }} {{ element.user.lastname }}
+                    </td>
+                </ng-container>
+
+                <ng-container matColumnDef="template">
+                    <th mat-header-cell *matHeaderCellDef class="font-semibold">
+                        {{ 'REPORTS.TRANSPORTS.TABLE.TRANSPORT' | transloco }}
+                    </th>
+                    <td mat-cell *matCellDef="let element">
+                        {{ element.template?.name || '-' }}
+                    </td>
+                </ng-container>
+
+                <ng-container matColumnDef="route">
+                    <th mat-header-cell *matHeaderCellDef class="font-semibold">
+                        {{ 'REPORTS.TRANSPORTS.TABLE.ROUTE' | transloco }}
+                    </th>
+                    <td mat-cell *matCellDef="let element">
+                        {{
+                            element.template
+                                ? element.template.fromLabel + ' → ' + element.template.toLabel
+                                : '-'
+                        }}
+                    </td>
+                </ng-container>
+
+                <ng-container matColumnDef="status">
+                    <th mat-header-cell *matHeaderCellDef class="font-semibold">
+                        {{ 'REPORTS.TABLE.STATUS' | transloco }}
+                    </th>
+                    <td mat-cell *matCellDef="let element">
+                        <span
+                            class="rounded-full px-2 py-1 text-xs font-medium"
+                            [ngClass]="getStatusClass(element.status)"
+                        >
+                            {{ getStatusLabel(element.status) }}
+                        </span>
+                    </td>
+                </ng-container>
+
+                <ng-container matColumnDef="seats">
+                    <th mat-header-cell *matHeaderCellDef class="font-semibold">
+                        {{ 'REPORTS.TRANSPORTS.TABLE.SEATS' | transloco }}
+                    </th>
+                    <td mat-cell *matCellDef="let element">
+                        {{ element.seats }}
+                    </td>
+                </ng-container>
+
+                <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+                <tr
+                    mat-row
+                    *matRowDef="let row; columns: displayedColumns"
+                ></tr>
+            </table>
+        </div>
+
+        <div
+            *ngIf="!loading && (!transportsList || transportsList.items.length === 0)"
+            class="text-secondary flex items-center justify-center py-16"
+        >
+            <div class="text-center">
+                <mat-icon
+                    class="mb-4 icon-size-12"
+                    svgIcon="heroicons_outline:truck"
+                ></mat-icon>
+                <p>{{ 'REPORTS.TRANSPORTS.EMPTY' | transloco }}</p>
+            </div>
+        </div>
+    </div>
+</div>

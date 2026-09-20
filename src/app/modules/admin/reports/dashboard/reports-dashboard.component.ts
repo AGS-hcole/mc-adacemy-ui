@@ -13,21 +13,30 @@ import { MatIconModule } from '@angular/material/icon';
 import { PageEvent } from '@angular/material/paginator';
 import { ActivatedRoute, Router } from '@angular/router';
 import { TranslocoModule } from '@jsverse/transloco';
-import { ReportsExportService } from 'app/core/reports/reports-export.service';
 import { ReportsStateService } from 'app/core/reports/reports-state.service';
 import {
     RatingsSummaryDto,
+    ResidenceListDto,
+    ResidenceSummaryDto,
+    ResidenceTimeseriesDto,
     ReportsFilters,
     SessionsListDto,
     SessionsSummaryDto,
     SessionsTimeseriesDto,
+    TransportsListDto,
+    TransportsSummaryDto,
+    TransportsTimeseriesDto,
 } from 'app/core/reports/reports.types';
 import { Subject, takeUntil } from 'rxjs';
 import { ReportsContractShareChartComponent } from './reports-contract-share-chart.component';
 import { ReportsFiltersComponent } from './reports-filters.component';
 import { ReportsKpiCardsComponent } from './reports-kpi-cards.component';
 import { ReportsRatingsSectionComponent } from './reports-ratings-section.component';
+import { ReportsResidenceTableComponent } from './reports-residence-table.component';
+import { ReportsResidenceTimeseriesChartComponent } from './reports-residence-timeseries-chart.component';
 import { ReportsTableComponent } from './reports-table.component';
+import { ReportsTransportsTableComponent } from './reports-transports-table.component';
+import { ReportsTransportsTimeseriesChartComponent } from './reports-transports-timeseries-chart.component';
 import { ReportsTimeseriesChartComponent } from './reports-timeseries-chart.component';
 
 @Component({
@@ -44,7 +53,11 @@ import { ReportsTimeseriesChartComponent } from './reports-timeseries-chart.comp
         ReportsTimeseriesChartComponent,
         ReportsContractShareChartComponent,
         ReportsRatingsSectionComponent,
+        ReportsResidenceTableComponent,
+        ReportsResidenceTimeseriesChartComponent,
         ReportsTableComponent,
+        ReportsTransportsTableComponent,
+        ReportsTransportsTimeseriesChartComponent,
     ],
 })
 export class ReportsDashboardComponent implements OnInit, OnChanges, OnDestroy {
@@ -55,6 +68,12 @@ export class ReportsDashboardComponent implements OnInit, OnChanges, OnDestroy {
     timeseries: SessionsTimeseriesDto | null = null;
     sessionsList: SessionsListDto | null = null;
     ratingsSummary: RatingsSummaryDto | null = null;
+    residenceSummary: ResidenceSummaryDto | null = null;
+    residenceTimeseries: ResidenceTimeseriesDto | null = null;
+    residenceList: ResidenceListDto | null = null;
+    transportsSummary: TransportsSummaryDto | null = null;
+    transportsTimeseries: TransportsTimeseriesDto | null = null;
+    transportsList: TransportsListDto | null = null;
     loading = false;
     error: string | null = null;
 
@@ -64,7 +83,6 @@ export class ReportsDashboardComponent implements OnInit, OnChanges, OnDestroy {
         private _route: ActivatedRoute,
         private _router: Router,
         private _state: ReportsStateService,
-        private _export: ReportsExportService,
         private _changeDetectorRef: ChangeDetectorRef
     ) {}
 
@@ -124,6 +142,48 @@ export class ReportsDashboardComponent implements OnInit, OnChanges, OnDestroy {
                 this.ratingsSummary = ratingsSummary;
 
                 // Mark for check
+                this._changeDetectorRef.markForCheck();
+            });
+
+        this._state.residenceSummary$
+            .pipe(takeUntil(this._unsubscribeAll))
+            .subscribe((residenceSummary) => {
+                this.residenceSummary = residenceSummary;
+                this._changeDetectorRef.markForCheck();
+            });
+
+        this._state.residenceTimeseries$
+            .pipe(takeUntil(this._unsubscribeAll))
+            .subscribe((residenceTimeseries) => {
+                this.residenceTimeseries = residenceTimeseries;
+                this._changeDetectorRef.markForCheck();
+            });
+
+        this._state.residenceList$
+            .pipe(takeUntil(this._unsubscribeAll))
+            .subscribe((residenceList) => {
+                this.residenceList = residenceList;
+                this._changeDetectorRef.markForCheck();
+            });
+
+        this._state.transportsSummary$
+            .pipe(takeUntil(this._unsubscribeAll))
+            .subscribe((transportsSummary) => {
+                this.transportsSummary = transportsSummary;
+                this._changeDetectorRef.markForCheck();
+            });
+
+        this._state.transportsTimeseries$
+            .pipe(takeUntil(this._unsubscribeAll))
+            .subscribe((transportsTimeseries) => {
+                this.transportsTimeseries = transportsTimeseries;
+                this._changeDetectorRef.markForCheck();
+            });
+
+        this._state.transportsList$
+            .pipe(takeUntil(this._unsubscribeAll))
+            .subscribe((transportsList) => {
+                this.transportsList = transportsList;
                 this._changeDetectorRef.markForCheck();
             });
 

@@ -88,6 +88,300 @@
             </reports-table>
         </div>
 
+        <!-- Residence Section -->
+        <div class="flex flex-col space-y-6">
+            <h2 class="text-2xl font-bold">
+                {{ 'REPORTS.RESIDENCE.TITLE' | transloco }}
+            </h2>
+
+            <div class="grid grid-cols-1 gap-6 md:grid-cols-2 lg:grid-cols-4">
+                <div class="bg-card rounded-lg p-6 shadow">
+                    <div class="flex items-center justify-between">
+                        <div>
+                            <div class="text-secondary text-sm font-medium">
+                                {{ 'REPORTS.RESIDENCE.KPI.NIGHTS' | transloco }}
+                            </div>
+                            <div
+                                class="mt-2 text-3xl font-bold"
+                                *ngIf="!loading && residenceSummary"
+                            >
+                                {{ residenceSummary.totals.nights }}
+                            </div>
+                            <div
+                                class="mt-2 h-9 animate-pulse rounded bg-gray-200"
+                                *ngIf="loading"
+                            ></div>
+                        </div>
+                        <div
+                            class="flex h-12 w-12 items-center justify-center rounded-full bg-primary-100"
+                        >
+                            <mat-icon
+                                class="text-primary icon-size-6"
+                                svgIcon="heroicons_solid:home-modern"
+                            ></mat-icon>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="bg-card rounded-lg p-6 shadow">
+                    <div class="flex items-center justify-between">
+                        <div>
+                            <div class="text-secondary text-sm font-medium">
+                                {{ 'REPORTS.RESIDENCE.KPI.PLANNED' | transloco }}
+                            </div>
+                            <div
+                                class="mt-2 text-3xl font-bold"
+                                *ngIf="!loading && residenceSummary"
+                            >
+                                {{ residenceSummary.totals.planned }}
+                            </div>
+                            <div
+                                class="mt-2 h-9 animate-pulse rounded bg-gray-200"
+                                *ngIf="loading"
+                            ></div>
+                        </div>
+                        <div
+                            class="flex h-12 w-12 items-center justify-center rounded-full bg-blue-100"
+                        >
+                            <mat-icon
+                                class="text-blue-600 icon-size-6"
+                                svgIcon="heroicons_solid:calendar-days"
+                            ></mat-icon>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="bg-card rounded-lg p-6 shadow">
+                    <div class="flex items-center justify-between">
+                        <div>
+                            <div class="text-secondary text-sm font-medium">
+                                {{ 'REPORTS.RESIDENCE.KPI.CANCELED' | transloco }}
+                            </div>
+                            <div
+                                class="mt-2 text-3xl font-bold"
+                                *ngIf="!loading && residenceSummary"
+                            >
+                                {{ residenceSummary.totals.canceled }}
+                            </div>
+                            <div
+                                class="mt-2 h-9 animate-pulse rounded bg-gray-200"
+                                *ngIf="loading"
+                            ></div>
+                        </div>
+                        <div
+                            class="flex h-12 w-12 items-center justify-center rounded-full bg-red-100"
+                        >
+                            <mat-icon
+                                class="text-red-600 icon-size-6"
+                                svgIcon="heroicons_solid:x-circle"
+                            ></mat-icon>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="bg-card rounded-lg p-6 shadow">
+                    <div class="flex items-center justify-between">
+                        <div>
+                            <div class="text-secondary text-sm font-medium">
+                                {{ 'REPORTS.RESIDENCE.KPI.UNIQUE_USERS' | transloco }}
+                            </div>
+                            <div
+                                class="mt-2 text-3xl font-bold"
+                                *ngIf="!loading && residenceSummary"
+                            >
+                                {{ residenceSummary.totals.uniqueUsers }}
+                            </div>
+                            <div
+                                class="mt-2 h-9 animate-pulse rounded bg-gray-200"
+                                *ngIf="loading"
+                            ></div>
+                        </div>
+                        <div
+                            class="flex h-12 w-12 items-center justify-center rounded-full bg-green-100"
+                        >
+                            <mat-icon
+                                class="text-green-600 icon-size-6"
+                                svgIcon="heroicons_solid:users"
+                            ></mat-icon>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <reports-residence-timeseries-chart
+                [timeseries]="residenceTimeseries"
+                [loading]="loading"
+            >
+            </reports-residence-timeseries-chart>
+
+            <reports-residence-table
+                [residenceList]="residenceList"
+                [loading]="loading"
+            >
+            </reports-residence-table>
+        </div>
+
+        <!-- Transports Section -->
+        <div class="flex flex-col space-y-6">
+            <h2 class="text-2xl font-bold">
+                {{ 'REPORTS.TRANSPORTS.TITLE' | transloco }}
+            </h2>
+
+            <div class="grid grid-cols-1 gap-6 md:grid-cols-2 lg:grid-cols-5">
+                <div class="bg-card rounded-lg p-6 shadow">
+                    <div class="flex items-center justify-between">
+                        <div>
+                            <div class="text-secondary text-sm font-medium">
+                                {{ 'REPORTS.TRANSPORTS.KPI.BOOKINGS' | transloco }}
+                            </div>
+                            <div
+                                class="mt-2 text-3xl font-bold"
+                                *ngIf="!loading && transportsSummary"
+                            >
+                                {{ transportsSummary.totals.bookings }}
+                            </div>
+                            <div
+                                class="mt-2 h-9 animate-pulse rounded bg-gray-200"
+                                *ngIf="loading"
+                            ></div>
+                        </div>
+                        <div
+                            class="flex h-12 w-12 items-center justify-center rounded-full bg-primary-100"
+                        >
+                            <mat-icon
+                                class="text-primary icon-size-6"
+                                svgIcon="heroicons_solid:calendar"
+                            ></mat-icon>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="bg-card rounded-lg p-6 shadow">
+                    <div class="flex items-center justify-between">
+                        <div>
+                            <div class="text-secondary text-sm font-medium">
+                                {{ 'REPORTS.TRANSPORTS.KPI.CONFIRMED' | transloco }}
+                            </div>
+                            <div
+                                class="mt-2 text-3xl font-bold"
+                                *ngIf="!loading && transportsSummary"
+                            >
+                                {{ transportsSummary.totals.confirmed }}
+                            </div>
+                            <div
+                                class="mt-2 h-9 animate-pulse rounded bg-gray-200"
+                                *ngIf="loading"
+                            ></div>
+                        </div>
+                        <div
+                            class="flex h-12 w-12 items-center justify-center rounded-full bg-green-100"
+                        >
+                            <mat-icon
+                                class="text-green-600 icon-size-6"
+                                svgIcon="heroicons_solid:check-circle"
+                            ></mat-icon>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="bg-card rounded-lg p-6 shadow">
+                    <div class="flex items-center justify-between">
+                        <div>
+                            <div class="text-secondary text-sm font-medium">
+                                {{ 'REPORTS.TRANSPORTS.KPI.CANCELLED' | transloco }}
+                            </div>
+                            <div
+                                class="mt-2 text-3xl font-bold"
+                                *ngIf="!loading && transportsSummary"
+                            >
+                                {{ transportsSummary.totals.cancelled }}
+                            </div>
+                            <div
+                                class="mt-2 h-9 animate-pulse rounded bg-gray-200"
+                                *ngIf="loading"
+                            ></div>
+                        </div>
+                        <div
+                            class="flex h-12 w-12 items-center justify-center rounded-full bg-red-100"
+                        >
+                            <mat-icon
+                                class="text-red-600 icon-size-6"
+                                svgIcon="heroicons_solid:x-circle"
+                            ></mat-icon>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="bg-card rounded-lg p-6 shadow">
+                    <div class="flex items-center justify-between">
+                        <div>
+                            <div class="text-secondary text-sm font-medium">
+                                {{ 'REPORTS.TRANSPORTS.KPI.UNIQUE_USERS' | transloco }}
+                            </div>
+                            <div
+                                class="mt-2 text-3xl font-bold"
+                                *ngIf="!loading && transportsSummary"
+                            >
+                                {{ transportsSummary.totals.uniqueUsers }}
+                            </div>
+                            <div
+                                class="mt-2 h-9 animate-pulse rounded bg-gray-200"
+                                *ngIf="loading"
+                            ></div>
+                        </div>
+                        <div
+                            class="flex h-12 w-12 items-center justify-center rounded-full bg-blue-100"
+                        >
+                            <mat-icon
+                                class="text-blue-600 icon-size-6"
+                                svgIcon="heroicons_solid:users"
+                            ></mat-icon>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="bg-card rounded-lg p-6 shadow">
+                    <div class="flex items-center justify-between">
+                        <div>
+                            <div class="text-secondary text-sm font-medium">
+                                {{ 'REPORTS.TRANSPORTS.KPI.OCCURRENCES' | transloco }}
+                            </div>
+                            <div
+                                class="mt-2 text-3xl font-bold"
+                                *ngIf="!loading && transportsSummary"
+                            >
+                                {{ transportsSummary.totals.uniqueOccurrences }}
+                            </div>
+                            <div
+                                class="mt-2 h-9 animate-pulse rounded bg-gray-200"
+                                *ngIf="loading"
+                            ></div>
+                        </div>
+                        <div
+                            class="flex h-12 w-12 items-center justify-center rounded-full bg-amber-100"
+                        >
+                            <mat-icon
+                                class="text-amber-600 icon-size-6"
+                                svgIcon="heroicons_solid:truck"
+                            ></mat-icon>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <reports-transports-timeseries-chart
+                [timeseries]="transportsTimeseries"
+                [loading]="loading"
+            >
+            </reports-transports-timeseries-chart>
+
+            <reports-transports-table
+                [transportsList]="transportsList"
+                [loading]="loading"
+            >
+            </reports-transports-table>
+        </div>
+
         <!-- Ratings Section -->
         <reports-ratings-section
             [ratingsSummary]="ratingsSummary"

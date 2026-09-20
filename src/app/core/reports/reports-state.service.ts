@@ -7,10 +7,16 @@ import {
     ContractScope,
     PeriodPreset,
     RatingsSummaryDto,
+    ResidenceListDto,
+    ResidenceSummaryDto,
+    ResidenceTimeseriesDto,
     ReportsFilters,
     SessionsListDto,
     SessionsSummaryDto,
     SessionsTimeseriesDto,
+    TransportsListDto,
+    TransportsSummaryDto,
+    TransportsTimeseriesDto,
 } from './reports.types';
 
 const STORAGE_KEY = 'mca-reports-filters-v1';
@@ -23,6 +29,12 @@ export class ReportsStateService {
     private _timeseries$ = new BehaviorSubject<SessionsTimeseriesDto | null>(null);
     private _sessionsList$ = new BehaviorSubject<SessionsListDto | null>(null);
     private _ratingsSummary$ = new BehaviorSubject<RatingsSummaryDto | null>(null);
+    private _residenceSummary$ = new BehaviorSubject<ResidenceSummaryDto | null>(null);
+    private _residenceTimeseries$ = new BehaviorSubject<ResidenceTimeseriesDto | null>(null);
+    private _residenceList$ = new BehaviorSubject<ResidenceListDto | null>(null);
+    private _transportsSummary$ = new BehaviorSubject<TransportsSummaryDto | null>(null);
+    private _transportsTimeseries$ = new BehaviorSubject<TransportsTimeseriesDto | null>(null);
+    private _transportsList$ = new BehaviorSubject<TransportsListDto | null>(null);
     private _loading$ = new BehaviorSubject<boolean>(false);
     private _error$ = new BehaviorSubject<string | null>(null);
     private _cancelRequests$ = new Subject<void>();
@@ -56,6 +68,30 @@ export class ReportsStateService {
 
     get ratingsSummary$(): Observable<RatingsSummaryDto | null> {
         return this._ratingsSummary$.asObservable();
+    }
+
+    get residenceSummary$(): Observable<ResidenceSummaryDto | null> {
+        return this._residenceSummary$.asObservable();
+    }
+
+    get residenceTimeseries$(): Observable<ResidenceTimeseriesDto | null> {
+        return this._residenceTimeseries$.asObservable();
+    }
+
+    get residenceList$(): Observable<ResidenceListDto | null> {
+        return this._residenceList$.asObservable();
+    }
+
+    get transportsSummary$(): Observable<TransportsSummaryDto | null> {
+        return this._transportsSummary$.asObservable();
+    }
+
+    get transportsTimeseries$(): Observable<TransportsTimeseriesDto | null> {
+        return this._transportsTimeseries$.asObservable();
+    }
+
+    get transportsList$(): Observable<TransportsListDto | null> {
+        return this._transportsList$.asObservable();
     }
 
     get loading$(): Observable<boolean> {
@@ -119,14 +155,37 @@ export class ReportsStateService {
                 filters.contractScope
             ),
             this._api.getRatingsSummary(filters.from, filters.to, filters.userId, filters.contractScope),
+            this._api.getResidenceSummary(filters.from, filters.to, filters.userId),
+            this._api.getResidenceTimeseries(filters.from, filters.to, filters.userId),
+            this._api.getResidenceList(filters.from, filters.to, 1, 10, filters.sort, filters.userId),
+            this._api.getTransportsSummary(filters.from, filters.to, filters.userId),
+            this._api.getTransportsTimeseries(filters.from, filters.to, filters.userId),
+            this._api.getTransportsList(filters.from, filters.to, 1, 10, filters.sort, filters.userId),
         ])
             .pipe(takeUntil(this._cancelRequests$))
             .subscribe({
-                next: ([summary, timeseries, sessionsList, ratingsSummary]) => {
+                next: ([
+                    summary,
+                    timeseries,
+                    sessionsList,
+                    ratingsSummary,
+                    residenceSummary,
+                    residenceTimeseries,
+                    residenceList,
+                    transportsSummary,
+                    transportsTimeseries,
+                    transportsList,
+                ]) => {
                     this._summary$.next(summary);
                     this._timeseries$.next(timeseries);
                     this._sessionsList$.next(sessionsList);
                     this._ratingsSummary$.next(ratingsSummary);
+                    this._residenceSummary$.next(residenceSummary);
+                    this._residenceTimeseries$.next(residenceTimeseries);
+                    this._residenceList$.next(residenceList);
+                    this._transportsSummary$.next(transportsSummary);
+                    this._transportsTimeseries$.next(transportsTimeseries);
+                    this._transportsList$.next(transportsList);
                     this._loading$.next(false);
                 },
                 error: (error) => {

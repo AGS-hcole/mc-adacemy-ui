@@ -1,6 +1,11 @@
 import { Injectable } from '@angular/core';
 import { DateTime } from 'luxon';
-import { PerUserRatingDto, SessionListItem } from './reports.types';
+import {
+    PerUserRatingDto,
+    ResidenceListItem,
+    SessionListItem,
+    TransportsListItem,
+} from './reports.types';
 
 @Injectable({ providedIn: 'root' })
 export class ReportsExportService {
@@ -30,6 +35,82 @@ export class ReportsExportService {
      * Export data as JSON
      */
     exportJson(items: SessionListItem[], filename: string = 'sessions-export'): void {
+        const jsonContent = JSON.stringify(items, null, 2);
+        this.downloadFile(jsonContent, `${filename}.json`, 'application/json;charset=utf-8;');
+    }
+
+    /**
+     * Export residence data as CSV
+     */
+    exportResidenceCsv(
+        items: ResidenceListItem[],
+        filename: string = 'residence-export'
+    ): void {
+        const headers = ['Date', 'User', 'Residence', 'Status', 'Over Capacity', 'Created By Admin'];
+        const rows = items.map((item) => [
+            this.formatDate(item.date),
+            this.escapeCsv(`${item.user.firstname} ${item.user.lastname}`),
+            this.escapeCsv(item.manor?.name || '-'),
+            item.status,
+            item.overCapacity ? 'Yes' : 'No',
+            item.createdByAdmin ? 'Yes' : 'No',
+        ]);
+
+        const csvContent = [
+            headers.join(','),
+            ...rows.map((row) => row.join(',')),
+        ].join('\n');
+
+        this.downloadFile(csvContent, `${filename}.csv`, 'text/csv;charset=utf-8;');
+    }
+
+    /**
+     * Export residence data as JSON
+     */
+    exportResidenceJson(
+        items: ResidenceListItem[],
+        filename: string = 'residence-export'
+    ): void {
+        const jsonContent = JSON.stringify(items, null, 2);
+        this.downloadFile(jsonContent, `${filename}.json`, 'application/json;charset=utf-8;');
+    }
+
+    /**
+     * Export transport data as CSV
+     */
+    exportTransportsCsv(
+        items: TransportsListItem[],
+        filename: string = 'transports-export'
+    ): void {
+        const headers = ['Departure', 'User', 'Transport', 'Route', 'Status', 'Seats'];
+        const rows = items.map((item) => [
+            this.formatDate(item.departureAt),
+            this.escapeCsv(`${item.user.firstname} ${item.user.lastname}`),
+            this.escapeCsv(item.template?.name || '-'),
+            this.escapeCsv(
+                item.template
+                    ? `${item.template.fromLabel} → ${item.template.toLabel}`
+                    : '-'
+            ),
+            item.status,
+            item.seats.toString(),
+        ]);
+
+        const csvContent = [
+            headers.join(','),
+            ...rows.map((row) => row.join(',')),
+        ].join('\n');
+
+        this.downloadFile(csvContent, `${filename}.csv`, 'text/csv;charset=utf-8;');
+    }
+
+    /**
+     * Export transport data as JSON
+     */
+    exportTransportsJson(
+        items: TransportsListItem[],
+        filename: string = 'transports-export'
+    ): void {
         const jsonContent = JSON.stringify(items, null, 2);
         this.downloadFile(jsonContent, `${filename}.json`, 'application/json;charset=utf-8;');
     }

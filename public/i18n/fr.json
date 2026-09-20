@@ -590,10 +590,12 @@
     },
     "REPORTS": {
         "TITLE": "Rapports",
-        "DESCRIPTION": "Analytique et statistiques des sessions de formation",
+        "DESCRIPTION": "Analytique et statistiques des sessions, résidences et transports",
         "CHART": {
             "CONTRACT_SHARE": "Sessions sous contrat vs hors contrat",
-            "SESSIONS_OVER_TIME": "Sessions dans le temps"
+            "SESSIONS_OVER_TIME": "Sessions dans le temps",
+            "RESIDENCE_OVER_TIME": "Résidences dans le temps",
+            "TRANSPORTS_OVER_TIME": "Transports dans le temps"
         },
         "ERROR": {
             "TITLE": "Échec du chargement des données de rapport"
@@ -648,6 +650,42 @@
         },
         "SESSIONS": {
             "TITLE": "Sessions"
+        },
+        "RESIDENCE": {
+            "TITLE": "Résidences",
+            "EMPTY": "Aucune réservation de résidence trouvée pour la période sélectionnée",
+            "KPI": {
+                "NIGHTS": "Total des nuitées",
+                "PLANNED": "Planifiées",
+                "CANCELED": "Annulées",
+                "UNIQUE_USERS": "Utilisateurs uniques"
+            },
+            "TABLE": {
+                "TITLE": "Dernières réservations",
+                "USER": "Élève",
+                "MANOR": "Résidence",
+                "OVER_CAPACITY": "Surcapacité",
+                "CREATED_BY_ADMIN": "Créée par admin"
+            }
+        },
+        "TRANSPORTS": {
+            "TITLE": "Transports",
+            "EMPTY": "Aucune réservation de transport trouvée pour la période sélectionnée",
+            "KPI": {
+                "BOOKINGS": "Réservations",
+                "CONFIRMED": "Confirmées",
+                "CANCELLED": "Annulées",
+                "UNIQUE_USERS": "Utilisateurs uniques",
+                "OCCURRENCES": "Trajets uniques"
+            },
+            "TABLE": {
+                "TITLE": "Dernières réservations",
+                "DEPARTURE": "Départ",
+                "USER": "Élève",
+                "TRANSPORT": "Transport",
+                "ROUTE": "Trajet",
+                "SEATS": "Places"
+            }
         },
         "FILTERS": {
             "PERIOD": "Période",
