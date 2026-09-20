@@ -4,7 +4,7 @@ import { MatButtonModule } from '@angular/material/button';
 import { MatIconModule } from '@angular/material/icon';
 import { MatTableModule } from '@angular/material/table';
 import { MatTooltipModule } from '@angular/material/tooltip';
-import { TranslocoModule } from '@jsverse/transloco';
+import { TranslocoModule, TranslocoService } from '@jsverse/transloco';
 import { ReportsExportService } from 'app/core/reports/reports-export.service';
 import {
     TransportBookingStatus,
@@ -39,7 +39,10 @@ export class ReportsTransportsTableComponent {
         'seats',
     ];
 
-    constructor(private _export: ReportsExportService) {}
+    constructor(
+        private _export: ReportsExportService,
+        private _translocoService: TranslocoService
+    ) {}
 
     formatDate(isoDate: string): string {
         return DateTime.fromISO(isoDate)
@@ -50,9 +53,13 @@ export class ReportsTransportsTableComponent {
     getStatusLabel(status: TransportBookingStatus): string {
         switch (status) {
             case 'CONFIRMED':
-                return 'Confirmée';
+                return this._translocoService.translate(
+                    'REPORTS.TRANSPORTS.STATUS.CONFIRMED'
+                );
             case 'CANCELLED':
-                return 'Annulée';
+                return this._translocoService.translate(
+                    'REPORTS.TRANSPORTS.STATUS.CANCELLED'
+                );
         }
     }
 

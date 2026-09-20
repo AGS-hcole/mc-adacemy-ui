@@ -1,4 +1,5 @@
 import { Injectable } from '@angular/core';
+import { TranslocoService } from '@jsverse/transloco';
 import { DateTime } from 'luxon';
 import {
     PerUserRatingDto,
@@ -9,6 +10,8 @@ import {
 
 @Injectable({ providedIn: 'root' })
 export class ReportsExportService {
+    constructor(private _translocoService: TranslocoService) {}
+
     /**
      * Export data as CSV
      */
@@ -51,9 +54,9 @@ export class ReportsExportService {
             this.formatDate(item.date),
             this.escapeCsv(`${item.user.firstname} ${item.user.lastname}`),
             this.escapeCsv(item.manor?.name || '-'),
-            item.status,
-            item.overCapacity ? 'Yes' : 'No',
-            item.createdByAdmin ? 'Yes' : 'No',
+            this.getResidenceStatusLabel(item.status),
+            this.getBooleanLabel(item.overCapacity),
+            this.getBooleanLabel(item.createdByAdmin),
         ]);
 
         const csvContent = [
@@ -92,7 +95,7 @@ export class ReportsExportService {
                     ? `${item.template.fromLabel} → ${item.template.toLabel}`
                     : '-'
             ),
-            item.status,
+            this.getTransportStatusLabel(item.status),
             item.seats.toString(),
         ]);
 
@@ -163,6 +166,26 @@ export class ReportsExportService {
             return `"${value.replace(/"/g, '""')}"`;
         }
         return value;
+    }
+
+    private getBooleanLabel(value: boolean): string {
+        return this._translocoService.translate(value ? 'COMMON.YES' : 'COMMON.NO');
+    }
+
+    private getResidenceStatusLabel(status: ResidenceListItem['status']): string {
+        return this._translocoService.translate(
+            status === 'PLANNED'
+                ? 'REPORTS.RESIDENCE.STATUS.PLANNED'
+                : 'REPORTS.RESIDENCE.STATUS.CANCELED'
+        );
+    }
+
+    private getTransportStatusLabel(status: TransportsListItem['status']): string {
+        return this._translocoService.translate(
+            status === 'CONFIRMED'
+                ? 'REPORTS.TRANSPORTS.STATUS.CONFIRMED'
+                : 'REPORTS.TRANSPORTS.STATUS.CANCELLED'
+        );
     }
 
     /**

@@ -764,6 +764,9 @@
                 "TITLE": "Student Rating Statistics"
             }
         },
+        "SERIES": {
+            "TOTAL": "Total"
+        },
         "KPI": {
             "TOTAL": "Total Sessions",
             "UNDER": "Under Contract",
@@ -788,6 +791,10 @@
                 "MANOR": "Residence",
                 "OVER_CAPACITY": "Over Capacity",
                 "CREATED_BY_ADMIN": "Created by admin"
+            },
+            "STATUS": {
+                "PLANNED": "Planned",
+                "CANCELED": "Canceled"
             }
         },
         "TRANSPORTS": {
@@ -807,6 +814,10 @@
                 "TRANSPORT": "Transport",
                 "ROUTE": "Route",
                 "SEATS": "Seats"
+            },
+            "STATUS": {
+                "CONFIRMED": "Confirmed",
+                "CANCELLED": "Cancelled"
             }
         },
         "FILTERS": {

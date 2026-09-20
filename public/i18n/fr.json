@@ -642,6 +642,9 @@
                 "TITLE": "Statistiques de notes de l'élève"
             }
         },
+        "SERIES": {
+            "TOTAL": "Total"
+        },
         "KPI": {
             "TOTAL": "Total des sessions",
             "UNDER": "Sous contrat",
@@ -666,6 +669,10 @@
                 "MANOR": "Résidence",
                 "OVER_CAPACITY": "Surcapacité",
                 "CREATED_BY_ADMIN": "Créée par admin"
+            },
+            "STATUS": {
+                "PLANNED": "Planifiée",
+                "CANCELED": "Annulée"
             }
         },
         "TRANSPORTS": {
@@ -685,6 +692,10 @@
                 "TRANSPORT": "Transport",
                 "ROUTE": "Trajet",
                 "SEATS": "Places"
+            },
+            "STATUS": {
+                "CONFIRMED": "Confirmée",
+                "CANCELLED": "Annulée"
             }
         },
         "FILTERS": {

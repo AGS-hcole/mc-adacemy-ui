@@ -4,7 +4,7 @@ import { MatButtonModule } from '@angular/material/button';
 import { MatIconModule } from '@angular/material/icon';
 import { MatTableModule } from '@angular/material/table';
 import { MatTooltipModule } from '@angular/material/tooltip';
-import { TranslocoModule } from '@jsverse/transloco';
+import { TranslocoModule, TranslocoService } from '@jsverse/transloco';
 import { ReportsExportService } from 'app/core/reports/reports-export.service';
 import {
     ResidenceListDto,
@@ -39,7 +39,10 @@ export class ReportsResidenceTableComponent {
         'createdByAdmin',
     ];
 
-    constructor(private _export: ReportsExportService) {}
+    constructor(
+        private _export: ReportsExportService,
+        private _translocoService: TranslocoService
+    ) {}
 
     formatDate(isoDate: string): string {
         return DateTime.fromISO(isoDate)
@@ -50,9 +53,13 @@ export class ReportsResidenceTableComponent {
     getStatusLabel(status: ResidenceStatus): string {
         switch (status) {
             case 'PLANNED':
-                return 'Planifiée';
+                return this._translocoService.translate(
+                    'REPORTS.RESIDENCE.STATUS.PLANNED'
+                );
             case 'CANCELED':
-                return 'Annulée';
+                return this._translocoService.translate(
+                    'REPORTS.RESIDENCE.STATUS.CANCELED'
+                );
         }
     }
 

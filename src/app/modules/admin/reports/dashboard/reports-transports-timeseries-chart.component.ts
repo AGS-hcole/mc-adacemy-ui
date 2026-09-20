@@ -7,7 +7,7 @@ import {
     ViewChild,
 } from '@angular/core';
 import { MatIconModule } from '@angular/material/icon';
-import { TranslocoModule } from '@jsverse/transloco';
+import { TranslocoModule, TranslocoService } from '@jsverse/transloco';
 import { TransportsTimeseriesDto } from 'app/core/reports/reports.types';
 import { DateTime } from 'luxon';
 import {
@@ -49,6 +49,8 @@ export class ReportsTransportsTimeseriesChartComponent implements OnChanges {
 
     chartOptions: Partial<TransportsChartOptions> = {};
 
+    constructor(private _translocoService: TranslocoService) {}
+
     ngOnChanges(changes: SimpleChanges): void {
         if (changes['timeseries'] && this.timeseries) {
             this.updateChart();
@@ -67,15 +69,19 @@ export class ReportsTransportsTimeseriesChartComponent implements OnChanges {
         this.chartOptions = {
             series: [
                 {
-                    name: 'Total',
+                    name: this._translocoService.translate('REPORTS.SERIES.TOTAL'),
                     data: this.timeseries.buckets.map((bucket) => bucket.total),
                 },
                 {
-                    name: 'Confirmées',
+                    name: this._translocoService.translate(
+                        'REPORTS.TRANSPORTS.STATUS.CONFIRMED'
+                    ),
                     data: this.timeseries.buckets.map((bucket) => bucket.confirmed),
                 },
                 {
-                    name: 'Annulées',
+                    name: this._translocoService.translate(
+                        'REPORTS.TRANSPORTS.STATUS.CANCELLED'
+                    ),
                     data: this.timeseries.buckets.map((bucket) => bucket.cancelled),
                 },
             ],
