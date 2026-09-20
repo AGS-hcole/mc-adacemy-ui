@@ -6,7 +6,10 @@ import { MatTableModule } from '@angular/material/table';
 import { MatTooltipModule } from '@angular/material/tooltip';
 import { TranslocoModule } from '@jsverse/transloco';
 import { ReportsExportService } from 'app/core/reports/reports-export.service';
-import { ResidenceListDto } from 'app/core/reports/reports.types';
+import {
+    ResidenceListDto,
+    ResidenceStatus,
+} from 'app/core/reports/reports.types';
 import { DateTime } from 'luxon';
 
 @Component({
@@ -44,14 +47,22 @@ export class ReportsResidenceTableComponent {
             .toLocaleString(DateTime.DATETIME_SHORT, { locale: 'fr-FR' });
     }
 
-    getStatusLabel(status: string): string {
-        return status === 'PLANNED' ? 'Planifiée' : 'Annulée';
+    getStatusLabel(status: ResidenceStatus): string {
+        switch (status) {
+            case 'PLANNED':
+                return 'Planifiée';
+            case 'CANCELED':
+                return 'Annulée';
+        }
     }
 
-    getStatusClass(status: string): string {
-        return status === 'PLANNED'
-            ? 'bg-blue-100 text-blue-800'
-            : 'bg-red-100 text-red-800';
+    getStatusClass(status: ResidenceStatus): string {
+        switch (status) {
+            case 'PLANNED':
+                return 'bg-blue-100 text-blue-800';
+            case 'CANCELED':
+                return 'bg-red-100 text-red-800';
+        }
     }
 
     exportCsv(): void {

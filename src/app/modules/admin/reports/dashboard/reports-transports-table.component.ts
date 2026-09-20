@@ -6,7 +6,10 @@ import { MatTableModule } from '@angular/material/table';
 import { MatTooltipModule } from '@angular/material/tooltip';
 import { TranslocoModule } from '@jsverse/transloco';
 import { ReportsExportService } from 'app/core/reports/reports-export.service';
-import { TransportsListDto } from 'app/core/reports/reports.types';
+import {
+    TransportBookingStatus,
+    TransportsListDto,
+} from 'app/core/reports/reports.types';
 import { DateTime } from 'luxon';
 
 @Component({
@@ -44,14 +47,22 @@ export class ReportsTransportsTableComponent {
             .toLocaleString(DateTime.DATETIME_SHORT, { locale: 'fr-FR' });
     }
 
-    getStatusLabel(status: string): string {
-        return status === 'CONFIRMED' ? 'Confirmée' : 'Annulée';
+    getStatusLabel(status: TransportBookingStatus): string {
+        switch (status) {
+            case 'CONFIRMED':
+                return 'Confirmée';
+            case 'CANCELLED':
+                return 'Annulée';
+        }
     }
 
-    getStatusClass(status: string): string {
-        return status === 'CONFIRMED'
-            ? 'bg-green-100 text-green-800'
-            : 'bg-red-100 text-red-800';
+    getStatusClass(status: TransportBookingStatus): string {
+        switch (status) {
+            case 'CONFIRMED':
+                return 'bg-green-100 text-green-800';
+            case 'CANCELLED':
+                return 'bg-red-100 text-red-800';
+        }
     }
 
     exportCsv(): void {
