@@ -44,6 +44,7 @@ export class ParentDashboardComponent implements OnInit, OnDestroy {
             .pipe(takeUntil(this._unsubscribeAll))
             .subscribe({
                 next: (data) => {
+                    console.log('Dashboard data received:', data);
                     this.children = data.children ?? [];
                     this.selectedChildId = this.children[0]?.child.id ?? null;
                     this.loading = false;
