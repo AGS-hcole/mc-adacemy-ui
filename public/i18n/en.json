@@ -959,7 +959,8 @@
     "COMMON": {
         "CANCEL": "Cancel",
         "SAVE": "Save",
-        "CONFIRM": "Confirm"
+        "CONFIRM": "Confirm",
+        "CLOSE": "Close"
     },
     "TRAINING_GROUPS": {
         "STATUS": {

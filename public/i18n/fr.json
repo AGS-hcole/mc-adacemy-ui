@@ -1014,7 +1014,8 @@
     "COMMON": {
         "CANCEL": "Annuler",
         "SAVE": "Enregistrer",
-        "CONFIRM": "Confirmer"
+        "CONFIRM": "Confirmer",
+        "CLOSE": "Fermer"
     },
     "TRANSPORTS": {
         "ADMIN": {
