@@ -21,11 +21,11 @@ export class TrainingGroupsService {
 
     constructor(private _httpClient: HttpClient) {}
 
-    get trainingGroup$(): Observable<TrainingGroup> {
+    get trainingGroup$(): Observable<TrainingGroup | null> {
         return this._trainingGroup.asObservable();
     }
 
-    get trainingGroups$(): Observable<TrainingGroup[]> {
+    get trainingGroups$(): Observable<TrainingGroup[] | null> {
         return this._trainingGroups.asObservable();
     }
 

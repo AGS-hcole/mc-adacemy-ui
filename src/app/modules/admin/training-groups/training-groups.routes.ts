@@ -30,14 +30,9 @@ const trainingGroupResolver = (
 ) => {
     const trainingGroupsService = inject(TrainingGroupsService);
     const router = inject(Router);
-    const id = route.paramMap.get('id');
-
-    if (!id) {
-        return router.parseUrl('/admin/groups');
-    }
 
     return trainingGroupsService
-        .getById(id)
+        .getById(route.paramMap.get('id')!)
         .pipe(catchError((error) => handleResolverError(error, state, router)));
 };
 
