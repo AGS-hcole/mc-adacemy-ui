@@ -1,0 +1,252 @@
+<div class="absolute inset-0 flex min-w-0 flex-col overflow-y-auto sm:overflow-hidden">
+    <div
+        class="bg-card relative flex flex-0 flex-col border-b px-6 py-8 sm:flex-row sm:items-center sm:justify-between md:px-8 dark:bg-transparent"
+    >
+        <div>
+            <div class="text-4xl font-extrabold tracking-tight">
+                {{ 'TRAINING_GROUPS.ADMIN.TITLE' | transloco }}
+            </div>
+            <div class="text-secondary mt-2 text-lg">
+                {{ 'TRAINING_GROUPS.ADMIN.SUBTITLE' | transloco }}
+            </div>
+        </div>
+
+        <div class="mt-6 flex shrink-0 items-center sm:ml-4 sm:mt-0">
+            <button
+                class="ml-4"
+                mat-flat-button
+                [color]="'primary'"
+                (click)="createTrainingGroup()"
+            >
+                <mat-icon [svgIcon]="'heroicons_outline:plus'"></mat-icon>
+                <span class="ml-2">
+                    {{ 'TRAINING_GROUPS.ADMIN.CREATE' | transloco }}
+                </span>
+            </button>
+        </div>
+    </div>
+
+    <div
+        class="flex flex-col items-start gap-4 bg-gray-50 p-6 pb-0 sm:flex-row sm:items-center dark:bg-gray-900"
+    >
+        <mat-form-field class="flex-auto">
+            <mat-icon
+                matPrefix
+                [svgIcon]="'heroicons_outline:magnifying-glass'"
+            ></mat-icon>
+            <input
+                matInput
+                [formControl]="searchInputControl"
+                [autocomplete]="'off'"
+                [placeholder]="'TRAINING_GROUPS.ADMIN.SEARCH_PLACEHOLDER' | transloco"
+            />
+        </mat-form-field>
+    </div>
+
+    <div class="flex flex-auto border-t sm:overflow-hidden">
+        <div class="flex flex-auto flex-col sm:overflow-y-auto">
+            @if (loading) {
+                <div class="grid grid-cols-1 gap-4 p-6 md:grid-cols-2 xl:grid-cols-3">
+                    @for (item of [1, 2, 3, 4, 5, 6]; track item) {
+                        <div class="bg-card rounded-2xl border p-6 shadow-sm">
+                            <div class="h-6 w-2/3 animate-pulse rounded bg-gray-200"></div>
+                            <div class="mt-4 h-4 w-1/2 animate-pulse rounded bg-gray-200"></div>
+                            <div class="mt-6 space-y-2">
+                                <div class="h-4 animate-pulse rounded bg-gray-200"></div>
+                                <div class="h-4 animate-pulse rounded bg-gray-200"></div>
+                                <div class="h-4 w-3/4 animate-pulse rounded bg-gray-200"></div>
+                            </div>
+                        </div>
+                    }
+                </div>
+            } @else if (filteredTrainingGroups.length === 0) {
+                <div
+                    class="flex flex-auto flex-col items-center justify-center bg-gray-100 px-6 text-center dark:bg-transparent"
+                >
+                    <mat-icon
+                        class="icon-size-24"
+                        [svgIcon]="'heroicons_outline:user-group'"
+                    ></mat-icon>
+                    <div
+                        class="text-secondary mt-4 text-2xl font-semibold tracking-tight"
+                    >
+                        {{ 'TRAINING_GROUPS.ADMIN.EMPTY_TITLE' | transloco }}
+                    </div>
+                    <div class="text-secondary mt-2 max-w-2xl text-md">
+                        {{ 'TRAINING_GROUPS.ADMIN.EMPTY_DESCRIPTION' | transloco }}
+                    </div>
+                    <button
+                        class="mt-6"
+                        mat-flat-button
+                        [color]="'primary'"
+                        (click)="createTrainingGroup()"
+                    >
+                        <mat-icon [svgIcon]="'heroicons_outline:plus'"></mat-icon>
+                        <span class="ml-2">
+                            {{ 'TRAINING_GROUPS.ADMIN.CREATE' | transloco }}
+                        </span>
+                    </button>
+                </div>
+            } @else {
+                <div class="grid grid-cols-1 gap-4 p-6 md:grid-cols-2 xl:grid-cols-3">
+                    @for (
+                        trainingGroup of filteredTrainingGroups;
+                        track trackByFn($index, trainingGroup)
+                    ) {
+                        <div
+                            class="bg-card group rounded-2xl border p-6 shadow-sm transition hover:shadow-md"
+                            [ngClass]="{
+                                'border-gray-200 opacity-75 dark:border-gray-700':
+                                    !trainingGroup.isActive,
+                            }"
+                        >
+                            <div class="flex items-start justify-between gap-4">
+                                <div class="min-w-0 flex-1">
+                                    <div class="truncate text-xl font-semibold">
+                                        {{ trainingGroup.name }}
+                                    </div>
+                                    <div
+                                        class="text-secondary mt-3 flex items-center gap-2 text-sm"
+                                    >
+                                        <mat-icon
+                                            class="icon-size-4"
+                                            [svgIcon]="'heroicons_outline:map-pin'"
+                                        ></mat-icon>
+                                        <span class="truncate">{{
+                                            getSiteName(trainingGroup)
+                                        }}</span>
+                                    </div>
+                                </div>
+
+                                <div class="flex items-center gap-2">
+                                    <span
+                                        class="inline-flex items-center rounded-full px-2.5 py-0.5 text-xs font-bold uppercase tracking-wide"
+                                        [ngClass]="{
+                                            'bg-green-200 text-green-800 dark:bg-green-600 dark:text-green-50':
+                                                trainingGroup.isActive,
+                                            'bg-gray-200 text-gray-800 dark:bg-gray-600 dark:text-gray-50':
+                                                !trainingGroup.isActive,
+                                        }"
+                                    >
+                                        {{
+                                            (trainingGroup.isActive
+                                                ? 'TRAINING_GROUPS.STATUS.ACTIVE'
+                                                : 'TRAINING_GROUPS.STATUS.INACTIVE'
+                                            ) | transloco
+                                        }}
+                                    </span>
+
+                                    <button
+                                        mat-icon-button
+                                        [matMenuTriggerFor]="actionsMenu"
+                                        (click)="$event.stopPropagation()"
+                                    >
+                                        <mat-icon
+                                            [svgIcon]="'heroicons_outline:ellipsis-vertical'"
+                                        ></mat-icon>
+                                    </button>
+
+                                    <mat-menu #actionsMenu="matMenu">
+                                        <button
+                                            mat-menu-item
+                                            (click)="editTrainingGroup(trainingGroup.id)"
+                                        >
+                                            <mat-icon
+                                                [svgIcon]="'heroicons_outline:pencil'"
+                                            ></mat-icon>
+                                            <span>{{
+                                                'TRAINING_GROUPS.ADMIN.ACTIONS.EDIT'
+                                                    | transloco
+                                            }}</span>
+                                        </button>
+                                        <button
+                                            mat-menu-item
+                                            (click)="deleteTrainingGroup(trainingGroup)"
+                                        >
+                                            <mat-icon
+                                                [svgIcon]="'heroicons_outline:trash'"
+                                            ></mat-icon>
+                                            <span>{{
+                                                'TRAINING_GROUPS.ADMIN.ACTIONS.DELETE'
+                                                    | transloco
+                                            }}</span>
+                                        </button>
+                                    </mat-menu>
+                                </div>
+                            </div>
+
+                            <div class="mt-5 grid grid-cols-2 gap-3">
+                                <div class="rounded-xl bg-gray-50 px-4 py-3 dark:bg-gray-800">
+                                    <div class="text-secondary text-xs font-medium uppercase">
+                                        {{ 'TRAINING_GROUPS.ADMIN.PLAYERS' | transloco }}
+                                    </div>
+                                    <div class="mt-1 text-lg font-semibold">
+                                        {{ getMembersCountLabel(trainingGroup) }}
+                                    </div>
+                                </div>
+
+                                <div class="rounded-xl bg-gray-50 px-4 py-3 dark:bg-gray-800">
+                                    <div class="text-secondary text-xs font-medium uppercase">
+                                        {{ 'TRAINING_GROUPS.ADMIN.SCHEDULES' | transloco }}
+                                    </div>
+                                    <div class="mt-1 text-lg font-semibold">
+                                        {{ getSchedulesCountLabel(trainingGroup) }}
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="mt-5">
+                                <div class="text-secondary text-xs font-medium uppercase">
+                                    {{ 'TRAINING_GROUPS.ADMIN.SCHEDULE_SUMMARY' | transloco }}
+                                </div>
+
+                                @if (trainingGroup.schedules.length === 0) {
+                                    <div class="text-secondary mt-3 text-sm italic">
+                                        {{
+                                            'TRAINING_GROUPS.ADMIN.NO_SCHEDULES'
+                                                | transloco
+                                        }}
+                                    </div>
+                                } @else {
+                                    <div class="mt-3 space-y-2">
+                                        @for (
+                                            schedule of getSortedSchedules(trainingGroup);
+                                            track schedule.id
+                                        ) {
+                                            <div
+                                                class="flex items-center justify-between gap-3 rounded-xl border border-gray-100 px-3 py-2 text-sm dark:border-gray-700"
+                                            >
+                                                <span class="font-medium">{{
+                                                    getDayLabel(
+                                                        schedule.dayOfWeek
+                                                    )
+                                                }}</span>
+                                                <span class="text-secondary">
+                                                    {{ schedule.startTime }}
+                                                    -
+                                                    {{ schedule.endTime }}
+                                                </span>
+                                            </div>
+                                        }
+                                    </div>
+                                }
+                            </div>
+
+                            <div class="mt-6 flex items-center justify-end gap-2">
+                                <button
+                                    mat-stroked-button
+                                    (click)="editTrainingGroup(trainingGroup.id)"
+                                >
+                                    {{
+                                        'TRAINING_GROUPS.ADMIN.ACTIONS.EDIT'
+                                            | transloco
+                                    }}
+                                </button>
+                            </div>
+                        </div>
+                    }
+                </div>
+            }
+        </div>
+    </div>
+</div>

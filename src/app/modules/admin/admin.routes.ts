@@ -46,6 +46,11 @@ export default [
         loadChildren: () => import('app/modules/admin/users/users.routes'),
     },
     {
+        path: 'groups',
+        loadChildren: () =>
+            import('app/modules/admin/training-groups/training-groups.routes'),
+    },
+    {
         path: 'sessions',
         loadChildren: () =>
             import('app/modules/admin/sessions/sessions.routes'),

@@ -1,0 +1,479 @@
+<div class="absolute inset-0 flex min-w-0 flex-col overflow-y-auto sm:overflow-hidden">
+    <div
+        class="bg-card relative flex flex-0 flex-col border-b px-6 py-8 sm:flex-row sm:items-center sm:justify-between md:px-8 dark:bg-transparent"
+    >
+        <div>
+            <div class="text-4xl font-extrabold tracking-tight">
+                {{
+                    (isEditMode
+                        ? 'TRAINING_GROUPS.ADMIN.EDIT_TITLE'
+                        : 'TRAINING_GROUPS.ADMIN.CREATE_TITLE'
+                    ) | transloco
+                }}
+            </div>
+            <div class="text-secondary mt-2 text-lg">
+                {{ 'TRAINING_GROUPS.ADMIN.SUBTITLE' | transloco }}
+            </div>
+        </div>
+
+        <div class="mt-6 flex shrink-0 items-center gap-2 sm:ml-4 sm:mt-0">
+            @if (isEditMode) {
+                <button
+                    mat-stroked-button
+                    color="warn"
+                    [disabled]="saving"
+                    (click)="confirmDelete()"
+                >
+                    {{ 'TRAINING_GROUPS.ADMIN.ACTIONS.DELETE' | transloco }}
+                </button>
+            }
+            <button mat-stroked-button [disabled]="saving" (click)="cancel()">
+                {{ 'COMMON.CANCEL' | transloco }}
+            </button>
+            <button
+                mat-flat-button
+                [color]="'primary'"
+                [disabled]="trainingGroupForm.invalid || saving"
+                (click)="save()"
+            >
+                {{
+                    (saving
+                        ? 'TRAINING_GROUPS.ADMIN.SAVING'
+                        : 'COMMON.SAVE'
+                    ) | transloco
+                }}
+            </button>
+        </div>
+    </div>
+
+    <div class="flex flex-auto overflow-y-auto">
+        <div class="mx-auto flex w-full max-w-6xl flex-col gap-6 p-6 md:p-8">
+            <form [formGroup]="trainingGroupForm" class="space-y-6">
+                <div class="bg-card rounded-2xl p-6 shadow">
+                    <div class="mb-6">
+                        <h2 class="text-2xl font-semibold">
+                            {{
+                                'TRAINING_GROUPS.ADMIN.SECTIONS.GENERAL'
+                                    | transloco
+                            }}
+                        </h2>
+                    </div>
+
+                    <div class="grid grid-cols-1 gap-4 md:grid-cols-2">
+                        <mat-form-field class="w-full md:col-span-2">
+                            <mat-label>{{
+                                'TRAINING_GROUPS.ADMIN.FORM.NAME' | transloco
+                            }}</mat-label>
+                            <input matInput formControlName="name" />
+                            <mat-error>
+                                {{
+                                    'TRAINING_GROUPS.ADMIN.FORM.NAME_REQUIRED'
+                                        | transloco
+                                }}
+                            </mat-error>
+                        </mat-form-field>
+
+                        <mat-form-field class="w-full">
+                            <mat-label>{{
+                                'TRAINING_GROUPS.ADMIN.FORM.SITE' | transloco
+                            }}</mat-label>
+                            <mat-select formControlName="siteId">
+                                @for (site of sites; track site.id) {
+                                    <mat-option [value]="site.id">
+                                        {{ site.name }}
+                                    </mat-option>
+                                }
+                            </mat-select>
+                            <mat-error>
+                                {{
+                                    'TRAINING_GROUPS.ADMIN.FORM.SITE_REQUIRED'
+                                        | transloco
+                                }}
+                            </mat-error>
+                        </mat-form-field>
+
+                        <div class="flex items-center rounded-2xl bg-gray-50 px-4 py-3 dark:bg-gray-800">
+                            <mat-checkbox formControlName="isActive">
+                                {{
+                                    'TRAINING_GROUPS.ADMIN.FORM.IS_ACTIVE'
+                                        | transloco
+                                }}
+                            </mat-checkbox>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="bg-card rounded-2xl p-6 shadow">
+                    <div class="mb-6 flex flex-col gap-2 sm:flex-row sm:items-center sm:justify-between">
+                        <div>
+                            <h2 class="text-2xl font-semibold">
+                                {{
+                                    'TRAINING_GROUPS.ADMIN.SECTIONS.PLAYERS'
+                                        | transloco
+                                }}
+                            </h2>
+                            <p class="text-secondary mt-1 text-sm">
+                                {{
+                                    'TRAINING_GROUPS.ADMIN.PLAYERS_HELP'
+                                        | transloco
+                                }}
+                            </p>
+                        </div>
+                        <div class="text-secondary text-sm">
+                            {{ selectedUsers.length }}
+                            {{ 'TRAINING_GROUPS.ADMIN.PLAYERS' | transloco }}
+                        </div>
+                    </div>
+
+                    <div class="grid grid-cols-1 gap-6 lg:grid-cols-[minmax(0,1fr)_minmax(0,1.2fr)]">
+                        <div class="rounded-2xl border border-dashed border-gray-300 p-4 dark:border-gray-700">
+                            <div class="text-secondary text-sm font-medium uppercase">
+                                {{
+                                    'TRAINING_GROUPS.ADMIN.SELECTED_PLAYERS'
+                                        | transloco
+                                }}
+                            </div>
+
+                            @if (selectedUsers.length === 0) {
+                                <div class="text-secondary mt-4 text-sm italic">
+                                    {{
+                                        'TRAINING_GROUPS.ADMIN.NO_SELECTED_PLAYERS'
+                                            | transloco
+                                    }}
+                                </div>
+                            } @else {
+                                <div class="mt-4 flex flex-wrap gap-2">
+                                    @for (
+                                        user of selectedUsers;
+                                        track trackByUser($index, user)
+                                    ) {
+                                        <div
+                                            class="flex items-center gap-2 rounded-full bg-primary-50 px-3 py-2 text-sm dark:bg-primary-900"
+                                        >
+                                            <div>
+                                                <div class="font-medium">
+                                                    {{ user.firstname }}
+                                                    {{ user.lastname }}
+                                                </div>
+                                                <div class="text-secondary text-xs">
+                                                    {{ user.email }}
+                                                </div>
+                                            </div>
+                                            <button
+                                                type="button"
+                                                mat-icon-button
+                                                class="icon-size-4"
+                                                (click)="removeUser(user.id)"
+                                            >
+                                                <mat-icon
+                                                    [svgIcon]="'heroicons_solid:x-mark'"
+                                                ></mat-icon>
+                                            </button>
+                                        </div>
+                                    }
+                                </div>
+                            }
+                        </div>
+
+                        <div class="rounded-2xl border p-4 dark:border-gray-700">
+                            <div class="text-secondary text-sm font-medium uppercase">
+                                {{
+                                    'TRAINING_GROUPS.ADMIN.ADD_PLAYERS'
+                                        | transloco
+                                }}
+                            </div>
+
+                            <mat-form-field class="mt-4 w-full">
+                                <mat-label>{{
+                                    'TRAINING_GROUPS.ADMIN.USER_SEARCH'
+                                        | transloco
+                                }}</mat-label>
+                                <input
+                                    matInput
+                                    [value]="userSearchTerm"
+                                    (input)="userSearchTerm = $any($event.target).value"
+                                />
+                                <mat-icon
+                                    matPrefix
+                                    [svgIcon]="'heroicons_outline:magnifying-glass'"
+                                ></mat-icon>
+                            </mat-form-field>
+
+                            @if (loadingUsers) {
+                                <div class="space-y-2">
+                                    @for (item of [1, 2, 3, 4]; track item) {
+                                        <div class="h-16 animate-pulse rounded-xl bg-gray-200"></div>
+                                    }
+                                </div>
+                            } @else if (filteredUsers.length === 0) {
+                                <div class="text-secondary py-6 text-sm italic">
+                                    {{
+                                        'TRAINING_GROUPS.ADMIN.NO_PLAYERS_FOUND'
+                                            | transloco
+                                    }}
+                                </div>
+                            } @else {
+                                <div class="max-h-80 space-y-2 overflow-y-auto pr-1">
+                                    @for (
+                                        user of filteredUsers;
+                                        track trackByUser($index, user)
+                                    ) {
+                                        <button
+                                            type="button"
+                                            class="flex w-full items-start justify-between rounded-2xl border px-4 py-3 text-left transition hover:bg-gray-50 dark:border-gray-700 dark:hover:bg-gray-800"
+                                            (click)="addUser(user.id)"
+                                        >
+                                            <div>
+                                                <div class="font-medium">
+                                                    {{ user.firstname }}
+                                                    {{ user.lastname }}
+                                                </div>
+                                                <div class="text-secondary mt-1 text-sm">
+                                                    {{ user.email }}
+                                                </div>
+                                                @if (getUserFormulaLabel(user); as formulaLabel) {
+                                                    <div class="text-secondary mt-1 text-xs">
+                                                        {{ formulaLabel }}
+                                                    </div>
+                                                }
+                                            </div>
+                                            <mat-icon
+                                                class="text-secondary mt-1"
+                                                [svgIcon]="'heroicons_outline:plus-circle'"
+                                            ></mat-icon>
+                                        </button>
+                                    }
+                                </div>
+                            }
+                        </div>
+                    </div>
+                </div>
+
+                <div class="bg-card rounded-2xl p-6 shadow">
+                    <div class="mb-6 flex flex-col gap-2 sm:flex-row sm:items-center sm:justify-between">
+                        <div>
+                            <h2 class="text-2xl font-semibold">
+                                {{
+                                    'TRAINING_GROUPS.ADMIN.SECTIONS.SCHEDULES'
+                                        | transloco
+                                }}
+                            </h2>
+                            <p class="text-secondary mt-1 text-sm">
+                                {{
+                                    'TRAINING_GROUPS.ADMIN.SCHEDULES_HELP'
+                                        | transloco
+                                }}
+                            </p>
+                        </div>
+                        <button
+                            type="button"
+                            mat-stroked-button
+                            (click)="addEmptySchedule()"
+                        >
+                            <mat-icon [svgIcon]="'heroicons_outline:plus'"></mat-icon>
+                            <span class="ml-2">
+                                {{
+                                    'TRAINING_GROUPS.ADMIN.ADD_SINGLE_SCHEDULE'
+                                        | transloco
+                                }}
+                            </span>
+                        </button>
+                    </div>
+
+                    <div class="rounded-2xl border bg-gray-50 p-4 dark:border-gray-700 dark:bg-gray-800/40">
+                        <div class="text-sm font-semibold uppercase tracking-wide">
+                            {{ 'TRAINING_GROUPS.ADMIN.QUICK_ADD_TITLE' | transloco }}
+                        </div>
+                        <div class="text-secondary mt-1 text-sm">
+                            {{ 'TRAINING_GROUPS.ADMIN.QUICK_ADD_HELP' | transloco }}
+                        </div>
+
+                        <div class="mt-4 flex flex-wrap gap-2">
+                            @for (day of dayOptions; track day.value) {
+                                <button
+                                    type="button"
+                                    class="rounded-full border px-4 py-2 text-sm font-medium transition"
+                                    [ngClass]="{
+                                        'border-primary-500 bg-primary-500 text-white':
+                                            selectedBulkDays.includes(day.value),
+                                        'border-gray-300 bg-white text-gray-700 dark:border-gray-600 dark:bg-gray-900 dark:text-gray-100':
+                                            !selectedBulkDays.includes(day.value),
+                                    }"
+                                    (click)="toggleBulkDay(day.value)"
+                                >
+                                    {{ day.shortLabel }}
+                                </button>
+                            }
+                        </div>
+
+                        <div [formGroup]="bulkScheduleForm" class="mt-4 grid grid-cols-1 gap-4 md:grid-cols-[minmax(0,1fr)_minmax(0,1fr)_auto]">
+                            <mat-form-field class="w-full">
+                                <mat-label>{{
+                                    'TRAINING_GROUPS.ADMIN.FORM.START_TIME'
+                                        | transloco
+                                }}</mat-label>
+                                <input matInput type="time" formControlName="startTime" />
+                                <mat-error>
+                                    {{
+                                        'TRAINING_GROUPS.ADMIN.FORM.TIME_FORMAT'
+                                            | transloco
+                                    }}
+                                </mat-error>
+                            </mat-form-field>
+
+                            <mat-form-field class="w-full">
+                                <mat-label>{{
+                                    'TRAINING_GROUPS.ADMIN.FORM.END_TIME'
+                                        | transloco
+                                }}</mat-label>
+                                <input matInput type="time" formControlName="endTime" />
+                                <mat-error>
+                                    {{
+                                        'TRAINING_GROUPS.ADMIN.FORM.TIME_FORMAT'
+                                            | transloco
+                                    }}
+                                </mat-error>
+                            </mat-form-field>
+
+                            <button
+                                type="button"
+                                class="md:self-start"
+                                mat-flat-button
+                                [color]="'primary'"
+                                (click)="addBulkSchedules()"
+                            >
+                                {{ 'TRAINING_GROUPS.ADMIN.ADD' | transloco }}
+                            </button>
+                        </div>
+
+                        @if (bulkScheduleForm.hasError('invalidRange')) {
+                            <div class="mt-2 text-sm text-red-600 dark:text-red-400">
+                                {{
+                                    'TRAINING_GROUPS.ADMIN.FORM.END_AFTER_START'
+                                        | transloco
+                                }}
+                            </div>
+                        }
+                        @if (bulkScheduleForm.get('daysPlaceholder')?.hasError('required')) {
+                            <div class="mt-2 text-sm text-red-600 dark:text-red-400">
+                                {{
+                                    'TRAINING_GROUPS.ADMIN.FORM.DAY_REQUIRED'
+                                        | transloco
+                                }}
+                            </div>
+                        }
+                    </div>
+
+                    <div class="mt-6 space-y-4" formArrayName="schedules">
+                        @for (
+                            scheduleControl of schedulesFormArray.controls;
+                            track trackByIndex($index)
+                        ) {
+                            <div
+                                class="rounded-2xl border p-4 dark:border-gray-700"
+                                [formGroupName]="$index"
+                            >
+                                <div class="grid grid-cols-1 gap-4 lg:grid-cols-[minmax(0,1.2fr)_minmax(0,1fr)_minmax(0,1fr)_auto]">
+                                    <mat-form-field class="w-full">
+                                        <mat-label>{{
+                                            'TRAINING_GROUPS.ADMIN.FORM.DAY'
+                                                | transloco
+                                        }}</mat-label>
+                                        <mat-select formControlName="dayOfWeek">
+                                            @for (day of dayOptions; track day.value) {
+                                                <mat-option [value]="day.value">
+                                                    {{ day.label }}
+                                                </mat-option>
+                                            }
+                                        </mat-select>
+                                        <mat-error>
+                                            {{
+                                                'TRAINING_GROUPS.ADMIN.FORM.DAY_REQUIRED'
+                                                    | transloco
+                                            }}
+                                        </mat-error>
+                                    </mat-form-field>
+
+                                    <mat-form-field class="w-full">
+                                        <mat-label>{{
+                                            'TRAINING_GROUPS.ADMIN.FORM.START_TIME'
+                                                | transloco
+                                        }}</mat-label>
+                                        <input
+                                            matInput
+                                            type="time"
+                                            formControlName="startTime"
+                                        />
+                                        <mat-error>
+                                            {{
+                                                'TRAINING_GROUPS.ADMIN.FORM.TIME_FORMAT'
+                                                    | transloco
+                                            }}
+                                        </mat-error>
+                                    </mat-form-field>
+
+                                    <mat-form-field class="w-full">
+                                        <mat-label>{{
+                                            'TRAINING_GROUPS.ADMIN.FORM.END_TIME'
+                                                | transloco
+                                        }}</mat-label>
+                                        <input
+                                            matInput
+                                            type="time"
+                                            formControlName="endTime"
+                                        />
+                                        <mat-error>
+                                            {{
+                                                'TRAINING_GROUPS.ADMIN.FORM.TIME_FORMAT'
+                                                    | transloco
+                                            }}
+                                        </mat-error>
+                                    </mat-form-field>
+
+                                    <div class="flex items-start justify-end pt-1">
+                                        <button
+                                            type="button"
+                                            mat-icon-button
+                                            color="warn"
+                                            (click)="removeSchedule($index)"
+                                        >
+                                            <mat-icon
+                                                [svgIcon]="'heroicons_outline:trash'"
+                                            ></mat-icon>
+                                        </button>
+                                    </div>
+                                </div>
+
+                                @if (scheduleControl.hasError('invalidRange')) {
+                                    <div class="mt-2 text-sm text-red-600 dark:text-red-400">
+                                        {{
+                                            'TRAINING_GROUPS.ADMIN.FORM.END_AFTER_START'
+                                                | transloco
+                                        }}
+                                    </div>
+                                }
+                            </div>
+                        }
+                    </div>
+
+                    @if (schedulesFormArray.hasError('duplicateSchedules')) {
+                        <div class="mt-4 text-sm text-red-600 dark:text-red-400">
+                            {{
+                                'TRAINING_GROUPS.ADMIN.SCHEDULE_DUPLICATE_ERROR'
+                                    | transloco
+                            }}
+                        </div>
+                    }
+                    @if (schedulesFormArray.hasError('required')) {
+                        <div class="mt-4 text-sm text-red-600 dark:text-red-400">
+                            {{
+                                'TRAINING_GROUPS.ADMIN.FORM.SCHEDULE_REQUIRED'
+                                    | transloco
+                            }}
+                        </div>
+                    }
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
