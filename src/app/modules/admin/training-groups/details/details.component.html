@@ -65,7 +65,13 @@
                                 'TRAINING_GROUPS.ADMIN.FORM.NAME' | transloco
                             }}</mat-label>
                             <input matInput formControlName="name" />
-                            <mat-error>
+                            <mat-error
+                                *ngIf="
+                                    trainingGroupForm
+                                        .get('name')
+                                        ?.hasError('required')
+                                "
+                            >
                                 {{
                                     'TRAINING_GROUPS.ADMIN.FORM.NAME_REQUIRED'
                                         | transloco
@@ -84,7 +90,13 @@
                                     </mat-option>
                                 }
                             </mat-select>
-                            <mat-error>
+                            <mat-error
+                                *ngIf="
+                                    trainingGroupForm
+                                        .get('siteId')
+                                        ?.hasError('required')
+                                "
+                            >
                                 {{
                                     'TRAINING_GROUPS.ADMIN.FORM.SITE_REQUIRED'
                                         | transloco
@@ -375,7 +387,25 @@
                                     type="time"
                                     formControlName="startTime"
                                 />
-                                <mat-error>
+                                <mat-error
+                                    *ngIf="
+                                        bulkScheduleForm
+                                            .get('startTime')
+                                            ?.hasError('required')
+                                    "
+                                >
+                                    {{
+                                        'TRAINING_GROUPS.ADMIN.FORM.START_TIME_REQUIRED'
+                                            | transloco
+                                    }}
+                                </mat-error>
+                                <mat-error
+                                    *ngIf="
+                                        bulkScheduleForm
+                                            .get('startTime')
+                                            ?.hasError('pattern')
+                                    "
+                                >
                                     {{
                                         'TRAINING_GROUPS.ADMIN.FORM.TIME_FORMAT'
                                             | transloco
@@ -393,7 +423,25 @@
                                     type="time"
                                     formControlName="endTime"
                                 />
-                                <mat-error>
+                                <mat-error
+                                    *ngIf="
+                                        bulkScheduleForm
+                                            .get('endTime')
+                                            ?.hasError('required')
+                                    "
+                                >
+                                    {{
+                                        'TRAINING_GROUPS.ADMIN.FORM.END_TIME_REQUIRED'
+                                            | transloco
+                                    }}
+                                </mat-error>
+                                <mat-error
+                                    *ngIf="
+                                        bulkScheduleForm
+                                            .get('endTime')
+                                            ?.hasError('pattern')
+                                    "
+                                >
                                     {{
                                         'TRAINING_GROUPS.ADMIN.FORM.TIME_FORMAT'
                                             | transloco
@@ -465,7 +513,13 @@
                                                 </mat-option>
                                             }
                                         </mat-select>
-                                        <mat-error>
+                                        <mat-error
+                                            *ngIf="
+                                                scheduleControl
+                                                    .get('dayOfWeek')
+                                                    ?.hasError('required')
+                                            "
+                                        >
                                             {{
                                                 'TRAINING_GROUPS.ADMIN.FORM.DAY_REQUIRED'
                                                     | transloco
@@ -483,7 +537,25 @@
                                             type="time"
                                             formControlName="startTime"
                                         />
-                                        <mat-error>
+                                        <mat-error
+                                            *ngIf="
+                                                scheduleControl
+                                                    .get('startTime')
+                                                    ?.hasError('required')
+                                            "
+                                        >
+                                            {{
+                                                'TRAINING_GROUPS.ADMIN.FORM.START_TIME_REQUIRED'
+                                                    | transloco
+                                            }}
+                                        </mat-error>
+                                        <mat-error
+                                            *ngIf="
+                                                scheduleControl
+                                                    .get('startTime')
+                                                    ?.hasError('pattern')
+                                            "
+                                        >
                                             {{
                                                 'TRAINING_GROUPS.ADMIN.FORM.TIME_FORMAT'
                                                     | transloco
@@ -501,7 +573,25 @@
                                             type="time"
                                             formControlName="endTime"
                                         />
-                                        <mat-error>
+                                        <mat-error
+                                            *ngIf="
+                                                scheduleControl
+                                                    .get('endTime')
+                                                    ?.hasError('required')
+                                            "
+                                        >
+                                            {{
+                                                'TRAINING_GROUPS.ADMIN.FORM.END_TIME_REQUIRED'
+                                                    | transloco
+                                            }}
+                                        </mat-error>
+                                        <mat-error
+                                            *ngIf="
+                                                scheduleControl
+                                                    .get('endTime')
+                                                    ?.hasError('pattern')
+                                            "
+                                        >
                                             {{
                                                 'TRAINING_GROUPS.ADMIN.FORM.TIME_FORMAT'
                                                     | transloco
@@ -541,7 +631,10 @@
                         }
                     </div>
 
-                    @if (schedulesFormArray.hasError('duplicateSchedules')) {
+                    @if (
+                        (submitAttempted || schedulesFormArray.touched) &&
+                        schedulesFormArray.hasError('duplicateSchedules')
+                    ) {
                         <div
                             class="mt-4 text-sm text-red-600 dark:text-red-400"
                         >
@@ -551,7 +644,10 @@
                             }}
                         </div>
                     }
-                    @if (schedulesFormArray.hasError('required')) {
+                    @if (
+                        (submitAttempted || schedulesFormArray.touched) &&
+                        schedulesFormArray.hasError('required')
+                    ) {
                         <div
                             class="mt-4 text-sm text-red-600 dark:text-red-400"
                         >

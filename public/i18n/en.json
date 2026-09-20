@@ -1004,7 +1004,9 @@
                 "END_TIME": "End",
                 "TIME_FORMAT": "Use the HH:mm format.",
                 "END_AFTER_START": "End time must be later than start time.",
-                "SCHEDULE_REQUIRED": "Add at least one weekly schedule."
+                "SCHEDULE_REQUIRED": "Add at least one weekly schedule.",
+                "START_TIME_REQUIRED": "Start time is required.",
+                "END_TIME_REQUIRED": "End time is required."
             },
             "QUICK_ADD_TITLE": "Quick add",
             "QUICK_ADD_HELP": "Select multiple days with the same time range, then adjust each row if needed.",

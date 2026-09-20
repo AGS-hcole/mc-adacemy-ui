@@ -1216,7 +1216,9 @@
                 "END_TIME": "Fin",
                 "TIME_FORMAT": "Utilisez le format HH:mm.",
                 "END_AFTER_START": "L'heure de fin doit être postérieure à l'heure de début.",
-                "SCHEDULE_REQUIRED": "Ajoutez au moins un créneau hebdomadaire."
+                "SCHEDULE_REQUIRED": "Ajoutez au moins un créneau hebdomadaire.",
+                "START_TIME_REQUIRED": "L'heure de début est obligatoire.",
+                "END_TIME_REQUIRED": "L'heure de fin est obligatoire."
             },
             "QUICK_ADD_TITLE": "Ajout rapide",
             "QUICK_ADD_HELP": "Sélectionnez plusieurs jours avec le même horaire, puis ajustez chaque ligne si nécessaire.",

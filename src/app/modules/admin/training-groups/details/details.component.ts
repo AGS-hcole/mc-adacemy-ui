@@ -44,9 +44,10 @@ import {
     Subject,
     concatMap,
     finalize,
-    forkJoin,
+    from,
     of,
     takeUntil,
+    toArray,
 } from 'rxjs';
 
 interface ScheduleFormValue {
@@ -85,6 +86,7 @@ export class AdminTrainingGroupDetailsComponent implements OnInit, OnDestroy {
     isEditMode = false;
     saving = false;
     loadingUsers = false;
+    submitAttempted = false;
 
     readonly formulaLabels: Record<FormulaType, string> = {
         [FormulaType.MORNING]: 'Matin',
@@ -170,6 +172,8 @@ export class AdminTrainingGroupDetailsComponent implements OnInit, OnDestroy {
     }
 
     save(): void {
+        this.submitAttempted = true;
+
         if (this.trainingGroupForm.invalid) {
             this.trainingGroupForm.markAllAsTouched();
             this.bulkScheduleForm.markAllAsTouched();
@@ -534,7 +538,10 @@ export class AdminTrainingGroupDetailsComponent implements OnInit, OnDestroy {
         const trainingGroup = this.trainingGroup!;
         const finalSchedules = this.getScheduleValues();
         const metadataPayload: UpdateTrainingGroupRequest = {};
-        const operations: Observable<unknown>[] = [];
+        const memberOperations: Observable<unknown>[] = [];
+        const deleteScheduleOperations: Observable<unknown>[] = [];
+        const updateScheduleOperations: Observable<unknown>[] = [];
+        const createScheduleOperations: Observable<unknown>[] = [];
 
         const name = this.trainingGroupForm.get('name')?.value;
         const siteId = this.trainingGroupForm.get('siteId')?.value;
@@ -563,7 +570,7 @@ export class AdminTrainingGroupDetailsComponent implements OnInit, OnDestroy {
         );
 
         if (membersToAdd.length > 0) {
-            operations.push(
+            memberOperations.push(
                 this._trainingGroupsService.addMembers(trainingGroup.id, {
                     userIds: membersToAdd,
                 })
@@ -571,7 +578,7 @@ export class AdminTrainingGroupDetailsComponent implements OnInit, OnDestroy {
         }
 
         if (membersToRemove.length > 0) {
-            operations.push(
+            memberOperations.push(
                 this._trainingGroupsService.removeMembers(trainingGroup.id, {
                     userIds: membersToRemove,
                 })
@@ -592,7 +599,7 @@ export class AdminTrainingGroupDetailsComponent implements OnInit, OnDestroy {
 
         finalSchedules.forEach((schedule) => {
             if (!schedule.id) {
-                operations.push(
+                createScheduleOperations.push(
                     this._trainingGroupsService.createSchedule(
                         trainingGroup.id,
                         {
@@ -615,7 +622,7 @@ export class AdminTrainingGroupDetailsComponent implements OnInit, OnDestroy {
                 initialSchedule.startTime !== schedule.startTime ||
                 initialSchedule.endTime !== schedule.endTime
             ) {
-                operations.push(
+                updateScheduleOperations.push(
                     this._trainingGroupsService.updateSchedule(
                         trainingGroup.id,
                         schedule.id,
@@ -632,7 +639,7 @@ export class AdminTrainingGroupDetailsComponent implements OnInit, OnDestroy {
         [...initialSchedules.keys()]
             .filter((scheduleId) => !keptScheduleIds.has(scheduleId))
             .forEach((scheduleId) => {
-                operations.push(
+                deleteScheduleOperations.push(
                     this._trainingGroupsService.deleteSchedule(
                         trainingGroup.id,
                         scheduleId
@@ -646,14 +653,23 @@ export class AdminTrainingGroupDetailsComponent implements OnInit, OnDestroy {
                   metadataPayload
               )
             : of(trainingGroup);
+        const orderedOperations = [
+            ...memberOperations,
+            ...deleteScheduleOperations,
+            ...updateScheduleOperations,
+            ...createScheduleOperations,
+        ];
 
         return metadataRequest$.pipe(
             concatMap(() => {
-                if (operations.length === 0) {
+                if (orderedOperations.length === 0) {
                     return of([]);
                 }
 
-                return forkJoin(operations);
+                return from(orderedOperations).pipe(
+                    concatMap((operation) => operation),
+                    toArray()
+                );
             })
         );
     }
