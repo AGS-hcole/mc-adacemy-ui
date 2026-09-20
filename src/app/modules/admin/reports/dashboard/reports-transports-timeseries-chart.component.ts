@@ -112,7 +112,14 @@ export class ReportsTransportsTimeseriesChartComponent implements OnChanges {
             },
             tooltip: {
                 x: {
-                    format: 'dd/MM/yyyy',
+                    formatter: (_value, { dataPointIndex }) =>
+                        dataPointIndex >= 0
+                            ? DateTime.fromISO(
+                                  this.timeseries!.buckets[dataPointIndex].date
+                              )
+                                  .setZone('Europe/Paris')
+                                  .toFormat('dd/MM/yyyy')
+                            : '',
                 },
             },
             legend: {
