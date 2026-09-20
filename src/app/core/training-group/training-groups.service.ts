@@ -1,7 +1,7 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { environment } from 'environments/environment';
-import { BehaviorSubject, Observable, map, tap } from 'rxjs';
+import { BehaviorSubject, Observable, concatMap, map, of, tap } from 'rxjs';
 import {
     CreateTrainingGroupRequest,
     CreateTrainingGroupScheduleRequest,
@@ -109,51 +109,88 @@ export class TrainingGroupsService {
 
     addMembers(
         id: string,
-        payload: TrainingGroupMemberBulkRequest
+        payload: TrainingGroupMemberBulkRequest,
+        syncState: boolean = true
     ): Observable<void> {
-        return this._httpClient.post<void>(
-            `${this.apiUrl}/training-groups/${id}/members`,
-            payload
-        );
+        return this._httpClient
+            .post<void>(`${this.apiUrl}/training-groups/${id}/members`, payload)
+            .pipe(
+                concatMap(() => (syncState ? this.syncState(id) : of(null))),
+                map(() => void 0)
+            );
     }
 
     removeMembers(
         id: string,
-        payload: TrainingGroupMemberBulkRequest
+        payload: TrainingGroupMemberBulkRequest,
+        syncState: boolean = true
     ): Observable<void> {
-        return this._httpClient.request<void>(
-            'delete',
-            `${this.apiUrl}/training-groups/${id}/members`,
-            {
-                body: payload,
-            }
-        );
+        return this._httpClient
+            .request<void>(
+                'delete',
+                `${this.apiUrl}/training-groups/${id}/members`,
+                {
+                    body: payload,
+                }
+            )
+            .pipe(
+                concatMap(() => (syncState ? this.syncState(id) : of(null))),
+                map(() => void 0)
+            );
     }
 
     createSchedule(
         id: string,
-        payload: CreateTrainingGroupScheduleRequest
+        payload: CreateTrainingGroupScheduleRequest,
+        syncState: boolean = true
     ): Observable<void> {
-        return this._httpClient.post<void>(
-            `${this.apiUrl}/training-groups/${id}/schedules`,
-            payload
-        );
+        return this._httpClient
+            .post<void>(
+                `${this.apiUrl}/training-groups/${id}/schedules`,
+                payload
+            )
+            .pipe(
+                concatMap(() => (syncState ? this.syncState(id) : of(null))),
+                map(() => void 0)
+            );
     }
 
     updateSchedule(
         id: string,
         scheduleId: string,
-        payload: UpdateTrainingGroupScheduleRequest
+        payload: UpdateTrainingGroupScheduleRequest,
+        syncState: boolean = true
     ): Observable<void> {
-        return this._httpClient.patch<void>(
-            `${this.apiUrl}/training-groups/${id}/schedules/${scheduleId}`,
-            payload
-        );
+        return this._httpClient
+            .patch<void>(
+                `${this.apiUrl}/training-groups/${id}/schedules/${scheduleId}`,
+                payload
+            )
+            .pipe(
+                concatMap(() => (syncState ? this.syncState(id) : of(null))),
+                map(() => void 0)
+            );
     }
 
-    deleteSchedule(id: string, scheduleId: string): Observable<void> {
-        return this._httpClient.delete<void>(
-            `${this.apiUrl}/training-groups/${id}/schedules/${scheduleId}`
+    deleteSchedule(
+        id: string,
+        scheduleId: string,
+        syncState: boolean = true
+    ): Observable<void> {
+        return this._httpClient
+            .delete<void>(
+                `${this.apiUrl}/training-groups/${id}/schedules/${scheduleId}`
+            )
+            .pipe(
+                concatMap(() => (syncState ? this.syncState(id) : of(null))),
+                map(() => void 0)
+            );
+    }
+
+    syncState(id: string): Observable<void> {
+        return this.getById(id).pipe(
+            concatMap(() => this.list()),
+            map(() => void 0)
         );
     }
 

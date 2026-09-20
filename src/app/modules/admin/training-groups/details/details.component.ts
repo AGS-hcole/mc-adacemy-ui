@@ -210,7 +210,7 @@ export class AdminTrainingGroupDetailsComponent implements OnInit, OnDestroy {
                         'OK',
                         { duration: 3000 }
                     );
-                    this._router.navigate(['/admin/groups']);
+                    this._navigateBackToList();
                 },
                 error: (error) => {
                     console.error('Error saving training group:', error);
@@ -226,7 +226,7 @@ export class AdminTrainingGroupDetailsComponent implements OnInit, OnDestroy {
     }
 
     cancel(): void {
-        this._router.navigate(['/admin/groups']);
+        this._navigateBackToList();
     }
 
     confirmDelete(): void {
@@ -277,7 +277,7 @@ export class AdminTrainingGroupDetailsComponent implements OnInit, OnDestroy {
                             'OK',
                             { duration: 3000 }
                         );
-                        this._router.navigate(['/admin/groups']);
+                        this._navigateBackToList();
                     },
                     error: (error) => {
                         console.error('Error deleting training group:', error);
@@ -571,17 +571,25 @@ export class AdminTrainingGroupDetailsComponent implements OnInit, OnDestroy {
 
         if (membersToAdd.length > 0) {
             memberOperations.push(
-                this._trainingGroupsService.addMembers(trainingGroup.id, {
-                    userIds: membersToAdd,
-                })
+                this._trainingGroupsService.addMembers(
+                    trainingGroup.id,
+                    {
+                        userIds: membersToAdd,
+                    },
+                    false
+                )
             );
         }
 
         if (membersToRemove.length > 0) {
             memberOperations.push(
-                this._trainingGroupsService.removeMembers(trainingGroup.id, {
-                    userIds: membersToRemove,
-                })
+                this._trainingGroupsService.removeMembers(
+                    trainingGroup.id,
+                    {
+                        userIds: membersToRemove,
+                    },
+                    false
+                )
             );
         }
 
@@ -606,7 +614,8 @@ export class AdminTrainingGroupDetailsComponent implements OnInit, OnDestroy {
                             dayOfWeek: schedule.dayOfWeek,
                             startTime: schedule.startTime,
                             endTime: schedule.endTime,
-                        }
+                        },
+                        false
                     )
                 );
                 return;
@@ -630,7 +639,8 @@ export class AdminTrainingGroupDetailsComponent implements OnInit, OnDestroy {
                             dayOfWeek: schedule.dayOfWeek,
                             startTime: schedule.startTime,
                             endTime: schedule.endTime,
-                        }
+                        },
+                        false
                     )
                 );
             }
@@ -642,7 +652,8 @@ export class AdminTrainingGroupDetailsComponent implements OnInit, OnDestroy {
                 deleteScheduleOperations.push(
                     this._trainingGroupsService.deleteSchedule(
                         trainingGroup.id,
-                        scheduleId
+                        scheduleId,
+                        false
                     )
                 );
             });
@@ -670,7 +681,12 @@ export class AdminTrainingGroupDetailsComponent implements OnInit, OnDestroy {
                     concatMap((operation) => operation),
                     toArray()
                 );
-            })
+            }),
+            concatMap(() =>
+                orderedOperations.length > 0
+                    ? this._trainingGroupsService.syncState(trainingGroup.id)
+                    : of(void 0)
+            )
         );
     }
 
@@ -800,5 +816,11 @@ export class AdminTrainingGroupDetailsComponent implements OnInit, OnDestroy {
                 endTime: schedule.endTime,
             })
         );
+    }
+
+    private _navigateBackToList(): void {
+        this._router.navigate(['../'], {
+            relativeTo: this._activatedRoute,
+        });
     }
 }
