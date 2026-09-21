@@ -1,4 +1,4 @@
-import { NgClass } from '@angular/common';
+import { DatePipe, NgClass } from '@angular/common';
 import {
     ChangeDetectionStrategy,
     ChangeDetectorRef,
@@ -42,6 +42,7 @@ import { Subject, debounceTime, takeUntil } from 'rxjs';
         ReactiveFormsModule,
         MatButtonModule,
         MatFormFieldModule,
+        DatePipe,
         MatIconModule,
         MatInputModule,
         MatMenuModule,
@@ -239,6 +240,38 @@ export class AdminTrainingGroupsListComponent implements OnInit, OnDestroy {
         }
 
         return `${member.user.firstname} ${member.user.lastname}`.trim();
+    }
+
+    getGroupedSchedules(trainingGroup: any): any[] {
+        const groups = new Map<
+            string,
+            {
+                days: number[];
+                startTime: string;
+                endTime: string;
+            }
+        >();
+
+        for (const schedule of trainingGroup.schedules ?? []) {
+            const key = `${schedule.startTime}-${schedule.endTime}`;
+
+            if (!groups.has(key)) {
+                groups.set(key, {
+                    days: [],
+                    startTime: schedule.startTime,
+                    endTime: schedule.endTime,
+                });
+            }
+
+            groups.get(key)!.days.push(schedule.dayOfWeek);
+        }
+
+        return Array.from(groups.values())
+            .map((group) => ({
+                ...group,
+                days: group.days.sort((a, b) => a - b),
+            }))
+            .sort((a, b) => a.days[0] - b.days[0]);
     }
 
     trackByFn(index: number, item: TrainingGroup): string {
