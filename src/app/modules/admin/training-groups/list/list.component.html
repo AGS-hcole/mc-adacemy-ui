@@ -227,9 +227,7 @@
                                         }}
                                     </div>
                                     <div class="mt-1 text-lg font-semibold">
-                                        {{
-                                            getMembersCountLabel(trainingGroup)
-                                        }}
+                                        {{ trainingGroup._count.members }}
                                     </div>
                                 </div>
 
@@ -245,11 +243,7 @@
                                         }}
                                     </div>
                                     <div class="mt-1 text-lg font-semibold">
-                                        {{
-                                            getSchedulesCountLabel(
-                                                trainingGroup
-                                            )
-                                        }}
+                                        {{ trainingGroup._count.schedules }}
                                     </div>
                                 </div>
                             </div>
@@ -264,7 +258,7 @@
                                     }}
                                 </div>
 
-                                @if (trainingGroup.schedules.length === 0) {
+                                @if (trainingGroup._count.schedules === 0) {
                                     <div
                                         class="text-secondary mt-3 text-sm italic"
                                     >

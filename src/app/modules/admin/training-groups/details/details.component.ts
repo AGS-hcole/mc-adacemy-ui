@@ -1,4 +1,4 @@
-import { NgClass } from '@angular/common';
+import { CommonModule, NgClass } from '@angular/common';
 import {
     ChangeDetectionStrategy,
     ChangeDetectorRef,
@@ -67,6 +67,7 @@ interface ScheduleFormValue {
         ReactiveFormsModule,
         MatButtonModule,
         MatCheckboxModule,
+        CommonModule,
         MatChipsModule,
         MatFormFieldModule,
         MatIconModule,
@@ -500,7 +501,7 @@ export class AdminTrainingGroupDetailsComponent implements OnInit, OnDestroy {
             .subscribe({
                 next: (users) => {
                     this.availableUsers = [...users]
-                        .filter((user) => user.role === Role.user)
+                        .filter((user) => user.role !== Role.parent)
                         .sort((first, second) => {
                             const firstName = `${first.firstname} ${first.lastname}`;
                             const secondName = `${second.firstname} ${second.lastname}`;

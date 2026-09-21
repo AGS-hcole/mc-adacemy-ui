@@ -85,6 +85,8 @@ export class AdminTrainingGroupsListComponent implements OnInit, OnDestroy {
             (this._activatedRoute.snapshot.data['sites'] as Site[]) || [];
         this.loading = false;
 
+        console.log(this.trainingGroups);
+
         this.searchInputControl.valueChanges
             .pipe(takeUntil(this._unsubscribeAll), debounceTime(200))
             .subscribe(() => {
