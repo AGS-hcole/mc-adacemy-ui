@@ -328,12 +328,16 @@
                                                 >
                                                     {{
                                                         scheduleGroup.startTime
-                                                            | date: 'shortTime'
+                                                            | date
+                                                                : 'HH:mm'
+                                                                : 'UTC'
                                                     }}
                                                     -
                                                     {{
                                                         scheduleGroup.endTime
-                                                            | date: 'shortTime'
+                                                            | date
+                                                                : 'HH:mm'
+                                                                : 'UTC'
                                                     }}
                                                 </span>
                                             </div>
