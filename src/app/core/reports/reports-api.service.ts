@@ -4,9 +4,15 @@ import { environment } from 'environments/environment';
 import { Observable } from 'rxjs';
 import {
     RatingsSummaryDto,
+    ResidenceListDto,
+    ResidenceSummaryDto,
+    ResidenceTimeseriesDto,
     SessionsListDto,
     SessionsSummaryDto,
     SessionsTimeseriesDto,
+    TransportsListDto,
+    TransportsSummaryDto,
+    TransportsTimeseriesDto,
     UsersLookupDto,
 } from './reports.types';
 
@@ -156,6 +162,150 @@ export class ReportsApiService {
 
         return this._httpClient.get<RatingsSummaryDto>(
             `${this.apiUrl}/reports/ratings/summary`,
+            { params }
+        );
+    }
+
+    /**
+     * Get residence summary
+     */
+    getResidenceSummary(
+        from: string,
+        to: string,
+        userId?: string
+    ): Observable<ResidenceSummaryDto> {
+        let params = new HttpParams().set('from', from).set('to', to);
+
+        if (userId) {
+            params = params.set('userId', userId);
+        }
+
+        return this._httpClient.get<ResidenceSummaryDto>(
+            `${this.apiUrl}/reports/residence/summary`,
+            { params }
+        );
+    }
+
+    /**
+     * Get residence timeseries
+     */
+    getResidenceTimeseries(
+        from: string,
+        to: string,
+        userId?: string,
+        bucket: string = 'daily'
+    ): Observable<ResidenceTimeseriesDto> {
+        let params = new HttpParams()
+            .set('from', from)
+            .set('to', to)
+            .set('bucket', bucket);
+
+        if (userId) {
+            params = params.set('userId', userId);
+        }
+
+        return this._httpClient.get<ResidenceTimeseriesDto>(
+            `${this.apiUrl}/reports/residence/timeseries`,
+            { params }
+        );
+    }
+
+    /**
+     * Get residence list
+     */
+    getResidenceList(
+        from: string,
+        to: string,
+        page: number,
+        pageSize: number,
+        sort: string,
+        userId?: string
+    ): Observable<ResidenceListDto> {
+        let params = new HttpParams()
+            .set('from', from)
+            .set('to', to)
+            .set('page', page.toString())
+            .set('pageSize', pageSize.toString())
+            .set('sort', sort);
+
+        if (userId) {
+            params = params.set('userId', userId);
+        }
+
+        return this._httpClient.get<ResidenceListDto>(
+            `${this.apiUrl}/reports/residence/list`,
+            { params }
+        );
+    }
+
+    /**
+     * Get transports summary
+     */
+    getTransportsSummary(
+        from: string,
+        to: string,
+        userId?: string
+    ): Observable<TransportsSummaryDto> {
+        let params = new HttpParams().set('from', from).set('to', to);
+
+        if (userId) {
+            params = params.set('userId', userId);
+        }
+
+        return this._httpClient.get<TransportsSummaryDto>(
+            `${this.apiUrl}/reports/transports/summary`,
+            { params }
+        );
+    }
+
+    /**
+     * Get transports timeseries
+     */
+    getTransportsTimeseries(
+        from: string,
+        to: string,
+        userId?: string,
+        bucket: string = 'daily'
+    ): Observable<TransportsTimeseriesDto> {
+        let params = new HttpParams()
+            .set('from', from)
+            .set('to', to)
+            .set('bucket', bucket);
+
+        if (userId) {
+            params = params.set('userId', userId);
+        }
+
+        return this._httpClient.get<TransportsTimeseriesDto>(
+            `${this.apiUrl}/reports/transports/timeseries`,
+            { params }
+        );
+    }
+
+    /**
+     * Get transports list
+     */
+    getTransportsList(
+        from: string,
+        to: string,
+        page: number,
+        pageSize: number,
+        sort: string,
+        userId?: string
+    ): Observable<TransportsListDto> {
+        let params = new HttpParams()
+            .set('from', from)
+            .set('to', to)
+            .set('page', page.toString())
+            .set('pageSize', pageSize.toString())
+            .set('sort', sort);
+
+        if (userId) {
+            params = params.set('userId', userId);
+        }
+
+        return this._httpClient.get<TransportsListDto>(
+            `${this.apiUrl}/reports/transports/list`,
             { params }
         );
     }

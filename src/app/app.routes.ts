@@ -117,7 +117,7 @@ export const appRoutes: Route[] = [
                 path: 'user',
                 canActivate: [RoleGuard],
                 canActivateChild: [RoleGuard],
-                data: { roles: [Role.user] },
+                data: { roles: [Role.admin, Role.user] },
                 loadChildren: () => import('app/modules/user/user.routes'),
             },
 

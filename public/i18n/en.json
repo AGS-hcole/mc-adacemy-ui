@@ -81,6 +81,11 @@
             "TITLE": "Cancel Booking",
             "MESSAGE": "Are you sure you want to cancel this booking?",
             "CONFIRM": "Cancel Booking"
+        },
+        "DELETE_TRAINING_GROUP": {
+            "TITLE": "Delete group?",
+            "MESSAGE": "The group \"{{name}}\" will be permanently deleted. This action cannot be undone.",
+            "CONFIRM": "Delete"
         }
     },
     "AUTH": {
@@ -326,6 +331,9 @@
             },
             "MANORS": {
                 "TITLE": "Manors"
+            },
+            "GROUPS": {
+                "TITLE": "Groups"
             }
         },
         "USER": {
@@ -705,10 +713,12 @@
     },
     "REPORTS": {
         "TITLE": "Reports",
-        "DESCRIPTION": "Training sessions analytics and statistics",
+        "DESCRIPTION": "Analytics and statistics for sessions, residence and transports",
         "CHART": {
             "CONTRACT_SHARE": "Contract vs Non-Contract Sessions",
-            "SESSIONS_OVER_TIME": "Sessions Over Time"
+            "SESSIONS_OVER_TIME": "Sessions Over Time",
+            "RESIDENCE_OVER_TIME": "Residence Over Time",
+            "TRANSPORTS_OVER_TIME": "Transports Over Time"
         },
         "ERROR": {
             "TITLE": "Failed to load reports data"
@@ -754,6 +764,9 @@
                 "TITLE": "Student Rating Statistics"
             }
         },
+        "SERIES": {
+            "TOTAL": "Total"
+        },
         "KPI": {
             "TOTAL": "Total Sessions",
             "UNDER": "Under Contract",
@@ -762,6 +775,50 @@
         },
         "SESSIONS": {
             "TITLE": "Sessions"
+        },
+        "RESIDENCE": {
+            "TITLE": "Residence",
+            "EMPTY": "No residence booking found for the selected period",
+            "KPI": {
+                "NIGHTS": "Total Nights",
+                "PLANNED": "Planned",
+                "CANCELED": "Canceled",
+                "UNIQUE_USERS": "Unique Users"
+            },
+            "TABLE": {
+                "TITLE": "Latest Bookings",
+                "USER": "Student",
+                "MANOR": "Residence",
+                "OVER_CAPACITY": "Over Capacity",
+                "CREATED_BY_ADMIN": "Created by admin"
+            },
+            "STATUS": {
+                "PLANNED": "Planned",
+                "CANCELED": "Canceled"
+            }
+        },
+        "TRANSPORTS": {
+            "TITLE": "Transports",
+            "EMPTY": "No transport booking found for the selected period",
+            "KPI": {
+                "BOOKINGS": "Bookings",
+                "CONFIRMED": "Confirmed",
+                "CANCELLED": "Cancelled",
+                "UNIQUE_USERS": "Unique Users",
+                "OCCURRENCES": "Unique Trips"
+            },
+            "TABLE": {
+                "TITLE": "Latest Bookings",
+                "DEPARTURE": "Departure",
+                "USER": "Student",
+                "TRANSPORT": "Transport",
+                "ROUTE": "Route",
+                "SEATS": "Seats"
+            },
+            "STATUS": {
+                "CONFIRMED": "Confirmed",
+                "CANCELLED": "Cancelled"
+            }
         },
         "FILTERS": {
             "PERIOD": "Period",
@@ -946,6 +1003,83 @@
         },
         "REPORTS": {
             "NO_CHILD": "No child associated with your account."
+        }
+    },
+    "COMMON": {
+        "CANCEL": "Cancel",
+        "SAVE": "Save",
+        "CONFIRM": "Confirm",
+        "CLOSE": "Close"
+    },
+    "TRAINING_GROUPS": {
+        "STATUS": {
+            "ACTIVE": "Active",
+            "INACTIVE": "Inactive"
+        },
+        "ADMIN": {
+            "TITLE": "Training groups",
+            "SUBTITLE": "Manage recurring groups and their training time slots.",
+            "CREATE": "New group",
+            "CREATE_TITLE": "Create group",
+            "EDIT_TITLE": "Edit group",
+            "SAVING": "Saving...",
+            "SEARCH_PLACEHOLDER": "Search by name, site, or player",
+            "EMPTY_TITLE": "No training groups",
+            "EMPTY_DESCRIPTION": "Create your first recurring group to prepare future registrations automatically.",
+            "PLAYERS": "Players",
+            "SCHEDULES": "Schedules",
+            "SCHEDULE_SUMMARY": "Schedule",
+            "NO_SCHEDULES": "No schedule configured",
+            "PLAYERS_HELP": "Add the players assigned to this recurring group.",
+            "SELECTED_PLAYERS": "Selected players",
+            "NO_SELECTED_PLAYERS": "No player selected",
+            "ADD_PLAYERS": "Add players",
+            "USER_SEARCH": "Search a player",
+            "NO_PLAYERS_FOUND": "No matching player found",
+            "USERS_LOAD_ERROR": "Unable to load players.",
+            "SECTIONS": {
+                "GENERAL": "General information",
+                "PLAYERS": "Players",
+                "SCHEDULES": "Weekly schedules"
+            },
+            "FORM": {
+                "NAME": "Group name",
+                "NAME_REQUIRED": "Group name is required.",
+                "SITE": "Site",
+                "SITE_REQUIRED": "Site is required.",
+                "ACTIVE": "Active group",
+                "INACTIVE": "Inactive group",
+                "DAY": "Day",
+                "DAY_REQUIRED": "Day is required.",
+                "START_TIME": "Start",
+                "END_TIME": "End",
+                "TIME_FORMAT": "Use the HH:mm format.",
+                "END_AFTER_START": "End time must be later than start time.",
+                "SCHEDULE_REQUIRED": "Add at least one weekly schedule.",
+                "START_TIME_REQUIRED": "Start time is required.",
+                "END_TIME_REQUIRED": "End time is required."
+            },
+            "QUICK_ADD_TITLE": "Quick add",
+            "QUICK_ADD_HELP": "Select multiple days with the same time range, then adjust each row if needed.",
+            "ADD_SINGLE_SCHEDULE": "Add schedule",
+            "ADD": "Add",
+            "SCHEDULE_DUPLICATE_ERROR": "This schedule already exists for this group.",
+            "COUNTS": {
+                "PLAYER": "{{count}} player",
+                "PLAYERS": "{{count}} players",
+                "SCHEDULE": "{{count}} schedule",
+                "SCHEDULES": "{{count}} schedules"
+            },
+            "ACTIONS": {
+                "EDIT": "Edit",
+                "DELETE": "Delete"
+            },
+            "CREATE_SUCCESS": "The group was created successfully.",
+            "UPDATE_SUCCESS": "The group was updated successfully.",
+            "SAVE_ERROR": "An error occurred while saving the group.",
+            "DELETE_SUCCESS": "The group was deleted successfully.",
+            "DELETE_ERROR": "Unable to delete the group.",
+            "SCHEDULES_HELP": "Organize the recurring schedules used for future registrations."
         }
     }
 }

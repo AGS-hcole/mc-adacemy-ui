@@ -39,6 +39,13 @@ export const adminNavigation: FuseNavigationItem[] = [
                 link: '/admin/users',
             },
             {
+                id: 'groups',
+                title: 'NAVIGATION.ADMIN.GROUPS.TITLE',
+                type: 'basic',
+                icon: 'heroicons_outline:user-group',
+                link: '/admin/groups',
+            },
+            {
                 id: 'sites',
                 title: 'NAVIGATION.ADMIN.SITES.TITLE',
                 type: 'basic',

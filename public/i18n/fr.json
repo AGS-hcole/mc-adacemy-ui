@@ -90,6 +90,11 @@
             "TITLE": "Annuler la réservation",
             "MESSAGE": "Êtes-vous sûr de vouloir annuler cette réservation ?",
             "CONFIRM": "Annuler la réservation"
+        },
+        "DELETE_TRAINING_GROUP": {
+            "TITLE": "Supprimer le groupe ?",
+            "MESSAGE": "Le groupe \"{{name}}\" sera supprimé définitivement. Cette action est irréversible.",
+            "CONFIRM": "Supprimer"
         }
     },
     "AUTH": {
@@ -176,6 +181,9 @@
             },
             "MANORS": {
                 "TITLE": "Manoirs"
+            },
+            "GROUPS": {
+                "TITLE": "Groupes"
             }
         },
         "USER": {
@@ -582,10 +590,12 @@
     },
     "REPORTS": {
         "TITLE": "Rapports",
-        "DESCRIPTION": "Analytique et statistiques des sessions de formation",
+        "DESCRIPTION": "Analytique et statistiques des sessions, résidences et transports",
         "CHART": {
             "CONTRACT_SHARE": "Sessions sous contrat vs hors contrat",
-            "SESSIONS_OVER_TIME": "Sessions dans le temps"
+            "SESSIONS_OVER_TIME": "Sessions dans le temps",
+            "RESIDENCE_OVER_TIME": "Résidences dans le temps",
+            "TRANSPORTS_OVER_TIME": "Transports dans le temps"
         },
         "ERROR": {
             "TITLE": "Échec du chargement des données de rapport"
@@ -632,6 +642,9 @@
                 "TITLE": "Statistiques de notes de l'élève"
             }
         },
+        "SERIES": {
+            "TOTAL": "Total"
+        },
         "KPI": {
             "TOTAL": "Total des sessions",
             "UNDER": "Sous contrat",
@@ -640,6 +653,50 @@
         },
         "SESSIONS": {
             "TITLE": "Sessions"
+        },
+        "RESIDENCE": {
+            "TITLE": "Résidences",
+            "EMPTY": "Aucune réservation de résidence trouvée pour la période sélectionnée",
+            "KPI": {
+                "NIGHTS": "Total des nuitées",
+                "PLANNED": "Planifiées",
+                "CANCELED": "Annulées",
+                "UNIQUE_USERS": "Utilisateurs uniques"
+            },
+            "TABLE": {
+                "TITLE": "Dernières réservations",
+                "USER": "Élève",
+                "MANOR": "Résidence",
+                "OVER_CAPACITY": "Surcapacité",
+                "CREATED_BY_ADMIN": "Créée par admin"
+            },
+            "STATUS": {
+                "PLANNED": "Planifiée",
+                "CANCELED": "Annulée"
+            }
+        },
+        "TRANSPORTS": {
+            "TITLE": "Transports",
+            "EMPTY": "Aucune réservation de transport trouvée pour la période sélectionnée",
+            "KPI": {
+                "BOOKINGS": "Réservations",
+                "CONFIRMED": "Confirmées",
+                "CANCELLED": "Annulées",
+                "UNIQUE_USERS": "Utilisateurs uniques",
+                "OCCURRENCES": "Trajets uniques"
+            },
+            "TABLE": {
+                "TITLE": "Dernières réservations",
+                "DEPARTURE": "Départ",
+                "USER": "Élève",
+                "TRANSPORT": "Transport",
+                "ROUTE": "Trajet",
+                "SEATS": "Places"
+            },
+            "STATUS": {
+                "CONFIRMED": "Confirmée",
+                "CANCELLED": "Annulée"
+            }
         },
         "FILTERS": {
             "PERIOD": "Période",
@@ -1006,7 +1063,8 @@
     "COMMON": {
         "CANCEL": "Annuler",
         "SAVE": "Enregistrer",
-        "CONFIRM": "Confirmer"
+        "CONFIRM": "Confirmer",
+        "CLOSE": "Fermer"
     },
     "TRANSPORTS": {
         "ADMIN": {
@@ -1163,6 +1221,77 @@
         },
         "REPORTS": {
             "NO_CHILD": "Aucun enfant associé à votre compte."
+        }
+    },
+    "TRAINING_GROUPS": {
+        "STATUS": {
+            "ACTIVE": "Actif",
+            "INACTIVE": "Inactif"
+        },
+        "ADMIN": {
+            "TITLE": "Groupes d'entraînement",
+            "SUBTITLE": "Gérez les groupes récurrents et leurs créneaux d'entraînement.",
+            "CREATE": "Nouveau groupe",
+            "CREATE_TITLE": "Créer un groupe",
+            "EDIT_TITLE": "Modifier le groupe",
+            "SAVING": "Enregistrement...",
+            "SEARCH_PLACEHOLDER": "Rechercher par nom, site ou joueur",
+            "EMPTY_TITLE": "Aucun groupe d'entraînement",
+            "EMPTY_DESCRIPTION": "Créez votre premier groupe récurrent pour préparer automatiquement les futures inscriptions.",
+            "PLAYERS": "Joueurs",
+            "SCHEDULES": "Créneaux",
+            "SCHEDULE_SUMMARY": "Planning",
+            "NO_SCHEDULES": "Aucun créneau configuré",
+            "PLAYERS_HELP": "Ajoutez les joueurs concernés par ce groupe récurrent.",
+            "SELECTED_PLAYERS": "Joueurs sélectionnés",
+            "NO_SELECTED_PLAYERS": "Aucun joueur sélectionné",
+            "ADD_PLAYERS": "Ajouter des joueurs",
+            "USER_SEARCH": "Rechercher un joueur",
+            "NO_PLAYERS_FOUND": "Aucun joueur correspondant",
+            "USERS_LOAD_ERROR": "Impossible de charger les joueurs.",
+            "SECTIONS": {
+                "GENERAL": "Informations générales",
+                "PLAYERS": "Joueurs",
+                "SCHEDULES": "Créneaux hebdomadaires"
+            },
+            "FORM": {
+                "NAME": "Nom du groupe",
+                "NAME_REQUIRED": "Le nom du groupe est obligatoire.",
+                "SITE": "Site",
+                "SITE_REQUIRED": "Le site est obligatoire.",
+                "ACTIVE": "Groupe actif",
+                "INACTIVE": "Groupe inactif",
+                "DAY": "Jour",
+                "DAY_REQUIRED": "Le jour est obligatoire.",
+                "START_TIME": "Début",
+                "END_TIME": "Fin",
+                "TIME_FORMAT": "Utilisez le format HH:mm.",
+                "END_AFTER_START": "L'heure de fin doit être postérieure à l'heure de début.",
+                "SCHEDULE_REQUIRED": "Ajoutez au moins un créneau hebdomadaire.",
+                "START_TIME_REQUIRED": "L'heure de début est obligatoire.",
+                "END_TIME_REQUIRED": "L'heure de fin est obligatoire."
+            },
+            "QUICK_ADD_TITLE": "Ajout rapide",
+            "QUICK_ADD_HELP": "Sélectionnez plusieurs jours avec le même horaire, puis ajustez chaque ligne si nécessaire.",
+            "ADD_SINGLE_SCHEDULE": "Ajouter un créneau",
+            "ADD": "Ajouter",
+            "SCHEDULE_DUPLICATE_ERROR": "Ce créneau existe déjà pour ce groupe.",
+            "COUNTS": {
+                "PLAYER": "{{count}} joueur",
+                "PLAYERS": "{{count}} joueurs",
+                "SCHEDULE": "{{count}} créneau",
+                "SCHEDULES": "{{count}} créneaux"
+            },
+            "ACTIONS": {
+                "EDIT": "Modifier",
+                "DELETE": "Supprimer"
+            },
+            "CREATE_SUCCESS": "Le groupe a été créé avec succès.",
+            "UPDATE_SUCCESS": "Le groupe a été mis à jour avec succès.",
+            "SAVE_ERROR": "Une erreur est survenue lors de l'enregistrement du groupe.",
+            "DELETE_SUCCESS": "Le groupe a été supprimé avec succès.",
+            "DELETE_ERROR": "Impossible de supprimer le groupe.",
+            "SCHEDULES_HELP": "Organisez les créneaux récurrents utilisés pour les futures inscriptions."
         }
     }
 }
