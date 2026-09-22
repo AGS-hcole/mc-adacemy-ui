@@ -13,7 +13,7 @@
                     ) | transloco
                 }}
             </div>
-            <div class="text-secondary mt-2 text-lg">
+            <div class="text-secondary mt-2 hidden text-lg sm:block">
                 {{ 'TRAINING_GROUPS.ADMIN.SUBTITLE' | transloco }}
             </div>
         </div>
@@ -83,6 +83,7 @@
                             <mat-label>{{
                                 'TRAINING_GROUPS.ADMIN.FORM.SITE' | transloco
                             }}</mat-label>
+
                             <mat-select formControlName="siteId">
                                 @for (site of sites; track site.id) {
                                     <mat-option [value]="site.id">
@@ -90,6 +91,7 @@
                                     </mat-option>
                                 }
                             </mat-select>
+
                             <mat-error
                                 *ngIf="
                                     trainingGroupForm
@@ -104,15 +106,15 @@
                             </mat-error>
                         </mat-form-field>
 
-                        <div
-                            class="flex items-center rounded-2xl bg-gray-50 px-4 py-3 dark:bg-gray-800"
-                        >
-                            <mat-checkbox formControlName="isActive">
+                        <div class="flex items-center pt-2">
+                            <mat-slide-toggle formControlName="isActive">
                                 {{
-                                    'TRAINING_GROUPS.ADMIN.FORM.IS_ACTIVE'
-                                        | transloco
+                                    (trainingGroupForm.get('isActive')?.value
+                                        ? 'TRAINING_GROUPS.ADMIN.FORM.ACTIVE'
+                                        : 'TRAINING_GROUPS.ADMIN.FORM.INACTIVE'
+                                    ) | transloco
                                 }}
-                            </mat-checkbox>
+                            </mat-slide-toggle>
                         </div>
                     </div>
                 </div>

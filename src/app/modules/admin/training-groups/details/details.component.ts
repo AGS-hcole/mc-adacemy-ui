@@ -24,6 +24,7 @@ import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatIconModule } from '@angular/material/icon';
 import { MatInputModule } from '@angular/material/input';
 import { MatSelectModule } from '@angular/material/select';
+import { MatSlideToggleModule } from '@angular/material/slide-toggle';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { ActivatedRoute, Router } from '@angular/router';
 import { FuseConfirmationService } from '@fuse/services/confirmation';
@@ -69,6 +70,7 @@ interface ScheduleFormValue {
         MatCheckboxModule,
         CommonModule,
         MatChipsModule,
+        MatSlideToggleModule,
         MatFormFieldModule,
         MatIconModule,
         MatInputModule,
@@ -466,7 +468,7 @@ export class AdminTrainingGroupDetailsComponent implements OnInit, OnDestroy {
 
         this.trainingGroupForm.patchValue({
             name: this.trainingGroup.name,
-            siteId: this.trainingGroup.siteId,
+            siteId: this.trainingGroup.site?.id,
             isActive: this.trainingGroup.isActive,
             memberUserIds: (this.trainingGroup.members || []).map(
                 (member) => member.userId
@@ -551,7 +553,7 @@ export class AdminTrainingGroupDetailsComponent implements OnInit, OnDestroy {
         if (name !== trainingGroup.name) {
             metadataPayload.name = name;
         }
-        if (siteId !== trainingGroup.siteId) {
+        if (siteId !== trainingGroup.site?.id) {
             metadataPayload.siteId = siteId;
         }
         if (isActive !== trainingGroup.isActive) {
