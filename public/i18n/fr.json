@@ -1211,7 +1211,7 @@
     "PARENT": {
         "DASHBOARD": {
             "TITLE": "Tableau de bord parent",
-            "CURRENT_WEEK": "Semaine en cours",
+            "PERIOD": "Période",
             "TRAINING_SESSIONS": "Sessions d'entraînement",
             "AVG_RATING": "Note moyenne",
             "TRANSPORTS": "Trajets utilisés",

@@ -993,7 +993,7 @@
     "PARENT": {
         "DASHBOARD": {
             "TITLE": "Parent dashboard",
-            "CURRENT_WEEK": "Current week",
+            "PERIOD": "Period",
             "TRAINING_SESSIONS": "Training sessions",
             "AVG_RATING": "Avg. rating",
             "TRANSPORTS": "Trips used",
