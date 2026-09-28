@@ -21,20 +21,25 @@ MyCenter Academy App UIest une interface d'administration Angular pour la gestio
 
 ### 1. Prérequis
 
-- Node.js (v18+ recommandé)
-- Angular CLI (`npm install -g @angular/cli`)
+- Node.js **22.12.0** (référence commune à `.nvmrc` et au Dockerfile)
+- npm **10.9.0**
+- Angular CLI installé localement par les dépendances du projet
 - NVM recommandé pour la gestion de versions Node
 
 ### 2. Installation
 
 ```bash
-npm install
+nvm install
+nvm use
+node --version # v22.12.0
+npm --version  # 10.9.0
+npm ci
 ```
 
 ### 3. Démarrer le serveur de dev
 
 ```bash
-ng serve
+npm start
 ```
 
 Accès via : [http://localhost:4200](http://localhost:4200)
