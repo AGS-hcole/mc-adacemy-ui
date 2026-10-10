@@ -35,6 +35,7 @@ import { formatStoredSessionTime } from 'app/shared/helpers/date.helper';
 import { LocalizedDatePipe } from 'app/shared/pipes/localized-date.pipe';
 import { DateTime } from 'luxon';
 import { Subject, combineLatest, debounceTime, takeUntil } from 'rxjs';
+import { ReapplySessionsDialogComponent } from '../reapply/reapply-sessions-dialog.component';
 
 @Component({
     selector: 'admin-sessions-list',
@@ -178,6 +179,20 @@ export class AdminSessionsListComponent implements OnInit, OnDestroy {
     /**
      * Create new session
      */
+    reapplyParticipants(): void {
+        const dialog = this._matDialog.open(ReapplySessionsDialogComponent, {
+            width: '560px',
+            maxWidth: '95vw',
+        });
+        const component = dialog.componentInstance;
+        dialog
+            .afterClosed()
+            .pipe(takeUntil(this._unsubscribeAll))
+            .subscribe(() => {
+                if (component.changed) this.loadSessions();
+            });
+    }
+
     createSession(): void {
         this._router.navigate(['./new'], { relativeTo: this._activatedRoute });
     }

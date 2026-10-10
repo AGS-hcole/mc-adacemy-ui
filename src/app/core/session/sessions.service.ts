@@ -4,6 +4,8 @@ import { environment } from 'environments/environment';
 import { BehaviorSubject, Observable, map, switchMap, take, tap } from 'rxjs';
 import {
     CreateSessionRequest,
+    ReapplySessionsRequest,
+    ReapplySessionsResult,
     Session,
     SessionFilters,
     Site,
@@ -252,6 +254,12 @@ export class SessionsService {
     /**
      * Get all sites
      */
+    reapplyParticipants(request: ReapplySessionsRequest): Observable<ReapplySessionsResult> {
+        return this._httpClient.post<ReapplySessionsResult>(
+            `${this.apiUrl}/sessions/trigger-reapply`, request
+        );
+    }
+
     getSites(): Observable<Site[]> {
         return this._httpClient.get<Site[]>(`${this.apiUrl}/sites`).pipe(
             tap((sites) => {

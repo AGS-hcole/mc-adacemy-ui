@@ -10,7 +10,10 @@
             {{ 'SESSIONS.ADMIN.TITLE' | transloco }}
         </div>
         <!-- Actions -->
-        <div class="mt-6 flex shrink-0 items-center sm:ml-4 sm:mt-0">
+        <div class="mt-6 flex shrink-0 flex-wrap items-center gap-2 sm:ml-4 sm:mt-0">
+            <button mat-stroked-button (click)="reapplyParticipants()">
+                {{ 'SESSIONS.ADMIN.REAPPLY.TITLE' | transloco }}
+            </button>
             <button
                 class="ml-4"
                 mat-flat-button

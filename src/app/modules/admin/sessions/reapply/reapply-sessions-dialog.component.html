@@ -1,0 +1,97 @@
+<h2 mat-dialog-title>{{ 'SESSIONS.ADMIN.REAPPLY.TITLE' | transloco }}</h2>
+<form [formGroup]="form" (ngSubmit)="submit()">
+    <mat-dialog-content>
+        <p class="mb-4">
+            {{ 'SESSIONS.ADMIN.REAPPLY.DESCRIPTION' | transloco }}
+        </p>
+        <div class="flex flex-col gap-2 sm:flex-row sm:gap-4">
+            <mat-form-field class="w-full">
+                <mat-label>{{
+                    'SESSIONS.ADMIN.FILTERS.START_DATE' | transloco
+                }}</mat-label>
+                <input
+                    matInput
+                    type="date"
+                    formControlName="startDate"
+                    required
+                    [max]="form.controls.endDate.value || '9999-12-31'"
+                />
+                <mat-error>{{
+                    'SESSIONS.ADMIN.REAPPLY.REQUIRED' | transloco
+                }}</mat-error>
+            </mat-form-field>
+            <mat-form-field class="w-full">
+                <mat-label>{{
+                    'SESSIONS.ADMIN.FILTERS.END_DATE' | transloco
+                }}</mat-label>
+                <input
+                    matInput
+                    type="date"
+                    formControlName="endDate"
+                    required
+                    [min]="form.controls.startDate.value"
+                    max="9999-12-31"
+                />
+                <mat-error>{{
+                    'SESSIONS.ADMIN.REAPPLY.REQUIRED' | transloco
+                }}</mat-error>
+            </mat-form-field>
+        </div>
+        @if (form.hasError('dateRange')) {
+            <p role="alert" class="mb-4 text-red-600">
+                {{ 'SESSIONS.ADMIN.REAPPLY.INVALID_RANGE' | transloco }}
+            </p>
+        }
+        @if (pending) {
+            <p role="status">
+                {{ 'SESSIONS.ADMIN.REAPPLY.PENDING' | transloco }}
+            </p>
+        }
+        @if (failed) {
+            <div role="alert" class="mb-4 rounded bg-red-50 p-4 text-red-800">
+                <p>{{ 'SESSIONS.ADMIN.REAPPLY.ERROR' | transloco }}</p>
+                <p class="whitespace-pre-wrap">{{ errorDetails }}</p>
+            </div>
+        }
+        @if (result) {
+            <div role="status" class="rounded bg-green-50 p-4 text-green-900">
+                <p class="mb-3 font-semibold">
+                    {{ 'SESSIONS.ADMIN.REAPPLY.SUCCESS' | transloco }}
+                </p>
+                <dl class="grid grid-cols-2 gap-2">
+                    <dt>{{ 'SESSIONS.ADMIN.REAPPLY.GROUPS' | transloco }}</dt>
+                    <dd>{{ result.groups }}</dd>
+                    <dt>
+                        {{ 'SESSIONS.ADMIN.REAPPLY.CANDIDATES' | transloco }}
+                    </dt>
+                    <dd>{{ result.candidates }}</dd>
+                    <dt>{{ 'SESSIONS.ADMIN.REAPPLY.CREATED' | transloco }}</dt>
+                    <dd>{{ result.created }}</dd>
+                </dl>
+                <p class="mt-3 text-sm">
+                    {{ 'SESSIONS.ADMIN.REAPPLY.COUNT_NOTE' | transloco }}
+                </p>
+            </div>
+        }
+    </mat-dialog-content>
+    <mat-dialog-actions align="end">
+        <button
+            mat-button
+            type="button"
+            [disabled]="pending"
+            [mat-dialog-close]="changed"
+        >
+            {{ 'SESSIONS.ADMIN.REAPPLY.CLOSE' | transloco }}
+        </button>
+        @if (!result) {
+            <button
+                mat-flat-button
+                color="primary"
+                type="submit"
+                [disabled]="pending || form.invalid"
+            >
+                {{ 'SESSIONS.ADMIN.REAPPLY.SUBMIT' | transloco }}
+            </button>
+        }
+    </mat-dialog-actions>
+</form>

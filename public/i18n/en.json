@@ -374,6 +374,21 @@
             "CANCELED": "Canceled"
         },
         "ADMIN": {
+            "REAPPLY": {
+                "TITLE": "Reapply participants",
+                "DESCRIPTION": "Add missing registrations from active groups to sessions in the inclusive date range, across all sites. Canceled sessions are excluded and existing registrations are preserved.",
+                "REQUIRED": "A valid date is required.",
+                "INVALID_RANGE": "The end date must be on or after the start date.",
+                "PENDING": "Reapplying participants…",
+                "ERROR": "Reapplication failed. You can try again.",
+                "SUCCESS": "Reapplication completed.",
+                "GROUPS": "Active groups",
+                "CANDIDATES": "Candidate registrations",
+                "CREATED": "Created registrations",
+                "COUNT_NOTE": "Counts refer to session registrations: one person may be counted in several sessions.",
+                "CLOSE": "Close",
+                "SUBMIT": "Reapply"
+            },
             "TITLE": "Training Sessions",
             "CREATE_SESSION": "Create Session",
             "EDIT_SESSION": "Edit Session",
