@@ -27,6 +27,10 @@ export class RsvpService {
         );
     }
 
+    withdraw(sessionId: string): Observable<Session> {
+        return this.rsvp(sessionId, { status: 'NO' });
+    }
+
     /**
      * Check if user can register for a session
      * This is a helper method that should be called before attempting RSVP

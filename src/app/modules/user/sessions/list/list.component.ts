@@ -11,8 +11,9 @@ import { MatButtonModule } from '@angular/material/button';
 import { MatIconModule } from '@angular/material/icon';
 import { MatTooltipModule } from '@angular/material/tooltip';
 import { Router } from '@angular/router';
-import { TranslocoModule } from '@jsverse/transloco';
+import { TranslocoModule, TranslocoService } from '@jsverse/transloco';
 import { RsvpService } from 'app/core/session/rsvp.service';
+import { canWithdrawFromSession } from 'app/core/session/session-withdrawal.helpers';
 import {
     isCutoffPassed,
     isFormulaCompatibleWithSlot,
@@ -23,7 +24,7 @@ import { UserService } from 'app/core/user/user.service';
 import { User } from 'app/core/user/user.types';
 import { formatStoredSessionTime } from 'app/shared/helpers/date.helper';
 import { LocalizedDatePipe } from 'app/shared/pipes/localized-date.pipe';
-import { combineLatest, Subject, takeUntil } from 'rxjs';
+import { combineLatest, finalize, Subject, takeUntil } from 'rxjs';
 
 @Component({
     selector: 'user-sessions-list',
@@ -43,6 +44,8 @@ import { combineLatest, Subject, takeUntil } from 'rxjs';
 export class UserSessionsListComponent implements OnInit, OnDestroy {
     sessions: Session[] = [];
     user: User;
+    pendingSessionIds = new Set<string>();
+    withdrawalErrors: Record<string, string> = {};
 
     SessionSlot = SessionSlot;
 
@@ -56,7 +59,8 @@ export class UserSessionsListComponent implements OnInit, OnDestroy {
         private _router: Router,
         private _sessionsService: SessionsService,
         private _rsvpService: RsvpService,
-        private _userService: UserService
+        private _userService: UserService,
+        private _transloco: TranslocoService
     ) {}
 
     // -----------------------------------------------------------------------------------------------------
@@ -95,9 +99,52 @@ export class UserSessionsListComponent implements OnInit, OnDestroy {
     // @ Public methods
     // -----------------------------------------------------------------------------------------------------
 
-    /**
-     * Register for a session
-     */
+    /** Check the withdrawal deadline independently of registration rules. */
+    canWithdraw(session: Session): boolean {
+        return (
+            this.isRegistered(session, this.user) &&
+            canWithdrawFromSession(session.date)
+        );
+    }
+
+    withdrawFromSession(session: Session): void {
+        if (
+            !this.canWithdraw(session) ||
+            this.pendingSessionIds.has(session.id)
+        )
+            return;
+        if (
+            !window.confirm(
+                this._transloco.translate('SESSIONS.USER.WITHDRAW.CONFIRM')
+            )
+        )
+            return;
+        this.pendingSessionIds.add(session.id);
+        delete this.withdrawalErrors[session.id];
+        this._rsvpService
+            .withdraw(session.id)
+            .pipe(
+                takeUntil(this._unsubscribeAll),
+                finalize(() => {
+                    this.pendingSessionIds.delete(session.id);
+                    this._changeDetectorRef.markForCheck();
+                })
+            )
+            .subscribe({
+                next: (updated) => {
+                    this.sessions = this.sessions.map((current) =>
+                        current.id === updated.id ? updated : current
+                    );
+                },
+                error: (error) => {
+                    this.withdrawalErrors[session.id] =
+                        error.status === 403
+                            ? 'SESSIONS.USER.WITHDRAW.CLOSED'
+                            : 'SESSIONS.USER.WITHDRAW.ERROR';
+                },
+            });
+    }
+
     registerForSession(session: Session, user: User): void {
         // Check cutoff
         if (isCutoffPassed(session.date)) {
