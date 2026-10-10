@@ -366,6 +366,21 @@
             "CANCELED": "Annulé"
         },
         "ADMIN": {
+            "REAPPLY": {
+                "TITLE": "Réappliquer les participants",
+                "DESCRIPTION": "Ajoute les inscriptions manquantes des groupes actifs aux sessions de la période, dates incluses, sur tous les sites. Les sessions annulées sont exclues et les inscriptions existantes sont conservées.",
+                "REQUIRED": "Une date valide est requise.",
+                "INVALID_RANGE": "La date de fin doit être égale ou postérieure à la date de début.",
+                "PENDING": "Réapplication en cours…",
+                "ERROR": "La réapplication a échoué. Vous pouvez réessayer.",
+                "SUCCESS": "Réapplication terminée.",
+                "GROUPS": "Groupes actifs",
+                "CANDIDATES": "Inscriptions candidates",
+                "CREATED": "Inscriptions créées",
+                "COUNT_NOTE": "Les compteurs concernent les inscriptions aux sessions : une personne peut être comptée dans plusieurs sessions.",
+                "CLOSE": "Fermer",
+                "SUBMIT": "Réappliquer"
+            },
             "TITLE": "Sessions d'entraînement",
             "CREATE_SESSION": "Créer une session",
             "EDIT_SESSION": "Modifier la session",

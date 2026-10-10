@@ -208,3 +208,14 @@ export interface SessionRatingsResponse {
     ratings: Rating[];
     stats: RatingStats;
 }
+
+export interface ReapplySessionsRequest {
+    startDate: string;
+    endDate: string;
+}
+
+export interface ReapplySessionsResult {
+    groups: number;
+    candidates: number;
+    created: number;
+}
