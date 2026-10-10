@@ -225,24 +225,74 @@
                                                             mat-flat-button
                                                             color="accent"
                                                             class="w-full"
-                                                            disabled
+                                                            [disabled]="
+                                                                !canWithdraw(
+                                                                    session
+                                                                ) ||
+                                                                pendingSessionIds.has(
+                                                                    session.id
+                                                                )
+                                                            "
+                                                            (click)="
+                                                                withdrawFromSession(
+                                                                    session
+                                                                )
+                                                            "
+                                                            [matTooltip]="
+                                                                'SESSIONS.USER.WITHDRAW.DEADLINE'
+                                                                    | transloco
+                                                            "
                                                         >
                                                             <mat-icon
                                                                 class="icon-size-5"
                                                                 [svgIcon]="
-                                                                    'heroicons_outline:check-circle'
+                                                                    'heroicons_outline:minus-circle'
                                                                 "
                                                             >
                                                             </mat-icon>
                                                             <span
                                                                 class="ml-2"
                                                                 >{{
-                                                                    'SESSIONS.USER.ACTIONS.REGISTERED'
+                                                                    (pendingSessionIds.has(
+                                                                        session.id
+                                                                    )
+                                                                        ? 'SESSIONS.USER.WITHDRAW.PENDING'
+                                                                        : 'SESSIONS.USER.WITHDRAW.ACTION'
+                                                                    )
                                                                         | transloco
                                                                 }}</span
                                                             >
                                                         </button>
                                                     </ng-container>
+                                                    <p
+                                                        *ngIf="
+                                                            withdrawalErrors[
+                                                                session.id
+                                                            ]
+                                                        "
+                                                        role="alert"
+                                                        class="mt-2 text-red-600"
+                                                    >
+                                                        {{
+                                                            withdrawalErrors[
+                                                                session.id
+                                                            ] | transloco
+                                                        }}
+                                                    </p>
+                                                    <p
+                                                        *ngIf="
+                                                            isRegistered(
+                                                                session,
+                                                                user
+                                                            )
+                                                        "
+                                                        class="text-secondary mt-2 text-sm"
+                                                    >
+                                                        {{
+                                                            'SESSIONS.USER.WITHDRAW.DEADLINE'
+                                                                | transloco
+                                                        }}
+                                                    </p>
                                                     <ng-container
                                                         *ngIf="
                                                             !isRegistered(
