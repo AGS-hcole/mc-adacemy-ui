@@ -11,6 +11,7 @@ import { MatButtonModule } from '@angular/material/button';
 import { MatIconModule } from '@angular/material/icon';
 import { MatTooltipModule } from '@angular/material/tooltip';
 import { Router } from '@angular/router';
+import { FuseConfirmationService } from '@fuse/services/confirmation';
 import { TranslocoModule, TranslocoService } from '@jsverse/transloco';
 import { RsvpService } from 'app/core/session/rsvp.service';
 import { canWithdrawFromSession } from 'app/core/session/session-withdrawal.helpers';
@@ -24,7 +25,7 @@ import { UserService } from 'app/core/user/user.service';
 import { User } from 'app/core/user/user.types';
 import { formatStoredSessionTime } from 'app/shared/helpers/date.helper';
 import { LocalizedDatePipe } from 'app/shared/pipes/localized-date.pipe';
-import { combineLatest, finalize, Subject, takeUntil } from 'rxjs';
+import { combineLatest, EMPTY, finalize, Subject, switchMap, takeUntil } from 'rxjs';
 
 @Component({
     selector: 'user-sessions-list',
@@ -60,7 +61,8 @@ export class UserSessionsListComponent implements OnInit, OnDestroy {
         private _sessionsService: SessionsService,
         private _rsvpService: RsvpService,
         private _userService: UserService,
-        private _transloco: TranslocoService
+        private _transloco: TranslocoService,
+        private _fuseConfirmationService: FuseConfirmationService
     ) {}
 
     // -----------------------------------------------------------------------------------------------------
@@ -113,17 +115,34 @@ export class UserSessionsListComponent implements OnInit, OnDestroy {
             this.pendingSessionIds.has(session.id)
         )
             return;
-        if (
-            !window.confirm(
-                this._transloco.translate('SESSIONS.USER.WITHDRAW.CONFIRM')
-            )
-        )
-            return;
         this.pendingSessionIds.add(session.id);
         delete this.withdrawalErrors[session.id];
-        this._rsvpService
-            .withdraw(session.id)
+        this._changeDetectorRef.markForCheck();
+        this._fuseConfirmationService
+            .open({
+                title: this._transloco.translate('SESSIONS.USER.WITHDRAW.ACTION'),
+                message: this._transloco.translate('SESSIONS.USER.WITHDRAW.CONFIRM'),
+                actions: {
+                    confirm: {
+                        label: this._transloco.translate('SESSIONS.USER.WITHDRAW.ACTION'),
+                    },
+                    cancel: {
+                        label: this._transloco.translate('COMMON.CANCEL'),
+                    },
+                },
+            })
+            .afterClosed()
             .pipe(
+                switchMap((result) => {
+                    if (result !== 'confirmed') return EMPTY;
+                    // The deadline may pass while the confirmation is open.
+                    if (!this.canWithdraw(session)) {
+                        this.withdrawalErrors[session.id] =
+                            'SESSIONS.USER.WITHDRAW.CLOSED';
+                        return EMPTY;
+                    }
+                    return this._rsvpService.withdraw(session.id);
+                }),
                 takeUntil(this._unsubscribeAll),
                 finalize(() => {
                     this.pendingSessionIds.delete(session.id);

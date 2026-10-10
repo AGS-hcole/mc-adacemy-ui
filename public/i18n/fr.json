@@ -485,7 +485,7 @@
                 "ACTION": "Se désinscrire",
                 "PENDING": "Désinscription…",
                 "CONFIRM": "Confirmer votre désinscription de cette session ?",
-                "DEADLINE": "Désinscription possible jusqu’à 20 h 00 la veille (heure de Paris).",
+                "DEADLINE": "Désinscription possible jusqu’à 20h00 la veille (heure de Paris).",
                 "CLOSED": "Le délai de désinscription est dépassé.",
                 "ERROR": "La désinscription a échoué. Veuillez réessayer."
             },
