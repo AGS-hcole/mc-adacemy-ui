@@ -11,6 +11,9 @@ export function canWithdrawFromSession(
             : date.slice(0, 10);
     const deadline = DateTime.fromISO(day, {
         zone: 'Europe/Paris',
-    }).startOf('day');
-    return deadline.isValid && now < deadline.toMillis();
+    })
+        .startOf('day')
+        .minus({ days: 1 })
+        .set({ hour: 20 });
+    return deadline.isValid && now <= deadline.toMillis();
 }

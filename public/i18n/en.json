@@ -341,7 +341,7 @@
                 "ACTION": "Unregister",
                 "PENDING": "Unregistering…",
                 "CONFIRM": "Confirm your withdrawal from this session?",
-                "DEADLINE": "You can unregister until 11:59 pm the day before (Paris time).",
+                "DEADLINE": "You can unregister until 8:00 pm the day before (Paris time).",
                 "CLOSED": "The withdrawal deadline has passed.",
                 "ERROR": "Could not unregister. Please try again."
             },
