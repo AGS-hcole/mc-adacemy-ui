@@ -105,10 +105,10 @@
             "EMAIL": "Adresse e-mail",
             "EMAIL_REQUIRED": "L'adresse e-mail est requise",
             "EMAIL_INVALID": "Veuillez entrer une adresse e-mail valide",
-            "PASSWORD": "Mot de passe",
-            "PASSWORD_REQUIRED": "Le mot de passe est requis",
+            "PASSWORD": "***REDACTED***",
+            "PASSWORD_REQUIRED": "***REDACTED***",
             "REMEMBER_ME": "Se souvenir de moi",
-            "FORGOT_PASSWORD": "Mot de passe oublié ?",
+            "FORGOT_PASSWORD": "***REDACTED***",
             "SIGNIN": "Se connecter",
             "ERROR_MESSAGE": "Utilisateur ou mot de passe invalide"
         },
@@ -122,11 +122,11 @@
         "RESET_PASSWORD": {
             "TITLE": "Réinitialiser le mot de passe",
             "SUBTITLE": "Entrez votre adresse e-mail pour recevoir un lien de réinitialisation de mot de passe.",
-            "PASSWORD": "Nouveau mot de passe",
-            "PASSWORD_REQUIRED": "Le mot de passe est requis",
-            "PASSWORD_CONFIRM": "Confirmer le mot de passe",
-            "PASSWORD_CONFIRM_REQUIRED": "La confirmation du mot de passe est requise",
-            "PASSWORD_MUST_MATCH": "Les mots de passe doivent correspondre",
+            "PASSWORD": "***REDACTED***",
+            "PASSWORD_REQUIRED": "***REDACTED***",
+            "PASSWORD_CONFIRM": "***REDACTED***",
+            "PASSWORD_CONFIRM_REQUIRED": "***REDACTED***",
+            "PASSWORD_MUST_MATCH": "***REDACTED***",
             "SUBMIT": "Réinitialiser le mot de passe",
             "RETURNTO": "Retour à",
             "SIGN_IN": "se connecter",
@@ -187,14 +187,6 @@
             }
         },
         "USER": {
-            "WITHDRAW": {
-                "ACTION": "Se désinscrire",
-                "PENDING": "Désinscription…",
-                "CONFIRM": "Confirmer votre désinscription de cette session ?",
-                "DEADLINE": "Désinscription possible jusqu’à 20 h 00 la veille (heure de Paris).",
-                "CLOSED": "Le délai de désinscription est dépassé.",
-                "ERROR": "La désinscription a échoué. Veuillez réessayer."
-            },
             "TITLE": "Mon espace",
             "SUBTITLE": "Mes activités",
             "SESSIONS": {
@@ -489,6 +481,14 @@
             }
         },
         "USER": {
+            "WITHDRAW": {
+                "ACTION": "Se désinscrire",
+                "PENDING": "Désinscription…",
+                "CONFIRM": "Confirmer votre désinscription de cette session ?",
+                "DEADLINE": "Désinscription possible jusqu’à 20 h 00 la veille (heure de Paris).",
+                "CLOSED": "Le délai de désinscription est dépassé.",
+                "ERROR": "La désinscription a échoué. Veuillez réessayer."
+            },
             "TITLE": "Mes sessions d'entraînement",
             "NO_SESSIONS": "Aucune session à venir",
             "NO_SESSIONS_DESCRIPTION": "Revenez plus tard pour voir les prochaines sessions disponibles",
